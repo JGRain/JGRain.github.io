@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>火舞的博客</title>
+  
+  <subtitle>鸡毛换糖，积少成多</subtitle>
+  <link href="https://rain520.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://rain520.github.io/"/>
+  <updated>2022-06-19T07:25:02.573Z</updated>
+  <id>https://rain520.github.io/</id>
+  
+  <author>
+    <name>naer</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>title</title>
+    <link href="https://rain520.github.io/2022/06/19/title/"/>
+    <id>https://rain520.github.io/2022/06/19/title/</id>
+    <published>2022-06-19T05:36:07.000Z</published>
+    <updated>2022-06-19T07:25:02.573Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="This-is-title"><a href="#This-is-title" class="headerlink" title="This is title"></a>This is title</h2><p>i want to do more</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;This-is-title&quot;&gt;&lt;a href=&quot;#This-is-title&quot; class=&quot;headerlink&quot; title=&quot;This is title&quot;&gt;&lt;/a&gt;This is title&lt;/h2&gt;&lt;p&gt;i want to do more&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="https://rain520.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="学习" scheme="https://rain520.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="自律" scheme="https://rain520.github.io/tags/%E8%87%AA%E5%BE%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello Visitor</title>
+    <link href="https://rain520.github.io/2022/06/19/hello-world/"/>
+    <id>https://rain520.github.io/2022/06/19/hello-world/</id>
+    <published>2022-06-19T04:04:12.277Z</published>
+    <updated>2022-06-19T07:24:40.363Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="welcome"><a href="#welcome" class="headerlink" title="welcome"></a>welcome</h2><p>i am a new writer</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;welcome&quot;&gt;&lt;a href=&quot;#welcome&quot; class=&quot;headerlink&quot; title=&quot;welcome&quot;&gt;&lt;/a&gt;welcome&lt;/h2&gt;&lt;p&gt;i am a new writer&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>

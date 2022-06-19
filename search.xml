@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>title</title>
+      <link href="/2022/06/19/title/"/>
+      <url>/2022/06/19/title/</url>
+      
+        <content type="html"><![CDATA[<h2 id="This-is-title"><a href="#This-is-title" class="headerlink" title="This is title"></a>This is title</h2><p>i want to do more</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 学习 </tag>
+            
+            <tag> 自律 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello Visitor</title>
+      <link href="/2022/06/19/hello-world/"/>
+      <url>/2022/06/19/hello-world/</url>
+      
+        <content type="html"><![CDATA[<h2 id="welcome"><a href="#welcome" class="headerlink" title="welcome"></a>welcome</h2><p>i am a new writer</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
