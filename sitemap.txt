@@ -1,3 +1,9 @@
+https://rain520.github.io/404/index.html
+https://rain520.github.io/about/index.html
+https://rain520.github.io/categories/index.html
+https://rain520.github.io/contact/index.html
+https://rain520.github.io/friends/index.html
+https://rain520.github.io/tags/index.html
 https://rain520.github.io/2022/06/19/title/
 https://rain520.github.io/2022/06/19/hello-world/
 https://rain520.github.io/
