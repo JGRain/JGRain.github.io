@@ -170,9 +170,9 @@ Also, create a new `_data` directory in your blog's `source` directory and a new
     "title": "Read More"
 }, {
     "avatar": "http://image.luokangyuan.com/4027734.jpeg",
-    "name": "Blinkfox",
-    "introduction": "Hello, I'm blinkfox, I like programming.",
-    "url": "https://blinkfox.github.io/",
+    "name": "JGRain",
+    "introduction": "Hello, I'm JGRain, I like programming.",
+    "url": "https://github.com/JGRain/JGRain.github.io.git",
     "title": "Visit Blog"
 }, {
     "avatar": "http://image.luokangyuan.com/avatar.jpg",
