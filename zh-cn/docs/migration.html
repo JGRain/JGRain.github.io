@@ -1,0 +1,27 @@
+<hr>
+<h2 id="title-迁移"><a href="#title-迁移" class="headerlink" title="title: 迁移"></a>title: 迁移</h2><h2 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h2><p>首先，安装 <code>hexo-migrator-rss</code> 插件。</p>
+<pre><code class="bash">$ npm install hexo-migrator-rss --save
+</code></pre>
+<p>插件安装完成后，执行下列命令，从 RSS 迁移所有文章。<code>source</code> 可以是文件路径或网址。</p>
+<pre><code class="bash">$ hexo migrate rss &lt;source&gt;
+</code></pre>
+<h2 id="Jekyll"><a href="#Jekyll" class="headerlink" title="Jekyll"></a>Jekyll</h2><p>把 <code>_posts</code> 文件夹内的所有文件复制到 <code>source/_posts</code> 文件夹，并在 <code>_config.yml</code> 中修改 <code>new_post_name</code> 参数。</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="Octopress"><a href="#Octopress" class="headerlink" title="Octopress"></a>Octopress</h2><p>把 Octopress <code>source/_posts</code> 文件夹内的所有文件转移到 Hexo 的 <code>source/_posts</code> 文件夹，并修改 <code>_config.yml</code> 中的 <code>new_post_name</code> 参数。</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h2><p>首先，安装 <code>hexo-migrator-wordpress</code> 插件。</p>
+<pre><code class="bash">$ npm install hexo-migrator-wordpress --save
+</code></pre>
+<p>在 WordPress 仪表盘中导出数据(“Tools” → “Export” → “WordPress”)（详情参考<a href="https://wordpress.com/zh-cn/support/export/">WP支持页面</a>）。</p>
+<p>插件安装完成后，执行下列命令来迁移所有文章。<code>source</code> 可以是 WordPress 导出的文件路径或网址。</p>
+<pre><code class="bash">$ hexo migrate wordpress &lt;source&gt;
+</code></pre>
+<p>{% note warn 注意 %}<br>这个插件并不能完美地实现WordPress-&gt;Hexo的数据转换，尤其是在处理WordPress的分类方面存在问题（见<a href="https://hexo.io/zh-cn/docs/front-matter.html">Front-matter中的分类与标签</a>）。因此，建议您在迁移完成后，手工审阅所有生成的markdown文件，检查其中是否有错误。对于文章数量较大的WordPress站点，这项工作可能要花很长的时间。<br>{% endnote %}</p>
+<h2 id="Joomla"><a href="#Joomla" class="headerlink" title="Joomla"></a>Joomla</h2><p>首先，安装 <code>hexo-migrator-joomla</code> 插件。</p>
+<pre><code class="bash">$ npm install hexo-migrator-joomla --save
+</code></pre>
+<p>使用 <a href="http://extensions.joomla.org/extensions/migration-a-conversion/data-import-a-export/12816?qh=YToxOntpOjA7czo1OiJqMnhtbCI7fQ==">J2XML</a> 组件导出 Joomla 文章。<br>插件安装完成后，执行下列命令来迁移所有文章。<code>source</code> 可以是 Joomla 导出的文件路径或网址。</p>
+<pre><code class="bash">$ hexo migrate joomla &lt;source&gt;
+</code></pre>

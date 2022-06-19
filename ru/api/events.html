@@ -1,0 +1,31 @@
+<hr>
+<h2 id="title-События"><a href="#title-События" class="headerlink" title="title: События"></a>title: События</h2><p>Hexo унаследован от сборщика событий <a href="https://nodejs.org/dist/latest/docs/api/events.html">EventEmitter</a>. Используйте метод <code>on</code> для просмотра событий Hexo и метод <code>emit</code> для генерации событий. Более подробную информацию смотрите в документации Node.js API.</p>
+<h3 id="deployBefore"><a href="#deployBefore" class="headerlink" title="deployBefore"></a>deployBefore</h3><p>Вызывается перед началом развёртывания.</p>
+<h3 id="deployAfter"><a href="#deployAfter" class="headerlink" title="deployAfter"></a>deployAfter</h3><p>Вызывается после окончания развёртывания.</p>
+<h3 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit</h3><p>Вызывается перед закрытием Hexo.</p>
+<h3 id="generateBefore"><a href="#generateBefore" class="headerlink" title="generateBefore"></a>generateBefore</h3><p>Вызывается перед началом генерации.</p>
+<h3 id="generateAfter"><a href="#generateAfter" class="headerlink" title="generateAfter"></a>generateAfter</h3><p>Вызывается после окончания генерации.</p>
+<h3 id="new"><a href="#new" class="headerlink" title="new"></a>new</h3><p>Вызывается после того, как пост создан. Событие возвращает данные поста:</p>
+<pre><code class="js">hexo.on(&#39;new&#39;, function(post){
+  //
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Данные</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>post.path</code></td>
+<td>Полный путь к файлу поста</td>
+</tr>
+<tr>
+<td><code>post.content</code></td>
+<td>Содержание файла поста</td>
+</tr>
+</tbody></table>
+<h3 id="processBefore"><a href="#processBefore" class="headerlink" title="processBefore"></a>processBefore</h3><p>Генерируется перед началом процесса. Событие возвращает корневой каталог модуля.</p>
+<h3 id="processAfter"><a href="#processAfter" class="headerlink" title="processAfter"></a>processAfter</h3><p>Генерируется после окончания процесса. Событие возвращает корневой каталог модуля.</p>
+<h3 id="ready"><a href="#ready" class="headerlink" title="ready"></a>ready</h3><p>Генерируется после инициализации.</p>

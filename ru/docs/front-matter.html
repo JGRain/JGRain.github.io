@@ -1,0 +1,89 @@
+<hr>
+<h2 id="title-Шапка-файла"><a href="#title-Шапка-файла" class="headerlink" title="title: Шапка файла"></a>title: Шапка файла</h2><p>Шапка файла это блок в формате YAML или JSON, расположенный в начале файла, который используется для изменения настроек написанного материала. Окончание шапки определяется строкой <code>---</code> или <code>;;;</code> при написании в формате JSON.</p>
+<p><strong>YAML</strong></p>
+<pre><code class="yaml">---
+title: Hello World
+date: 2013/7/13 20:46:25
+---
+</code></pre>
+<p><strong>JSON</strong></p>
+<pre><code class="json">&quot;title&quot;: &quot;Hello World&quot;,
+&quot;date&quot;: &quot;2013/7/13 20:46:25&quot;
+;;;
+</code></pre>
+<h3 id="Параметры-и-значения-по-умолчанию"><a href="#Параметры-и-значения-по-умолчанию" class="headerlink" title="Параметры и значения по умолчанию"></a>Параметры и значения по умолчанию</h3><table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>layout</code></td>
+<td>Макет</td>
+<td><a href="/ru/docs/configuration#%D0%9D%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5"><code>config.default_layout</code></a></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Заголовок</td>
+<td>Filename (posts only)</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Дата публикации</td>
+<td>Дата создания файла</td>
+</tr>
+<tr>
+<td><code>updated</code></td>
+<td>Дата обновления</td>
+<td>Дата обновления файла</td>
+</tr>
+<tr>
+<td><code>comments</code></td>
+<td>Включение поддержки комментариев в посте</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>Теги (Недоступно для страниц)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>Категории (Не доступно для страниц)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>Переопределяет ссылку по умолчанию. Должна заканчиваться <code>/</code> или <code>.html</code></td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>excerpt</code></td>
+<td>Отрывок страницы в виде простого текста. Используйте <a href="/ru/docs/tag-plugins#%D0%9E%D1%82%D1%80%D1%8B%D0%B2%D0%BE%D0%BA-%D0%BF%D0%BE%D1%81%D1%82%D0%B0">этот плагин</a> для оформления текста</td>
+<td></td>
+</tr>
+<tr>
+<td><code>disableNunjucks</code></td>
+<td>Отключить отображение тегов Nunjucks <code>{{ }}</code>&#x2F;<code>{% %}</code> и <a href="/ru/docs/tag-plugins">плагины тегов</a> при включении</td>
+<td></td>
+</tr>
+<tr>
+<td><code>lang</code></td>
+<td>Установите язык для переопределения <a href="/ru/docs/internationalization#%D0%9F%D1%83%D1%82%D1%8C">автоопределения</a></td>
+<td>Берётся из <code>_config.yml</code></td>
+</tr>
+</tbody></table>
+<h4 id="Макет"><a href="#Макет" class="headerlink" title="Макет"></a>Макет</h4><p>Умолчания для макета <code>поста</code>, берутся в соответствии со значениеми <a href="(https://hexo.io/ru/docs/configuration#%D0%9D%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5)"><code>параметров</code></a> в файле <code>_config.yml</code>. Когда в статье макет отключён (<code>layout: false</code>), он не будет обрабатываться с темой. Тем не менее, он все равно будет отображаться любым доступным средством визуализации: если статья написана в Markdown и средстве визуализации Markdown (например, установлен по умолчанию <a href="https://github.com/hexojs/hexo-renderer-marked">hexo-renderer-marked</a>) , он будет отображён в HTML.</p>
+<p><a href="/ru/docs/tag-plugins">Плагины тегов</a> всегда обрабатываются независимо от макета, если только они не отключены настройкой <code>disableNunjucks</code> или [средство визуализации] (&#x2F;api&#x2F;renderer#Disable-Nunjucks-tags).</p>
+<h4 id="Категории-и-теги"><a href="#Категории-и-теги" class="headerlink" title="Категории и теги"></a>Категории и теги</h4><p>Только посты поддерживают использование категорий и тегов. Категории считываются в порядке их написания, в результате чего сохраняется иерархия классификации и подклассификации. Теги определены на одном иерархическом уровне, не важен порядок написания.</p>
+<p><strong>Например</strong></p>
+<pre><code class="yaml">categories:
+- Sports
+- Baseball
+tags:
+- Injury
+- Fight
+- Shocking
+</code></pre>

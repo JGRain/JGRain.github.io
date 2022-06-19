@@ -1,0 +1,117 @@
+<hr>
+<h2 id="title-Команды"><a href="#title-Команды" class="headerlink" title="title: Команды"></a>title: Команды</h2><h2 id="init"><a href="#init" class="headerlink" title="init"></a>init</h2><pre><code class="bash">$ hexo init [folder]
+</code></pre>
+<p>Инициализирует сайт. Если переменная <code>folder</code> не указана, Hexo создаёт сайт в текущей папке.</p>
+<p>Эта команда представляет собой ярлык, который выполняет следующие действия:</p>
+<ol>
+<li>Создаёт слон Git репозитория <a href="https://github.com/hexojs/hexo-starter">hexo-starter</a> включая <a href="https://github.com/hexojs/hexo-theme-landscape">hexo-theme-landscape</a> в текущий каталог или,если указана, в целевую папку.</li>
+<li>Установите зависимости с помощью менеджера пакетов: <a href="https://classic.yarnpkg.com/lang/en/">Yarn 1</a>, <a href="https://pnpm.js.org/">pnpm</a> или <a href="https://docs.npmjs.com/cli/install">npm</a>, в зависимости от того, что установлено; если установлено более одного, приоритет указан в списке. npm поставляется в комплекте с <a href="/docs/#Install-Node-js">Node.js</a> by default.</li>
+</ol>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><pre><code class="bash">$ hexo new [layout] &lt;title&gt;
+</code></pre>
+<p>Будет создана новая статья. Если макет не был указан, Hexo будет использовать значение <code>default_layout</code>, указанное в <a href="configuration.html">_config.yml</a>. Если название содержит пробелы, заключите его в кавычки.</p>
+<h2 id="generate"><a href="#generate" class="headerlink" title="generate"></a>generate</h2><pre><code class="bash">$ hexo generate
+</code></pre>
+<p>Генерирует статичные файлы.</p>
+<table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-d</code>, <code>--deploy</code></td>
+<td>Опубликовать после генерации</td>
+</tr>
+<tr>
+<td><code>-w</code>, <code>--watch</code></td>
+<td>Отслеживать изменения файлов</td>
+</tr>
+</tbody></table>
+<h2 id="publish"><a href="#publish" class="headerlink" title="publish"></a>publish</h2><pre><code class="bash">$ hexo publish [layout] &lt;filename&gt;
+</code></pre>
+<p>Переносит черновик в публикуемую папку.</p>
+<h2 id="server"><a href="#server" class="headerlink" title="server"></a>server</h2><pre><code class="bash">$ hexo server
+</code></pre>
+<p>Запускает локальный сервер. По умолчанию адрес: <code>http://localhost:4000/</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-p</code>, <code>--port</code></td>
+<td>Переназначает стандартный порт</td>
+</tr>
+<tr>
+<td><code>-s</code>, <code>--static</code></td>
+<td>Обрабатывать только статичные файлы</td>
+</tr>
+<tr>
+<td><code>-l</code>, <code>--log</code></td>
+<td>Включить журналирование. Переопределяет формат журнала.</td>
+</tr>
+</tbody></table>
+<h2 id="deploy"><a href="#deploy" class="headerlink" title="deploy"></a>deploy</h2><pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>Публикует сайт.</p>
+<table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-g</code>, <code>--generate</code></td>
+<td>Генерировать перед публикацией</td>
+</tr>
+</tbody></table>
+<h2 id="render"><a href="#render" class="headerlink" title="render"></a>render</h2><pre><code class="bash">$ hexo render &lt;file1&gt; [file2] ...
+</code></pre>
+<p>Генерирует файлы.</p>
+<table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-o</code>, <code>--output</code></td>
+<td>Путь вывода</td>
+</tr>
+</tbody></table>
+<h2 id="migrate"><a href="#migrate" class="headerlink" title="migrate"></a>migrate</h2><pre><code class="bash">$ hexo migrate &lt;type&gt;
+</code></pre>
+<p><a href="migration.html">Миграция</a> контента из других систем.</p>
+<h2 id="clean"><a href="#clean" class="headerlink" title="clean"></a>clean</h2><pre><code class="bash">$ hexo clean
+</code></pre>
+<p>Очищает кэш (<code>db.json</code>) и генерирует файлы для опубликования (<code>public</code>).</p>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><pre><code class="bash">$ hexo list &lt;type&gt;
+</code></pre>
+<p>Список всех путей.</p>
+<h2 id="version"><a href="#version" class="headerlink" title="version"></a>version</h2><pre><code class="bash">$ hexo version
+</code></pre>
+<p>Отображает информацию о версии Hexo.</p>
+<h2 id="Опции"><a href="#Опции" class="headerlink" title="Опции"></a>Опции</h2><h3 id="Безопасный-режим"><a href="#Безопасный-режим" class="headerlink" title="Безопасный режим"></a>Безопасный режим</h3><pre><code class="bash">$ hexo --safe
+</code></pre>
+<p>Отключает загрузку плагинов и скриптов. Применяется при возникновении проблем после установки нового плагина.</p>
+<h3 id="Режим-отладки"><a href="#Режим-отладки" class="headerlink" title="Режим отладки"></a>Режим отладки</h3><pre><code class="bash">$ hexo --debug
+</code></pre>
+<p>Журнал подробных сообщений в терминале и <code>debug.log</code>. Применяется при возникновении проблем с Hexo. Если выдаются ошибки, пожалуйста, задайте вопрос на <a href="https://github.com/hexojs/hexo/issues/new">GitHub</a>.</p>
+<h3 id="Тихий-режим"><a href="#Тихий-режим" class="headerlink" title="Тихий режим"></a>Тихий режим</h3><pre><code class="bash">$ hexo --silent
+</code></pre>
+<p>Отключает показ сообщений в консоли.</p>
+<h3 id="Альтернативная-конфигурация"><a href="#Альтернативная-конфигурация" class="headerlink" title="Альтернативная конфигурация"></a>Альтернативная конфигурация</h3><pre><code class="bash">$ hexo --config custom.yml
+</code></pre>
+<p>Использует другой конфигурационный файл (вместо <code>_config.yml</code>).</p>
+<h3 id="Показать-черновики"><a href="#Показать-черновики" class="headerlink" title="Показать черновики"></a>Показать черновики</h3><pre><code class="bash">$ hexo --draft
+</code></pre>
+<p>Отображает черновики (хранящиеся в папке <code>source/_drafts</code>).</p>
+<h3 id="Изменить-рабочую-папку"><a href="#Изменить-рабочую-папку" class="headerlink" title="Изменить рабочую папку"></a>Изменить рабочую папку</h3><pre><code class="bash">$ hexo --cwd /path/to/cwd
+</code></pre>
+<p>Изменяет путь к текущей рабочей папке.</p>

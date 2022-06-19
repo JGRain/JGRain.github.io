@@ -1,0 +1,428 @@
+<hr>
+<h2 id="title-Configuracao"><a href="#title-Configuracao" class="headerlink" title="title: Configuração"></a>title: Configuração</h2><p>Você pode modificar as configurações do site em <code>_config.yml</code> ou em um <a href="#Usando-uma-Configuracao-Alternativa">arquivo de configuração alternativo</a>.</p>
+<h3 id="Site"><a href="#Site" class="headerlink" title="Site"></a>Site</h3><table>
+<thead>
+<tr>
+<th>Configuração</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>O título do seu site</td>
+</tr>
+<tr>
+<td><code>subtitle</code></td>
+<td>O subtítulo do seu site</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>A descrição do seu site</td>
+</tr>
+<tr>
+<td><code>keywords</code></td>
+<td>The keywords of your website. Supports multiple values.</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>Seu nome</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>O idioma do seu site. Use a <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">2-lettter ISO-639-1 code</a>. O padrão é <code>en</code>.</td>
+</tr>
+<tr>
+<td><code>timezone</code></td>
+<td>O fuso horário do seu site. O Hexo usa a configuração do seu computador por padrão. Você pode encontrar a lista de fusos horários disponíveis <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">aqui</a>. Alguns exemplos são <code>America/New_York</code>, <code>Japan</code> e <code>UTC</code>.</td>
+</tr>
+</tbody></table>
+<h3 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h3><table>
+<thead>
+<tr>
+<th>Configuração</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>url</code></td>
+<td>A URL do seu site, must starts with <code>http://</code> or <code>https://</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>O diretório raiz do seu site</td>
+<td><code>url&#39;s pathname</code></td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>O formato de <a href="permalinks.html">permalink</a> dos artigos</td>
+<td><code>:year/:month/:day/:title/</code></td>
+</tr>
+<tr>
+<td><code>permalink_defaults</code></td>
+<td>Valores padrão de cada segmento no permalink</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pretty_urls</code></td>
+<td>Rewrite the <a href="variables.html"><code>permalink</code></a> variables to pretty URLs</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_index</code></td>
+<td>Trailing <code>index.html</code>, set to <code>false</code> to remove it</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_html</code></td>
+<td>Trailing <code>.html</code>, set to <code>false</code> to remove it (<em>does not apply to trailing <code>index.html</code></em>)</td>
+<td><code>true</code></td>
+</tr>
+</tbody></table>
+<p>{% note info Site em subdiretório %}<br>Se o seu site estiver em um subdiretório (como por exemplo <code>http://example.org/blog</code>) defina <code>url</code> para <code>http://example.org/blog</code> e defina <code>root</code> para <code>/blog/</code>.<br>{% endnote %}</p>
+<h3 id="Diretorio"><a href="#Diretorio" class="headerlink" title="Diretório"></a>Diretório</h3><table>
+<thead>
+<tr>
+<th>Configuração</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source_dir</code></td>
+<td>Diretório dos fonte. Onde seu conteúdo está armazenado</td>
+<td><code>source</code></td>
+</tr>
+<tr>
+<td><code>public_dir</code></td>
+<td>Diretório dos arquivos públicos. Onde o site estático será gerado</td>
+<td><code>public</code></td>
+</tr>
+<tr>
+<td><code>tag_dir</code></td>
+<td>Diretório de tags</td>
+<td><code>tags</code></td>
+</tr>
+<tr>
+<td><code>archive_dir</code></td>
+<td>Diretório de archives</td>
+<td><code>archives</code></td>
+</tr>
+<tr>
+<td><code>category_dir</code></td>
+<td>Diretório de categorias</td>
+<td><code>categories</code></td>
+</tr>
+<tr>
+<td><code>code_dir</code></td>
+<td>Diretório de código (subdiretório de <code>source_dir</code>)</td>
+<td><code>downloads/code</code></td>
+</tr>
+<tr>
+<td><code>i18n_dir</code></td>
+<td>Diretório de internacionalização (i18n)</td>
+<td><code>:lang</code></td>
+</tr>
+<tr>
+<td><code>skip_render</code></td>
+<td>Caminhos que não devem ser renderizados. Você pode usar <a href="https://github.com/micromatch/micromatch#extended-globbing">expressões globais</a> para fazer correspondência de caminho</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Escrita"><a href="#Escrita" class="headerlink" title="Escrita"></a>Escrita</h3><table>
+<thead>
+<tr>
+<th>Configuração</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>new_post_name</code></td>
+<td>O formato do nome do arquivo para novas postagens</td>
+<td><code>:title.md</code></td>
+</tr>
+<tr>
+<td><code>default_layout</code></td>
+<td>Layout padrão</td>
+<td><code>post</code></td>
+</tr>
+<tr>
+<td><code>titlecase</code></td>
+<td>Transformar títulos em maiúsculo?</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>external_link</code></td>
+<td>Abrir links externos em uma nova aba?</td>
+<td></td>
+</tr>
+<tr>
+<td><code>external_link.enable</code></td>
+<td>Abrir links externos em uma nova aba?</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>external_link.field</code></td>
+<td>Applies to the whole <code>site</code> or <code>post</code> only</td>
+<td><code>site</code></td>
+</tr>
+<tr>
+<td><code>external_link.exclude</code></td>
+<td>Exclude hostname. Specify subdomain when applicable, including <code>www</code></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>filename_case</code></td>
+<td>Converter nomes de arquivos para minúsculos <code>1</code>; maiúsculos <code>2</code></td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>render_drafts</code></td>
+<td>Exibir rascunhos?</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>post_asset_folder</code></td>
+<td>Ativar o <a href="asset-folders.html">diretório de Asset</a>?</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>relative_link</code></td>
+<td>Links para o diretório raiz?</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>future</code></td>
+<td>Exibir postagens futuras?</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>Configurações de bloco de código, see <a href="/docs/syntax-highlight#Highlight-js">Highlight.js</a> section for usage guide</td>
+<td></td>
+</tr>
+<tr>
+<td><code>prismjs</code></td>
+<td>Configurações de bloco de código, see <a href="/docs/syntax-highlight#PrismJS">PrismJS</a> section for usage guide</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Categoria-amp-Tag"><a href="#Categoria-amp-Tag" class="headerlink" title="Categoria &amp; Tag"></a>Categoria &amp; Tag</h3><table>
+<thead>
+<tr>
+<th>Configuração</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>default_category</code></td>
+<td>Categoria padrão</td>
+<td><code>uncategorized</code></td>
+</tr>
+<tr>
+<td><code>category_map</code></td>
+<td>Mapa de Categoria</td>
+<td></td>
+</tr>
+<tr>
+<td><code>tag_map</code></td>
+<td>Mapa de Tag</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Formato-de-Data-x2F-Hora"><a href="#Formato-de-Data-x2F-Hora" class="headerlink" title="Formato de Data &#x2F; Hora"></a>Formato de Data &#x2F; Hora</h3><p>Hexo usa <a href="http://momentjs.com/">Moment.js</a> para processar datas.</p>
+<table>
+<thead>
+<tr>
+<th>Configuração</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>date_format</code></td>
+<td>Formato de data</td>
+<td><code>YYYY-MM-DD</code></td>
+</tr>
+<tr>
+<td><code>time_format</code></td>
+<td>Formado de hora</td>
+<td><code>HH:mm:ss</code></td>
+</tr>
+<tr>
+<td><code>updated_option</code></td>
+<td>The <a href="/pt-br/docs/variables#Variaveis-da-Pagina"><code>updated</code></a> value to used when not provided in the front-matter</td>
+<td><code>mtime</code></td>
+</tr>
+</tbody></table>
+<p>{% note info updated_option %}<br><code>updated_option</code> controls the <code>updated</code> value when not provided in the front-matter:</p>
+<ul>
+<li><code>mtime</code>: Use file modification date as <code>updated</code>. It is the default behavior of Hexo since 3.0.0</li>
+<li><code>date</code>: Use <code>date</code> as <code>updated</code>. Typically used with Git workflow when file modification date could be different.</li>
+<li><code>empty</code>: Simply drop <code>updated</code> when not provided. May not be compatible with most themes and plugins.</li>
+</ul>
+<p><code>use_date_for_updated</code> is deprecated and will be removed in next major version. Please use <code>updated_option: &#39;date&#39;</code> instead.<br>{% endnote %}</p>
+<h3 id="Paginacao"><a href="#Paginacao" class="headerlink" title="Paginação"></a>Paginação</h3><table>
+<thead>
+<tr>
+<th>Configuração</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>per_page</code></td>
+<td>A quantidade de postagens exibidas em uma única página. <code>0</code> desabilita paginação</td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td><code>pagination_dir</code></td>
+<td>Diretório de paginação</td>
+<td><code>page</code></td>
+</tr>
+</tbody></table>
+<h3 id="Extensoes"><a href="#Extensoes" class="headerlink" title="Extensões"></a>Extensões</h3><table>
+<thead>
+<tr>
+<th>Configuração</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>theme</code></td>
+<td>Nome do tema. <code>false</code> desabilita o tema</td>
+</tr>
+<tr>
+<td><code>theme_config</code></td>
+<td>Configuração do tema. Inclui quaisquer configurações de tema personalizado sob esta chave para substituir os padrões do tema.</td>
+</tr>
+<tr>
+<td><code>deploy</code></td>
+<td>Configurações de implantação</td>
+</tr>
+<tr>
+<td><code>meta_generator</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#Attributes">Meta generator</a> tag. <code>false</code> disables injection of the tag.</td>
+</tr>
+</tbody></table>
+<h3 id="Incluir-x2F-Excluir-Arquivos-ou-Diretorios"><a href="#Incluir-x2F-Excluir-Arquivos-ou-Diretorios" class="headerlink" title="Incluir&#x2F;Excluir Arquivos ou Diretórios"></a>Incluir&#x2F;Excluir Arquivos ou Diretórios</h3><p>No arquivo de configuração, defina a chave de include&#x2F;exclude para que o hexo processe ou ignore, explicitamente, determinados arquivos&#x2F;diretórios.</p>
+<p><code>include</code> and <code>exclude</code> options only apply to the <code>source/</code> folder, whereas <code>ignore</code> option applies to all folders.</p>
+<table>
+<thead>
+<tr>
+<th>Configuração</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>include</code></td>
+<td>Por padrão, o Hexo ignora os arquivos e diretórios ocultos, mas configurar este campo fará com que o Hexo os processe também</td>
+</tr>
+<tr>
+<td><code>exclude</code></td>
+<td>O Hexo irá ignorar os arquivos e diretórios listados abaixo deste campo</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>Ignore files&#x2F;folders</td>
+</tr>
+</tbody></table>
+<p>Exemplo:</p>
+<pre><code class="yaml"># Incluir/Excluir Arquivos/Diretórios
+include:
+  - &quot;.nojekyll&quot;
+  # Include &#39;source/css/_typing.css&#39;.
+  - &quot;css/_typing.css&quot;
+  # Include any file in &#39;source/_css/&#39;.
+  - &quot;_css/*&quot;
+  # Include any file and subfolder in &#39;source/_css/&#39;.
+  - &quot;_css/**/*&quot;
+
+exclude:
+  # Exclude &#39;source/js/test.js&#39;.
+  - &quot;js/test.js&quot;
+  # Exclude any file in &#39;source/js/&#39;.
+  - &quot;js/*&quot;
+  # Exclude any file and subfolder in &#39;source/js/&#39;.
+  - &quot;js/**/*&quot;
+  # Exclude any file with filename that starts with &#39;test&#39; in &#39;source/js/&#39;.
+  - &quot;js/test*&quot;
+  # Exclude any file with filename that starts with &#39;test&#39; in &#39;source/js/&#39; and its subfolders.
+  - &quot;js/**/test*&quot;
+  # Do not use this to exclude posts in the &#39;source/_posts/&#39;.
+  # Use skip_render for that. Or prepend an underscore to the filename.
+  # - &quot;_posts/hello-world.md&quot; # Does not work.
+
+ignore:
+  # Ignore any folder named &#39;foo&#39;.
+  - &quot;**/foo&quot;
+  # Ignore &#39;foo&#39; folder in &#39;themes/&#39; only.
+  - &quot;**/themes/*/foo&quot;
+  # Same as above, but applies to every subfolders of &#39;themes/&#39;.
+  - &quot;**/themes/**/foo&quot;
+</code></pre>
+<p>Each value in the list must be enclosed with single&#x2F;double quotes.</p>
+<p><code>include:</code> and <code>exclude:</code> do not apply to the <code>themes/</code> folder. Either use <code>ignore:</code> or alternatively, prepend an underscore to the file&#x2F;folder name to exclude.</p>
+<p>* Notable exception is the <code>source/_posts</code> folder, but any file or folder with a name that starts with an underscore under that folder would still be ignored. Using <code>include:</code> rule in that folder is not recommended.</p>
+<h3 id="Alternate-Theme-Config"><a href="#Alternate-Theme-Config" class="headerlink" title="Alternate Theme Config"></a>Alternate Theme Config</h3><p>Hexo themes are independent projects, with separate <code>_config.yml</code> files.</p>
+<p>Instead of forking a theme, and maintaining a custom branch with your settings, you can configure it from somewhere else.</p>
+<p><strong><code>theme_config</code> in site’s primary configuration file</strong></p>
+<blockquote>
+<p>Supported since Hexo 2.8.2</p>
+</blockquote>
+<pre><code class="yml"># _config.yml
+theme: &quot;my-theme&quot;
+theme_config:
+  bio: &quot;My awesome bio&quot;
+  foo:
+    bar: &#39;a&#39;
+</code></pre>
+<pre><code class="yml"># themes/my-theme/_config.yml
+bio: &quot;Some generic bio&quot;
+logo: &quot;a-cool-image.png&quot;
+  foo:
+    baz: &#39;b&#39;
+</code></pre>
+<p>Resulting in theme configuration:</p>
+<pre><code class="json">{
+  bio: &quot;My awesome bio&quot;,
+  logo: &quot;a-cool-image.png&quot;,
+  foo: {
+    bar: &quot;a&quot;,
+    baz: &quot;b&quot;
+  }
+}
+</code></pre>
+<p><strong>dedicated <code>_config.[theme].yml</code> file</strong></p>
+<blockquote>
+<p>Supported since Hexo 5.0.0</p>
+</blockquote>
+<p>The file should be placed in your site folder, both <code>yml</code> and <code>json</code> are supported. <code>theme</code> inside <code>_config.yml</code> must be configured for Hexo to read <code>_config.[theme].yml</code></p>
+<pre><code class="yml"># _config.yml
+theme: &quot;my-theme&quot;
+</code></pre>
+<pre><code class="yml"># _config.my-theme.yml
+bio: &quot;My awesome bio&quot;
+foo:
+  bar: &#39;a&#39;
+</code></pre>
+<pre><code class="yml"># themes/my-theme/_config.yml
+bio: &quot;Some generic bio&quot;
+logo: &quot;a-cool-image.png&quot;
+  foo:
+    baz: &#39;b&#39;
+</code></pre>
+<p>Resulting in theme configuration:</p>
+<pre><code class="json">{
+  bio: &quot;My awesome bio&quot;,
+  logo: &quot;a-cool-image.png&quot;,
+  foo: {
+    bar: &quot;a&quot;,
+    baz: &quot;b&quot;
+  }
+}
+</code></pre>
+<p>{% note %}<br>We strongly recommends you to store your theme configuration in one place. But in case you have to store your theme configuration separately, those information is quite important: The <code>theme_config</code> inside site’s primary configuration file has the highest priority during merging, then the dedicated theme configuration file. the <code>_config.yml</code> file under the theme directory has the lowest priority.<br>{% endnote %}</p>

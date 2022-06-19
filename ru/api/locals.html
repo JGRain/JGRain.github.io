@@ -1,0 +1,39 @@
+<hr>
+<h2 id="title-Локальные-переменные"><a href="#title-Локальные-переменные" class="headerlink" title="title: Локальные переменные"></a>title: Локальные переменные</h2><p>Локальные переменные используются для рендеринга шаблона, они доступны через переменную <code>site</code> в шаблоне.</p>
+<h2 id="Переменные-по-умолчанию"><a href="#Переменные-по-умолчанию" class="headerlink" title="Переменные по умолчанию"></a>Переменные по умолчанию</h2><table>
+<thead>
+<tr>
+<th>Переменная</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>posts</code></td>
+<td>Все посты</td>
+</tr>
+<tr>
+<td><code>pages</code></td>
+<td>Все страницы</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>Все категории</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>Все теги</td>
+</tr>
+</tbody></table>
+<h2 id="Получение-переменной"><a href="#Получение-переменной" class="headerlink" title="Получение переменной"></a>Получение переменной</h2><pre><code class="js">hexo.locals.get(&#39;posts&#39;)
+</code></pre>
+<h2 id="Установка-переменной"><a href="#Установка-переменной" class="headerlink" title="Установка переменной"></a>Установка переменной</h2><pre><code class="js">hexo.locals.set(&#39;posts&#39;, function(){
+  return ...
+});
+</code></pre>
+<h2 id="Удаление-переменной"><a href="#Удаление-переменной" class="headerlink" title="Удаление переменной"></a>Удаление переменной</h2><pre><code class="js">hexo.locals.remove(&#39;posts&#39;);
+</code></pre>
+<h2 id="Получение-всех-переменных"><a href="#Получение-всех-переменных" class="headerlink" title="Получение всех переменных"></a>Получение всех переменных</h2><pre><code class="js">hexo.locals.toObject();
+</code></pre>
+<h2 id="Очистка-кэша"><a href="#Очистка-кэша" class="headerlink" title="Очистка кэша"></a>Очистка кэша</h2><pre><code class="js">hexo.locals.invalidate();
+``
+</code></pre>

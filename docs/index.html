@@ -1,0 +1,88 @@
+<hr>
+<h2 id="title-Documentation"><a href="#title-Documentation" class="headerlink" title="title: Documentation"></a>title: Documentation</h2><p>Welcome to the Hexo documentation. If you encounter any problems when using Hexo, have a look at the  <a href="troubleshooting.html">troubleshooting guide</a>, raise an issue on <a href="https://github.com/hexojs/hexo/issues">GitHub</a> or start a topic on the <a href="https://groups.google.com/group/hexo">Google Group</a>.</p>
+<h2 id="What-is-Hexo"><a href="#What-is-Hexo" class="headerlink" title="What is Hexo?"></a>What is Hexo?</h2><p>Hexo is a fast, simple and powerful blog framework. You write posts in <a href="http://daringfireball.net/projects/markdown/">Markdown</a> (or other markup languages) and Hexo generates static files with a beautiful theme in seconds.</p>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>It only takes a few minutes to set up Hexo. If you encounter a problem and can’t find the solution here, please <a href="https://github.com/hexojs/hexo/issues">submit a GitHub issue</a> and we’ll help.</p>
+<p>{% youtube ARted4RniaU %}</p>
+<h3 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h3><p>Installing Hexo is quite easy and only requires the following beforehand:</p>
+<ul>
+<li><a href="http://nodejs.org/">Node.js</a> (Should be at least Node.js 10.13, recommends 12.0 or higher)</li>
+<li><a href="http://git-scm.com/">Git</a></li>
+</ul>
+<p>If your computer already has these, congratulations! You can skip to the <a href="#Install-Hexo">Hexo installation</a> step.</p>
+<p>If not, please follow the following instructions to install all the requirements.</p>
+<h3 id="Install-Git"><a href="#Install-Git" class="headerlink" title="Install Git"></a>Install Git</h3><ul>
+<li>Windows: Download &amp; install <a href="https://git-scm.com/download/win">git</a>.</li>
+<li>Mac: Install it with <a href="https://brew.sh/">Homebrew</a>, <a href="http://www.macports.org/">MacPorts</a> or <a href="http://sourceforge.net/projects/git-osx-installer/">installer</a>.</li>
+<li>Linux (Ubuntu, Debian): <code>sudo apt-get install git-core</code></li>
+<li>Linux (Fedora, Red Hat, CentOS): <code>sudo yum install git-core</code></li>
+</ul>
+<p>{% note warn For Mac users %}<br>You may encounter some problems when compiling. Please install Xcode from App Store first. After Xcode is installed, open Xcode and go to <strong>Preferences -&gt; Download -&gt; Command Line Tools -&gt; Install</strong> to install command line tools.<br>{% endnote %}</p>
+<h3 id="Install-Node-js"><a href="#Install-Node-js" class="headerlink" title="Install Node.js"></a>Install Node.js</h3><p>Node.js provides <a href="https://nodejs.org/en/download/">official installer</a> for most platforms.</p>
+<p>Alternative installation methods:</p>
+<ul>
+<li>Windows: Install it with <a href="https://github.com/jasongin/nvs/">nvs</a> (recommended) or <a href="https://github.com/nvm-sh/nvm">nvm</a>.</li>
+<li>Mac: Install it with <a href="https://brew.sh/">Homebrew</a> or <a href="http://www.macports.org/">MacPorts</a>.</li>
+<li>Linux (DEB&#x2F;RPM-based): Install it with <a href="https://github.com/nodesource/distributions">NodeSource</a>.</li>
+<li>Others: Install it through respective package manager. Refer to <a href="https://nodejs.org/en/download/package-manager/">the guide</a> provided by Node.js.</li>
+</ul>
+<p>nvs is also recommended for Mac and Linux to avoid possible permission issue.</p>
+<p>{% note info Windows %}<br>If you use the official installer, make sure <strong>Add to PATH</strong> is checked (it’s checked by default).<br>{% endnote %}</p>
+<p>{% note warn Mac &#x2F; Linux %}<br>If you encounter <code>EACCES</code> permission error when trying to install Hexo, please follow <a href="https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally">the workaround</a> provided by npmjs; overriding with root&#x2F;sudo is highly discouraged.<br>{% endnote %}</p>
+<p>{% note info Linux %}<br>If you installed Node.js using Snap, you may need to manually run <code>npm install</code> in the target folder when <a href="/docs/commands#init">initializing</a> a blog.<br>{% endnote %}</p>
+<h3 id="Install-Hexo"><a href="#Install-Hexo" class="headerlink" title="Install Hexo"></a>Install Hexo</h3><p>Once all the requirements are installed, you can install Hexo with npm:</p>
+<pre><code class="bash">$ npm install -g hexo-cli
+</code></pre>
+<h3 id="Advanced-installation-and-usage"><a href="#Advanced-installation-and-usage" class="headerlink" title="Advanced installation and usage"></a>Advanced installation and usage</h3><p>Advanced users may prefer to install and use <code>hexo</code> package instead.</p>
+<pre><code class="bash">$ npm install hexo
+</code></pre>
+<p>Once installed, you can run Hexo in two ways:</p>
+<ol>
+<li><code>npx hexo &lt;command&gt;</code></li>
+<li>Linux users can set relative path of <code>node_modules/</code> folder:</li>
+</ol>
+<pre><code class="bash">echo &#39;PATH=&quot;$PATH:./node_modules/.bin&quot;&#39; &gt;&gt; ~/.profile
+</code></pre>
+<p>  then run Hexo using <code>hexo &lt;command&gt;</code></p>
+<h3 id="Minimum-required-Node-js-version"><a href="#Minimum-required-Node-js-version" class="headerlink" title="Minimum required Node.js version"></a>Minimum required Node.js version</h3><p>If you are stuck with older Node.js, you can consider installing a past version of Hexo.</p>
+<p>Please note we do not provide bugfixes to past versions of Hexo.</p>
+<p>We highly recommend to always install the <a href="https://www.npmjs.com/package/hexo?activeTab=versions">latest version</a> of Hexo and the <a href="#Requirements">recommended version</a> of Node.js, whenever possible.</p>
+<table>
+<thead>
+<tr>
+<th>Hexo version</th>
+<th>Minimum Node.js version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>6.0+</td>
+<td>12.13.0</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>10.13.0</td>
+</tr>
+<tr>
+<td>4.1 - 4.2</td>
+<td>8.10</td>
+</tr>
+<tr>
+<td>4.0</td>
+<td>8.6</td>
+</tr>
+<tr>
+<td>3.3 - 3.9</td>
+<td>6.9</td>
+</tr>
+<tr>
+<td>3.2 - 3.3</td>
+<td>0.12</td>
+</tr>
+<tr>
+<td>3.0 - 3.1</td>
+<td>0.10 or iojs</td>
+</tr>
+<tr>
+<td>0.0.1 - 2.8</td>
+<td>0.10</td>
+</tr>
+</tbody></table>

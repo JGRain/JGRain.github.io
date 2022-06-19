@@ -1,0 +1,33 @@
+<hr>
+<h2 id="title-Internacionalizacao-i18n"><a href="#title-Internacionalizacao-i18n" class="headerlink" title="title: Internacionalização (i18n)"></a>title: Internacionalização (i18n)</h2><p>Você pode usar a internacionalização para apresentar seu site em diferentes idiomas. O idioma padrão é definido modificando a configuração <code>language</code> em <code>_config.yml</code>. Você também pode definir vários idiomas e modificar a ordem dos idiomas padrão.</p>
+<pre><code class="yaml">language: zh-tw
+
+language:
+- zh-tw
+- en
+</code></pre>
+<h3 id="Arquivo-de-Idiomas"><a href="#Arquivo-de-Idiomas" class="headerlink" title="Arquivo de Idiomas"></a>Arquivo de Idiomas</h3><p>Os arquivos de idioma podem ser arquivos YAML ou JSON. Você deve inseri-los no diretório <code>languages</code> de <code>theme</code>. Há suporte para o <a href="https://github.com/alexei/sprintf.js">printf format</a> nos arquivos de idioma.</p>
+<h3 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h3><p>Use os helpers <code>__</code> ou <code>_p</code> nos templates para traduzir as strings. O primeiro é para uso normal e o segundo é para strings no plural. Por exemplo:</p>
+<pre><code class="yaml">index:
+  title: Home
+  add: Add
+  video:
+    zero: No videos
+    one: One video
+    other: %d videos
+</code></pre>
+<pre><code class="js">&lt;%= __(&#39;index.title&#39;) %&gt;
+// Home
+
+&lt;%= _p(&#39;index.video&#39;, 3) %&gt;
+// 3 videos
+</code></pre>
+<h3 id="Caminhos"><a href="#Caminhos" class="headerlink" title="Caminhos"></a>Caminhos</h3><p>Você pode definir o idioma das páginas no front-matter ou modificar a configuração <code>i18n_dir</code> no arquivo <code>_config.yml</code> para habilitar a detecção automática pelo Hexo.</p>
+<pre><code class="yaml">i18n_dir: :lang
+</code></pre>
+<p>O valor padrão da configuração <code>i18n_dir</code> é <code>:lang</code>, o que significa que o Hexo detectará o idioma dentro do primeiro segmento de URL. Por exemplo:</p>
+<pre><code class="plain">/index.html =&gt; en
+/archives/index.html =&gt; en
+/zh-tw/index.html =&gt; zh-tw
+</code></pre>
+<p>A string só será servida como um idioma quando o arquivo de idioma existir. Então, <code>archives</code> em <code>/archives/index.html</code> (exemplo 2) não será servida como um idioma.</p>

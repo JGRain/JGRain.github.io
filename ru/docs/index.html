@@ -1,0 +1,78 @@
+<hr>
+<h2 id="title-Документация"><a href="#title-Документация" class="headerlink" title="title: Документация"></a>title: Документация</h2><p>Добро пожаловать в документацию Hexo. Если возникнут проблемы при использовании Hexo, попробуйте поискать в <a href="troubleshooting.html">руководстве по решению проблем</a>, поднять вопрос на <a href="https://github.com/hexojs/hexo/issues">GitHub</a> или завести тему в группе <a href="https://groups.google.com/group/hexo">Google Group</a>.</p>
+<h2 id="Что-есть-Hexo"><a href="#Что-есть-Hexo" class="headerlink" title="Что есть Hexo?"></a>Что есть Hexo?</h2><p>Hexo — это быстрый, простой и мощный фреймворк для блога. Вы пишите посты в <a href="http://daringfireball.net/projects/markdown/">Markdown</a> (или других языках), и Hexo генерирует статические файлы с красивой темой в считанные секунды.</p>
+<h2 id="Установка"><a href="#Установка" class="headerlink" title="Установка"></a>Установка</h2><p>Настройка Hexo занимает всего несколько минут. Если вы столкнулись с проблемой и не можете найти решение здесь, пожалуйста, отправьте вопрос на <a href="https://github.com/hexojs/hexo/issues">GitHub</a>, и я постараюсь разрешить её.</p>
+<h3 id="Требования"><a href="#Требования" class="headerlink" title="Требования"></a>Требования</h3><p>Установка Hexo довольно проста. Однако сперва нужно установить пару вещей:</p>
+<ul>
+<li><a href="http://nodejs.org/">Node.js</a> (Версия должна быть как минимум Node.js 8.10, рекомендовано использовать 10.0 или выше)</li>
+<li><a href="http://git-scm.com/">Git</a></li>
+</ul>
+<p>Если всё это уже есть, поздравляю! Просто установите Hexo с помощью npm:</p>
+<pre><code class="bash">$ npm install -g hexo-cli
+</code></pre>
+<p>Если нет, выполните следующие действия, чтобы установить всё, что требуется.</p>
+<p>{% note warn Для пользователей Mac %}<br>Вы можете столкнуться с проблемами при компиляции. Пожалуйста, сначала установите Xcode из магазина App Store. После установки откройте xcode и перейдите в <strong>Настройки -&gt; Загрузки -&gt; Командная строка -&gt; Установить</strong> (<strong>Preferences -&gt; Download -&gt; Command Line Tools -&gt; Install</strong>), чтобы установить утилиту командной строки.<br>{% endnote %}</p>
+<h3 id="Установка-Git"><a href="#Установка-Git" class="headerlink" title="Установка Git"></a>Установка Git</h3><ul>
+<li>Windows: Скачать и установить <a href="https://git-scm.com/download/win">git</a>.</li>
+<li>Mac: Установите с помощью <a href="http://mxcl.github.com/homebrew/">Homebrew</a>, <a href="http://www.macports.org/">MacPorts</a> или <a href="http://sourceforge.net/projects/git-osx-installer/">установочного файла</a>.</li>
+<li>Linux (Ubuntu, Debian): <code>sudo apt-get install git-core</code></li>
+<li>Linux (Fedora, Red Hat, CentOS): <code>sudo yum install git-core</code></li>
+</ul>
+<h3 id="Установка-Node-js"><a href="#Установка-Node-js" class="headerlink" title="Установка Node.js"></a>Установка Node.js</h3><p>Node.js предоставляет [официальный установщик](<a href="http://nodejs.org/en/download">http://nodejs.org/en/download</a> &#x2F;) для большинства платформ.</p>
+<p>Альтернативные методы установки:</p>
+<ul>
+<li>Windows: Установите его с помощью <a href="https://github.com/jasongin/nvs/">nvs</a> (рекомендуется) или <a href="https://github.com/nvm-sh/nvm">nvm</a>.</li>
+<li>Mac: Установите его с помощью <a href="https://brew.sh/">Homebrew</a> или <a href="http://www.macports.org/">MacPorts</a>.</li>
+<li>Linux (DEB&#x2F;RPM-based): Установите его с помощью <a href="https://github.com/nodesource/distributions">NodeSource</a>.</li>
+<li>Others: Установите его через соответствующий менеджер пакетов. Обратитесь к <a href="https://nodejs.org/en/download/package-manager/">руководству</a> предоставленное Node.js.</li>
+</ul>
+<p>nvs также рекомендуется для Mac и Linux, чтобы избежать возможных проблем с разрешениями.</p>
+<p>{% note info Windows %}<br>Если вы используете официальный установщик, убедитесь, что установлен флажок <strong>Добавить в ПУТЬ</strong>(<strong>Add to PATH</strong>) (он установлен по умолчанию).<br>{% endnote %}</p>
+<p>{% note warn Mac &#x2F; Linux %}<br>Если вы столкнулись с ошибкой разрешения <code>EACCES</code>обходному при попытке установить Hexo, пожалуйста, следуйте <a href="https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally">обходному пути</a> предоставляенным npmjs; переопределение с помощью root&#x2F;sudo крайне не рекомендуется.<br>{% endnote %}</p>
+<p>{% note info Linux %}<br>Если вы установили Node.js используя Snap, вам может потребоваться вручную запустить <code>npm install</code> в целевой папке при <a href="/docs/commands#init">инициализации</a> блога.<br>{% endnote %}</p>
+<h3 id="Установка-Hexo"><a href="#Установка-Hexo" class="headerlink" title="Установка Hexo"></a>Установка Hexo</h3><p>После установки всех требуемых программ, можно устанавливать Hexo с помощью npm.</p>
+<pre><code class="bash">$ npm install -g hexo-cli
+</code></pre>
+<h3 id="Минимально-необходимая-версия-Node-js"><a href="#Минимально-необходимая-версия-Node-js" class="headerlink" title="Минимально необходимая версия Node.js"></a>Минимально необходимая версия Node.js</h3><p>Если вы застряли с устаревшими версиями Node.js , вы можете рассмотреть возможность установки предыдущей версии Hexo.</p>
+<p>Пожалуйста, обратите внимание, что мы не предоставляем исправления ошибок в предыдущих версиях Hexo.</p>
+<p>Мы настоятельно рекомендуем всегда устанавливать <a href="https://www.npmjs.com/package/hexo?activeTab=%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D0%B8">последнюю версию</a> Hexo и <a href="#Requirements">рекомендуемую версию</a> Node.js , когда это возможно.</p>
+<table>
+<thead>
+<tr>
+<th>Hexo версия</th>
+<th>Минимальная версия Node.js</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>6.0+</td>
+<td>12.13.0</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>10.13.0</td>
+</tr>
+<tr>
+<td>4.1 - 4.2</td>
+<td>8.10</td>
+</tr>
+<tr>
+<td>4.0</td>
+<td>8.6</td>
+</tr>
+<tr>
+<td>3.3 - 3.9</td>
+<td>6.9</td>
+</tr>
+<tr>
+<td>3.2 - 3.3</td>
+<td>0.12</td>
+</tr>
+<tr>
+<td>3.0 - 3.1</td>
+<td>0.10 или iojs</td>
+</tr>
+<tr>
+<td>0.0.1 - 2.8</td>
+<td>0.10</td>
+</tr>
+</tbody></table>

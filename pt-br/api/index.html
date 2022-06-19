@@ -1,0 +1,62 @@
+<hr>
+<h2 id="title-API"><a href="#title-API" class="headerlink" title="title: API"></a>title: API</h2><p>Essa documentação fornece informações mais detalhadas sobre a API e será útil para pessoas que desejam modificar o código-fonte do Hexo ou escrever novos plugins. Se você está interessado em um uso mais básico do Hexo, consulte a <a href="../docs">documentação</a>.</p>
+<p>Por favor, note que essa documentação é válida apenas para o Hexo 3 ou superior.</p>
+<h2 id="Inicializar"><a href="#Inicializar" class="headerlink" title="Inicializar"></a>Inicializar</h2><p>Primeiro, temos que criar uma instancia do Hexo. Uma nova instancia recebe dois argumentos: o diretório raiz do site, <code>base_dir</code>, e um objeto com as opções de inicialização. Em seguida, inicializamos essa instância chamando o método <code>init</code>, que irá carregar as configurações e plugins do Hexo.</p>
+<pre><code class="js">var Hexo = require(&#39;hexo&#39;);
+var hexo = new Hexo(process.cwd(), {});
+
+hexo.init().then(function(){
+  // ...
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>debug</code></td>
+<td>Habilita o modo debug. Mostra as mensagens de debug no terminal e cria o arquivo <code>debug.log</code> no diretório raiz.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>safe</code></td>
+<td>Habilita o modo seguro. Não carrega nenhum plugin.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>silent</code></td>
+<td>Habilita o modo silencioso. Não mostra nenhuma mensagem no terminal.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>Especifica o caminho do arquivo de configuração.</td>
+<td><code>_config.yml</code></td>
+</tr>
+</tbody></table>
+<h2 id="Carregar-Arquivos"><a href="#Carregar-Arquivos" class="headerlink" title="Carregar Arquivos"></a>Carregar Arquivos</h2><p>O Hexo fornece dois métodos para carregar arquivos: <code>load</code> e <code>watch</code>. O método <code>load</code> é usado para carregador todos os arquivos do diretório <code>source</code> e também os dados do tema. O método <code>watch</code> faz a mesma coisa que o <code>load</code>, mas também assiste por mudanças nos arquivos continuamente.</p>
+<p>Ambos os métodos irão carregar a lista de arquivos e passá-los para os processadores correspondentes. Depois de todos os arquivos terem sido processados, eles irão chamar os geradores para criar as rotas.</p>
+<pre><code class="js">hexo.load().then(function(){
+  // ...
+});
+
+hexo.watch().then(function(){
+  // You can call hexo.unwatch() later to stop watching.
+});
+</code></pre>
+<h2 id="Executar-Comandos"><a href="#Executar-Comandos" class="headerlink" title="Executar Comandos"></a>Executar Comandos</h2><p>Qualquer comando de console pode ser chamado explicitamente usando o método <code>call</code> na instancia do Hexo. Cada chamada recebe dois argumentos: o nome do comando do console, e um argumento de opções. Existem diferentes opções disponíveis para os diferentes comandos.</p>
+<pre><code class="js">hexo.call(&#39;generate&#39;, {}).then(function(){
+  // ...
+});
+</code></pre>
+<h2 id="Sair"><a href="#Sair" class="headerlink" title="Sair"></a>Sair</h2><p>Você deve chamar o método <code>exit</code> após a conclusão bem sucedida ou mal sucedida de um comando. Isso permite que o Hexo saia e termine coisas importantes, como salvar o banco de dados.</p>
+<pre><code class="js">hexo.call(&#39;generate&#39;).then(function(){
+  return hexo.exit();
+}).catch(function(err){
+  return hexo.exit(err);
+});
+</code></pre>

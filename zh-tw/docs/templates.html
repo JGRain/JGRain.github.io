@@ -1,0 +1,87 @@
+<hr>
+<h2 id="title-模版"><a href="#title-模版" class="headerlink" title="title: 模版"></a>title: 模版</h2><p>模板決定了網站內容的呈現方式，每個主題至少都應包含一個 <code>index</code> 模板，以下是各頁面相對應的模板名稱：</p>
+<table>
+<thead>
+<tr>
+<th>模板</th>
+<th>用途</th>
+<th>Fallback</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>index</code></td>
+<td>首頁</td>
+<td></td>
+</tr>
+<tr>
+<td><code>post</code></td>
+<td>文章</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td>分頁</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>archive</code></td>
+<td>彙整</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td>分類彙整</td>
+<td><code>archive</code></td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td>標籤彙整</td>
+<td><code>archive</code></td>
+</tr>
+</tbody></table>
+<h2 id="佈局（Layout）"><a href="#佈局（Layout）" class="headerlink" title="佈局（Layout）"></a>佈局（Layout）</h2><p>如果頁面結構類似，例如兩個模板都有頁首（Header）和頁尾（Footer），您可考慮透過「佈局」讓兩個模板共享相同的結構。一個佈局檔案必須要能顯示 <code>body</code> 變數的內容，如此一來模板的內容才會被顯示，舉例來說：</p>
+<pre><code class="html">index
+</code></pre>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;&lt;%- body %&gt;&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>產生：</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;index&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>每個模板預設都套用 <code>layout</code> 佈局，您可在 front-matter 指定其他佈局，或是設為 <code>false</code> 來關閉佈局功能，您甚至可在佈局中再使用其他佈局來建立巢狀佈局。</p>
+<h2 id="局部模版（Partial）"><a href="#局部模版（Partial）" class="headerlink" title="局部模版（Partial）"></a>局部模版（Partial）</h2><p>局部模板讓您在不同模板之間共享相同的組件，例如頁首（Header）、頁尾（Footer）或側邊欄（Sidebar）等，可利用局部模板功能分割為個別檔案，讓維護更加便利。舉例來說：</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= config.title %&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>產生：</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;My Site&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h3 id="區域變數"><a href="#區域變數" class="headerlink" title="區域變數"></a>區域變數</h3><p>您可以在模板中指定區域變數，就能在其他模板中使用。</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= title&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;, {title: &#39;Hello World&#39;}) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>產生：</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;Hello World&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h2 id="最佳化"><a href="#最佳化" class="headerlink" title="最佳化"></a>最佳化</h2><p>如果您的主題太過於複雜，或是需要產生的檔案量太過於龐大，可能會大幅降低效能，除了簡化主題外，您可以考慮 Hexo 2.7 新增的局部快取（Fragment Caching）功能。</p>
+<p>本功能借鑑於 <a href="http://guides.rubyonrails.org/caching_with_rails.html#fragment-caching">Ruby on Rails</a>，它儲存局部區塊的內容，下次便能直接使用快取內容，可以減少資料庫查詢並使產生速度更快。</p>
+<p>它可用於頁首、頁尾、側邊欄等資料不常變動的位置，舉例來說：</p>
+<pre><code class="js">&lt;%- fragment_cache(&#39;header&#39;, function(){
+  return &#39;&lt;header&gt;&lt;/header&gt;&#39;;
+});
+</code></pre>
+<p>如果您使用局部模板的話，可以更簡單：</p>
+<pre><code class="js">&lt;%- partial(&#39;header&#39;, {}, {cache: true});
+</code></pre>
+<p>{% note warn %}<br><code>fragment_cache()</code> will cache the rendered result and output the cached result to other pages. This should only be used on partials that are expected <strong>not</strong> to change across different pages. Otherwise, it should <strong>not</strong> be enabled.<br>For example, it should be disabled when <code>relative_link</code> is enabled in the config. This is because relative links may appear differently across pages.<br>{% endnote %}</p>

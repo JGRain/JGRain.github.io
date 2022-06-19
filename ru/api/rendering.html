@@ -1,0 +1,42 @@
+<hr>
+<h2 id="title-Рендеринг"><a href="#title-Рендеринг" class="headerlink" title="title: Рендеринг"></a>title: Рендеринг</h2><p>Существует два метода обработки файлов или строк для рендеринга: асинхронный <code>hexo.render.render</code> и синхронный <code>hexo.render.renderSync</code>. Нет ничего удивительного в похожести этих методов. Ниже описываются только асинхронные методы.</p>
+<h2 id="Обработка-строки"><a href="#Обработка-строки" class="headerlink" title="Обработка строки"></a>Обработка строки</h2><p>При рендеринге строки Hexo необходимо указать, каким обработчиком (<code>engine</code>) её обрабатывать.</p>
+<pre><code class="js">hexo.render.render({text: &#39;example&#39;, engine: &#39;swig&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="Обработка-файла"><a href="#Обработка-файла" class="headerlink" title="Обработка файла"></a>Обработка файла</h2><p>При обработке файла не нужно указывать <code>engine</code>, потому что Hexo сам обнаружит соответствующий рендер автоматически в зависимости от расширения файла. Конечно, возможно и явно задать обработчик.</p>
+<pre><code class="js">hexo.render.render({path: &#39;path/to/file.swig&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="Опции-обработчика"><a href="#Опции-обработчика" class="headerlink" title="Опции обработчика"></a>Опции обработчика</h2><p>Можно задать опции в качестве второго аргумента.</p>
+<pre><code class="js">hexo.render.render({text: &#39;&#39;}, {foo: &#39;foo&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="Фильтр-after-render"><a href="#Фильтр-after-render" class="headerlink" title="Фильтр after_render"></a>Фильтр after_render</h2><p>При окончании обработки Hexo выполнит соответствующие фильтры, заданные в переменной <code>after_render</code>. Например, эта функция запустит минификацию JavaScript’а.</p>
+<pre><code class="js">var UglifyJS = require(&#39;uglify-js&#39;);
+
+hexo.extend.filter.register(&#39;after_render:js&#39;, function(str, data){
+  var result = UglifyJS.minify(str);
+  return result.code;
+});
+</code></pre>
+<h2 id="Проверка-существует-ли-обработчик-для-типа-файла"><a href="#Проверка-существует-ли-обработчик-для-типа-файла" class="headerlink" title="Проверка, существует ли обработчик для типа файла"></a>Проверка, существует ли обработчик для типа файла</h2><p>Можно использовать метод <code>isRenderable</code> или <code>isRenderableSync</code> для проверки, зарегистрирован ли обработчик для типа файла. Только когда соответствующий обработчик был зарегистрирован, будет возвращёно значение <code>true</code>.</p>
+<pre><code class="js">hexo.render.isRenderable(&#39;layout.swig&#39;) // true
+hexo.render.isRenderable(&#39;image.png&#39;) // false
+</code></pre>
+<h2 id="Определение-расширения-на-выходе"><a href="#Определение-расширения-на-выходе" class="headerlink" title="Определение расширения на выходе"></a>Определение расширения на выходе</h2><p>Метод <code>getOutput</code> получает расширение на выходе обработчика. Если передать необрабатываемый файл, то обработчик вернёт пустую строку.</p>
+<pre><code class="js">hexo.render.getOutput(&#39;layout.swig&#39;) // html
+hexo.render.getOutput(&#39;image.png&#39;) // &#39;&#39;&#39;
+</code></pre>
+<h2 id="Disable-Nunjucks-tags"><a href="#Disable-Nunjucks-tags" class="headerlink" title="Disable Nunjucks tags"></a>Disable Nunjucks tags</h2><p>If you are not using a <a href="/docs/tag-plugins">tag plugin</a> and want to use <code>{{ }}</code> or <code>{% %}</code> in your post without using content <a href="/docs/troubleshooting#Escape-Contents">escaping</a>, you can disable processing of Nunjucks tag in existing renderer by:</p>
+<pre><code class="js">// following example only applies to &#39;.md&#39; file extension
+// you may need to cover other extensions, e.g. &#39;.markdown&#39;, &#39;.mkd&#39;, etc
+const renderer = hexo.render.renderer.get(&#39;md&#39;)
+if (renderer) {
+  renderer.disableNunjucks = true
+  hexo.extend.renderer.register(&#39;md&#39;, &#39;html&#39;, renderer)
+}
+</code></pre>

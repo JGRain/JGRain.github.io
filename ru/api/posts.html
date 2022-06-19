@@ -1,0 +1,108 @@
+<hr>
+<h2 id="title-Посты"><a href="#title-Посты" class="headerlink" title="title: Посты"></a>title: Посты</h2><h2 id="Создание-поста"><a href="#Создание-поста" class="headerlink" title="Создание поста"></a>Создание поста</h2><pre><code class="js">hexo.post.create(data, replace);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Аргумент</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>Данные</td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>Заменять существующие файлы</td>
+</tr>
+</tbody></table>
+<p>Атрибуты поста можно установить в переменной <code>data</code>. Таблица ниже не является полной. Дополнительные атрибуты могут быть добавлены в шапке поста.</p>
+<table>
+<thead>
+<tr>
+<th>Данные</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>Заголовок</td>
+</tr>
+<tr>
+<td><code>slug</code></td>
+<td>Ссылка</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>Шаблон. По умолчанию в настройках указано <code>default_layout</code>.</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Путь. По умолчанию Hexo строит пути на основе переменной <code>new_post_path</code>, указанной в настройках.</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Дата. По умолчанию — текущая дата.</td>
+</tr>
+</tbody></table>
+<h2 id="Публикация-черновиков"><a href="#Публикация-черновиков" class="headerlink" title="Публикация черновиков"></a>Публикация черновиков</h2><pre><code class="js">hexo.post.publish(data, replace);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Аргумент</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>Дата</td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>Заменять существующие файлы</td>
+</tr>
+</tbody></table>
+<p>Атрибуты поста можно установить в переменной <code>data</code>. Таблица ниже не является полной. Дополнительные атрибуты могут быть добавлены в шапке поста.</p>
+<table>
+<thead>
+<tr>
+<th>Данные</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>slug</code></td>
+<td>Имя файла (Обязательно)</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>Шаблон. По умолчанию берется из переменной <code>default_layout</code>, указанной в настройках.</td>
+</tr>
+</tbody></table>
+<h2 id="Обработка"><a href="#Обработка" class="headerlink" title="Обработка"></a>Обработка</h2><pre><code class="js">hexo.post.render(source, data);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Аргумент</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source</code></td>
+<td>Полный путь к файлу (необязательно)</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Данные</td>
+</tr>
+</tbody></table>
+<p>Данные должны содержать атрибут <code>content</code>. Если нет, Hexo постарается прочитать исходный файл. Этапы выполнения этой функции следующие:</p>
+<ul>
+<li>Предобработка фильтрами <code>before_post_render</code></li>
+<li>Обработка с помощью Markdown или другого обработчика (выбирается в зависимости от расширения)</li>
+<li>Обработка <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a></li>
+<li>Постобработка фильтрами <code>after_post_render</code></li>
+</ul>

@@ -1,0 +1,127 @@
+<hr>
+<h2 id="title-Commands"><a href="#title-Commands" class="headerlink" title="title: Commands"></a>title: Commands</h2><h2 id="init"><a href="#init" class="headerlink" title="init"></a>init</h2><pre><code class="bash">$ hexo init [folder]
+</code></pre>
+<p>initialize เว็บไซต์. ถ้าไม่ป่งชี้หรือสร้าง <code>folder</code> โดยเฉพาะ hexo<br>จะสร้างไฟล์ต่างๆอยู่ใน directory ปัจจุบัน</p>
+<p>This command is a shortcut that runs the following steps:</p>
+<ol>
+<li>Git clone <a href="https://github.com/hexojs/hexo-starter">hexo-starter</a> including <a href="https://github.com/hexojs/hexo-theme-landscape">hexo-theme-landscape</a> into the current directory or a target folder if specified.</li>
+<li>Install dependencies using a package manager: <a href="https://classic.yarnpkg.com/lang/en/">Yarn 1</a>, <a href="https://pnpm.js.org/">pnpm</a> or <a href="https://docs.npmjs.com/cli/install">npm</a>, whichever is installed; if there are more than one installed, the priority is as listed. npm is bundled with <a href="/docs/#Install-Node-js">Node.js</a> by default.</li>
+</ol>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><pre><code class="bash">$ hexo new [layout] &lt;title&gt;
+</code></pre>
+<p>สร้างบทความใหม่.<br>ถ้าไม่ได้ตั้งค่าชั้ดเจน hexo จะใช้ <code>default_layout</code> ของไฟล์ <a href="configuration.html">_config.yml</a><br>ถ้า <code>title</code> ของบทความนั้นมี  space  จะต้องห่อ <code>title</code> นั้นด้วยเครื่องหมายอ้างอิง</p>
+<h2 id="generate"><a href="#generate" class="headerlink" title="generate"></a>generate</h2><pre><code class="bash">$ hexo generate
+</code></pre>
+<p>generate ไฟล์คงที่</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-d</code>, <code>--deploy</code></td>
+<td>Deploy after generation finishes</td>
+</tr>
+<tr>
+<td><code>-w</code>, <code>--watch</code></td>
+<td>Watch file changes</td>
+</tr>
+<tr>
+<td><code>-b</code>, <code>--bail</code></td>
+<td>Raise an error if any unhandled exception is thrown during generation</td>
+</tr>
+<tr>
+<td><code>-f</code>, <code>--force</code></td>
+<td>Force regenerate</td>
+</tr>
+</tbody></table>
+<h2 id="publish"><a href="#publish" class="headerlink" title="publish"></a>publish</h2><pre><code class="bash">$ hexo publish [layout] &lt;filename&gt;
+</code></pre>
+<p>ประกาศ draft</p>
+<h2 id="server"><a href="#server" class="headerlink" title="server"></a>server</h2><pre><code class="bash">$ hexo server
+</code></pre>
+<p>เปิดเซร์ฟเวอร์ local   เซร์ฟเวอร์ local นั้นจะเป็น <code>http://localhost:4000/</code><br>by default</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-p</code>, <code>--port</code></td>
+<td>Override default port</td>
+</tr>
+<tr>
+<td><code>-s</code>, <code>--static</code></td>
+<td>Only serve static files</td>
+</tr>
+<tr>
+<td><code>-l</code>, <code>--log</code></td>
+<td>Enable logger. Override logger format.</td>
+</tr>
+</tbody></table>
+<h2 id="deploy"><a href="#deploy" class="headerlink" title="deploy"></a>deploy</h2><pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>deploy เว็บไซต์ของคุณ</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-g</code>, <code>--generate</code></td>
+<td>Generate before deployment</td>
+</tr>
+</tbody></table>
+<h2 id="render"><a href="#render" class="headerlink" title="render"></a>render</h2><pre><code class="bash">$ hexo render &lt;file1&gt; [file2] ...
+</code></pre>
+<p>render ไฟล์ต่างๆ</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-o</code>, <code>--output</code></td>
+<td>Output destination</td>
+</tr>
+</tbody></table>
+<h2 id="migrate"><a href="#migrate" class="headerlink" title="migrate"></a>migrate</h2><pre><code class="bash">$ hexo migrate &lt;type&gt;
+</code></pre>
+<p><a href="migration.html">Migrates</a> เนื้อหาจากบล็อกอื่นๆ</p>
+<h2 id="clean"><a href="#clean" class="headerlink" title="clean"></a>clean</h2><pre><code class="bash">$ hexo clean
+</code></pre>
+<p>ลบไฟล์ cache (<code>db.json</code>) และ generate ไฟล์ (<code>public</code>)</p>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><pre><code class="bash">$ hexo list &lt;type&gt;
+</code></pre>
+<p>โชว์ route ทั้งหมด</p>
+<h2 id="version"><a href="#version" class="headerlink" title="version"></a>version</h2><pre><code class="bash">$ hexo version
+</code></pre>
+<p>โชว์ข้อมูลเวร์อชั่น</p>
+<h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><h3 id="Safe-mode"><a href="#Safe-mode" class="headerlink" title="Safe mode"></a>Safe mode</h3><pre><code class="bash">$ hexo --safe
+</code></pre>
+<p>ปิดปลั๊กอิน loading และ script ลองใช้โหมดนี้หลังพบปัญหาเมื่อติดตั้งปลั๊กอินใหม่</p>
+<h3 id="Debug-mode"><a href="#Debug-mode" class="headerlink" title="Debug mode"></a>Debug mode</h3><pre><code class="bash">$ hexo --debug
+</code></pre>
+<p>log ข้อมูลละเอียดไปถึง terminal และ <code>debug.log</code>  เมื่อเห็นข้อผิดพลาดใดๆอยู่ใน<br> log ไป<a href="https://github.com/hexojs/hexo/issues/new">raise a GitHub issue</a>ได้</p>
+<h3 id="Silent-mode"><a href="#Silent-mode" class="headerlink" title="Silent mode"></a>Silent mode</h3><pre><code class="bash">$ hexo --silent
+</code></pre>
+<p>silence ผลไปถึง terminal</p>
+<h3 id="Customize-config-file-path"><a href="#Customize-config-file-path" class="headerlink" title="Customize config file path"></a>Customize config file path</h3><pre><code class="bash">$ hexo --config custom.yml
+</code></pre>
+<p>ใช้ไฟล์การตั้งค่าของตน(แทน <code>_config.yml</code>) ถ้่าเป็นไฟล์หลายตัว<br>ไฟล์นั้นเป็นไฟล์ JSON หรือ YAML ได้<br>คุณต่องเขียนรายชื่อไฟล์พวกนี้อยู่ใน <code>_multiconfig.yml</code><br>และตัดแต่ละชื่อไฟล์ด้วยเครื่องหมายจุลภาค</p>
+<pre><code class="bash">$ hexo --config custom.yml,custom2.json
+</code></pre>
+<h3 id="Display-drafts"><a href="#Display-drafts" class="headerlink" title="Display drafts"></a>Display drafts</h3><pre><code class="bash">$ hexo --draft
+</code></pre>
+<p>โชว์โพสต์ท่ีเป็น draft (เก็บอยู่ใน folder <code>source/_drafts</code>)</p>
+<h3 id="Customize-CWD"><a href="#Customize-CWD" class="headerlink" title="Customize CWD"></a>Customize CWD</h3><pre><code class="bash">$ hexo --cwd /path/to/cwd
+</code></pre>
+<p>ตั้งค่า path ของ directory ท่ีใช่งานปัจจุบันด้วยตนเองได้</p>

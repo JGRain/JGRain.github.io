@@ -1,0 +1,206 @@
+<hr>
+<h2 id="title-Tag-Plugins"><a href="#title-Tag-Plugins" class="headerlink" title="title: Tag Plugins"></a>title: Tag Plugins</h2><p>As Tag Plugins são diferentes das tags de postagem. Elas são portadas pela Octopress e fornecem uma maneira útil para você adicionar rapidamente conteúdo específico às suas postagens.</p>
+<p>Although you can write your posts in any formats, but the tag plugins will always be available and syntax remains the same.</p>
+<p>{% youtube I07XMi7MHd4 %}</p>
+<p><em>Tag plugins should not be wrapped inside Markdown syntax, e.g. <code>[]({% post_path lorem-ipsum %})</code> is not supported.</em></p>
+<h2 id="Bloco-de-Citacao"><a href="#Bloco-de-Citacao" class="headerlink" title="Bloco de Citação"></a>Bloco de Citação</h2><p>Perfeito para adicionar citações à sua postagem, com informações opcionais de autor, fontes e título.</p>
+<p><strong>Alias:</strong> quote (citação)</p>
+<pre><code>{% blockquote [author[, source]] [link] [source_link_title] %}
+conteúdo
+{% endblockquote %}
+</code></pre>
+<h3 id="Exemplos"><a href="#Exemplos" class="headerlink" title="Exemplos"></a>Exemplos</h3><p><strong>Sem argumentos. Bloco de citação simples.</strong></p>
+<pre><code>{% blockquote %}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote %}<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.<br>{% endblockquote %}</p>
+<p><strong>Citação de um livro</strong></p>
+<pre><code>{% blockquote David Levithan, Wide Awake %}
+Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote David Levithan, Wide Awake %}<br>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.<br>{% endblockquote %}</p>
+<p><strong>Citação de um twitter</strong></p>
+<pre><code>{% blockquote @DevDocs https://twitter.com/devdocs/status/356095192085962752 %}
+NEW: DevDocs now comes with syntax highlighting. http://devdocs.io
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote @DevDocs <a href="https://twitter.com/devdocs/status/356095192085962752">https://twitter.com/devdocs/status/356095192085962752</a> %}<br>NEW: DevDocs now comes with syntax highlighting. <a href="http://devdocs.io/">http://devdocs.io</a><br>{% endblockquote %}</p>
+<p><strong>Citação de um artigo da web</strong></p>
+<pre><code>{% blockquote Seth Godin http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html Welcome to Island Marketing %}
+Every interaction is both precious and an opportunity to delight.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote Seth Godin <a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html</a> Welcome to Island Marketing %}<br>Every interaction is both precious and an opportunity to delight.<br>{% endblockquote %}</p>
+<h2 id="Bloco-de-Codigo"><a href="#Bloco-de-Codigo" class="headerlink" title="Bloco de Código"></a>Bloco de Código</h2><p>Funcionalidade útil para adicionar trechos de código à sua postagem.</p>
+<p><strong>Alias:</strong> code (Código-fonte)</p>
+<pre><code>{% codeblock [title] [lang:language] [url] [link text] [additional options] %}
+code snippet
+{% endcodeblock %}
+</code></pre>
+<p>Specify additional options in <code>option:value</code> format, e.g. <code>line_number:false first_line:5</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Extra Options</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>line_number</code></td>
+<td>Show line number</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>line_threshold</code></td>
+<td>Only show line numbers as long as the numbers of lines of the code block exceed such threshold.</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>Enable code highlighting</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>first_line</code></td>
+<td>Specify the first line number</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>mark</code></td>
+<td>Line highlight specific line(s), each value separated by a comma. Specify number range using a dash<br>Example: <code>mark:1,4-7,10</code> will mark line 1, 4 to 7 and 10.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>wrap</code></td>
+<td>Wrap the code block in <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table"><code>&lt;table&gt;</code></a></td>
+<td><code>true</code></td>
+</tr>
+</tbody></table>
+<h3 id="Exemplos-1"><a href="#Exemplos-1" class="headerlink" title="Exemplos"></a>Exemplos</h3><p><strong>Um bloco de código simples</strong></p>
+<pre><code>{% codeblock %}
+alert(&#39;Hello World!&#39;);
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock %}<br>alert(‘Hello World!’);<br>{% endcodeblock %}</p>
+<p><strong>Em uma linguagem específica</strong></p>
+<pre><code>{% codeblock lang:objc %}
+[rectangle setX: 10 y: 10 width: 20 height: 20];
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock lang:objc %}<br>[rectangle setX: 10 y: 10 width: 20 height: 20];<br>{% endcodeblock %}</p>
+<p><strong>Adicionando uma legenda ao código</strong></p>
+<pre><code>{% codeblock Array.map %}
+array.map(callback[, thisArg])
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock Array.map %}<br>array.map(callback[, thisArg])<br>{% endcodeblock %}</p>
+<p><strong>Adicionando uma legenda e uma URL</strong></p>
+<pre><code>{% codeblock _.compact http://underscorejs.org/#compact Underscore.js %}
+_.compact([0, 1, false, 2, &#39;&#39;, 3]);
+=&gt; [1, 2, 3]
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock _.compact <a href="http://underscorejs.org/#compact">http://underscorejs.org/#compact</a> Underscore.js %}<br>_.compact([0, 1, false, 2, ‘’, 3]);<br>&#x3D;&gt; [1, 2, 3]<br>{% endcodeblock %}</p>
+<h2 id="Bloco-de-Codigo-com-Backtick"><a href="#Bloco-de-Codigo-com-Backtick" class="headerlink" title="Bloco de Código com Backtick"></a>Bloco de Código com Backtick</h2><p>Isso é idêntico ao usar um bloco de código, mas usa três backticks (acentos grave) para delimitar o bloco.</p>
+<p>{% raw %}<br>&amp;#96<code> [language] [title] [url] [link text] code snippet &amp;#96;</code><br>{% endraw %}</p>
+<h2 id="Pull-Quote"><a href="#Pull-Quote" class="headerlink" title="Pull Quote"></a>Pull Quote</h2><p>Para adicionar pull quotes (citações destacadas) em sua postagem:</p>
+<pre><code>{% pullquote [class] %}
+content
+{% endpullquote %}
+</code></pre>
+<h2 id="jsFiddle"><a href="#jsFiddle" class="headerlink" title="jsFiddle"></a>jsFiddle</h2><p>Para incorporar um snippet (trecho de código) do jsFiddle:</p>
+<pre><code>{% jsfiddle shorttag [tabs] [skin] [width] [height] %}
+</code></pre>
+<h2 id="Gist"><a href="#Gist" class="headerlink" title="Gist"></a>Gist</h2><p>Para incorporar um snippet (trecho de código) do Gist:</p>
+<pre><code>{% gist gist_id [filename] %}
+</code></pre>
+<h2 id="iframe"><a href="#iframe" class="headerlink" title="iframe"></a>iframe</h2><p>Para incorporar um iframe:</p>
+<pre><code>{% iframe url [width] [height] %}
+</code></pre>
+<h2 id="Imagem"><a href="#Imagem" class="headerlink" title="Imagem"></a>Imagem</h2><p>Insere uma imagem com tamanho especificado.</p>
+<pre><code>{% img [class names] /path/to/image [width] [height] &#39;&quot;title text&quot; &quot;alt text&quot;&#39; %}
+</code></pre>
+<h2 id="Link"><a href="#Link" class="headerlink" title="Link"></a>Link</h2><p>Insere um link com o atributo <code>target=&quot;_blank&quot;</code>.</p>
+<pre><code>{% link text url [external] [title] %}
+</code></pre>
+<h2 id="Incluir-Codigo"><a href="#Incluir-Codigo" class="headerlink" title="Incluir Código"></a>Incluir Código</h2><p>Insere trechos de código no diretório <code>source/downloads/code</code>.</p>
+<pre><code>{% include_code [title] [lang:language] path/to/file %}
+</code></pre>
+<h2 id="YouTube"><a href="#YouTube" class="headerlink" title="YouTube"></a>YouTube</h2><p>Insere um vídeo do YouTube.</p>
+<pre><code>{% youtube video_id [type] [cookie] %}
+</code></pre>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><p><strong>Embed a video</strong></p>
+<pre><code>{% youtube lJIrF4YjHfQ %}
+</code></pre>
+<p><strong>Embed a playlist</strong></p>
+<pre><code>{% youtube PL9hW1uS6HUfscJ9DHkOSoOX45MjXduUxo &#39;playlist&#39; %}
+</code></pre>
+<p><strong>Enable privacy-enhanced mode</strong></p>
+<p>YouTube’s cookie is not used in this mode.</p>
+<pre><code>{% youtube lJIrF4YjHfQ false %}
+{% youtube PL9hW1uS6HUfscJ9DHkOSoOX45MjXduUxo &#39;playlist&#39; false %}
+</code></pre>
+<h2 id="Vimeo"><a href="#Vimeo" class="headerlink" title="Vimeo"></a>Vimeo</h2><p>Insere um vídeo do Vimeo.</p>
+<pre><code>{% vimeo video_id %}
+</code></pre>
+<h2 id="Incluir-Postagens"><a href="#Incluir-Postagens" class="headerlink" title="Incluir Postagens"></a>Incluir Postagens</h2><p>Incluir links para outras postagens.</p>
+<pre><code>{% post_path filename %}
+{% post_link filename [title] [escape] %}
+</code></pre>
+<p>You can ignore permalink and folder information, like languages and dates, when using this tag.</p>
+<p>For instance: <code>{% raw %}{% post_link how-to-bake-a-cake %}{% endraw %}</code>.</p>
+<p>This will work as long as the filename of the post is <code>how-to-bake-a-cake.md</code>, even if the post is located at <code>source/posts/2015-02-my-family-holiday</code> and has permalink <code>2018/en/how-to-bake-a-cake</code>.</p>
+<p>You can customize the text to display, instead of displaying the post’s title.</p>
+<p>Post’s title and custom text are escaped by default. You can use the <code>escape</code> option to disable escaping.</p>
+<p>For instance:</p>
+<p><strong>Display title of the post.</strong></p>
+<p><code>{% raw %}{% post_link hexo-3-8-released %}{% endraw %}</code></p>
+<p>{% post_link hexo-3-8-released %}</p>
+<p><strong>Display custom text.</strong></p>
+<p><code>{% raw %}{% post_link hexo-3-8-released &#39;Link to a post&#39; %}{% endraw %}</code></p>
+<p>{% post_link hexo-3-8-released ‘Link to a post’ %}</p>
+<p><strong>Escape title.</strong></p>
+<pre><code>{% post_link hexo-4-released &#39;How to use &lt;b&gt; tag in title&#39; %}
+</code></pre>
+<p>{% post_link hexo-4-released ‘How to use <b> tag in title’ %}</p>
+<p><strong>Do not escape title.</strong></p>
+<pre><code>{% post_link hexo-4-released &#39;&lt;b&gt;bold&lt;/b&gt; custom title&#39; false %}
+</code></pre>
+<p>{% post_link hexo-4-released ‘<b>bold</b> custom title’ false %}</p>
+<h2 id="Incluir-Assets"><a href="#Incluir-Assets" class="headerlink" title="Incluir Assets"></a>Incluir Assets</h2><p>Incluir assets de postagem.</p>
+<pre><code>{% asset_path filename %}
+{% asset_img [class names] slug [width] [height] [title text [alt text]] %}
+{% asset_link filename [title] [escape] %}
+</code></pre>
+<h3 id="Embed-image"><a href="#Embed-image" class="headerlink" title="Embed image"></a>Embed image</h3><p><em>hexo-renderer-marked 3.1.0+ can (optionally) resolves the post’s path of an image automatically, refer to <a href="/docs/asset-folders#Embedding-an-image-using-markdown">this section</a> on how to enable it.</em></p>
+<p>“foo.jpg” is located at <code>http://example.com/2020/01/02/hello/foo.jpg</code>.</p>
+<p><strong>Default (no option)</strong></p>
+<p><code>{% asset_img foo.jpg %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot;&gt;
+</code></pre>
+<p><strong>Custom class</strong></p>
+<p><code>{% asset_img post-image foo.jpg %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; class=&quot;post-image&quot;&gt;
+</code></pre>
+<p><strong>Display size</strong></p>
+<p><code>{% asset_img foo.jpg 500 400 %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; width=&quot;500&quot; height=&quot;400&quot;&gt;
+</code></pre>
+<p><strong>Title &amp; Alt</strong></p>
+<p><code>{% asset_img logo.svg &quot;lorem ipsum&#39;dolor&#39;&quot; %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; title=&quot;lorem ipsum&quot; alt=&quot;dolor&quot;&gt;
+</code></pre>
+<h2 id="Raw"><a href="#Raw" class="headerlink" title="Raw"></a>Raw</h2><p>Se determinado conteúdo estiver causando problemas de processamento em suas postagens, envolva-o com a tag <code>raw</code> para evitar erros de renderização.</p>
+<pre><code>{% raw %}
+content
+{% endraw %}
+</code></pre>
+<h2 id="Trecho-de-Postagem"><a href="#Trecho-de-Postagem" class="headerlink" title="Trecho de Postagem"></a>Trecho de Postagem</h2><p>Use o texto colocado antes da marcação <code>&lt;!-- more --&gt;</code> como um trecho da publicação.</p>
+<p><strong>Exemplo:</strong></p>
+<pre><code>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+&lt;!-- more --&gt;
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</code></pre>

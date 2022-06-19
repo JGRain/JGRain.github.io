@@ -1,0 +1,36 @@
+<hr>
+<h2 id="title-将-Hexo-部署到-GitLab-Pages"><a href="#title-将-Hexo-部署到-GitLab-Pages" class="headerlink" title="title: 将 Hexo 部署到 GitLab Pages"></a>title: 将 Hexo 部署到 GitLab Pages</h2><p>在本教程中，我们将会使用 GitLab CI 将 Hexo 博客部署到 GitLab Pages 上。</p>
+<ol>
+<li>新建一个 repository。如果你希望你的站点能通过 <code>&lt;你的 GitLab 用户名&gt;.gitlab.io</code> 域名访问，你的 repository 应该直接命名为 <code>&lt;你的 GitLab 用户名&gt;.gitlab.io</code>。</li>
+<li>将你的 Hexo 站点文件夹推送到 repository 中。默认情况下 <code>public</code> 目录将不会（并且不应该）被推送到 repository 中，建议你检查 <code>.gitignore</code> 文件中是否包含 <code>public</code> 一行，如果没有请加上。</li>
+<li>在你的站点文件夹中新建 <code>.gitlab-ci.yml</code> 文件：</li>
+</ol>
+<pre><code class="yml">image: node:10-alpine # use nodejs v10 LTS
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm install hexo-cli -g
+  - npm install
+
+pages:
+  script:
+    - hexo generate
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+</code></pre>
+<ol start="4">
+<li>GitLab CI 应该会自动开始运行，构建成功以后你应该可以在 <code>https://&lt;你的 GitLab 用户名&gt;.gitlab.io</code> 查看你的网站。</li>
+<li>(可选) 如果你需要查看生成的文件，可以在 <a href="https://docs.gitlab.com/ee/user/project/pipelines/job_artifacts.html">job artifact</a> 中找到。</li>
+</ol>
+<p>{% note info %}<br>在 GitLab.com 上，GitLab CI 是默认启用的。如果你使用的是自托管的 GitLab，你可能需要在 <code>Settings -&gt; CI / CD -&gt; Shared Runners</code> 启用 GitLab CI。<br>{% endnote %}</p>
+<h2 id="Project-page"><a href="#Project-page" class="headerlink" title="Project page"></a>Project page</h2><p>如果你更希望你的站点部署在 <code>&lt;你的 GitLab 用户名&gt;.gitlab.io</code> 的子目录中，你的 repository 需要直接命名为子目录的名字，这样你的站点可以通过 <code>https://&lt;你的 GitLab 用户名&gt;.gitlab.io/&lt;repository 的名字&gt;</code> 访问。你需要检查你的 Hexo 配置文件，将 <code>url</code> 的值修改为 <code>https://&lt;你的 GitLab 用户名&gt;.gitlab.io/&lt;repository 的名字&gt;</code>、将 <code>root</code> 的值修改为 <code>/&lt;repository 的名字&gt;/</code></p>
+<h2 id="Useful-links"><a href="#Useful-links" class="headerlink" title="Useful links"></a>Useful links</h2><ul>
+<li><a href="https://docs.gitlab.com/ee/user/project/pages/index.html">GitLab Pages 相关文档</a></li>
+<li><a href="https://docs.gitlab.com/ee/ci/README.html">GitLab CI 相关文档</a></li>
+<li><a href="https://www.baidu.com/s?wd=Hexo%20GitLab">在百度上搜索 “Hexo GitLab”</a></li>
+</ul>

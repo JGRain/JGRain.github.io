@@ -1,0 +1,18 @@
+<hr>
+<h2 id="title-Data-Files"><a href="#title-Data-Files" class="headerlink" title="title: Data Files"></a>title: Data Files</h2><p>Sometimes you may need to use some data in templates which is not directly available in your posts, or you want to reuse the data elsewhere. For such use cases, Hexo 3 introduced the new <strong>Data files</strong>. This feature loads YAML or JSON files in <code>source/_data</code> folder so you can use them in your site.</p>
+<p>{% youtube CN31plHbI-w %}</p>
+<p>For example, add <code>menu.yml</code> in <code>source/_data</code> folder.</p>
+<pre><code class="yaml">Home: /
+Gallery: /gallery/
+Archives: /archives/
+</code></pre>
+<p>And you can use them in templates:</p>
+<pre><code>&lt;% for (var link in site.data.menu) { %&gt;
+  &lt;a href=&quot;&lt;%= site.data.menu[link] %&gt;&quot;&gt; &lt;%= link %&gt; &lt;/a&gt;
+&lt;% } %&gt;
+</code></pre>
+<p>render like this :</p>
+<pre><code>&lt;a href=&quot;/&quot;&gt; Home &lt;/a&gt;
+&lt;a href=&quot;/gallery/&quot;&gt; Gallery &lt;/a&gt;
+&lt;a href=&quot;/archives/&quot;&gt; Archives &lt;/a&gt;
+</code></pre>

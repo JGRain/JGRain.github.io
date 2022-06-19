@@ -1,0 +1,41 @@
+<hr>
+<h2 id="title-Установка"><a href="#title-Установка" class="headerlink" title="title: Установка"></a>title: Установка</h2><p>После установки Hexo, запустите следующие команды в консоли для инициализации Hexo в папке <code>&lt;folder&gt;</code>.</p>
+<pre><code class="bash">$ hexo init &lt;folder&gt;
+$ cd &lt;folder&gt;
+$ npm install
+</code></pre>
+<p>После инициализации папка будет выглядеть так:</p>
+<pre><code class="plain">.
+├── _config.yml
+├── package.json
+├── scaffolds
+├── source
+|   ├── _drafts
+|   └── _posts
+└── themes
+</code></pre>
+<h3 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h3><p>Файл <a href="configuration.html">конфигурации</a> сайта. В нём возможно настроить большинство параметров.</p>
+<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3><p>Данные приложений. <a href="https://ejs.co/">EJS</a>-, <a href="http://learnboost.github.io/stylus/">Stylus</a>- и <a href="http://daringfireball.net/projects/markdown/">Markdown</a>-обработчики устанавливаются по умолчанию. При желании можно удалить их позже.</p>
+<pre><code class="json">{
+  &quot;name&quot;: &quot;hexo-site&quot;,
+  &quot;version&quot;: &quot;0.0.0&quot;,
+  &quot;private&quot;: true,
+  &quot;hexo&quot;: {
+    &quot;version&quot;: &quot;&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;hexo&quot;: &quot;^3.8.0&quot;,
+    &quot;hexo-generator-archive&quot;: &quot;^0.1.5&quot;,
+    &quot;hexo-generator-category&quot;: &quot;^0.1.3&quot;,
+    &quot;hexo-generator-index&quot;: &quot;^0.2.1&quot;,
+    &quot;hexo-generator-tag&quot;: &quot;^0.2.0&quot;,
+    &quot;hexo-renderer-ejs&quot;: &quot;^0.3.1&quot;,
+    &quot;hexo-renderer-stylus&quot;: &quot;^0.3.3&quot;,
+    &quot;hexo-renderer-marked&quot;: &quot;^0.3.2&quot;,
+    &quot;hexo-server&quot;: &quot;^0.3.3&quot;
+  }
+}
+</code></pre>
+<h3 id="scaffolds"><a href="#scaffolds" class="headerlink" title="scaffolds"></a>scaffolds</h3><p>Папка с <a href="writing.html#%D0%97%D0%B0%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BA%D0%B8">заготовками</a>. При создании нового поста Hexo формирует файл в папке scaffold.</p>
+<h3 id="source"><a href="#source" class="headerlink" title="source"></a>source</h3><p>Папка с исходниками. Это содержащая сайт папка. Hexo игнорирует скрытые файлы и файлы или папки, имена которых начинаются с <code>_</code> (подчеркивания). Исключением является папка <code>_posts</code>. Обрабатываемые файлы (напр., markdown, HTML) будут вставлены в общую папку, остальные файлы просто копируются.</p>
+<h3 id="themes"><a href="#themes" class="headerlink" title="themes"></a>themes</h3><p>Папка с <a href="themes.html">темами</a>. Hexo генерирует статический сайт, комбинируя содержимое сайта с темой.</p>

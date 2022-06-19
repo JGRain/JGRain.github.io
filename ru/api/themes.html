@@ -1,0 +1,16 @@
+<hr>
+<h2 id="title-Темы"><a href="#title-Темы" class="headerlink" title="title: Темы"></a>title: Темы</h2><p><code>hexo.theme</code> является наследником <a href="box.html">модулей</a> и сохраняет шаблоны.</p>
+<h2 id="Получить-визуализацию"><a href="#Получить-визуализацию" class="headerlink" title="Получить визуализацию"></a>Получить визуализацию</h2><pre><code class="js">hexo.theme.getView(path);
+</code></pre>
+<h2 id="Установить-визуализацию"><a href="#Установить-визуализацию" class="headerlink" title="Установить визуализацию"></a>Установить визуализацию</h2><pre><code class="js">hexo.theme.setView(path, data);
+</code></pre>
+<h2 id="Удалить-визуализацию"><a href="#Удалить-визуализацию" class="headerlink" title="Удалить визуализацию"></a>Удалить визуализацию</h2><pre><code class="js">hexo.theme.removeView(path);
+</code></pre>
+<h2 id="Визуализация"><a href="#Визуализация" class="headerlink" title="Визуализация"></a>Визуализация</h2><p>Визуализация использует два метода: <code>render</code> и <code>renderSync</code>. Они идентичны. Асинхронный <code>renderSync</code> является устаревшим, а <code>render</code> более новым. Для простоты будет рассмотрен только метод <code>render</code>.</p>
+<pre><code class="js">var view = hexo.theme.getView(&#39;layout.swig&#39;);
+
+view.render({foo: 1, bar: 2}).then(function(result){
+  // ...
+});
+</code></pre>
+<p>Можно передать параметры в метод <code>render</code>, и он попытается обработать шаблон соответствующим обработчиком и загрузить <a href="helper.html">помощников</a>. Когда обработка завершена, ищется макет. Если макет <code>layout</code> установлен в значение <code>false</code> или не существует, результат возвращается напрямую.</p>

@@ -1,0 +1,140 @@
+<hr>
+<h2 id="title-Filter"><a href="#title-Filter" class="headerlink" title="title: Filter"></a>title: Filter</h2><p>filter ใช้มาเป็นการแก้ไขข้อมูลเฉพาะ hexo ส่งข้อมูลเข้า filter ตามลำดับและ filter จะแก้ไขข้อมูลตามลำดับ ความคิดนี้มาจาก <a href="http://codex.wordpress.org/Plugin_API#Filters">WordPress</a></p>
+<h2 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h2><pre><code class="js">hexo.extend.filter.register(type, function() {
+  // User configuration
+  const { config } = this;
+  if (config.external_link.enable) // do something...
+
+  // Theme configuration
+  const { config: themeCfg } = this.theme;
+  if (themeCfg.fancybox) // do something...
+
+}, priority);
+</code></pre>
+<p>ผู้ใช้สามารถตั้งค่า <code>priority</code> ได้  ค่าของ <code>priority</code> ยิ่งต่ำหมายถึงว่าจะ execute ยิ่งก่อนตัวอื่น ส่วนค่า default ของ <code>priority</code> คือ 10.</p>
+<h2 id="Execute-Filters"><a href="#Execute-Filters" class="headerlink" title="Execute Filters"></a>Execute Filters</h2><pre><code class="js">hexo.extend.filter.exec(type, data, options);
+hexo.extend.filter.execSync(type, data, options);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>context</code></td>
+<td>Context</td>
+</tr>
+<tr>
+<td><code>args</code></td>
+<td>Arguments. This must be an array.</td>
+</tr>
+</tbody></table>
+<p>argument ตัวแรกคือ <code>data</code>   การแก้ไขค่าของ<code>data</code> จะเป็นการส่ง <code>data</code> เข้า filter และส่งค่าใหม่กลับมา ถ้าไม่มีข้อมูลส่งกลับมา ค่าของ <code>data</code> จะคงอยู่เหมือนเดิม ผู้ใช้สามารถใช้ <code>args</code> มาชี้ถึง argument อื่นๆใน filter ยกตัวอย่างเช่น:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;test&#39;, function(data, arg1, arg2){
+  // data === &#39;some data&#39;
+  // arg1 === &#39;foo&#39;
+  // arg2 === &#39;bar&#39;
+
+  return &#39;something&#39;;
+});
+
+hexo.extend.filter.register(&#39;test&#39;, function(data, arg1, arg2){
+  // data === &#39;something&#39;
+});
+
+hexo.extend.filter.exec(&#39;test&#39;, &#39;some data&#39;, {
+  args: [&#39;foo&#39;, &#39;bar&#39;]
+});
+</code></pre>
+<p>ผู้ใช้สามารถใช้วิธีต่อไปเพื่อ execute filter:</p>
+<pre><code class="js">hexo.execFilter(type, data, options);
+hexo.execFilterSync(type, data, options);
+</code></pre>
+<h2 id="Unregister-Filters"><a href="#Unregister-Filters" class="headerlink" title="Unregister Filters"></a>Unregister Filters</h2><pre><code class="js">hexo.extend.filter.unregister(type, filter);
+</code></pre>
+<p><strong>Example</strong></p>
+<pre><code class="js">// Unregister a filter which is registered with named function
+
+const filterFn = (data) =&gt; {
+  data = &#39;something&#39;;
+  return data;
+};
+hexo.extend.filter.register(&#39;example&#39;, filterFn);
+
+hexo.extend.filter.unregister(&#39;example&#39;, filterFn);
+</code></pre>
+<pre><code class="js">// Unregister a filter which is registered with commonjs module
+
+hexo.extend.filter.register(&#39;example&#39;, require(&#39;path/to/filter&#39;));
+
+hexo.extend.filter.unregister(&#39;example&#39;, require(&#39;path/to/filter&#39;));
+</code></pre>
+<h2 id="Filter-List"><a href="#Filter-List" class="headerlink" title="Filter List"></a>Filter List</h2><p>ต่อไปเป็นตารางของ filter ท่ีใช้ใน hexo</p>
+<h3 id="before-post-render"><a href="#before-post-render" class="headerlink" title="before_post_render"></a>before_post_render</h3><p>execute ก่อนการ render ของโพสต์  สำหรับขั้นตอนของ execution ไปดูท่ี <a href="posts.html#Render">post rendering</a> ได้</p>
+<p>ยกตัวอย่างเช่น การเปลี่ยนตัวอักษรเป็นตัวเล็ก:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_post_render&#39;, function(data){
+  data.title = data.title.toLowerCase();
+  return data;
+});
+</code></pre>
+<h3 id="after-post-render"><a href="#after-post-render" class="headerlink" title="after_post_render"></a>after_post_render</h3><p>execute หลังการ render ของโพสต์ สำหรับขั้นตอนของ execution ไปดูท่ี <a href="posts.html#Render">post rendering</a> ได้</p>
+<p>ยกตัวอย่างเช่น แทน <code>@username</code> ด้วยลิงค์ท่ีชึ้ไปถึงโปรไฟล์ของ Twitter</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_post_render&#39;, function(data){
+  data.content = data.content.replace(/@(\d+)/, &#39;&lt;a href=&quot;http://twitter.com/$1&quot;&gt;#$1&lt;/a&gt;&#39;);
+  return data;
+});
+</code></pre>
+<h3 id="before-exit"><a href="#before-exit" class="headerlink" title="before_exit"></a>before_exit</h3><p>execute ก่อนการท่ีจะจบการใช้โปรแกรม hexo – รันหลังการเรียก <code>hexo.exit</code></p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_exit&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="before-generate"><a href="#before-generate" class="headerlink" title="before_generate"></a>before_generate</h3><p>execute ก่อนการเริ่มต้นของ generation</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_generate&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="after-generate"><a href="#after-generate" class="headerlink" title="after_generate"></a>after_generate</h3><p>execute หลังการเสร็จสิ้นของ generation</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_generate&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="template-locals"><a href="#template-locals" class="headerlink" title="template_locals"></a>template_locals</h3><p>แก้ไข <a href="../docs/variables.html">local variables</a> ใน template</p>
+<p>ยกตัวอย่างเช่น เพิ่มเวลาปัจจุบันไปถึง local variable ของ template</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;template_locals&#39;, function(locals){
+  locals.now = Date.now();
+  return locals;
+});
+</code></pre>
+<h3 id="after-init"><a href="#after-init" class="headerlink" title="after_init"></a>after_init</h3><p>execute หลัง initialization ของ hexo – รันหลังการเสร็จสิ้นของ <code>hexo.init</code></p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_init&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="new-post-path"><a href="#new-post-path" class="headerlink" title="new_post_path"></a>new_post_path</h3><p>execute เพิ่อให้ path แก่โพสต์ใหม่เมื่อการสร้่างโพสต์ใหม่มา</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;new_post_path&#39;, function(data, replace){
+  // ...
+});
+</code></pre>
+<h3 id="post-permalink"><a href="#post-permalink" class="headerlink" title="post_permalink"></a>post_permalink</h3><p>ใช้มาเพื่อสร้างลิงค์ถาวรของโพสต์</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;post_permalink&#39;, function(data){
+  // ...
+});
+</code></pre>
+<h3 id="after-render"><a href="#after-render" class="headerlink" title="after_render"></a>after_render</h3><p> execute หลังการเสร็จสิ้นของ rendering สำหรับข้อมูลเพิ่มเติม ไปดูได้ที่ <a href="rendering.html#after_render_Filters">rendering</a> </p>
+<h3 id="after-clean"><a href="#after-clean" class="headerlink" title="after_clean"></a>after_clean</h3><p>execute หลัง generation ของไฟล์ และ cache จะลบออกด้วยคำสั่ง <code>hexo clean</code></p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_clean&#39;, function(){
+  // remove some other temporary files
+});
+</code></pre>
+<h3 id="server-middleware"><a href="#server-middleware" class="headerlink" title="server_middleware"></a>server_middleware</h3><p>เพิ่ม middleware ไปถึง server  <code>app</code> เป็น instance ของ <a href="https://github.com/senchalabs/connect">Connect</a></p>
+<p>ยกตัวอย่างเช่น เพิ่ม <code>X-Powered-By: Hexo</code> ไปให้ response header:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;server_middleware&#39;, function(app){
+  app.use(function(req, res, next){
+    res.setHeader(&#39;X-Powered-By&#39;, &#39;Hexo&#39;);
+    next();
+  });
+});
+</code></pre>

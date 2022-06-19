@@ -1,0 +1,26 @@
+<hr>
+<h2 id="title-Asset-Folders"><a href="#title-Asset-Folders" class="headerlink" title="title: Asset Folders"></a>title: Asset Folders</h2><h2 id="Global-Asset-Folder"><a href="#Global-Asset-Folder" class="headerlink" title="Global Asset Folder"></a>Global Asset Folder</h2><p>asset เป็นไฟล์ท่ี non-post และอยู่ใน folder <code>source</code> อย่่างเช่นไฟล์ images,<br>CSS หรือ JavaScript ยกตัวอย่างเช่น ถ้าคุณมีรูปภาพบ้างใน Hexo project<br>แล้วรูปภาพเหล่านั้นควรอยู่ใน directory <code>source/images</code><br>และคุณจะเข้าถึงรูปภาพพวกนี้ได้ด้วยการเขียน path แบบ <code>![](/images/image.jpg)</code></p>
+<h2 id="Post-Asset-Folder"><a href="#Post-Asset-Folder" class="headerlink" title="Post Asset Folder"></a>Post Asset Folder</h2><p>{% youtube feIDVQ2tz0o %}</p>
+<p>ถ้าคุณอยากทำให้ asset ของแต่ละโพสต์อยู่ใน folder  ท่ีแตกต่างกัน ไปตั้งค่า<br><code>post_asset_folder</code> ของไฟล์ <code>_config.yml</code> เป็น true ได้</p>
+<pre><code class="yaml">post_asset_folder: true
+</code></pre>
+<p>ถ้าเปิดการเฝ้าดู asset folder แล้ว hexo จะสร้าง folder<br>ให้ทุกครั้งท่ีคุณสร้างโพสต์ใหม่ด้วยคำสั่ง <code>hexo new [layout] &lt;title&gt;</code><br>asset folder นี้จะมีชื่อเดียวกันกับไฟล์ markdown ท่ีเป็นโพสต์นั้น<br>อย่างนี้คุณจะได้วาง asset  ทั้งหมดของโพสต์นั้นอยู่ใน folder และอ้างอิง asset<br>ด้วย relative path</p>
+<h2 id="Tag-Plugins-For-Relative-Path-Referencing"><a href="#Tag-Plugins-For-Relative-Path-Referencing" class="headerlink" title="Tag Plugins For Relative Path Referencing"></a>Tag Plugins For Relative Path Referencing</h2><p>การอ้างอิงรูปภาพหรือ asset อื่นๆ ด้วยภาษา markdown และ relative path<br>แต่อย่างนี้อาจจะไม่สามารถทำให้รูปภาพนั้นอยู่ในเพจ index หรือเพจ archive<br>อย่างถูกต้อง เพื่อแก้ไขเรื่องนี้ hexo 2<br>ได้สร้างปลั๊กอินท่ีเกี่ยวข้องด้วยความทุ่งเทของผู้ใช้ เมื่อถุง hexo 3<br>แล้วมีปลั๊กอินใหม่ออกมาด้วย ด้วยปลั๊กอินเหล่านี้คุณจะอ้างอิง asset<br>ในโพสต์ได้ง่ายขึ้น:</p>
+<pre><code>{% asset_path slug %}
+{% asset_img slug [title] %}
+{% asset_link slug [title] %}
+</code></pre>
+<p>ยกตัวอย่างเช่น ถ้าสร้าง asset folder แล้ว วางรูปภาพ  <code>example.jpg</code> เข้าอยู่ใน<br> asset folder ของคุณ และใช้  syntax ของ markdown ท่ีเป็น <code>![](example.jpg)</code><br> เพื่ออ้างอิงรูปภาพ  แต่ syntax นี้จะไม่สามารถทำให้รูปภาพนั้นอยู่ในเพจ index<br> อย่างถูกต้อง</p>
+<p>วิธีที่ถูกต้องสำหรับการอ้างอิงรูปภาพคือใช้ปลั๊อินแท็ก ไม่ใช่ markdown:</p>
+<pre><code>{% asset_img example.jpg This is an example image %}
+{% asset_img &quot;spaced asset.jpg&quot; &quot;spaced title&quot; %}
+</code></pre>
+<p>ดังนั้น รูปภาพจะอยู่ทั้งในโพสต์และในเพจ index กับ archive</p>
+<h2 id="Embedding-an-image-using-markdown"><a href="#Embedding-an-image-using-markdown" class="headerlink" title="Embedding an image using markdown"></a>Embedding an image using markdown</h2><p><a href="https://github.com/hexojs/hexo-renderer-marked">hexo-renderer-marked</a> 3.1.0 introduced a new option that allows you to embed an image in markdown without using <code>asset_img</code> tag plugin.</p>
+<p>To enable:</p>
+<pre><code class="yml">post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
+</code></pre>
+<p>Once enabled, an asset image will be automatically resolved to its corresponding post’s path. For example, “image.jpg” is located at “&#x2F;2020&#x2F;01&#x2F;02&#x2F;foo&#x2F;image.jpg”, meaning it is an asset image of “&#x2F;2020&#x2F;01&#x2F;02&#x2F;foo&#x2F;“ post, <code>![](image.jpg)</code> will be rendered as <code>&lt;img src=&quot;/2020/01/02/foo/image.jpg&quot;&gt;</code>.</p>

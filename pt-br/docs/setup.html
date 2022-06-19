@@ -1,0 +1,42 @@
+<hr>
+<h2 id="title-Setup"><a href="#title-Setup" class="headerlink" title="title: Setup"></a>title: Setup</h2><p>{% youtube 0m2HnATkHOk %}</p>
+<p>Uma vez instalado o Hexo, execute os seguintes comandos para inicializar um site com Hexo em um diretório <code>&lt;folder&gt;</code>.</p>
+<pre><code class="bash">$ hexo init &lt;folder&gt;
+$ cd &lt;folder&gt;
+$ npm install
+</code></pre>
+<p>Após inicializado, o diretório do seu projeto ficará com a seguinte estrutura:</p>
+<pre><code class="plain">.
+├── _config.yml
+├── package.json
+├── scaffolds
+├── source
+|   ├── _drafts
+|   └── _posts
+└── themes
+</code></pre>
+<h3 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h3><p>Arquivo de <a href="configuration.html">configuração</a> do site. Você pode definir a maioria das configurações aqui.</p>
+<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3><p>Arquivo de dados da aplicação. Os renderizadores <a href="http://daringfireball.net/projects/markdown/">Markdown</a>, <a href="https://ejs.co/">EJS</a> e <a href="http://learnboost.github.io/stylus/">Stylus</a> são instalados por padrão. Se desejar, você pode desinstalá-los posteriormente.</p>
+<pre><code class="json">{
+  &quot;name&quot;: &quot;hexo-site&quot;,
+  &quot;version&quot;: &quot;0.0.0&quot;,
+  &quot;private&quot;: true,
+  &quot;hexo&quot;: {
+    &quot;version&quot;: &quot;&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;hexo&quot;: &quot;^3.8.0&quot;,
+    &quot;hexo-generator-archive&quot;: &quot;^0.1.5&quot;,
+    &quot;hexo-generator-category&quot;: &quot;^0.1.3&quot;,
+    &quot;hexo-generator-index&quot;: &quot;^0.2.1&quot;,
+    &quot;hexo-generator-tag&quot;: &quot;^0.2.0&quot;,
+    &quot;hexo-renderer-ejs&quot;: &quot;^0.3.1&quot;,
+    &quot;hexo-renderer-stylus&quot;: &quot;^0.3.3&quot;,
+    &quot;hexo-renderer-marked&quot;: &quot;^0.3.2&quot;,
+    &quot;hexo-server&quot;: &quot;^0.3.3&quot;
+  }
+}
+</code></pre>
+<h3 id="scaffolds"><a href="#scaffolds" class="headerlink" title="scaffolds"></a>scaffolds</h3><p>Diretório de <a href="writing.html#Scaffolds">Scaffold</a>. Quando você cria uma nova postagem, o Hexo cria um arquivo baseado no scaffold.</p>
+<h3 id="source"><a href="#source" class="headerlink" title="source"></a>source</h3><p>Diretório de conteúdo. É aqui que você coloca o conteúdo do seu site. O Hexo ignora arquivos ocultos e arquivos ou diretórios cujos nomes são prefixados com <code>_</code> (sublinhado) - exceto o diretório <code>_posts</code>. Os arquivos renderizáveis (arquivos Markdown e HTML por exemplo) serão processados e colocados no diretório <code>public</code>, enquanto outros arquivos serão simplesmente copiados.</p>
+<h3 id="themes"><a href="#themes" class="headerlink" title="themes"></a>themes</h3><p>Diretório de <a href="themes.html">Temas</a>. O Hexo gera um site estático combinando o conteúdo do site com o tema.</p>

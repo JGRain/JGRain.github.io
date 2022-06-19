@@ -1,0 +1,135 @@
+<hr>
+<h2 id="title-過濾器（Filter）"><a href="#title-過濾器（Filter）" class="headerlink" title="title: 過濾器（Filter）"></a>title: 過濾器（Filter）</h2><p>過濾器用於修改特定資料，Hexo 將資料依序傳給過濾器，而過濾器可以針對資料進行修改，這個概念是從 <a href="http://codex.wordpress.org/Plugin_API#Filters">WordPress</a> 借來的。</p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><pre><code class="js">hexo.extend.filter.register(type, function() {
+  // User configuration
+  const { config } = this;
+  if (config.external_link.enable) // do something...
+
+  // Theme configuration
+  const { config: themeCfg } = this.theme;
+  if (themeCfg.fancybox) // do something...
+
+}, priority);
+</code></pre>
+<p>您可指定過濾器的優先度 <code>priority</code>，<code>priority</code> 值越低的過濾器會越先執行，預設的 <code>priority</code> 是 10。</p>
+<h2 id="執行過濾器"><a href="#執行過濾器" class="headerlink" title="執行過濾器"></a>執行過濾器</h2><pre><code class="js">hexo.extend.filter.exec(type, data, options);
+hexo.extend.filter.execSync(type, data, options);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>context</code></td>
+<td>Context</td>
+</tr>
+<tr>
+<td><code>args</code></td>
+<td>參數。必須為陣列。</td>
+</tr>
+</tbody></table>
+<p><code>data</code> 會作為第一個參數傳入每個過濾器，而您可在過濾器中透過回傳值改變下一個過濾器中的 <code>data</code>，如果什麼都沒回傳的話則會保持原本的 <code>data</code>。您還可使用 <code>args</code> 指定過濾器的其他參數。舉例來說：</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;test&#39;, function(data, arg1, arg2){
+  // data === &#39;some data&#39;
+  // arg1 === &#39;foo&#39;
+  // arg2 === &#39;bar&#39;
+
+  return &#39;something&#39;;
+});
+
+hexo.extend.filter.register(&#39;test&#39;, function(data, arg1, arg2){
+  // data === &#39;something&#39;
+});
+
+hexo.extend.filter.exec(&#39;test&#39;, &#39;some data&#39;, {
+  args: [&#39;foo&#39;, &#39;bar&#39;]
+});
+</code></pre>
+<p>您也可使用以下方法來執行過濾器：</p>
+<pre><code class="js">hexo.execFilter(type, data, options);
+hexo.execFilterSync(type, data, options);
+</code></pre>
+<h2 id="移除過濾器"><a href="#移除過濾器" class="headerlink" title="移除過濾器"></a>移除過濾器</h2><pre><code class="js">hexo.extend.filter.unregister(type, filter);
+</code></pre>
+<p><strong>Example</strong></p>
+<pre><code class="js">// Unregister a filter which is registered with named function
+
+const filterFn = (data) =&gt; {
+  data = &#39;something&#39;;
+  return data;
+};
+hexo.extend.filter.register(&#39;example&#39;, filterFn);
+
+hexo.extend.filter.unregister(&#39;example&#39;, filterFn);
+</code></pre>
+<pre><code class="js">// Unregister a filter which is registered with commonjs module
+
+hexo.extend.filter.register(&#39;example&#39;, require(&#39;path/to/filter&#39;));
+
+hexo.extend.filter.unregister(&#39;example&#39;, require(&#39;path/to/filter&#39;));
+</code></pre>
+<h2 id="過濾器列表"><a href="#過濾器列表" class="headerlink" title="過濾器列表"></a>過濾器列表</h2><p>以下是 Hexo 所使用的過濾器。</p>
+<h3 id="before-post-render"><a href="#before-post-render" class="headerlink" title="before_post_render"></a>before_post_render</h3><p>在文章開始渲染前執行。您可參考 <a href="posts.html#%E6%B8%B2%E6%9F%93">文章渲染</a> 以瞭解執行順序。</p>
+<p>舉例來說，把標題轉為小寫：</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_post_render&#39;, function(data){
+  data.title = data.title.toLowerCase();
+  return data;
+});
+</code></pre>
+<h3 id="after-post-render"><a href="#after-post-render" class="headerlink" title="after_post_render"></a>after_post_render</h3><p>在文章渲染完成後執行。您可參考 <a href="posts.html#%E6%B8%B2%E6%9F%93">文章渲染</a> 以瞭解執行順序。</p>
+<p>舉例來說，把 <code>@username</code> 取代為 Twitter 的使用者連結。</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_post_render&#39;, function(data){
+  data.content = data.content.replace(/@(\d+)/, &#39;&lt;a href=&quot;http://twitter.com/$1&quot;&gt;#$1&lt;/a&gt;&#39;);
+  return data;
+});
+</code></pre>
+<h3 id="before-exit"><a href="#before-exit" class="headerlink" title="before_exit"></a>before_exit</h3><p>在 Hexo 即將結束時執行，也就是在 <code>hexo.exit</code> 被呼叫後執行。</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_exit&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="before-generate"><a href="#before-generate" class="headerlink" title="before_generate"></a>before_generate</h3><p>在產生器執行開始前執行。</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_generate&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="after-generate"><a href="#after-generate" class="headerlink" title="after_generate"></a>after_generate</h3><p>在產生器執行結束後執行。</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_generate&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="template-locals"><a href="#template-locals" class="headerlink" title="template_locals"></a>template_locals</h3><p>修改模板的 <a href="../docs/variables.html">區域變數</a>。</p>
+<p>舉例來說，在模板的區域變數中新增目前的時間：</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;template_locals&#39;, function(locals){
+  locals.now = Date.now();
+  return locals;
+});
+</code></pre>
+<h3 id="after-init"><a href="#after-init" class="headerlink" title="after_init"></a>after_init</h3><p>在 Hexo 初始化完成後執行，也就是在 <code>hexo.init</code> 執行完成後執行。</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_init&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="new-post-path"><a href="#new-post-path" class="headerlink" title="new_post_path"></a>new_post_path</h3><p>用來決定新建文章的路徑，在建立文章時執行。</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;new_post_path&#39;, function(data, replace){
+  // ...
+});
+</code></pre>
+<h3 id="post-permalink"><a href="#post-permalink" class="headerlink" title="post_permalink"></a>post_permalink</h3><p>用來決定文章的永久連結。</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;post_permalink&#39;, function(data){
+  // ...
+});
+</code></pre>
+<h3 id="after-render"><a href="#after-render" class="headerlink" title="after_render"></a>after_render</h3><p>在渲染後執行，您可參考 <a href="rendering.html#after_render_%E9%81%8E%E6%BF%BE%E5%99%A8">渲染</a> 以瞭解更多資訊。</p>
+<h3 id="server-middleware"><a href="#server-middleware" class="headerlink" title="server_middleware"></a>server_middleware</h3><p>新增伺服器的 Middleware。<code>app</code> 是一個 <a href="https://github.com/senchalabs/connect">Connect</a> 實例。</p>
+<p>舉例來說，在回應標頭中新增 <code>X-Powered-By: Hexo</code>。</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;server_middleware&#39;, function(app){
+  app.use(function(req, res, next){
+    res.setHeader(&#39;X-Powered-By&#39;, &#39;Hexo&#39;);
+    next();
+  });
+});
+</code></pre>

@@ -1,0 +1,73 @@
+<hr>
+<h2 id="title-Renderer"><a href="#title-Renderer" class="headerlink" title="title: Renderer"></a>title: Renderer</h2><p>Renderer는 내용들을 그릴(render) 때 사용합니다.</p>
+<h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><pre><code class="js">hexo.extend.renderer.register(name, output, function(data, options){
+  // ...
+}, sync);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>인자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>입력 파일의 확장자 (소문자, ‘.’ 사용 불가)</td>
+</tr>
+<tr>
+<td><code>output</code></td>
+<td>출력 파일의 확장자 (소문자, ‘.’ 사용 불가)</td>
+</tr>
+<tr>
+<td><code>sync</code></td>
+<td>동기(Sync) 모드</td>
+</tr>
+</tbody></table>
+<p>두 개의 인자가 render 함수로 전달됩니다:</p>
+<table>
+<thead>
+<tr>
+<th>인자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>두 개의 속성을 포함합니다: 파일 경로인 <code>path</code>와 파일 컨텐츠인 <code>text</code>. <code>path</code>는 없어도 됩니다.</td>
+</tr>
+<tr>
+<td><code>option</code></td>
+<td>옵션</td>
+</tr>
+</tbody></table>
+<h2 id="예시"><a href="#예시" class="headerlink" title="예시"></a>예시</h2><h3 id="비동기-Async-모드"><a href="#비동기-Async-모드" class="headerlink" title="비동기(Async) 모드"></a>비동기(Async) 모드</h3><pre><code class="js">var stylus = require(&#39;stylus&#39;);
+
+// Callback
+hexo.extend.renderer.register(&#39;styl&#39;, &#39;css&#39;, function(data, options, callback){
+  stylus(data.text).set(&#39;filename&#39;, data.path).render(callback);
+});
+
+// Promise
+hexo.extend.renderer.register(&#39;styl&#39;, &#39;css&#39;, function(data, options){
+  return new Promise(function(resolve, reject){
+    resolve(&#39;test&#39;);
+  });
+});
+</code></pre>
+<h3 id="동기-Sync-Mode"><a href="#동기-Sync-Mode" class="headerlink" title="동기(Sync) Mode"></a>동기(Sync) Mode</h3><pre><code class="js">var ejs = require(&#39;ejs&#39;);
+
+hexo.extend.renderer.register(&#39;ejs&#39;, &#39;html&#39;, function(data, options){
+  options.filename = data.path;
+  return ejs.render(data.text, options);
+}, true);
+</code></pre>
+<h3 id="Disable-Nunjucks-tags"><a href="#Disable-Nunjucks-tags" class="headerlink" title="Disable Nunjucks tags"></a>Disable Nunjucks tags</h3><p>Nunjucks tags <code>{{ }}</code> or <code>{% %}</code> (utilized by <a href="/docs/tag-plugins">tag plugin</a>) are processed by default, to disable:</p>
+<pre><code class="js">function lessFn(data, options) {
+  // do something
+}
+
+lessFn.disableNunjucks = true
+
+hexo.extend.renderer.register(&#39;less&#39;, &#39;css&#39;, lessFn);
+</code></pre>

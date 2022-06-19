@@ -1,0 +1,79 @@
+<hr>
+<h2 id="title-Box"><a href="#title-Box" class="headerlink" title="title: Box"></a>title: Box</h2><p>box เป็น container ที่ใช้มาจัดการไฟล์ภายใน folder เฉพาะ Hexo ใช้ box ที่แตกต่างกันสองตัว ซึ้งก็คือ <code>hexo.source</code> และ <code>hexo.theme</code> ตัวแรกใช้มาจัดการ folder <code>source</code> และตัวท่ีสองใช้มาจัดการ folder <code>theme</code></p>
+<h2 id="Files-Loading"><a href="#Files-Loading" class="headerlink" title="Files Loading"></a>Files Loading</h2><p>box สนับสนุนวิธีการโหลดไฟล์สองวิธี ซึ้งก็คือ <code>process</code> และ <code>watch</code>  วิธีตัว <code>process</code> จะโหลดไฟล์ทั้งหมดใน folder ส่วนวิธีตัว  <code>watch</code><br>นอกจากจะมีการกระทำที่เหมือนวิธีตัว <code>process</code> แล้วแถมยังเฝ้าดูการเปลี่ยนแปลงของไฟล์ที่อยู่ใน folder นั้นด้วย</p>
+<pre><code class="js">box.process().then(function(){
+  // ...
+});
+
+box.watch().then(function(){
+  // You can call box.unwatch() later to stop watching.
+});
+</code></pre>
+<h2 id="Path-Matching"><a href="#Path-Matching" class="headerlink" title="Path Matching"></a>Path Matching</h2><p>box สนับสนุนวิธีหลายอย่างสำหรับ path matching คุณสามารถใช้ regExp function หรือ Express-style pattern string เวลาทำเรื่อง path mathching</p>
+<pre><code class="plain">posts/:id =&gt; posts/89
+posts/*path =&gt; posts/2015/title
+</code></pre>
+<p>สำหรับข้อมูลเพิ่มเติม สามารถดูได้ที่ <a href="https://github.com/hexojs/hexo-util#patternrule">util.Pattern</a></p>
+<h2 id="Processors"><a href="#Processors" class="headerlink" title="Processors"></a>Processors</h2><p>processor เป็น element จำเป็นสำหรับ box และใช้มาจัดการไฟล์ คุณสามารถใช้ path matching  ที่กล่าวข้างบนมาจำกัดขอบแขดไฟล์ที่อยากจัดการจริงๆ คุณลงทะเบียน processor ตัวใหม่ได้ด้วยวิธี <code>addProcessor</code></p>
+<pre><code class="js">box.addProcessor(&#39;posts/:id&#39;, function(file){
+  //
+});
+</code></pre>
+<p>box ส่งเนื้อหาของไฟล์ที่ถูกคัดเลือกไปให้ processor ข้อมูลที่เกี่ยวกับปฎิบัติการนี้จะอ่านได้จาก <code>file</code> ที่เป็น argument ของ callback ได้</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source</code></td>
+<td>Full path of the file</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Relative path to the box of the file</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>File type. The value can be <code>create</code>, <code>update</code>, <code>skip</code>, <code>delete</code>.</td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td>The information from path matching.</td>
+</tr>
+</tbody></table>
+<p>box ยังสนับสนุนวิธีหลายวิธีที่ให้ความสะดวกว่าคุณไม่ต้องทำ IO ของไฟล์ด้วยตนเอง</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>read</code></td>
+<td>Read a file</td>
+</tr>
+<tr>
+<td><code>readSync</code></td>
+<td>Read a file synchronously</td>
+</tr>
+<tr>
+<td><code>stat</code></td>
+<td>Read the status of a file</td>
+</tr>
+<tr>
+<td><code>statSync</code></td>
+<td>Read the status of a file synchronously</td>
+</tr>
+<tr>
+<td><code>render</code></td>
+<td>Render a file</td>
+</tr>
+<tr>
+<td><code>renderSync</code></td>
+<td>Render a file synchronously</td>
+</tr>
+</tbody></table>

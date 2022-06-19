@@ -1,0 +1,134 @@
+<hr>
+<h2 id="title-Permalinks"><a href="#title-Permalinks" class="headerlink" title="title: Permalinks"></a>title: Permalinks</h2><p>You can specify the permalinks for your site in <code>_config.yml</code> or in the front-matter for each post.</p>
+<h3 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h3><p>Besides the following variables, you can use any attributes in the permalink.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year</code></td>
+<td>Published year of posts (4-digit)</td>
+</tr>
+<tr>
+<td><code>:month</code></td>
+<td>Published month of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:i_month</code></td>
+<td>Published month of posts (Without leading zeros)</td>
+</tr>
+<tr>
+<td><code>:day</code></td>
+<td>Published day of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:i_day</code></td>
+<td>Published day of posts (Without leading zeros)</td>
+</tr>
+<tr>
+<td><code>:hour</code></td>
+<td>Published hour of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:minute</code></td>
+<td>Published minute of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:second</code></td>
+<td>Published second of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:title</code></td>
+<td>Filename (relative to “source&#x2F;_posts&#x2F;“ folder)</td>
+</tr>
+<tr>
+<td><code>:name</code></td>
+<td>Filename</td>
+</tr>
+<tr>
+<td><code>:post_title</code></td>
+<td>Post title</td>
+</tr>
+<tr>
+<td><code>:id</code></td>
+<td>Post ID (<em>not persistent across <a href="/docs/commands#clean">cache reset</a></em>)</td>
+</tr>
+<tr>
+<td><code>:category</code></td>
+<td>Categories. If the post is uncategorized, it will use the <code>default_category</code> value.</td>
+</tr>
+<tr>
+<td><code>:hash</code></td>
+<td>SHA1 hash of filename (same as <code>:title</code>) and date (12-hexadecimal)</td>
+</tr>
+</tbody></table>
+<p>You can define the default value of each variable in the permalink through the <code>permalink_defaults</code> setting:</p>
+<pre><code class="yaml">permalink_defaults:
+  lang: en
+</code></pre>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><pre><code class="yaml">title: Hello World
+date: 2013-07-14 17:01:34
+categories:
+- foo
+- bar
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year/:month/:day/:title/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:year-:month-:day-:title.html</code></td>
+<td>2013-07-14-hello-world.html</td>
+</tr>
+<tr>
+<td><code>:category/:title/</code></td>
+<td>foo&#x2F;bar&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:title-:hash/</code></td>
+<td>hello-world-a2c8ac003b43&#x2F;</td>
+</tr>
+</tbody></table>
+<pre><code class="yaml">title: Hello World
+date: 2013-07-14 17:01:34
+categories:
+- foo
+- bar
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year/:month/:day/:title/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;lorem&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:year/:month/:day/:name/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;hello-world&#x2F;</td>
+</tr>
+</tbody></table>
+<h3 id="Multi-language-Support"><a href="#Multi-language-Support" class="headerlink" title="Multi-language Support"></a>Multi-language Support</h3><p>To create a multi-language site, you can modify the <code>new_post_name</code> and <code>permalink</code> settings like this:</p>
+<pre><code class="yaml">new_post_name: :lang/:title.md
+permalink: :lang/:title/
+</code></pre>
+<p>When you create a new post, the post will be saved to:</p>
+<pre><code class="bash">$ hexo new &quot;Hello World&quot; --lang tw
+# =&gt; source/_posts/tw/Hello-World.md
+</code></pre>
+<p>and the URL will be:</p>
+<pre><code class="plain">http://localhost:4000/tw/hello-world/
+</code></pre>

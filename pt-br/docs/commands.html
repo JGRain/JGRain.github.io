@@ -1,0 +1,127 @@
+<hr>
+<h2 id="title-Comandos"><a href="#title-Comandos" class="headerlink" title="title: Comandos"></a>title: Comandos</h2><h2 id="init"><a href="#init" class="headerlink" title="init"></a>init</h2><pre><code class="bash">$ hexo init [folder]
+</code></pre>
+<p>Inicializa um website. Se não existir o diretório <code>folder</code>, o Hexo irá configurar o site no diretório atual.</p>
+<p>This command is a shortcut that runs the following steps:</p>
+<ol>
+<li>Git clone <a href="https://github.com/hexojs/hexo-starter">hexo-starter</a> including <a href="https://github.com/hexojs/hexo-theme-landscape">hexo-theme-landscape</a> into the current directory or a target folder if specified.</li>
+<li>Install dependencies using a package manager: <a href="https://classic.yarnpkg.com/lang/en/">Yarn 1</a>, <a href="https://pnpm.js.org/">pnpm</a> or <a href="https://docs.npmjs.com/cli/install">npm</a>, whichever is installed; if there are more than one installed, the priority is as listed. npm is bundled with <a href="/docs/#Install-Node-js">Node.js</a> by default.</li>
+</ol>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><pre><code class="bash">$ hexo new [layout] &lt;title&gt;
+</code></pre>
+<p>Cria um novo artigo. Se nenhum <code>layout</code> for fornecido, o Hexo usará o <code>default_layout</code> de <a href="configuration.html">_config.yml</a>. Se o <code>title</code> contiver espaços, rode-o com aspas.</p>
+<h2 id="generate"><a href="#generate" class="headerlink" title="generate"></a>generate</h2><pre><code class="bash">$ hexo generate
+</code></pre>
+<p>Gera os arquivos estáticos.</p>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-d</code>, <code>--deploy</code></td>
+<td>Faz o deploy após os arquivos estáticos serem gerados</td>
+</tr>
+<tr>
+<td><code>-w</code>, <code>--watch</code></td>
+<td>Assiste alterações no aquivo</td>
+</tr>
+<tr>
+<td><code>-b</code>, <code>--bail</code></td>
+<td>Levanta um erro se qualquer exceção não tratada for lançada durante o processo de geração dos arquivos</td>
+</tr>
+<tr>
+<td><code>-f</code>, <code>--force</code></td>
+<td>Regeneração forçada</td>
+</tr>
+</tbody></table>
+<h2 id="publish"><a href="#publish" class="headerlink" title="publish"></a>publish</h2><pre><code class="bash">$ hexo publish [layout] &lt;filename&gt;
+</code></pre>
+<p>Publica um rascunho.</p>
+<h2 id="server"><a href="#server" class="headerlink" title="server"></a>server</h2><pre><code class="bash">$ hexo server
+</code></pre>
+<p>Inicia um servidor local. Por padrão, o local é <code>http://localhost:4000/</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-p</code>, <code>--port</code></td>
+<td>Substituir a porta padrão</td>
+</tr>
+<tr>
+<td><code>-s</code>, <code>--static</code></td>
+<td>Somente serve arquivos estáticos</td>
+</tr>
+<tr>
+<td><code>-l</code>, <code>--log</code></td>
+<td>Ativar o logger. Substitui o formato do logger.</td>
+</tr>
+</tbody></table>
+<h2 id="deploy"><a href="#deploy" class="headerlink" title="deploy"></a>deploy</h2><pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>Implanta o site.</p>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-g</code>, <code>--generate</code></td>
+<td>Gerar os arquivos estáticos antes do deploy</td>
+</tr>
+</tbody></table>
+<h2 id="render"><a href="#render" class="headerlink" title="render"></a>render</h2><pre><code class="bash">$ hexo render &lt;file1&gt; [file2] ...
+</code></pre>
+<p>Renderiza arquivos.</p>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-o</code>, <code>--output</code></td>
+<td>Destino de saída</td>
+</tr>
+</tbody></table>
+<h2 id="migrate"><a href="#migrate" class="headerlink" title="migrate"></a>migrate</h2><pre><code class="bash">$ hexo migrate &lt;type&gt;
+</code></pre>
+<p><a href="migration.html">Migração</a> de conteúdo de outros sistemas de blog.</p>
+<h2 id="clean"><a href="#clean" class="headerlink" title="clean"></a>clean</h2><pre><code class="bash">$ hexo clean
+</code></pre>
+<p>Limpa o arquivo de cache (<code>db.json</code>) e os arquivos gerados (<code>public</code>).</p>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><pre><code class="bash">$ hexo list &lt;type&gt;
+</code></pre>
+<p>Lista todas as rotas</p>
+<h2 id="version"><a href="#version" class="headerlink" title="version"></a>version</h2><pre><code class="bash">$ hexo version
+</code></pre>
+<p>Exibe informações de versão.</p>
+<h2 id="Opcoes"><a href="#Opcoes" class="headerlink" title="Opções"></a>Opções</h2><h3 id="Modo-safe"><a href="#Modo-safe" class="headerlink" title="Modo safe"></a>Modo safe</h3><pre><code class="bash">$ hexo --safe
+</code></pre>
+<p>Desativa o carregamento de plugins e scripts. Tente isso se você encontrar problemas depois de instalar um novo plugin.</p>
+<h3 id="Modo-debug"><a href="#Modo-debug" class="headerlink" title="Modo debug"></a>Modo debug</h3><pre><code class="bash">$ hexo --debug
+</code></pre>
+<p>Registra mensagens detalhadas para o terminal e para o arquivo <code>debug.log</code>. Tente isso se você tiver algum problema com o Hexo. Se você encontrar erros, por favor <a href="https://github.com/hexojs/hexo/issues/new">crie uma issue no GitHub</a>.</p>
+<h3 id="Modo-silent"><a href="#Modo-silent" class="headerlink" title="Modo silent"></a>Modo silent</h3><pre><code class="bash">$ hexo --silent
+</code></pre>
+<p>Silencia a saída para no terminal.</p>
+<h3 id="Caminho-do-arquivo-de-configuracao-personalizado"><a href="#Caminho-do-arquivo-de-configuracao-personalizado" class="headerlink" title="Caminho do arquivo de configuração personalizado"></a>Caminho do arquivo de configuração personalizado</h3><pre><code class="bash">$ hexo --config custom.yml
+</code></pre>
+<p>Usa um arquivo de configuração personalizado (em vez de <code>_config.yml</code>). Também aceita uma lista separada por vírgulas (sem espaços) de arquivos de configuração JSON ou YAML que combinará os arquivos em um único <code>_multiconfig.yml</code>.</p>
+<pre><code class="bash">$ hexo --config custom.yml,custom2.json
+</code></pre>
+<h3 id="Mostra-rascunhos"><a href="#Mostra-rascunhos" class="headerlink" title="Mostra rascunhos"></a>Mostra rascunhos</h3><pre><code class="bash">$ hexo --draft
+</code></pre>
+<p>Exibe os rascunhos (armazenados no diretório <code>source/_drafts</code>).</p>
+<h3 id="Customizando-CWD"><a href="#Customizando-CWD" class="headerlink" title="Customizando CWD"></a>Customizando CWD</h3><pre><code class="bash">$ hexo --cwd /path/to/cwd
+</code></pre>
+<p>Personaliza o caminho do diretório de trabalho atual.</p>

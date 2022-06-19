@@ -1,0 +1,91 @@
+<hr>
+<h2 id="title-Написание"><a href="#title-Написание" class="headerlink" title="title: Написание"></a>title: Написание</h2><p>Чтобы создать новый пост, можно выполнить следующую команду:</p>
+<pre><code class="bash">$ hexo new [layout] &lt;title&gt;
+</code></pre>
+<p><code>post</code> — это макет (<code>layout</code>) по умолчанию, но можно установить свой собственный изменив значение <code>default_layout</code> в <code>_config.yml</code>.</p>
+<h3 id="Макет"><a href="#Макет" class="headerlink" title="Макет"></a>Макет</h3><p>В Hexo есть три макета по умолчанию: <code>post</code>, <code>page</code> и <code>draft</code>. Каждый из них сохраняется по своему пути. Пользовательские макеты сохраняются в папке <code>source/_posts</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Макет</th>
+<th>Путь</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>post</code></td>
+<td><code>source/_posts</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td><code>source</code></td>
+</tr>
+<tr>
+<td><code>draft</code></td>
+<td><code>source/_drafts</code></td>
+</tr>
+</tbody></table>
+<p>{% note tip Отключение макета %}<br>Если вы не хотите, чтобы статья (пост&#x2F;страница) обрабатывалась с помощью темы, установите <code>layout: false</code> в её шапке. Обратитесь к <a href="/ru/docs/front-matter#%D0%9C%D0%B0%D0%BA%D0%B5%D1%82">этому разделу</a> для более подробной информации.<br>{% endnote %}</p>
+<h3 id="Имя-файла"><a href="#Имя-файла" class="headerlink" title="Имя файла"></a>Имя файла</h3><p>По умолчанию Hexo использует название поста для создания имени. Для изменения имени файла по умолчанию, можно отредактировать настройки, изменив <code>new_post_name</code> в <code>_config.yml</code>. Например, у значения <code>:year-:month-:day-:title.md</code>, будет префикс с именем файлов и датой создания поста. Можно использовать следующие подстановки:</p>
+<table>
+<thead>
+<tr>
+<th>Подстановка</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:title</code></td>
+<td>Заголовок поста (строчными буквами с пробелами заменёнными на дефисы)</td>
+</tr>
+<tr>
+<td><code>:year</code></td>
+<td>Год создания. Например: <code>2015</code></td>
+</tr>
+<tr>
+<td><code>:month</code></td>
+<td>Месяц создания (с ведущим нулём). Например: <code>04</code></td>
+</tr>
+<tr>
+<td><code>:i_month</code></td>
+<td>Месяц создания (без ведущего нуля). Например: <code>4</code></td>
+</tr>
+<tr>
+<td><code>:day</code></td>
+<td>День создания (с ведущим нулём). Например: <code>07</code></td>
+</tr>
+<tr>
+<td><code>:i_day</code></td>
+<td>Месяц создания (без ведущего нуля). Например: <code>7</code></td>
+</tr>
+</tbody></table>
+<h3 id="Черновики"><a href="#Черновики" class="headerlink" title="Черновики"></a>Черновики</h3><p>Ранее упоминалось о специальном макете в Hexo: <code>draft</code>. В нём сообщения при создании сохраняются в папку <code>source/_drafts</code>. Можно использовать команду <code>publish</code>, чтобы переместить черновик в папку <code>source/_posts</code>. <code>publish</code> похожа на команду <code>new</code>.</p>
+<pre><code class="bash">$ hexo publish [layout] &lt;title&gt;
+</code></pre>
+<p>Черновики по умолчанию не отображаются. Можно добавить параметр <code>--draft</code> при запуске Hexo или установить значение <code>render_drafts: true</code> в <code>_config.yml</code>, чтобы включить обработку черновиков.</p>
+<h3 id="Заготовки"><a href="#Заготовки" class="headerlink" title="Заготовки"></a>Заготовки</h3><p>При создании сообщения Hexo строит файлы на основе соответствующего файла с каркасом (<code>scaffolds</code>). Например:</p>
+<pre><code class="bash">$ hexo new photo &quot;My Gallery&quot;
+</code></pre>
+<p>Когда выполнится эта команда, Hexo постарается найти <code>photo.md</code> в папке <code>scaffolds</code> и создать пост на его основе. Эти подстановочные части доступны в заготовках:</p>
+<table>
+<thead>
+<tr>
+<th>Подстановка</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>layout</code></td>
+<td>Макет</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Заголовок</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Дата создания файла</td>
+</tr>
+</tbody></table>
+<h3 id="Поддерживаемые-форматы"><a href="#Поддерживаемые-форматы" class="headerlink" title="Поддерживаемые форматы"></a>Поддерживаемые форматы</h3><p>Hexo поддерживает посты в любом формате, если установлен соответствующий плагин для рендеринга.</p>
+<p>Например, плагины <code>hexo-renderer-marked</code> и <code>hexo-renderer-ejs</code> установлены в Hexo по умолчанию, таким образом вы можете писать свои посты в <code>markdown</code> или <code>ejs</code>. Если вы установили <code>hexo-renderer-pug</code>, то вы так же можете писать свои посты в формате <code>pug</code>.</p>
+<p>Вы можете переименовать свои посты и изменить файловое расширение с <code>.md</code> на <code>.ejs</code>, тогда Hexo будет использовать <code>hexo-renderer-ejs</code>, чтобы отрендерить эти файлы, аналогично происходит и для других форматов.</p>

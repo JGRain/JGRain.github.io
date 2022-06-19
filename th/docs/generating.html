@@ -1,0 +1,12 @@
+<hr>
+<h2 id="title-Generating"><a href="#title-Generating" class="headerlink" title="title: Generating"></a>title: Generating</h2><p>การ generate ไฟล์คงท่ีใน hexo จะค่อนข้างรวดเร็วและง่าย</p>
+<pre><code class="bash">$ hexo generate
+</code></pre>
+<p>{% youtube viEJQPVCoLU %}</p>
+<h3 id="Watch-for-File-Changes"><a href="#Watch-for-File-Changes" class="headerlink" title="Watch for File Changes"></a>Watch for File Changes</h3><p>hexo จะเฝ้าดูการเปลี่ยนแปลงของไฟล์และ generate ไฟล์ ทันที<br>เฝ้าดูการเปลี่ยนแปลงของไฟล์นั้นจะเป็นการเปรียนเทียบ SHA1 checksum ของไฟล์</p>
+<pre><code class="bash">$ hexo generate --watch
+</code></pre>
+<h3 id="Deploy-After-Generating"><a href="#Deploy-After-Generating" class="headerlink" title="Deploy After Generating"></a>Deploy After Generating</h3><p>คำสั่งสองบรรทัดต่อไปจะมีการปฏิบัติเหมือนกันสำหรับการ deploy หลังการ generate ไฟล์</p>
+<pre><code class="bash">$ hexo generate --deploy
+$ hexo deploy --generate
+</code></pre>

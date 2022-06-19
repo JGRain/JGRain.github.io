@@ -1,0 +1,79 @@
+<hr>
+<h2 id="title-Box"><a href="#title-Box" class="headerlink" title="title: Box"></a>title: Box</h2><p>Box is a container used for processing files in a specified folder. Hexo uses two different boxes: <code>hexo.source</code> and <code>hexo.theme</code>. The former is used to process the <code>source</code> folder and the latter to process the <code>theme</code> folder.</p>
+<h2 id="Load-Files"><a href="#Load-Files" class="headerlink" title="Load Files"></a>Load Files</h2><p>Box provides two methods for loading files: <code>process</code> and <code>watch</code>. <code>process</code> loads all files in the folder. <code>watch</code> does the same, but also starts watching for file changes.</p>
+<pre><code class="js">box.process().then(function(){
+  // ...
+});
+
+box.watch().then(function(){
+  // You can call box.unwatch() later to stop watching.
+});
+</code></pre>
+<h2 id="Path-Matching"><a href="#Path-Matching" class="headerlink" title="Path Matching"></a>Path Matching</h2><p>Box provides many ways for path matching. You can use a regular expression, a function or an Express-style pattern string. For example:</p>
+<pre><code class="plain">posts/:id =&gt; posts/89
+posts/*path =&gt; posts/2015/title
+</code></pre>
+<p>See <a href="https://github.com/hexojs/hexo-util#patternrule">util.Pattern</a> for more info.</p>
+<h2 id="Processors"><a href="#Processors" class="headerlink" title="Processors"></a>Processors</h2><p>A processor is an essential element of Box and is used to process files. You can use path matching as described above to restrict what exactly the processor should process. Register a new processor with the <code>addProcessor</code> method.</p>
+<pre><code class="js">box.addProcessor(&#39;posts/:id&#39;, function(file){
+  //
+});
+</code></pre>
+<p>Box passes the content of matched files to processors. This information can then be read straight from the <code>file</code> argument in the callback:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source</code></td>
+<td>Full path of the file</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Relative path to the box of the file</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>File type. The value can be <code>create</code>, <code>update</code>, <code>skip</code>, <code>delete</code>.</td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td>The information from path matching.</td>
+</tr>
+</tbody></table>
+<p>Box also provides some methods so you don’t have to do file IO by yourself.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>read</code></td>
+<td>Read a file</td>
+</tr>
+<tr>
+<td><code>readSync</code></td>
+<td>Read a file synchronously</td>
+</tr>
+<tr>
+<td><code>stat</code></td>
+<td>Read the status of a file</td>
+</tr>
+<tr>
+<td><code>statSync</code></td>
+<td>Read the status of a file synchronously</td>
+</tr>
+<tr>
+<td><code>render</code></td>
+<td>Render a file</td>
+</tr>
+<tr>
+<td><code>renderSync</code></td>
+<td>Render a file synchronously</td>
+</tr>
+</tbody></table>

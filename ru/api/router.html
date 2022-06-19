@@ -1,0 +1,43 @@
+<hr>
+<h2 id="title-Маршрутизатор"><a href="#title-Маршрутизатор" class="headerlink" title="title: Маршрутизатор"></a>title: Маршрутизатор</h2><p>Маршрутизатор сохраняет все ссылки, используемые на сайте.</p>
+<h2 id="Получение-пути"><a href="#Получение-пути" class="headerlink" title="Получение пути"></a>Получение пути</h2><p>Метод <code>get</code> возвращает поток <a href="http://nodejs.org/api/stream.html">Stream</a>. Пример для сохранения данных о ссылках в указанное место:</p>
+<pre><code class="js">var data = hexo.route.get(&#39;index.html&#39;);
+var dest = fs.createWriteStream(&#39;somewhere&#39;);
+
+data.pipe(dest);
+</code></pre>
+<h2 id="Установка-пути"><a href="#Установка-пути" class="headerlink" title="Установка пути"></a>Установка пути</h2><p>Метод <code>set</code> принимает строку, <a href="http://nodejs.org/api/buffer.html">Buffer</a> или функцию.</p>
+<pre><code class="js">// Строка
+hexo.route.set(&#39;index.html&#39;, &#39;index&#39;)
+
+// Buffer
+hexo.route.set(&#39;index.html&#39;, new Buffer(&#39;index&#39;));
+
+// Функция (Запрос)
+hexo.route.set(&#39;index.html&#39;, function(){
+  return new Promise(function(resolve, reject){
+    resolve(&#39;index&#39;);
+  });
+});
+
+// Функция (Обратный вызов)
+hexo.route.set(&#39;index.html&#39;, function(callback){
+  callback(null, &#39;index&#39;);
+});
+</code></pre>
+<p>Можно также установить логическое значение, был ли изменён путь. Это позволяет увеличить скорость создания файлов, поскольку игнорируются неизменённые ссылки.</p>
+<pre><code class="js">hexo.route.set(&#39;index.html&#39;, {
+    data: &#39;index&#39;,
+    modified: false
+});
+
+// hexo.route.isModified(&#39;index.html&#39;) =&gt; false
+</code></pre>
+<h2 id="Удаление-ссылки"><a href="#Удаление-ссылки" class="headerlink" title="Удаление ссылки"></a>Удаление ссылки</h2><pre><code class="js">hexo.route.remove(&#39;index.html&#39;);
+</code></pre>
+<h2 id="Получение-списка-ссылок"><a href="#Получение-списка-ссылок" class="headerlink" title="Получение списка ссылок"></a>Получение списка ссылок</h2><pre><code class="js">hexo.route.list();
+</code></pre>
+<h2 id="Формат-пути"><a href="#Формат-пути" class="headerlink" title="Формат пути"></a>Формат пути</h2><p>Метод <code>format</code> преобразует строку в правильную ссылку.</p>
+<pre><code class="js">hexo.route.format(&#39;archives/&#39;);
+// archives/index.html
+</code></pre>

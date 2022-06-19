@@ -1,0 +1,18 @@
+<hr>
+<h2 id="title-資產資料夾"><a href="#title-資產資料夾" class="headerlink" title="title: 資產資料夾"></a>title: 資產資料夾</h2><p>資產（Asset）代表 <code>source</code> 資料夾中除了文章以外的所有檔案，例如圖片、CSS、JS 檔案等。Hexo 提供了一種更方便管理 Asset 的設定：<code>post_asset_folder</code>。</p>
+<pre><code class="yaml">post_asset_folder: true
+</code></pre>
+<p>當您開啟 <code>post_asset_folder</code> 設定後，在建立檔案時，Hexo 會自動建立一個與文章同名的資料夾，您可以把與該文章相關的所有資產都放到那個資料夾，如此一來，您便可以更方便的使用資產。</p>
+<h2 id="標籤外掛"><a href="#標籤外掛" class="headerlink" title="標籤外掛"></a>標籤外掛</h2><p>Hexo 3 新增了幾個<a href="/docs/tag-plugins#Include-Assets">外掛</a>，讓您更方便的在文章內引用資產。</p>
+<pre><code>{% asset_path slug %}
+{% asset_img slug [title] %}
+{% asset_link slug [title] %}
+</code></pre>
+<h2 id="Embedding-an-image-using-markdown"><a href="#Embedding-an-image-using-markdown" class="headerlink" title="Embedding an image using markdown"></a>Embedding an image using markdown</h2><p><a href="https://github.com/hexojs/hexo-renderer-marked">hexo-renderer-marked</a> 3.1.0 introduced a new option that allows you to embed an image in markdown without using <code>asset_img</code> tag plugin.</p>
+<p>To enable:</p>
+<pre><code class="yml">post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
+</code></pre>
+<p>Once enabled, an asset image will be automatically resolved to its corresponding post’s path. For example, “image.jpg” is located at “&#x2F;2020&#x2F;01&#x2F;02&#x2F;foo&#x2F;image.jpg”, meaning it is an asset image of “&#x2F;2020&#x2F;01&#x2F;02&#x2F;foo&#x2F;“ post, <code>![](image.jpg)</code> will be rendered as <code>&lt;img src=&quot;/2020/01/02/foo/image.jpg&quot;&gt;</code>.</p>

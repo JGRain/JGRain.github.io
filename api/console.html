@@ -1,0 +1,51 @@
+<hr>
+<h2 id="title-Console"><a href="#title-Console" class="headerlink" title="title: Console"></a>title: Console</h2><p>The console forms the bridge between Hexo and its users. It registers and describes the available console commands.</p>
+<h2 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h2><pre><code class="js">hexo.extend.console.register(name, desc, options, function(args){
+  // ...
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>Name</td>
+</tr>
+<tr>
+<td><code>desc</code></td>
+<td>Description</td>
+</tr>
+<tr>
+<td><code>options</code></td>
+<td>Options</td>
+</tr>
+</tbody></table>
+<p>An argument <code>args</code> will be passed into the function. This is the argument that users type into the terminal. It’s parsed by <a href="https://github.com/substack/minimist">Minimist</a>.</p>
+<h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><h3 id="usage"><a href="#usage" class="headerlink" title="usage"></a>usage</h3><p>The usage of a console command. For example:</p>
+<pre><code class="js">{usage: &#39;[layout] &lt;title&gt;&#39;}
+// hexo new [layout] &lt;title&gt;
+</code></pre>
+<h3 id="arguments"><a href="#arguments" class="headerlink" title="arguments"></a>arguments</h3><p>The description of each argument of a console command. For example:</p>
+<pre><code class="js">{
+  arguments: [
+    {name: &#39;layout&#39;, desc: &#39;Post layout&#39;},
+    {name: &#39;title&#39;, desc: &#39;Post title&#39;}
+  ]
+}
+</code></pre>
+<h3 id="options"><a href="#options" class="headerlink" title="options"></a>options</h3><p>The description of each option of a console command. For example:</p>
+<pre><code class="js">{
+  options: [
+    {name: &#39;-r, --replace&#39;, desc: &#39;Replace existing files&#39;}
+  ]
+}
+</code></pre>
+<h3 id="desc"><a href="#desc" class="headerlink" title="desc"></a>desc</h3><p>More detailed information about a console command.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><pre><code class="js">hexo.extend.console.register(&#39;config&#39;, &#39;Display configuration&#39;, function(args){
+  console.log(hexo.config);
+});
+</code></pre>

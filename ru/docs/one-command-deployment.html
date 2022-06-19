@@ -1,0 +1,336 @@
+<hr>
+<h2 id="title-Публикация"><a href="#title-Публикация" class="headerlink" title="title: Публикация"></a>title: Публикация</h2><p>Hexo обеспечивает быстрый и простой способ размещения. Нужна только одна команда, чтобы развернуть свой сайт на сервере.</p>
+<pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>Перед первой публикацией сайта нужно изменить некоторые настройки в <code>_config.yml</code>. Правильные параметры развёртывания должны иметь поле <code>type</code>. Например:</p>
+<pre><code class="yaml">deploy:
+  type: git
+</code></pre>
+<p>Вы можете использовать несколько сервисов размещения. Hexo будет выполнять все в том порядке, какой указан в файле.</p>
+<pre><code class="yaml">deploy:
+- type: git
+  repo:
+- type: heroku
+  repo:
+</code></pre>
+<p>Расположение списка дополнительных плагинов для развертывания: <a href="https://hexo.io/plugins/">Plugins</a>.</p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><ol>
+<li>Установка <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>.</li>
+</ol>
+<pre><code class="bash">$ npm install hexo-deployer-git --save
+</code></pre>
+<ol start="2">
+<li>Отредактируйте <strong>_config.yml</strong> (примеры значений, показаны ниже в качестве комментариев):</li>
+</ol>
+<pre><code class="yaml">deploy:
+  type: git
+  repo: &lt;repository url&gt; #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
+  branch: [branch]
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>По умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>URL-адрес целевого репозитория</td>
+<td></td>
+</tr>
+<tr>
+<td><code>branch</code></td>
+<td>Название ветки.</td>
+<td><code>gh-pages</code> (GitHub)<br><code>coding-pages</code> (Coding.net)<br><code>master</code> (другое)</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Конфигурирация сообщения о коммите.</td>
+<td><code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code></td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td>Необязательное значение токена для аутентификации в репозитории. Префикс с <code>$</code> для чтения, взятый из переменной среды</td>
+<td></td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>Разместите свой сайт  <code>hexo clean &amp;&amp; hexo deploy</code>.</li>
+</ol>
+<ul>
+<li>Вам будет предложено ввести имя пользователя и пароль целевого репозитория, если вы не аутентифицируетесь с помощью токена или ssh-ключа.</li>
+<li>hexo-deployer-git не хранит ваше имя пользователя и пароль. Используйте <a href="https://git-scm.com/docs/git-credential-cache">git-credential-cache</a>, чтобы временно их хранить.</li>
+</ul>
+<ol start="4">
+<li>Перейдите в настройки своего репозитория и измените ветвь “Pages” на <code>gh-pages</code> (или ветвь, указанную в вашей конфигурации). Развернутый сайт должен быть доступен по ссылке, указанной в параметре “Pages”.</li>
+</ol>
+<h2 id="Heroku"><a href="#Heroku" class="headerlink" title="Heroku"></a>Heroku</h2><p>Установите <a href="https://github.com/hexojs/hexo-deployer-heroku">hexo-deployer-heroku</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-heroku --save
+</code></pre>
+<p>Изменение параметров.</p>
+<pre><code class="yaml">deploy:
+  type: heroku
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code>, <code>repository</code></td>
+<td>Адрес Heroku репозитория</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Изменение описания коммита (По умолчанию: <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="Rsync"><a href="#Rsync" class="headerlink" title="Rsync"></a>Rsync</h2><p>Установите <a href="https://github.com/hexojs/hexo-deployer-rsync">hexo-deployer-rsync</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-rsync --save
+</code></pre>
+<p>Изменение параметров.</p>
+<pre><code class="yaml">deploy:
+  type: rsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  root: &lt;root&gt;
+  port: [port]
+  delete: [true|false]
+  verbose: [true|false]
+  ignore_errors: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Умолчание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>Адрес удалённого хоста</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>Имя пользователя</td>
+<td></td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>Корневой каталог на удалённом хосте</td>
+<td></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Порт</td>
+<td>22</td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td>Удаление старых файлов на удаленном хосте</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>Выводить подробные сообщения</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>ignore_errors</code></td>
+<td>Игнорировать ошибки</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h2 id="OpenShift"><a href="#OpenShift" class="headerlink" title="OpenShift"></a>OpenShift</h2><p>Установите <a href="https://github.com/hexojs/hexo-deployer-openshift">hexo-deployer-openshift</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-openshift --save
+</code></pre>
+<p>Изменение параметров.</p>
+<pre><code class="yaml">deploy:
+  type: openshift
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>Адрес OpenShift репозитория</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Изменение описания коммита (По умолчанию: <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="FTPSync"><a href="#FTPSync" class="headerlink" title="FTPSync"></a>FTPSync</h2><p>Установите <a href="https://github.com/hexojs/hexo-deployer-ftpsync">hexo-deployer-ftpsync</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-ftpsync --save
+</code></pre>
+<p>Изменение параметров.</p>
+<pre><code class="yaml">deploy:
+  type: ftpsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  pass: &lt;password&gt;
+  remote: [remote]
+  port: [port]
+  ignore: [ignore]
+  connections: [connections]
+  verbose: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>Адрес удалённого хоста</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>Имя пользователя</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>Пароль</td>
+<td></td>
+</tr>
+<tr>
+<td><code>remote</code></td>
+<td>Корневой каталог на удалённом хосте</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Порт</td>
+<td>21</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>Игнорировать файлы на удалённом хосте</td>
+<td></td>
+</tr>
+<tr>
+<td><code>connections</code></td>
+<td>Количество подключений</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>Выводить подробные сообщения</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h2 id="Vercel"><a href="#Vercel" class="headerlink" title="Vercel"></a>Vercel</h2><p><a href="https://vercel.com/">Vercel</a> это облачная платформа, которая позволяет разработчикам размещать веб-сайты и веб-службы Jamstackкоторые мгновенно развертываются, автоматически масштабируются и не требуют контроля, все с нулевой конфигурацией. Они обеспечивают глобальную пограничную сеть, шифрование SSL, сжатие ресурсов, аннулирование кэша и многое другое.</p>
+<p>Шаг 1: Добавьте сценарий сборки в файл <code>package.json</code>:</p>
+<pre><code class="json">{
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;hexo generate&quot;
+  }
+}
+</code></pre>
+<p>Шаг 2: Разместите свой веб-сайт Hexo в Vercel</p>
+<p>Для разворачивания вашего приложения Hexo с помощью <a href="https://vercel.com/docs/git-integrations">Vercel для интеграции с Git</a>, убедитесь, что он был отправлен в репозиторий Git.</p>
+<p>Импортируйте проект в Vercel с помощью <a href="https://vercel.com/import/git">Import Flow</a>. Во время импорта вы найдете все соответствующие параметры, предварительно настроенные для вас; однако вы можете изменить любой из этих параметров, список которых можно найти <a href="https://vercel.com/docs/build-step#build-&-development-settings">здесь</a>.</p>
+<p>После импорта вашего проекта все последующие изменения в ветви будут создавать <a href="https://vercel.com/docs/platform/deployments#preview">Preview Deployments</a>, и все изменения, внесенные в <a href="https://vercel.com/docs/git-integrations#production-branch">Production Branch</a> (обычно “main”) приведет к [Production Deployment] (<a href="https://vercel.com/docs/platform/deployments#production">https://vercel.com/docs/platform/deployments#production</a>).</p>
+<p>Кроме того, вы можете нажать кнопку разместить ниже, чтобы создать новый проект:</p>
+<p><a href="https://vercel.com/new/hexo"><img src="https://vercel.com/button" alt="Разместить в Vercel"></a></p>
+<h2 id="21YunBox"><a href="#21YunBox" class="headerlink" title="21YunBox"></a>21YunBox</h2><ol>
+<li>На сайте <a href="https://www.21yunbox.com/">21YunBox</a> настройте новый проект «Статический сайт» от GitHub со следующими настройками:</li>
+</ol>
+<ul>
+<li><strong>Build command:</strong> <code>yarn &amp;&amp; hexo deploy</code></li>
+<li><strong>Publish directory:</strong> <code>public</code></li>
+</ul>
+<ol start="2">
+<li>Пресс Развертывание Бутон!</li>
+</ol>
+<p>Ну вот! Ваше приложение будет жить на вашем URL 21YunBox, как только сборка заканчивается.</p>
+<p>Образец приложения для ‘hexo’ развернут на сайте <a href="https://hexo.21yunbox.com/">https://hexo.21yunbox.com/</a>.</p>
+<p>Для получения более подробной информации, следуйте этому руководству по адресу <a href="https://www.21yunbox.com/docs/'/deploy-hexo">https://www.21yunbox.com/docs/'/deploy-hexo</a>.</p>
+<h2 id="Bip"><a href="#Bip" class="headerlink" title="Bip"></a>Bip</h2><p><a href="https://bip.sh/">Bip</a> - это коммерческая услуга хостинга, которая обеспечивает развертывание с нулевым временем простоя, глобальную CDN, SSL, неограниченную пропускную способность и многое другое для статических веб-сайтов. Планы доступны с оплатой по факту (pay as you go), в зависимости от домена.</p>
+<p>Начало работы происходит быстро и легко, так как Bip обеспечивает стандартную поддержку Hexo. В этом руководстве предполагается, что у вас уже есть <a href="https://bip.sh/getstarted">домен Bip и установленный интерфейс командной строки</a>.</p>
+<p>1: Инициализируйте каталог вашего проекта</p>
+<pre><code class="bash">$ bip init
+</code></pre>
+<p>Следуйте инструкциям, где вас спросят, в каком домене вы хотите выполнить развертывание. Bip обнаружит, что вы используете Hexo, и автоматически установит параметры проекта, такие как каталог исходных файлов.</p>
+<p>2: Разместите свой веб-сайт</p>
+<pre><code class="bash">$ hexo generate —deploy &amp;&amp; bip deploy
+</code></pre>
+<p>Через несколько мгновений ваш веб-сайт будет размещён.</p>
+<h2 id="RSS3"><a href="#RSS3" class="headerlink" title="RSS3"></a>RSS3</h2><p>[RSS3] (<a href="https://rss3.io/">https://rss3.io</a>) - это открытый протокол, разработанный для контента и социальных сетей в эпоху Web 3.0.</p>
+<ol>
+<li><p>Установите <a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3">hexo-deployer-rss3</a>.</p>
+</li>
+<li><p>Измените конфигурацию.</p>
+</li>
+</ol>
+<pre><code class="yaml">deploy:
+- type: rss3
+  endpoint: https://hub.rss3.io
+  privateKey: 47e18d6c386898b424025cd9db446f779ef24ad33a26c499c87bb3d9372540ba
+  ipfs:
+    deploy: true
+    gateway: pinata
+    api:
+      key: d693df715d3631e489d6
+      secret: ee8b74626f12b61c1a4bde3b8c331ad390567c86ba779c9b18561ee92c1cbff0
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Параметры</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>endpoint</code></td>
+<td>Ссылка на RSS3 Hub</td>
+</tr>
+<tr>
+<td><code>privateKey</code></td>
+<td>Ваш закрытый ключ, 64 байта</td>
+</tr>
+<tr>
+<td><code>ipfs/deploy</code></td>
+<td>Следует ли развертывать в IPFS</td>
+</tr>
+<tr>
+<td><code>ipfs/gateway</code></td>
+<td>IPFS API Gateway</td>
+</tr>
+<tr>
+<td><code>ipfs/api/key</code></td>
+<td>Проверочный контент, связанный со шлюзом IPFS</td>
+</tr>
+<tr>
+<td><code>ipfs/api/secret</code></td>
+<td>Проверочный контент, связанный со шлюзом IPFS</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li><p>Создавайте статические файлы.</p>
+</li>
+<li><p>Развертывание</p>
+</li>
+</ol>
+<p>Меры предосторожности, связанные с конкретным развертыванием, можно найти в <a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3/tree/develop/docs/en/start.md">нашей документации</a>.</p>
+<h2 id="Другие-способы"><a href="#Другие-способы" class="headerlink" title="Другие способы"></a>Другие способы</h2><p>Все созданные файлы сохраняются в папке <code>public</code>. Вы можете скопировать их куда угодно.</p>

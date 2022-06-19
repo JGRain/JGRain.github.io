@@ -1,0 +1,85 @@
+<hr>
+<h2 id="title-生成器（Generator）"><a href="#title-生成器（Generator）" class="headerlink" title="title: 生成器（Generator）"></a>title: 生成器（Generator）</h2><p>生成器根据处理后的原始文件建立路由。</p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><pre><code class="js">hexo.extend.generator.register(name, function(locals){
+});
+</code></pre>
+<p>在函数中会传入一个 <code>locals</code> 参数，等同于 <a href="../docs/variables.html#%E7%BD%91%E7%AB%99%E5%8F%98%E9%87%8F">网站变量</a>，请尽量利用此参数取得网站数据，避免直接存取资料库。</p>
+<h2 id="更新路由"><a href="#更新路由" class="headerlink" title="更新路由"></a>更新路由</h2><pre><code class="js">hexo.extend.generator.register(&#39;test&#39;, function(locals){
+  // Object
+  return {
+    path: &#39;foo&#39;,
+    data: &#39;foo&#39;
+  };
+  
+  // Array
+  return [
+    {path: &#39;foo&#39;, data: &#39;foo&#39;},
+    {path: &#39;bar&#39;, data: &#39;bar&#39;}
+  ];
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>path</code></td>
+<td>路径。不可包含开头的 <code>/</code>。</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>数据</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>布局。指定用于渲染的模板，可为字符串或数组，如果省略此属性的话则会直接输出 <code>data</code>。</td>
+</tr>
+</tbody></table>
+<p>在原始文件更新时，Hexo 会执行所有生成器并重建路由，<strong>请直接回传资料，不要直接操作路由</strong>。</p>
+<h2 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h2><h3 id="归档页面"><a href="#归档页面" class="headerlink" title="归档页面"></a>归档页面</h3><p>在 <code>archives/index.html</code> 建立一归档页面，把所有文章当作资料传入模板内，这个资料也就等同于模板中的 <code>page</code> 变量。</p>
+<p>然后，设置 <code>layout</code> 属性好让 Hexo 使用主题模板来渲染，在此例中同时设定了两个布局，当 <code>archive</code> 布局不存在时，会继续尝试 <code>index</code> 布局。</p>
+<pre><code class="js">hexo.extend.generator.register(&#39;archive&#39;, function(locals){
+  return {
+    path: &#39;archives/index.html&#39;,
+    data: locals.posts,
+    layout: [&#39;archive&#39;, &#39;index&#39;]
+  }
+});
+</code></pre>
+<h3 id="有分页的归档页面"><a href="#有分页的归档页面" class="headerlink" title="有分页的归档页面"></a>有分页的归档页面</h3><p>您可以通过 <a href="https://github.com/hexojs/hexo-pagination">hexo-pagination</a> 这个方便的官方工具来轻松建立分页归档。</p>
+<pre><code class="js">var pagination = require(&#39;hexo-pagination&#39;);
+
+hexo.extend.generator.register(&#39;archive&#39;, function(locals){
+  return pagination(&#39;archives/index.html&#39;, locals.posts, {
+    perPage: 10,
+    layout: [&#39;archive&#39;, &#39;index&#39;],
+    data: {}
+  });
+});
+</code></pre>
+<h3 id="生成所有文章"><a href="#生成所有文章" class="headerlink" title="生成所有文章"></a>生成所有文章</h3><p>遍历 <code>locals.posts</code> 中的所有文章并生成所有文章的路由。</p>
+<pre><code class="js">hexo.extend.generator.register(&#39;post&#39;, function(locals){
+  return locals.posts.map(function(post){
+    return {
+      path: post.path,
+      data: post,
+      layout: &#39;post&#39;
+    };
+  });
+});
+</code></pre>
+<h3 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h3><p>这次不直接在 <code>data</code> 中返回数据而是返回一个函数，如此一来这个路由唯有在使用时才会建立 <code>fs.ReadStream</code>。</p>
+<pre><code class="js">var fs = require(&#39;hexo-fs&#39;);
+
+hexo.extend.generator.register(&#39;asset&#39;, function(locals){
+  return {
+    path: &#39;file.txt&#39;,
+    data: function(){
+      return fs.createReadStream(&#39;path/to/file.txt&#39;)
+    }
+  };
+});
+</code></pre>

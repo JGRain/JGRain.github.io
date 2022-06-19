@@ -1,0 +1,31 @@
+<hr>
+<h2 id="title-Events"><a href="#title-Events" class="headerlink" title="title: Events"></a>title: Events</h2><p>Hexo는 <a href="https://nodejs.org/dist/latest/docs/api/events.html">EventEmitter</a>를 상속합니다. <code>on</code> 메소드를 사용하여 Hexo가 emit한 이벤트를 listen할 수 있습니다. 그리고 <code>emit</code>메소드를 사용하여 이벤트를 emit합니다. 더 자세한 정보는 Node.js API 문서를 참고해 주시기 바랍니다.</p>
+<h3 id="deployBefore"><a href="#deployBefore" class="headerlink" title="deployBefore"></a>deployBefore</h3><p>Deployment가 시작되기 전에 emit합니다.</p>
+<h3 id="deployAfter"><a href="#deployAfter" class="headerlink" title="deployAfter"></a>deployAfter</h3><p>Deployment가 끝난 후에 emit합니다.</p>
+<h3 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit</h3><p>Hexo가 종료되기 전에 emit합니다.</p>
+<h3 id="generateBefore"><a href="#generateBefore" class="headerlink" title="generateBefore"></a>generateBefore</h3><p>생성(generation)이 시작되기 전에 emit합니다.</p>
+<h3 id="generateAfter"><a href="#generateAfter" class="headerlink" title="generateAfter"></a>generateAfter</h3><p>생성(generation)이 끝난 후에 emit합니다.</p>
+<h3 id="new"><a href="#new" class="headerlink" title="new"></a>new</h3><p>새로운 포스트가 생성된 후에 emit합니다. 이 이벤트는 포스트 데이터를 반환합니다:</p>
+<pre><code class="js">hexo.on(&#39;new&#39;, function(post){
+  //
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>데이터</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>post.path</code></td>
+<td>포스트 파일의 전체경로</td>
+</tr>
+<tr>
+<td><code>post.content</code></td>
+<td>포스트 파일의 컨텐츠</td>
+</tr>
+</tbody></table>
+<h3 id="processBefore"><a href="#processBefore" class="headerlink" title="processBefore"></a>processBefore</h3><p>프로세싱을 시작하기 전에 emit합니다. 이 이벤트는 box의 루트 디렉토리의 경로를 반환합니다.</p>
+<h3 id="processAfter"><a href="#processAfter" class="headerlink" title="processAfter"></a>processAfter</h3><p>프로세싱이 끝난 후에 emit합니다. 이 이벤트는 box의 루트 디렉토리의 경로를 반환합니다.</p>
+<h3 id="ready"><a href="#ready" class="headerlink" title="ready"></a>ready</h3><p>초기화 과정이 완료된 후 emit합니다.</p>

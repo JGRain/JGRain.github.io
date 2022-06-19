@@ -1,0 +1,92 @@
+<hr>
+<h2 id="title-Escrevendo"><a href="#title-Escrevendo" class="headerlink" title="title: Escrevendo"></a>title: Escrevendo</h2><p>{% youtube AIqBubK6ZLc %}</p>
+<p>Para criar uma nova postagem ou uma nova página, você pode rodar o seguinte comando:</p>
+<pre><code class="bash">$ hexo new [layout] &lt;title&gt;
+</code></pre>
+<p>O <code>layout</code> padrão é o <code>post</code>, mas você pode fornecer o seu próprio. Você pode alterar o layout padrão editando a configuração <code>default_layout</code> em <code>_config.yml</code>.</p>
+<h3 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h3><p>Existem três layouts padrões no Hexo: <code>post</code>, <code>page</code> e <code>draft</code>. Os arquivos criados por cada um deles são salvos em um caminho diferente. As postagens criadas recentemente são salvas no diretório <code>source/_posts</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Layout</th>
+<th>Caminho</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>post</code></td>
+<td><code>source/_posts</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td><code>source</code></td>
+</tr>
+<tr>
+<td><code>draft</code></td>
+<td><code>source/_drafts</code></td>
+</tr>
+</tbody></table>
+<p>{% note tip Disabling layout %}<br>If you don’t want an article (post&#x2F;page) to be processed with a theme, set <code>layout: false</code> in its front-matter. Refer to <a href="/docs/front-matter#Layout">this section</a> for more details.<br>{% endnote %}</p>
+<h3 id="Nome-de-Arquivo"><a href="#Nome-de-Arquivo" class="headerlink" title="Nome de Arquivo"></a>Nome de Arquivo</h3><p>Por padrão, o Hexo usa o título da postagem como seu nome de arquivo. Você pode editar a configuração <code>new_post_name</code> em <code>_config.yml</code> para alterar o nome do arquivo padrão. Por exemplo, <code>:year-:month-:day-:title.md</code> prefixará nomes de arquivos com a data de criação de postagem. Você pode usar os seguintes placeholders:</p>
+<table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:title</code></td>
+<td>Título do post (minúsculas, com espaços substituídos por hifens)</td>
+</tr>
+<tr>
+<td><code>:year</code></td>
+<td>Ano de criação, ex: <code>2015</code></td>
+</tr>
+<tr>
+<td><code>:month</code></td>
+<td>Mês de criação (com zero à esquerda), ex: <code>04</code></td>
+</tr>
+<tr>
+<td><code>:i_month</code></td>
+<td>Mês de criação (sem zero à esquerda), ex: <code>4</code></td>
+</tr>
+<tr>
+<td><code>:day</code></td>
+<td>Dia de criação (com zero à esquerda), ex: <code>07</code></td>
+</tr>
+<tr>
+<td><code>:i_day</code></td>
+<td>Dia de criação (sem zero à esquerda), ex: <code>7</code></td>
+</tr>
+</tbody></table>
+<h3 id="Rascunhos"><a href="#Rascunhos" class="headerlink" title="Rascunhos"></a>Rascunhos</h3><p>Anteriormente, mencionamos um layout especial no Hexo: <code>draft</code>. As postagens inicializadas com este layout são salvas no diretório <code>source/_drafts</code>. Você pode usar o comando <code>publish</code> para mover os rascunhos para o diretório <code>source/_posts</code>. O comando <code>publish</code> funciona de forma semelhante ao comando <code>new</code>.</p>
+<pre><code class="bash">$ hexo publish [layout] &lt;title&gt;
+</code></pre>
+<p>Os rascunhos não são exibidos por padrão. Você pode adicionar a opção <code>--draft</code> ao executar o Hexo ou habilitar a configuração <code>render_drafts</code> em <code>_config.yml</code> para renderizar rascunhos.</p>
+<h3 id="Scaffolds"><a href="#Scaffolds" class="headerlink" title="Scaffolds"></a>Scaffolds</h3><p>Ao criar postagens, o Hexo irá construir arquivos com base no arquivo correspondente no diretório <code>scaffolds</code>. Por exemplo:</p>
+<pre><code class="bash">$ hexo new photo &quot;My Gallery&quot;
+</code></pre>
+<p>Quando você executa este comando, o Hexo tentará encontrar <code>photo.md</code> no diretório <code>scaffolds</code> e criar a postagem com base nele. Os seguintes placeholders estão disponíveis em scaffolds:</p>
+<table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>layout</code></td>
+<td>Layout</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Título</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Data de criação do arquivo</td>
+</tr>
+</tbody></table>
+<h3 id="Supported-Formats"><a href="#Supported-Formats" class="headerlink" title="Supported Formats"></a>Supported Formats</h3><p>Hexo support posts written in any format, as long as the corresponding renderer plugin is installed.</p>
+<p>For example, Hexo has <code>hexo-renderer-marked</code> and <code>hexo-renderer-ejs</code> installed by default, so you can write your posts in <code>markdown</code> or in <code>ejs</code>. If you have <code>hexo-renderer-pug</code> installed, then you can even write your post in pug template language.</p>
+<p>You can rename your posts and change to file extension from <code>.md</code> to <code>.ejs</code>, then Hexo will use <code>hexo-renderer-ejs</code> to render that file, so do the other formats.</p>

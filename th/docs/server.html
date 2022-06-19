@@ -1,0 +1,24 @@
+<hr>
+<h2 id="title-Server"><a href="#title-Server" class="headerlink" title="title: Server"></a>title: Server</h2><h2 id="hexo-server"><a href="#hexo-server" class="headerlink" title="hexo-server"></a><a href="https://github.com/hexojs/hexo-server">hexo-server</a></h2><p>ด้วยการประกาศของ hexo 3   เซิร์ฟเวอร์ถูกย้ายออกมากจาก module หลัก คุณต้องการติดตั้ง <a href="https://github.com/hexojs/hexo-server">hexo-server</a> ก่อนการเริ่มใช้เซิร์ฟเวอร์</p>
+<pre><code class="bash">$ npm install hexo-server --save
+</code></pre>
+<p>เมื่อติดตั้งเซิร์ฟเวอร์แล้ว รันคำสั่งต่อไปเพื่อเริ่มใช้เซิร์ฟเวอร์<br>เว็บไซต์ของคุณจะรันอยู่ท่ี <code>http://localhost:4000</code> by default<br>เมื่อเซิร์ฟเวอร์รันอยู่ hexo จะเฝ้าดูการเปลี่ยนแปลงของไฟล์และอัปเดทโดยอัตโนมัติ ดังนั้นจะไม่ต้องเปิดใหม่ด้วยตน</p>
+<pre><code class="bash">$ hexo server
+</code></pre>
+<p>If you want to change the port or if you’re encountering <code>EADDRINUSE</code> errors, use the <code>-p</code> option to set a different port.<br>ถ้าคุณอยากเปลี่ยน port หรือพบข้อผิดพลาดว่า <code>EADDRINUSE</code> ใช้ตัวเลือก <code>-p</code> ไปตั้งค่าเป็น port อื่น</p>
+<pre><code class="bash">$ hexo server -p 5000
+</code></pre>
+<h3 id="Static-Mode"><a href="#Static-Mode" class="headerlink" title="Static Mode"></a>Static Mode</h3><p>ในโหมดคงที่  ระบบจะเฝ้าดูแต่ไฟล์ท่ีอยู่ใน folder <code>public</code><br>เท่านั้นและไม่เฝ้าดูไฟล์อื่นๆ คุณต้องรันคำสั่ง <code>hexo generate</code><br>ก่อนเปิดเซิร์ฟเวอร์ โหลดนี้ปกติใช้แต่ในกรณี production</p>
+<pre><code class="bash">$ hexo server -s
+</code></pre>
+<h3 id="Custom-IP"><a href="#Custom-IP" class="headerlink" title="Custom IP"></a>Custom IP</h3><p>hexo รันเซิร์ฟเวอร์อยู่ท่ี <code>0.0.0.0</code> by default คุณสามารถเปลียนการตั้งค่า IP default นี้</p>
+<pre><code class="bash">$ hexo server -i 192.168.1.1
+</code></pre>
+<h2 id="Pow"><a href="#Pow" class="headerlink" title="Pow"></a>Pow</h2><p><a href="http://pow.cx/">Pow</a> เป็นเซร์ฟเวอร์ rack ท่ี zero-config สำหรับ mac</p>
+<h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><pre><code class="bash">$ curl get.pow.cx | sh
+</code></pre>
+<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>symlink folder เข้า <code>~/.pow</code></p>
+<pre><code class="bash">$ cd ~/.pow
+$ ln -s /path/to/myapp
+</code></pre>
+<p>เว็บไซต์ของคุณจะรันอยุ่ท่ี <code>http://myapp.test</code> URL นั้นจะอยู่บน symlink<br>ท่ีตั้งขึ้นมา</p>

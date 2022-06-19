@@ -1,0 +1,18 @@
+<hr>
+<h2 id="title-Data-Files"><a href="#title-Data-Files" class="headerlink" title="title: Data Files"></a>title: Data Files</h2><p>บางทีคุณอยากใช้ data ใน template ท่ีเข้าถึงโดยตรงไม่ได้ หรือคุณอยากเอา data<br>ไปใช้อีกในท่ีอื่นๆ ในกรณีเหล่านี้ hexo 3 จะแนะนำ  <strong>Data files</strong> ใหม่<br>ด้วยลักษณะนี้ hexo จะโหลดไฟล์ YAML หรือ JSON ใน folder  <code>source/_data</code><br>และคุณจะใช้ data ในไฟล์ได้ในเว็บไซต์ของตน</p>
+<p>{% youtube CN31plHbI-w %}</p>
+<p>ยกตัวอย่างเช่น เพิ่ม <code>menu.yml</code> ใน folder <code>source/_data</code></p>
+<pre><code class="yaml">Home: /
+Gallery: /gallery/
+Archives: /archives/
+</code></pre>
+<p>และคุณสามารถใช้ data ได้ใน templates:</p>
+<pre><code>&lt;% for (var link in site.data.menu) { %&gt;
+  &lt;a href=&quot;&lt;%= site.data.menu[link] %&gt;&quot;&gt; &lt;%= link %&gt; &lt;/a&gt;
+&lt;% } %&gt;
+</code></pre>
+<p>การ render จะเป็นอย่างนี้:</p>
+<pre><code>&lt;a href=&quot;/&quot;&gt; Home &lt;/a&gt;
+&lt;a href=&quot;/gallery/&quot;&gt; Gallery &lt;/a&gt;
+&lt;a href=&quot;/archives/&quot;&gt; Archives &lt;/a&gt;
+</code></pre>

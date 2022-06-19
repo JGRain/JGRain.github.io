@@ -1,0 +1,31 @@
+<hr>
+<h2 id="title-Migration"><a href="#title-Migration" class="headerlink" title="title: Migration"></a>title: Migration</h2><h2 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h2><p>먼저 <code>hexo-migrator-rss</code> 플러그인을 설치하세요.</p>
+<pre><code class="bash">$ npm install hexo-migrator-rss --save
+</code></pre>
+<p>플러그인 설치 후에는 아래의 명령어를 수행하여 RSS의 모든 포스트를 마이그레이션 하세요. <code>source</code>에는 파일 경로나 URL를 사용할 수 있습니다.</p>
+<pre><code class="bash">$ hexo migrate rss &lt;source&gt;
+</code></pre>
+<h2 id="Jekyll"><a href="#Jekyll" class="headerlink" title="Jekyll"></a>Jekyll</h2><p>Jekyll의 <code>_posts</code> 폴더의 모든 파일을 Hexo의 <code>source/_posts</code> 폴더로 옮기세요.</p>
+<p><code>_config.yml</code>파일의 <code>new_post_name</code> 설정을 다음과 같이 수정하세요.</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="Octopress"><a href="#Octopress" class="headerlink" title="Octopress"></a>Octopress</h2><p>Octopress <code>source/_posts</code> 폴더의 모든 파일을 Hexo의 <code>source/_posts</code> 폴더로 옮기세요.</p>
+<p><code>_config.yml</code>파일의 <code>new_post_name</code> 설정을 다음과 같이 수정하세요.</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h2><p>먼저, <code>hexo-migrator-wordpress</code> plugin을 설치하세요.</p>
+<pre><code class="bash">$ npm install hexo-migrator-wordpress --save
+</code></pre>
+<p>WordPress의 dashboard에서 “Tools” → “Export” → “WordPress” 를 통해 사용하던 WordPress 사이트를 Export하세요. (<a href="http://en.support.wordpress.com/export/">WordPress support page</a>에 더 자세한 정보가 있습니다.)</p>
+<p>그 후 아래 명령어를 수행하세요:</p>
+<pre><code class="bash">$ hexo migrate wordpress &lt;source&gt;
+</code></pre>
+<p>여기서 <code>source</code>는 WordPress의 export 파일이 있는 파일 경로 또는 URL을 의미합니다.</p>
+<h2 id="Joomla"><a href="#Joomla" class="headerlink" title="Joomla"></a>Joomla</h2><p>먼저, <code>hexo-migrator-joomla</code> 플러그인을 설치하세요.</p>
+<pre><code class="bash">$ npm install hexo-migrator-joomla --save
+</code></pre>
+<p>Joomla 게시물을 <a href="http://extensions.joomla.org/extensions/migration-a-conversion/data-import-a-export/12816?qh=YToxOntpOjA7czo1OiJqMnhtbCI7fQ==">J2XML</a>를 사용하여 export하세요.</p>
+<p>그 후 아래 명령어를 ㅅ수행하세요:</p>
+<pre><code class="bash">$ hexo migrate joomla &lt;source&gt;
+</code></pre>
+<p>여기서 <code>source</code>는 Joonla의 export 파일이 있는 파일 경로 또는 URL을 의미합니다.</p>

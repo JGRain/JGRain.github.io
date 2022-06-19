@@ -1,0 +1,400 @@
+<hr>
+<h2 id="title-Implantacao"><a href="#title-Implantacao" class="headerlink" title="title: Implantação"></a>title: Implantação</h2><p>O Hexo fornece uma estratégia de implantação (deployment) rápida e fácil. Você só precisa de um único comando para implantar seu site no servidor.</p>
+<pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>Antes da sua primeira implantação, você terá que modificar algumas configurações em <code>_config.yml</code>. Uma configuração de implantação válida deve ter um campo <code>type</code>. Por exemplo:</p>
+<pre><code class="yaml">deploy:
+  type: git
+</code></pre>
+<p>Você pode implantar o site em mais de um servidor. O Hexo executará cada implantação na ordem da declaração.</p>
+<pre><code class="yaml">deploy:
+- type: git
+  repo:
+- type: heroku
+  repo:
+</code></pre>
+<p>Refer to the <a href="https://hexo.io/plugins/">Plugins</a> list for more deployment plugins.</p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><ol>
+<li>Install <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>.</li>
+</ol>
+<pre><code class="bash">$ npm install hexo-deployer-git --save
+</code></pre>
+<ol start="2">
+<li>Edit <strong>_config.yml</strong> (with example values shown below as comments):</li>
+</ol>
+<pre><code class="yaml">deploy:
+  type: git
+  repo: &lt;repository url&gt; #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
+  branch: [branch]
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>URL of the target repository</td>
+<td></td>
+</tr>
+<tr>
+<td><code>branch</code></td>
+<td>Branch name.</td>
+<td><code>gh-pages</code> (GitHub)<br><code>coding-pages</code> (Coding.net)<br><code>master</code> (others)</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Customize commit message.</td>
+<td><code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code></td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td>Optional token value to authenticate with the repo. Prefix with <code>$</code> to read token from environment variable</td>
+<td></td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>Deploy your site <code>hexo clean &amp;&amp; hexo deploy</code>.</li>
+</ol>
+<ul>
+<li>You will be prompted with username and password of the target repository, unless you authenticate with a token or ssh key.</li>
+<li>hexo-deployer-git does not store your username and password. Use <a href="https://git-scm.com/docs/git-credential-cache">git-credential-cache</a> to store them temporarily.</li>
+</ul>
+<ol start="4">
+<li>Navigate to your repository settings and change the “Pages” branch to <code>gh-pages</code> (or the branch specified in your config). The deployed site should be live on the link shown on the “Pages” setting.</li>
+</ol>
+<h2 id="Heroku"><a href="#Heroku" class="headerlink" title="Heroku"></a>Heroku</h2><p>Instale o pacote <a href="https://github.com/hexojs/hexo-deployer-heroku">hexo-deployer-heroku</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-heroku --save
+</code></pre>
+<p>Editando as configurações.</p>
+<pre><code class="yaml">deploy:
+  type: heroku
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code>, <code>repository</code></td>
+<td>URL do repositório no Heroku</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Customiza a mensagem de commit (O padão é: <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="Rsync"><a href="#Rsync" class="headerlink" title="Rsync"></a>Rsync</h2><p>Instale o pacote <a href="https://github.com/hexojs/hexo-deployer-rsync">hexo-deployer-rsync</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-rsync --save
+</code></pre>
+<p>Editando as configurações.</p>
+<pre><code class="yaml">deploy:
+  type: rsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  root: &lt;root&gt;
+  port: [port]
+  delete: [true|false]
+  verbose: [true|false]
+  ignore_errors: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>Endereço do host remoto</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>Nome de usuário</td>
+<td></td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>Diretório raiz do host remoto</td>
+<td></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Porta</td>
+<td>22</td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td>Exclui arquivos antigos no host remoto</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>Exibi mensagens detalhadas</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>ignore_errors</code></td>
+<td>Ignora erros</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h2 id="OpenShift"><a href="#OpenShift" class="headerlink" title="OpenShift"></a>OpenShift</h2><p>Instale o pacote <a href="https://github.com/hexojs/hexo-deployer-openshift">hexo-deployer-openshift</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-openshift --save
+</code></pre>
+<p>Editando as configurações.</p>
+<pre><code class="yaml">deploy:
+  type: openshift
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>URL do repositório no OpenShift</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Customiza a mensagem de commit (O padrão é <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="FTPSync"><a href="#FTPSync" class="headerlink" title="FTPSync"></a>FTPSync</h2><p>Instale o pacote <a href="https://github.com/hexojs/hexo-deployer-ftpsync">hexo-deployer-ftpsync</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-ftpsync --save
+</code></pre>
+<p>Editando as configurações.</p>
+<pre><code class="yaml">deploy:
+  type: ftpsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  pass: &lt;password&gt;
+  remote: [remote]
+  port: [port]
+  ignore: [ignore]
+  connections: [connections]
+  verbose: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>Endereço do host remoto</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>Nome de usuário</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>Senha</td>
+<td></td>
+</tr>
+<tr>
+<td><code>remote</code></td>
+<td>Diretório raiz do host remoto</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Porta</td>
+<td>21</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>Ignora os arquivos no host remoto</td>
+<td></td>
+</tr>
+<tr>
+<td><code>connections</code></td>
+<td>Número de conexões</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>Exibi mensagens detalhadas</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h2 id="SFTP"><a href="#SFTP" class="headerlink" title="SFTP"></a>SFTP</h2><p>Instale o pacote <a href="https://github.com/lucascaro/hexo-deployer-sftp">hexo-deployer-sftp</a>. Implantação do site via SFTP, permitindo conexões sem senhas usando “ssh-agent”.</p>
+<pre><code class="bash">$ npm install hexo-deployer-sftp --save
+</code></pre>
+<p>Editando as configurações.</p>
+<pre><code class="yaml">deploy:
+  type: sftp
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  pass: &lt;password&gt;
+  remotePath: [remote path]
+  port: [port]
+  privateKey: [path/to/privateKey]
+  passphrase: [passphrase]
+  agent: [path/to/agent/socket]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>Endereço do host remoto</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>Nome de usuário</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>Senha</td>
+<td></td>
+</tr>
+<tr>
+<td><code>remotePath</code></td>
+<td>Diretório raiz do host remoto</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Porta</td>
+<td>22</td>
+</tr>
+<tr>
+<td><code>privateKey</code></td>
+<td>Caminho para uma chave ssh privada</td>
+<td></td>
+</tr>
+<tr>
+<td><code>passphrase</code></td>
+<td>Frase secreta opcional para a chave privada</td>
+<td></td>
+</tr>
+<tr>
+<td><code>agent</code></td>
+<td>Caminho para o socket do agente ssh</td>
+<td><code>$SSH_AUTH_SOCK</code></td>
+</tr>
+</tbody></table>
+<h2 id="Vercel"><a href="#Vercel" class="headerlink" title="Vercel"></a>Vercel</h2><p><a href="https://vercel.com/">Vercel</a> is a cloud platform that enables developers to host Jamstack websites and web services that deploy instantly, scale automatically, and requires no supervision, all with zero configuration. They provide a global edge network, SSL encryption, asset compression, cache invalidation, and more.</p>
+<p>Step 1: Add a build script to your <code>package.json</code> file:</p>
+<pre><code class="json">{
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;hexo generate&quot;
+  }
+}
+</code></pre>
+<p>Step 2: Deploy your Hexo Website to Vercel</p>
+<p>To deploy your Hexo app with a <a href="https://vercel.com/docs/git-integrations">Vercel for Git Integration</a>, make sure it has been pushed to a Git repository.</p>
+<p>Import the project into Vercel using the <a href="https://vercel.com/import/git">Import Flow</a>. During the import, you will find all relevant options preconfigured for you; however, you can choose to change any of these options, a list of which can be found <a href="https://vercel.com/docs/build-step#build-&-development-settings">here</a>.</p>
+<p>After your project has been imported, all subsequent pushes to branches will generate <a href="https://vercel.com/docs/platform/deployments#preview">Preview Deployments</a>, and all changes made to the <a href="https://vercel.com/docs/git-integrations#production-branch">Production Branch</a> (commonly “main”) will result in a <a href="https://vercel.com/docs/platform/deployments#production">Production Deployment</a>.</p>
+<p>Alternatively, you can click the deploy button below to create a new project:</p>
+<p><a href="https://vercel.com/new/hexo"><img src="https://vercel.com/button" alt="Deploy Vercel"></a></p>
+<h2 id="21YunBox"><a href="#21YunBox" class="headerlink" title="21YunBox"></a>21YunBox</h2><ol>
+<li>Em <a href="https://www.21yunbox.com/">21YunBox</a>, configure um novo projeto ‘Site estático’ do GitHub com as seguintes configurações:</li>
+</ol>
+<ul>
+<li><strong>Build command:</strong> <code>yarn &amp;&amp; hexo deploy</code></li>
+<li><strong>Publish directory:</strong> <code>public</code></li>
+</ul>
+<ol start="2">
+<li>Pressione Implantar Buton!</li>
+</ol>
+<p>É isso mesmo! Seu aplicativo estará ao vivo em sua URL 21YunBox assim que a compilação terminar.</p>
+<p>O aplicativo de exemplo para ‘hexo’ é implantado em <a href="https://hexo.21yunbox.com/">https://hexo.21yunbox.com/</a>.</p>
+<p>Para obter mais detalhes, siga este guia em <a href="https://www.21yunbox.com/docs/#/deploy-hexo">https://www.21yunbox.com/docs/#/deploy-hexo</a>.</p>
+<h2 id="Bip"><a href="#Bip" class="headerlink" title="Bip"></a>Bip</h2><p><a href="https://bip.sh/">Bip</a> is a commercial hosting service which provides zero downtime deployment, a global CDN, SSL, unlimited bandwidth and more for static websites. Plans are available on a pay as you go, per domain basis.</p>
+<p>Getting started is quick and easy, as Bip provides out the box support for Hexo. This guide assumes you already have <a href="https://bip.sh/getstarted">a Bip domain and Bip CLI installed</a>.</p>
+<p>1: Initialise your project directory</p>
+<pre><code class="bash">$ bip init
+</code></pre>
+<p>Follow the prompts, where you’ll be asked which domain you’d like to deploy to. Bip will detect that you’re using Hexo, and set project settings like the source file directory automatically.</p>
+<p>2: Deploy your website</p>
+<pre><code class="bash">$ hexo generate —deploy &amp;&amp; bip deploy
+</code></pre>
+<p>After a few moments, your website will be deployed.</p>
+<h2 id="RSS3"><a href="#RSS3" class="headerlink" title="RSS3"></a>RSS3</h2><p>[RSS3] (<a href="https://rss3.io/">https://rss3.io</a>) é um protocolo aberto projetado para conteúdo e redes sociais na era da Web 3.0.</p>
+<ol>
+<li><p>Instale <a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3">hexo-deployer-rss3</a></p>
+</li>
+<li><p>Modifique a configuração.</p>
+</li>
+</ol>
+<pre><code class="yaml">deploy:
+- type: rss3
+  endpoint: https://hub.rss3.io
+  privateKey: 47e18d6c386898b424025cd9db446f779ef24ad33a26c499c87bb3d9372540ba
+  ipfs:
+    deploy: true
+    gateway: pinata
+    api:
+      key: d693df715d3631e489d6
+      secret: ee8b74626f12b61c1a4bde3b8c331ad390567c86ba779c9b18561ee92c1cbff0
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parâmetros</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>endpoint</code></td>
+<td>Um link para o hub RSS3</td>
+</tr>
+<tr>
+<td><code>privateKey</code></td>
+<td>Sua chave privada, 64 bytes</td>
+</tr>
+<tr>
+<td><code>ipfs/deploy</code></td>
+<td>Se deve implantar no IPFS</td>
+</tr>
+<tr>
+<td><code>ipfs/gateway</code></td>
+<td>Gateway de API IPFS</td>
+</tr>
+<tr>
+<td><code>ipfs/api/key</code></td>
+<td>Conteúdo de verificação relacionado ao gateway IPFS</td>
+</tr>
+<tr>
+<td><code>ipfs/api/secret</code></td>
+<td>Conteúdo de verificação relacionado ao gateway IPFS</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li><p>Gere arquivos estáticos</p>
+</li>
+<li><p>Implantação</p>
+</li>
+</ol>
+<p>Para precauções relacionadas à implantação específica, você pode consultar [nossa documentação] (<a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3/tree/develop/docs/zh_CN/start.md">https://github.com/NaturalSelectionLabs/hexo-deployer-rss3/tree/develop/docs/zh_CN/start.md</a>).</p>
+<h2 id="Outros-Metodos"><a href="#Outros-Metodos" class="headerlink" title="Outros Métodos"></a>Outros Métodos</h2><p>Todos os arquivos gerados são salvos no diretório <code>public</code>. Você pode copiá-los para onde quiser.</p>

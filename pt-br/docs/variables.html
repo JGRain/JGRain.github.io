@@ -1,0 +1,311 @@
+<hr>
+<h2 id="title-Variaveis"><a href="#title-Variaveis" class="headerlink" title="title: Variáveis"></a>title: Variáveis</h2><p>{% youtube T9oAax-IRw0 %}</p>
+<h3 id="Variaveis-Globais"><a href="#Variaveis-Globais" class="headerlink" title="Variáveis Globais"></a>Variáveis Globais</h3><table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Descrição</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>site</code></td>
+<td>Informações do site.</td>
+<td><code>object</code>; veja <a href="#Variaveis-do-Site">Variáveis do Site</a></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td>Informações específicas da página e  variáveis personalizadas definidas no front-matter.</td>
+<td><code>object</code>; veja <a href="#Variaveis-da-Pagina">Variáveis da Página</a></td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>Configuração do site.</td>
+<td><code>object</code> (arquivo <code>_config</code> do seu site)</td>
+</tr>
+<tr>
+<td><code>theme</code></td>
+<td>Configuração do tema. Herda a configuração do site.</td>
+<td><code>object</code> (arquivo <code>_config</code> do seu tema)</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Caminho da página atual</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>URL completa da página atual</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>env</code></td>
+<td>Variáveis de ambiente</td>
+<td>???</td>
+</tr>
+</tbody></table>
+<p>{% note warn %}<br>Lodash has been removed from global variables since Hexo 5.0.0. <a href="https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore">You-Dont-Need-Lodash-Underscore</a> might be helpful for your migration.<br>{% endnote %}</p>
+<h3 id="Variaveis-do-Site"><a href="#Variaveis-do-Site" class="headerlink" title="Variáveis do Site"></a>Variáveis do Site</h3><table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Descrição</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>site.posts</code></td>
+<td>Todos as postagens</td>
+<td><code>array</code> de objetos <code>post</code></td>
+</tr>
+<tr>
+<td><code>site.pages</code></td>
+<td>Todas as páginas</td>
+<td><code>array</code> de objetos <code>page</code></td>
+</tr>
+<tr>
+<td><code>site.categories</code></td>
+<td>Todas as categorias</td>
+<td><code>array</code> de ???</td>
+</tr>
+<tr>
+<td><code>site.tags</code></td>
+<td>Todas as tags</td>
+<td><code>array</code> de ???</td>
+</tr>
+</tbody></table>
+<h3 id="Variaveis-da-Pagina"><a href="#Variaveis-da-Pagina" class="headerlink" title="Variáveis da Página"></a>Variáveis da Página</h3><p><strong>Artigo (<code>page</code>)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Descrição</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.title</code></td>
+<td>Título do artigo</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.date</code></td>
+<td>Data de criação do artigo</td>
+<td><a href="http://momentjs.com/">Moment.js</a> objeto</td>
+</tr>
+<tr>
+<td><code>page.updated</code></td>
+<td>Data da última atualização do artigo</td>
+<td><a href="http://momentjs.com/">Moment.js</a> object</td>
+</tr>
+<tr>
+<td><code>page.comments</code></td>
+<td>Comentário habilitado ou não</td>
+<td><code>boolean</code></td>
+</tr>
+<tr>
+<td><code>page.layout</code></td>
+<td>Nome do layout</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.content</code></td>
+<td>O conteúdo completo processado do artigo</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.excerpt</code></td>
+<td>Trecho do artigo</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.more</code></td>
+<td>Conteúdo exceto trecho do artigo</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.source</code></td>
+<td>O caminho do arquivo de fontes</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.full_source</code></td>
+<td>Caminho completo do arquivo de fontes</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.path</code></td>
+<td>A URL do artigo sem a URL raiz. Usamos geralmente <code>url_for(page.path)</code> no tema.</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.permalink</code></td>
+<td>URL completa do artigo</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.prev</code></td>
+<td>A postagem anterior, <code>null</code> se for a primeira postagem</td>
+<td>???</td>
+</tr>
+<tr>
+<td><code>page.next</code></td>
+<td>A próxima postagem, <code>null</code> se for a última postagem</td>
+<td>???</td>
+</tr>
+<tr>
+<td><code>page.raw</code></td>
+<td>Os dados brutos do artigo</td>
+<td>???</td>
+</tr>
+<tr>
+<td><code>page.photos</code></td>
+<td>As fotos do artigo (Usado em postagens de galeria)</td>
+<td>array de ???</td>
+</tr>
+<tr>
+<td><code>page.link</code></td>
+<td>O link externo do artigo (Usado em postagens de link)</td>
+<td><code>string</code></td>
+</tr>
+</tbody></table>
+<p><strong>Post (<code>post</code>):</strong> O mesmo que o layout <code>page</code> mas adicione as seguintes variáveis.</p>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Descrição</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.published</code></td>
+<td>Verdadeiro se a postagem não for um rascunho</td>
+<td><code>boolean</code></td>
+</tr>
+<tr>
+<td><code>page.categories</code></td>
+<td>Todas as categorias da postagem</td>
+<td><code>array</code> de ???</td>
+</tr>
+<tr>
+<td><code>page.tags</code></td>
+<td>Todas as tags da postagem</td>
+<td><code>array</code> de ???</td>
+</tr>
+</tbody></table>
+<p><strong>Home (<code>index</code>)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Descrição</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.per_page</code></td>
+<td>Postagens exibidas por página</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.total</code></td>
+<td>Número total de páginas</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.current</code></td>
+<td>Número da página atual</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.current_url</code></td>
+<td>A URL da página atual</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.posts</code></td>
+<td>Posts in this page (<a href="https://hexojs.github.io/warehouse/">Data Model</a>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>page.prev</code></td>
+<td>Número da página anterior. <code>0</code> se a página atual for a primeira.</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.prev_link</code></td>
+<td>A URL da página anterior. <code>&#39;&#39;</code> se a página atual for a primeira.</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.next</code></td>
+<td>Número da próxima página. <code>0</code> se a página atual for a última.</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.next_link</code></td>
+<td>A URL da próxima página. <code>&#39;&#39;</code> se a página atual for a última.</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.path</code></td>
+<td>A URL da página atual sem URL raiz. Costumamos usar <code>url_for(page.path)</code> no tema.</td>
+<td><code>string</code></td>
+</tr>
+</tbody></table>
+<p><strong>Arquivo (<code>archive</code>):</strong> O mesmo que o layout do <code>index</code>, mas adicione as seguintes variáveis.</p>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Descrição</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.archive</code></td>
+<td>Igual a <code>true</code></td>
+<td><code>boolean</code></td>
+</tr>
+<tr>
+<td><code>page.year</code></td>
+<td>Ano do arquivo (4 - dígitos)</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.month</code></td>
+<td>Mês do arquivo (2 dígitos sem zeros à esquerda)</td>
+<td><code>number</code></td>
+</tr>
+</tbody></table>
+<p><strong>Categoria (<code>category</code>):</strong> O mesmo que o layout do <code>index</code> mas adicione as seguintes variáveis.</p>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Descrição</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.category</code></td>
+<td>Nome da categoria</td>
+<td><code>string</code></td>
+</tr>
+</tbody></table>
+<p><strong>Tag (<code>tag</code>):</strong> O mesmo que o layout do <code>index</code> mas adicione as seguintes variáveis.</p>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Descrição</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.tag</code></td>
+<td>Nome da tag</td>
+<td><code>string</code></td>
+</tr>
+</tbody></table>

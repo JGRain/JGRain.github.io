@@ -1,0 +1,47 @@
+<hr>
+<h2 id="title-Plugins"><a href="#title-Plugins" class="headerlink" title="title: Plugins"></a>title: Plugins</h2><p>Hexo has a powerful plugin system, which makes it easy to extend functions without modifying the source code of the core module. There are two kinds of plugins in Hexo:</p>
+<h3 id="Script"><a href="#Script" class="headerlink" title="Script"></a>Script</h3><p>If your plugin is relatively simple, it’s recommended to use a script. All you need to do is put your JavaScript files in the <code>scripts</code> folder and Hexo will load them during initialization.</p>
+<h3 id="Plugin"><a href="#Plugin" class="headerlink" title="Plugin"></a>Plugin</h3><p>If your code is complicated or if you want to publish it to the NPM registry, we recommend using a plugin. First, create a folder in the <code>node_modules</code> folder. The name of this folder must begin with <code>hexo-</code> or Hexo will ignore it.</p>
+<p>Your new folder must contain at least two files: one containing the actual JavaScript code and one <code>package.json</code> file that describes the purpose of the plugin and sets its dependencies.</p>
+<pre><code class="plain">.
+├── index.js
+└── package.json
+</code></pre>
+<p>At the very least, you should set the <code>name</code>, <code>version</code> and <code>main</code> entries in <code>package.json</code>. For example:</p>
+<pre><code class="json">{
+  &quot;name&quot;: &quot;hexo-my-plugin&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;main&quot;: &quot;index&quot;
+}
+</code></pre>
+<p>You’ll also need to list your plugin as a dependency in the root <code>package.json</code> of your hexo instance in order for Hexo to detect and load it.</p>
+<h3 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h3><p>You can make use of the official tools provided by Hexo to accelerate development:</p>
+<ul>
+<li><a href="https://github.com/hexojs/hexo-fs">hexo-fs</a>：File IO</li>
+<li><a href="https://github.com/hexojs/hexo-util">hexo-util</a>：Utilities</li>
+<li><a href="https://github.com/hexojs/hexo-i18n">hexo-i18n</a>：Localization (i18n)</li>
+<li><a href="https://github.com/hexojs/hexo-pagination">hexo-pagination</a>：Generate pagination data</li>
+</ul>
+<h3 id="Publishing"><a href="#Publishing" class="headerlink" title="Publishing"></a>Publishing</h3><p>When your plugin is ready, you may consider publishing it to the <a href="/plugins">plugin list</a> to invite other people to start using it. Publishing your own plugins is very similar to <a href="contributing.html#Updating_Documentation">updating documentation</a>.</p>
+<ol>
+<li><p>Fork <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a></p>
+</li>
+<li><p>Clone the repository to your computer and install dependencies.</p>
+<p> {% code %}<br> $ git clone <a href="https://github.com/">https://github.com/</a><username>&#x2F;site.git<br> $ cd site<br> $ npm install<br> {% endcode %}</p>
+</li>
+<li><p>Edit <code>source/_data/plugins.yml</code> and add your plugin. For example:</p>
+<p> {% code %}</p>
+<ul>
+<li>name: hexo-server<br>description: Server module for Hexo.<br>link: <a href="https://github.com/hexojs/hexo-server">https://github.com/hexojs/hexo-server</a><br>tags:<ul>
+<li>official</li>
+<li>server</li>
+<li>console<br> {% endcode %}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Push the branch.</p>
+</li>
+<li><p>Create a pull request and describe the change.</p>
+</li>
+</ol>

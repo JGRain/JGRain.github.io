@@ -1,0 +1,42 @@
+<hr>
+<h2 id="title-Renderizacao"><a href="#title-Renderizacao" class="headerlink" title="title: Renderização"></a>title: Renderização</h2><p>Existem dois métodos para renderizar arquivos ou strings no Hexo: o método assíncrono <code>hexo.render.render</code> e o método síncrono <code>hexo.render.renderSync</code>. Os dois métodos são bastante semelhantes, desta forma, apenas o método <code>hexo.render.render</code> assíncrono será um pouco mais discutido nos parágrafos abaixo.</p>
+<h2 id="Renderizar-uma-String"><a href="#Renderizar-uma-String" class="headerlink" title="Renderizar uma String"></a>Renderizar uma String</h2><p>Ao renderizar uma string, você deve especificar uma <code>engine</code> para permitir que o Hexo conheça o mecanismo de renderização que deverá ser  usado.</p>
+<pre><code class="js">hexo.render.render({text: &#39;example&#39;, engine: &#39;swig&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="Renderizar-um-Arquivo"><a href="#Renderizar-um-Arquivo" class="headerlink" title="Renderizar um Arquivo"></a>Renderizar um Arquivo</h2><p>Ao renderizar um arquivo, não é necessário especificar uma <code>engine</code> porque o Hexo detectará automaticamente o mecanismo de renderização mais apropriado com base na extensão do arquivo. Mas se for a caso, você também pode definir explicitamente a <code>engine</code>.</p>
+<pre><code class="js">hexo.render.render({path: &#39;path/to/file.swig&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="Opcoes-de-Renderizacao"><a href="#Opcoes-de-Renderizacao" class="headerlink" title="Opções de Renderização"></a>Opções de Renderização</h2><p>Você pode passar um conjunto de opções em formato de objeto no segundo argumento.</p>
+<pre><code class="js">hexo.render.render({text: &#39;&#39;}, {foo: &#39;foo&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="Filtros-after-render"><a href="#Filtros-after-render" class="headerlink" title="Filtros after_render"></a>Filtros after_render</h2><p>Quando a renderização estiver completa, o Hexo executará os filtros <code>after_render</code> correspondentes. Por exemplo, podemos usar este recurso para implementar um minificador para arquivos JavaScript.</p>
+<pre><code class="js">var UglifyJS = require(&#39;uglify-js&#39;);
+
+hexo.extend.filter.register(&#39;after_render:js&#39;, function(str, data){
+  var result = UglifyJS.minify(str);
+  return result.code;
+});
+</code></pre>
+<h2 id="Verificar-se-um-Arquivo-e-Renderizavel"><a href="#Verificar-se-um-Arquivo-e-Renderizavel" class="headerlink" title="Verificar se um Arquivo é Renderizável"></a>Verificar se um Arquivo é Renderizável</h2><p>Você pode usar o método <code>isRenderable</code> ou <code>isRenderableSync</code> para verificar se um caminho de arquivo é renderizável. O retorno do método será <code>true</code> apenas se um renderizador correspondente for registrado.</p>
+<pre><code class="js">hexo.render.isRenderable(&#39;layout.swig&#39;) // true
+hexo.render.isRenderable(&#39;image.png&#39;) // false
+</code></pre>
+<h2 id="Obter-a-Extensao-de-Saida"><a href="#Obter-a-Extensao-de-Saida" class="headerlink" title="Obter a Extensão de Saída"></a>Obter a Extensão de Saída</h2><p>Use o método <code>getOutput</code> para obter a extensão da saída renderizada. Se um arquivo não foi renderizado, o método retornará uma string vazia.</p>
+<pre><code class="js">hexo.render.getOutput(&#39;layout.swig&#39;) // html
+hexo.render.getOutput(&#39;image.png&#39;) // &#39;&#39;&#39;
+</code></pre>
+<h2 id="Disable-Nunjucks-tags"><a href="#Disable-Nunjucks-tags" class="headerlink" title="Disable Nunjucks tags"></a>Disable Nunjucks tags</h2><p>If you are not using a <a href="/docs/tag-plugins">tag plugin</a> and want to use <code>{{ }}</code> or <code>{% %}</code> in your post without using content <a href="/docs/troubleshooting#Escape-Contents">escaping</a>, you can disable processing of Nunjucks tag in existing renderer by:</p>
+<pre><code class="js">// following example only applies to &#39;.md&#39; file extension
+// you may need to cover other extensions, e.g. &#39;.markdown&#39;, &#39;.mkd&#39;, etc
+const renderer = hexo.render.renderer.get(&#39;md&#39;)
+if (renderer) {
+  renderer.disableNunjucks = true
+  hexo.extend.renderer.register(&#39;md&#39;, &#39;html&#39;, renderer)
+}
+</code></pre>

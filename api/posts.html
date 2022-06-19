@@ -1,0 +1,108 @@
+<hr>
+<h2 id="title-Posts"><a href="#title-Posts" class="headerlink" title="title: Posts"></a>title: Posts</h2><h2 id="Create-a-Post"><a href="#Create-a-Post" class="headerlink" title="Create a Post"></a>Create a Post</h2><pre><code class="js">hexo.post.create(data, replace);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>Data</td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>Replace existing files</td>
+</tr>
+</tbody></table>
+<p>The attributes of a post can be defined in <code>data</code>. The table below is not exhaustive. Additional attributes may be appended to the front-matter.</p>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>Title</td>
+</tr>
+<tr>
+<td><code>slug</code></td>
+<td>URL</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>Layout. Defaults to the <code>default_layout</code> setting.</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Path. Hexo builds the post path based on the <code>new_post_path</code> setting by default.</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Date. Defaults to the current date.</td>
+</tr>
+</tbody></table>
+<h2 id="Publish-a-Draft"><a href="#Publish-a-Draft" class="headerlink" title="Publish a Draft"></a>Publish a Draft</h2><pre><code class="js">hexo.post.publish(data, replace);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>Data</td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>Replace existing files</td>
+</tr>
+</tbody></table>
+<p>The attributes of a post can be defined in <code>data</code>. The table below is not exhaustive. Additional attributes may be appended to the front-matter.</p>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>slug</code></td>
+<td>File name (Required)</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>Layout. Defaults to the <code>default_layout</code> setting.</td>
+</tr>
+</tbody></table>
+<h2 id="Render"><a href="#Render" class="headerlink" title="Render"></a>Render</h2><pre><code class="js">hexo.post.render(source, data);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source</code></td>
+<td>Full path of a file (Optional)</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Data</td>
+</tr>
+</tbody></table>
+<p>The data must contain the <code>content</code> attribute. If not, Hexo will try to read the original file. The execution steps of this function are as follows:</p>
+<ul>
+<li>Execute <code>before_post_render</code> filters</li>
+<li>Render with Markdown or other renderers (depending on the extension name)</li>
+<li>Render with <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a></li>
+<li>Execute <code>after_post_render</code> filters</li>
+</ul>

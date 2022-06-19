@@ -1,0 +1,46 @@
+<hr>
+<h2 id="title-外掛"><a href="#title-外掛" class="headerlink" title="title: 外掛"></a>title: 外掛</h2><p>Hexo 有強大的外掛系統，使您能輕鬆擴展功能而不用修改核心模組的原始碼。在 Hexo 中有兩種形式的外掛：</p>
+<h3 id="腳本（Scripts）"><a href="#腳本（Scripts）" class="headerlink" title="腳本（Scripts）"></a>腳本（Scripts）</h3><p>如果您的程式碼很簡單，建議您撰寫腳本，您只需要把 JavaScript 檔案放到 <code>scripts</code> 資料夾，在啟動時就會自動載入一次。</p>
+<h3 id="套件（Packages）"><a href="#套件（Packages）" class="headerlink" title="套件（Packages）"></a>套件（Packages）</h3><p>如果您的程式碼較複雜，或是您想要發佈到 NPM 上，建議您撰寫套件。首先，在 <code>node_modules</code> 資料夾中建立資料夾，資料夾名稱開頭必須為 <code>hexo-</code>，如此一來 Hexo 才會在啟動時載入。</p>
+<p>資料夾內至少要包含 2 個檔案：一個是主程式，另一個是 <code>package.json</code>，描述套件的用途和相依套件。</p>
+<pre><code class="plain">.
+├── index.js
+└── package.json
+</code></pre>
+<p><code>package.json</code> 中至少要包含 <code>name</code>, <code>version</code>, <code>main</code> 屬性，例如：</p>
+<pre><code class="json">{
+  &quot;name&quot;: &quot;hexo-my-plugin&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;main&quot;: &quot;index&quot;
+}
+</code></pre>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>您可善用 Hexo 提供的官方工具套件來加速開發：</p>
+<ul>
+<li><a href="https://github.com/hexojs/hexo-fs">hexo-fs</a>：檔案 IO</li>
+<li><a href="https://github.com/hexojs/hexo-util">hexo-util</a>：工具程式</li>
+<li><a href="https://github.com/hexojs/hexo-i18n">hexo-i18n</a>：本地化（i18n）</li>
+<li><a href="https://github.com/hexojs/hexo-pagination">hexo-pagination</a>：產生分頁資料</li>
+</ul>
+<h3 id="發佈"><a href="#發佈" class="headerlink" title="發佈"></a>發佈</h3><p>當您完成外掛後，可以考慮將它發佈到 <a href="/plugins">外掛列表</a>，讓更多人能夠使用您的外掛。發佈外掛的步驟和 <a href="contributing.html#%E6%9B%B4%E6%96%B0%E6%96%87%E4%BB%B6">更新文件</a> 非常類似。</p>
+<ol>
+<li><p>Fork <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a></p>
+</li>
+<li><p>把檔案庫（repository）複製到電腦上，並安裝相依套件。</p>
+<p> {% code %}<br> $ git clone <a href="https://github.com/">https://github.com/</a><username>&#x2F;site.git<br> $ cd site<br> $ npm install<br> {% endcode %}</p>
+</li>
+<li><p>編輯 <code>source/_data/plugins.yml</code>，在檔案中新增您的外掛，例如：</p>
+<p> {% code %}</p>
+<ul>
+<li>name: hexo-server<br>description: Server module for Hexo.<br>link: <a href="https://github.com/hexojs/hexo-server">https://github.com/hexojs/hexo-server</a><br>tags:<ul>
+<li>official</li>
+<li>server</li>
+<li>console<br> {% endcode %}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>推送（push）分支。</p>
+</li>
+<li><p>建立一個新的合併申請（pull request）。</p>
+</li>
+</ol>

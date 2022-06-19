@@ -1,0 +1,62 @@
+<hr>
+<h2 id="title-API"><a href="#title-API" class="headerlink" title="title: API"></a>title: API</h2><p>이 문서는 API에 대해 더 자세한 정보를 담고 있습니다. Hexo 소스 코드를 수정하길 원하는 사용자나 새로운 플러그인을 작성하고자 하는 사용자에게 많은 도움이 될 것입니다. 당신이 Hexo의 기본 사용법에 대해 흥미가 있다면 <a href="../docs">docs</a>를 확인해보세요.</p>
+<p>이 문서는 Hexo 3 이상의 버전에 맞추어 작성되었습니다.</p>
+<h2 id="초기화"><a href="#초기화" class="headerlink" title="초기화"></a>초기화</h2><p>우선, 우리는 Hexo 인스턴스를 생성할 필요가 있습니다. 새로운 인스턴스는 두 개의 인자를 갖게 됩니다. 웹 사이트의 루트 디렉토리를 의미하는 <code>base_dir</code>와 초기화 옵션을 가지고 있는 객체입니다. 다음으로, <code>init</code> 메소드를 호출함으로써 이 인스턴스를 초기화 합니다. 초기화 시 Hexo는 설정값과 플러그인을 불러옵니다.</p>
+<pre><code class="js">var Hexo = require(&#39;hexo&#39;);
+var hexo = new Hexo(process.cwd(), {});
+
+hexo.init().then(function(){
+  // ...
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>옵션</th>
+<th>설명</th>
+<th>기본값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>debug</code></td>
+<td>디버그 모드를 활성화 합니다. 디버그 메시지는 터미널에 출력되고 루트 디렉토리의 <code>debug.log</code>파일에 저장됩니다.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>safe</code></td>
+<td>보호 모드를 활성화 합니다. 플러그인을 불러오지 않습니다.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>silent</code></td>
+<td>조용한 모드를 활성화 합니다. 어떠한 메시지도 터미널에 표시하지 않습니다.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>환경 설정 파일의 경로를 지정합니다.</td>
+<td><code>_config.yml</code></td>
+</tr>
+</tbody></table>
+<h2 id="파일-불러오기"><a href="#파일-불러오기" class="headerlink" title="파일 불러오기"></a>파일 불러오기</h2><p>Hexo는 파일을 불러오기 위해 두 가지의 메소드를 지원합니다. <code>load</code>와 <code>watch</code> 입니다. <code>load</code>는 <code>source</code> 테마 데이터를 포함하여 폴더 안의 모든 파일을 불러옵니다. <code>watch</code>도 동일한 동작을 수행하지만 파일이 수정되는 것을 감지(watching)합니다.</p>
+<p>두 메소드 모드 파일의 목록을 불러와서 적절한 프로세서로 전달합니다. 모든 파일들이 처리된 후, 경로(route)를 생성하기 위해 generator들을 호출합니다.</p>
+<pre><code class="js">hexo.load().then(function(){
+  // ...
+});
+
+hexo.watch().then(function(){
+  // You can call hexo.unwatch() later to stop watching.
+});
+</code></pre>
+<h2 id="명령어의-실행"><a href="#명령어의-실행" class="headerlink" title="명령어의 실행"></a>명령어의 실행</h2><p>Hexo 인스턴스의 <code>call</code> 메소드를 통해 모든 콘솔 명령어를 호출할 수 있습니다. 호출할 때는 콘솔 명령어와 옵션 두 개의 인자를 포함합니다. 각각의 콘솔 명령어마다 서로 다른 옵션을 가지고 있습니다.</p>
+<pre><code class="js">hexo.call(&#39;generate&#39;, {}).then(function(){
+  // ...
+});
+</code></pre>
+<h2 id="종료"><a href="#종료" class="headerlink" title="종료"></a>종료</h2><p><code>exit</code>를 호출하여 콘솔 명령어의 성공적&#x2F;비성공적 종료를 할 수 있습니다. 이 명령어를 통해 Hexo를 정상적으로 종료하고 데이터베이스를 저장한다거나 하는 중요한 동작들을 마무리할 수 있습니다.</p>
+<pre><code class="js">hexo.call(&#39;generate&#39;).then(function(){
+  return hexo.exit();
+}).catch(function(err){
+  return hexo.exit(err);
+});
+</code></pre>

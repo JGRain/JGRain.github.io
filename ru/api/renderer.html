@@ -1,0 +1,73 @@
+<hr>
+<h2 id="title-Рендер"><a href="#title-Рендер" class="headerlink" title="title: Рендер"></a>title: Рендер</h2><p>Рендер используется для создания содержимого.</p>
+<h2 id="Краткий-обзор"><a href="#Краткий-обзор" class="headerlink" title="Краткий обзор"></a>Краткий обзор</h2><pre><code class="js">hexo.extend.renderer.register(name, output, function(data, options){
+  // ...
+}, sync);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Аргумент</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>Вводится расширение входного файла (нижний регистр, без ведущей <code>.</code>)</td>
+</tr>
+<tr>
+<td><code>output</code></td>
+<td>Выводится расширение входного файла (нижний регистр, без ведущей <code>.</code>)</td>
+</tr>
+<tr>
+<td><code>sync</code></td>
+<td>Режим синхронизации</td>
+</tr>
+</tbody></table>
+<p>В функцию рендера передаются два аргумента:</p>
+<table>
+<thead>
+<tr>
+<th>Аргумент</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>Включает два атрибута: путь к файлу <code>path</code> и содержимое файла  <code>text</code>. Переменная <code>path</code> не является обязательной.</td>
+</tr>
+<tr>
+<td><code>option</code></td>
+<td>Опции</td>
+</tr>
+</tbody></table>
+<h2 id="Пример"><a href="#Пример" class="headerlink" title="Пример"></a>Пример</h2><h3 id="Асинхронный-режим"><a href="#Асинхронный-режим" class="headerlink" title="Асинхронный режим"></a>Асинхронный режим</h3><pre><code class="js">var stylus = require(&#39;stylus&#39;);
+
+// Обратный вызов
+hexo.extend.renderer.register(&#39;styl&#39;, &#39;css&#39;, function(data, options, callback){
+  stylus(data.text).set(&#39;filename&#39;, data.path).render(callback);
+});
+
+// Запрос
+hexo.extend.renderer.register(&#39;styl&#39;, &#39;css&#39;, function(data, options){
+  return new Promise(function(resolve, reject){
+    resolve(&#39;test&#39;);
+  });
+});
+</code></pre>
+<h3 id="Синхронный-режим"><a href="#Синхронный-режим" class="headerlink" title="Синхронный режим"></a>Синхронный режим</h3><pre><code class="js">var ejs = require(&#39;ejs&#39;);
+
+hexo.extend.renderer.register(&#39;ejs&#39;, &#39;html&#39;, function(data, options){
+  options.filename = data.path;
+  return ejs.render(data.text, options);
+}, true);
+</code></pre>
+<h3 id="Disable-Nunjucks-tags"><a href="#Disable-Nunjucks-tags" class="headerlink" title="Disable Nunjucks tags"></a>Disable Nunjucks tags</h3><p>Nunjucks tags <code>{{ }}</code> or <code>{% %}</code> (utilized by <a href="/docs/tag-plugins">tag plugin</a>) are processed by default, to disable:</p>
+<pre><code class="js">function lessFn(data, options) {
+  // do something
+}
+
+lessFn.disableNunjucks = true
+
+hexo.extend.renderer.register(&#39;less&#39;, &#39;css&#39;, lessFn);
+</code></pre>

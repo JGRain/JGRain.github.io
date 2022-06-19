@@ -1,0 +1,433 @@
+<hr>
+<h2 id="title-Configuration"><a href="#title-Configuration" class="headerlink" title="title: Configuration"></a>title: Configuration</h2><p><code>_config.yml</code> 파일의 사이트 환경 설정을 수정할 수 있습니다.</p>
+<h3 id="Site"><a href="#Site" class="headerlink" title="Site"></a>Site</h3><table>
+<thead>
+<tr>
+<th>설정</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>웹 사이트의 제목</td>
+</tr>
+<tr>
+<td><code>subtitle</code></td>
+<td>웹 사이트의 부제</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>웹 사이트에 대한 설명</td>
+</tr>
+<tr>
+<td><code>keywords</code></td>
+<td>The keywords of your website. Supports multiple values.</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>작성자 이름</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>웹 사이트의 주 사용언어. <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">2-lettter ISO-639-1 code</a> 참조. 기본값은 <code>en</code>.</td>
+</tr>
+<tr>
+<td><code>timezone</code></td>
+<td>웹 사이트에서 사용하는 timezone. Hexo는 기본적으로 PC의 시간값을 사용합니다. 사용 가능한 timezone의 종류는 <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">여기</a>에서 확인할 수 있습니다. 다음과 같은 형식으로 사용하세요. <code>America/New_York</code>, <code>Japan</code>, <code>UTC</code>.</td>
+</tr>
+</tbody></table>
+<h3 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h3><table>
+<thead>
+<tr>
+<th>설정</th>
+<th>설명</th>
+<th>기본값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>url</code></td>
+<td>웹 사이트의 URL, must starts with <code>http://</code> or <code>https://</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>웹 사이트의 루트 디렉토리</td>
+<td><code>url&#39;s pathname</code></td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>게시글의 <a href="permalinks.html">permalink</a> 형식</td>
+<td><code>:year/:month/:day/:title/</code></td>
+</tr>
+<tr>
+<td><code>permalink_defaults</code></td>
+<td>Permalink 각 부분(segment)의 기본값</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pretty_urls</code></td>
+<td>Rewrite the <a href="variables.html"><code>permalink</code></a> variables to pretty URLs</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_index</code></td>
+<td>Trailing <code>index.html</code>, set to <code>false</code> to remove it</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_html</code></td>
+<td>Trailing <code>.html</code>, set to <code>false</code> to remove it (<em>does not apply to trailing <code>index.html</code></em>)</td>
+<td><code>true</code></td>
+</tr>
+</tbody></table>
+<p>{% note info Website in subdirectory %}<br>당신의 웹 사이트가 <code>http://example.org/blog</code>와 같이 서브디렉토리에 있다면 <code>url</code>은 <code>http://example.org/blog</code>고 설정하고 <code>root</code>는 <code>/blog/</code>로 설정하세요.<br>{% endnote %}</p>
+<h3 id="Directory"><a href="#Directory" class="headerlink" title="Directory"></a>Directory</h3><table>
+<thead>
+<tr>
+<th>설정</th>
+<th>설명</th>
+<th>기본값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source_dir</code></td>
+<td>컨텐츠들이 저장되어 있는 소스 폴더</td>
+<td><code>source</code></td>
+</tr>
+<tr>
+<td><code>public_dir</code></td>
+<td>생성된 정적 사이트들이 저장될 공용 폴더</td>
+<td><code>public</code></td>
+</tr>
+<tr>
+<td><code>tag_dir</code></td>
+<td>태그 디렉토리</td>
+<td><code>tags</code></td>
+</tr>
+<tr>
+<td><code>archive_dir</code></td>
+<td>저장소 디렉토리</td>
+<td><code>archives</code></td>
+</tr>
+<tr>
+<td><code>category_dir</code></td>
+<td>카테고리 디렉토리</td>
+<td><code>categories</code></td>
+</tr>
+<tr>
+<td><code>code_dir</code></td>
+<td>Code 디렉토리</td>
+<td><code>downloads/code</code></td>
+</tr>
+<tr>
+<td><code>i18n_dir</code></td>
+<td>i18n 디렉토리</td>
+<td><code>:lang</code></td>
+</tr>
+<tr>
+<td><code>skip_render</code></td>
+<td>렌더링하지 않을 경로. 경로 매칭을 위해 <a href="https://github.com/micromatch/micromatch#extended-globbing">glob expressions</a>를 사용할 수 있습니다.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Writing"><a href="#Writing" class="headerlink" title="Writing"></a>Writing</h3><table>
+<thead>
+<tr>
+<th>설정</th>
+<th>설명</th>
+<th>기본값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>new_post_name</code></td>
+<td>새 포스트의 파일명 형식</td>
+<td><code>:title.md</code></td>
+</tr>
+<tr>
+<td><code>default_layout</code></td>
+<td>기본 레이아웃</td>
+<td><code>post</code></td>
+</tr>
+<tr>
+<td><code>titlecase</code></td>
+<td>제목을 제목에 맞는 대&#x2F;소문자로 변경할 것인지 선택</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>external_link</code></td>
+<td>외부 링크를 새 탭에서 열 것인지 선택</td>
+<td></td>
+</tr>
+<tr>
+<td><code>external_link.enable</code></td>
+<td>외부 링크를 새 탭에서 열 것인지 선택</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>external_link.field</code></td>
+<td>Applies to the whole <code>site</code> or <code>post</code> only</td>
+<td><code>site</code></td>
+</tr>
+<tr>
+<td><code>external_link.exclude</code></td>
+<td>Exclude hostname. Specify subdomain when applicable, including <code>www</code></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>filename_case</code></td>
+<td>파일명을 소문자(<code>1</code>) 또는 대문자(<code>2</code>)로 변경</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>render_drafts</code></td>
+<td>Draft 문서를 표시할 것인지 선택</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>post_asset_folder</code></td>
+<td><a href="asset-folders.html">Asset 폴더</a>를 활성화 할 것인지 선택</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>relative_link</code></td>
+<td>루트 폴더에 대한 상대 경로로 링크를 만들 것인지 선택</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>future</code></td>
+<td>미래의 포스트를 표시할 것인지 선택</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>Code block의 설정, see <a href="/docs/syntax-highlight#Highlight-js">Highlight.js</a> section for usage guide</td>
+<td></td>
+</tr>
+<tr>
+<td><code>prismjs</code></td>
+<td>Code block의 설정, see <a href="/docs/syntax-highlight#PrismJS">PrismJS</a> section for usage guide</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Category-amp-Tag"><a href="#Category-amp-Tag" class="headerlink" title="Category &amp; Tag"></a>Category &amp; Tag</h3><table>
+<thead>
+<tr>
+<th>설정</th>
+<th>설명</th>
+<th>기본값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>default_category</code></td>
+<td>기본 분류</td>
+<td><code>uncategorized</code></td>
+</tr>
+<tr>
+<td><code>category_map</code></td>
+<td>분류 목록</td>
+<td></td>
+</tr>
+<tr>
+<td><code>tag_map</code></td>
+<td>태그 목록</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Date-x2F-Time-format"><a href="#Date-x2F-Time-format" class="headerlink" title="Date &#x2F; Time format"></a>Date &#x2F; Time format</h3><p>Hexo는 날짜 처리 시 <a href="http://momentjs.com/">Moment.js</a>를 사용합니다.</p>
+<table>
+<thead>
+<tr>
+<th>설정</th>
+<th>설명</th>
+<th>기본값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>date_format</code></td>
+<td>날짜 형식</td>
+<td><code>YYYY-MM-DD</code></td>
+</tr>
+<tr>
+<td><code>time_format</code></td>
+<td>시간 형식</td>
+<td><code>HH:mm:ss</code></td>
+</tr>
+<tr>
+<td><code>updated_option</code></td>
+<td>The [<code>updated</code>](&#x2F;ko&#x2F;docs&#x2F;variables#페이지 변수) value to used when not provided in the front-matter</td>
+<td><code>mtime</code></td>
+</tr>
+</tbody></table>
+<p>{% note info updated_option %}<br><code>updated_option</code> controls the <code>updated</code> value when not provided in the front-matter:</p>
+<ul>
+<li><code>mtime</code>: Use file modification date as <code>updated</code>. It is the default behavior of Hexo since 3.0.0</li>
+<li><code>date</code>: Use <code>date</code> as <code>updated</code>. Typically used with Git workflow when file modification date could be different.</li>
+<li><code>empty</code>: Simply drop <code>updated</code> when not provided. May not be compatible with most themes and plugins.</li>
+</ul>
+<p><code>use_date_for_updated</code> is deprecated and will be removed in next major version. Please use <code>updated_option: &#39;date&#39;</code> instead.<br>{% endnote %}</p>
+<h3 id="Pagination"><a href="#Pagination" class="headerlink" title="Pagination"></a>Pagination</h3><table>
+<thead>
+<tr>
+<th>설정</th>
+<th>설명</th>
+<th>기본값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>per_page</code></td>
+<td>하나의 페이지에 표시할 포스트의 개수. <code>0</code>이면 pagination을 표시하지 않습니다.</td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td><code>pagination_dir</code></td>
+<td>Pagination 디렉토리</td>
+<td><code>page</code></td>
+</tr>
+</tbody></table>
+<h3 id="Extensions"><a href="#Extensions" class="headerlink" title="Extensions"></a>Extensions</h3><table>
+<thead>
+<tr>
+<th>설정</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>theme</code></td>
+<td>테마명. <code>false</code>라면 테마를 끕니다.</td>
+</tr>
+<tr>
+<td><code>deploy</code></td>
+<td>Deployment 설정</td>
+</tr>
+<tr>
+<td><code>meta_generator</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#Attributes">Meta generator</a> tag. <code>false</code> disables injection of the tag.</td>
+</tr>
+</tbody></table>
+<h3 id="Include-x2F-Exclude-Files-or-Folders"><a href="#Include-x2F-Exclude-Files-or-Folders" class="headerlink" title="Include&#x2F;Exclude Files or Folders"></a>Include&#x2F;Exclude Files or Folders</h3><p>Use the following options to explicitly process or ignore certain files&#x2F;folders. Support <a href="https://github.com/micromatch/micromatch#extended-globbing">glob expressions</a> for path matching.</p>
+<p><code>include</code> and <code>exclude</code> options only apply to the <code>source/</code> folder, whereas <code>ignore</code> option applies to all folders.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>include</code></td>
+<td>Include hidden files (including files&#x2F;folders with a name that start with an underscore, with an exception*)</td>
+</tr>
+<tr>
+<td><code>exclude</code></td>
+<td>Exclude files&#x2F;folders</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>Ignore files&#x2F;folders</td>
+</tr>
+</tbody></table>
+<p>Examples:</p>
+<pre><code class="yaml"># Include/Exclude Files/Folders
+include:
+  - &quot;.nojekyll&quot;
+  # Include &#39;source/css/_typing.css&#39;.
+  - &quot;css/_typing.css&quot;
+  # Include any file in &#39;source/_css/&#39;.
+  - &quot;_css/*&quot;
+  # Include any file and subfolder in &#39;source/_css/&#39;.
+  - &quot;_css/**/*&quot;
+
+exclude:
+  # Exclude &#39;source/js/test.js&#39;.
+  - &quot;js/test.js&quot;
+  # Exclude any file in &#39;source/js/&#39;.
+  - &quot;js/*&quot;
+  # Exclude any file and subfolder in &#39;source/js/&#39;.
+  - &quot;js/**/*&quot;
+  # Exclude any file with filename that starts with &#39;test&#39; in &#39;source/js/&#39;.
+  - &quot;js/test*&quot;
+  # Exclude any file with filename that starts with &#39;test&#39; in &#39;source/js/&#39; and its subfolders.
+  - &quot;js/**/test*&quot;
+  # Do not use this to exclude posts in the &#39;source/_posts/&#39;.
+  # Use skip_render for that. Or prepend an underscore to the filename.
+  # - &quot;_posts/hello-world.md&quot; # Does not work.
+
+ignore:
+  # Ignore any folder named &#39;foo&#39;.
+  - &quot;**/foo&quot;
+  # Ignore &#39;foo&#39; folder in &#39;themes/&#39; only.
+  - &quot;**/themes/*/foo&quot;
+  # Same as above, but applies to every subfolders of &#39;themes/&#39;.
+  - &quot;**/themes/**/foo&quot;
+</code></pre>
+<p>Each value in the list must be enclosed with single&#x2F;double quotes.</p>
+<p><code>include:</code> and <code>exclude:</code> do not apply to the <code>themes/</code> folder. Either use <code>ignore:</code> or alternatively, prepend an underscore to the file&#x2F;folder name to exclude.</p>
+<p>* Notable exception is the <code>source/_posts</code> folder, but any file or folder with a name that starts with an underscore under that folder would still be ignored. Using <code>include:</code> rule in that folder is not recommended.</p>
+<h3 id="Using-an-Alternate-Config"><a href="#Using-an-Alternate-Config" class="headerlink" title="Using an Alternate Config"></a>Using an Alternate Config</h3><p>A custom config file path can be specified by adding the <code>--config</code> flag to your <code>hexo</code> commands with a path to an alternate YAML or JSON config file, or a comma-separated list (no spaces) of multiple YAML or JSON files.</p>
+<pre><code class="bash"># use &#39;custom.yml&#39; in place of &#39;_config.yml&#39;
+$ hexo server --config custom.yml
+
+# use &#39;custom.yml&#39; &amp; &#39;custom2.json&#39;, prioritizing &#39;custom2.json&#39;
+$ hexo server --config custom.yml,custom2.json
+</code></pre>
+<p>Using multiple files combines all the config files and saves the merged settings to <code>_multiconfig.yml</code>. The later values take precedence. It works with any number of JSON and YAML files with arbitrarily deep objects. Note that <strong>no spaces are allowed in the list</strong>.</p>
+<p>For instance, in the above example if <code>foo: bar</code> is in <code>custom.yml</code>, but <code>&quot;foo&quot;: &quot;dinosaur&quot;</code> is in <code>custom2.json</code>, <code>_multiconfig.yml</code> will contain <code>foo: dinosaur</code>.</p>
+<h3 id="Alternate-Theme-Config"><a href="#Alternate-Theme-Config" class="headerlink" title="Alternate Theme Config"></a>Alternate Theme Config</h3><p>Hexo themes are independent projects, with separate <code>_config.yml</code> files.</p>
+<p>Instead of forking a theme, and maintaining a custom branch with your settings, you can configure it from somewhere else.</p>
+<p><strong><code>theme_config</code> in site’s primary configuration file</strong></p>
+<blockquote>
+<p>Supported since Hexo 2.8.2</p>
+</blockquote>
+<pre><code class="yml"># _config.yml
+theme: &quot;my-theme&quot;
+theme_config:
+  bio: &quot;My awesome bio&quot;
+  foo:
+    bar: &#39;a&#39;
+</code></pre>
+<pre><code class="yml"># themes/my-theme/_config.yml
+bio: &quot;Some generic bio&quot;
+logo: &quot;a-cool-image.png&quot;
+  foo:
+    baz: &#39;b&#39;
+</code></pre>
+<p>Resulting in theme configuration:</p>
+<pre><code class="json">{
+  bio: &quot;My awesome bio&quot;,
+  logo: &quot;a-cool-image.png&quot;,
+  foo: {
+    bar: &quot;a&quot;,
+    baz: &quot;b&quot;
+  }
+}
+</code></pre>
+<p><strong>dedicated <code>_config.[theme].yml</code> file</strong></p>
+<blockquote>
+<p>Supported since Hexo 5.0.0</p>
+</blockquote>
+<p>The file should be placed in your site folder, both <code>yml</code> and <code>json</code> are supported. <code>theme</code> inside <code>_config.yml</code> must be configured for Hexo to read <code>_config.[theme].yml</code></p>
+<pre><code class="yml"># _config.yml
+theme: &quot;my-theme&quot;
+</code></pre>
+<pre><code class="yml"># _config.my-theme.yml
+bio: &quot;My awesome bio&quot;
+foo:
+  bar: &#39;a&#39;
+</code></pre>
+<pre><code class="yml"># themes/my-theme/_config.yml
+bio: &quot;Some generic bio&quot;
+logo: &quot;a-cool-image.png&quot;
+  foo:
+    baz: &#39;b&#39;
+</code></pre>
+<p>Resulting in theme configuration:</p>
+<pre><code class="json">{
+  bio: &quot;My awesome bio&quot;,
+  logo: &quot;a-cool-image.png&quot;,
+  foo: {
+    bar: &quot;a&quot;,
+    baz: &quot;b&quot;
+  }
+}
+</code></pre>
+<p>{% note %}<br>We strongly recommends you to store your theme configuration in one place. But in case you have to store your theme configuration separately, those information is quite important: The <code>theme_config</code> inside site’s primary configuration file has the highest priority during merging, then the dedicated theme configuration file. the <code>_config.yml</code> file under the theme directory has the lowest priority.<br>{% endnote %}</p>

@@ -1,0 +1,71 @@
+<hr>
+<h2 id="title-API"><a href="#title-API" class="headerlink" title="title: API"></a>title: API</h2><p>This documentation provides more detailed information about the API and will be particularly helpful for people who want to modify the Hexo source code or write new plugins. If you are interested in more basic usage of Hexo, please refer to the <a href="../docs">docs</a> instead.</p>
+<p>Please note that this documentation is only valid for Hexo 3 and above.</p>
+<h2 id="Initialize"><a href="#Initialize" class="headerlink" title="Initialize"></a>Initialize</h2><p>First, we have to create a Hexo instance. A new instance takes two arguments: the root directory of the website, <code>base_dir</code>, and an object containing the initialization options. Next, we initialize this instance by calling the <code>init</code> method on it, which will then cause Hexo to load its configuration and plugins.</p>
+<pre><code class="js">var Hexo = require(&#39;hexo&#39;);
+var hexo = new Hexo(process.cwd(), {});
+
+hexo.init().then(function(){
+  // ...
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>debug</code></td>
+<td>Enable debug mode. Display debug messages in the terminal and save <code>debug.log</code> in the root directory.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>safe</code></td>
+<td>Enable safe mode. Don’t load any plugins.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>silent</code></td>
+<td>Enable silent mode. Don’t display any messages in the terminal.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>Specify the path of the configuration file.</td>
+<td><code>_config.yml</code></td>
+</tr>
+<tr>
+<td><code>draft</code> &#x2F; <code>drafts</code></td>
+<td>Enable to add drafts to the posts list.<br> example: when you use <code>hexo.locals.get(&#39;posts&#39;)</code></td>
+<td><code>render_drafts</code> of _config.yml</td>
+</tr>
+</tbody></table>
+<h2 id="Load-Files"><a href="#Load-Files" class="headerlink" title="Load Files"></a>Load Files</h2><p>Hexo provides two methods for loading files: <code>load</code> and <code>watch</code>. <code>load</code> is used for loading all files in the <code>source</code> folder as well as the theme data. <code>watch</code> does the same things <code>load</code> does, but will also start watching for file changes continuously.</p>
+<p>Both methods will load the list of files and pass them to the corresponding processors. After all files have been processed, they will call upon the generators to create the routes.</p>
+<pre><code class="js">hexo.load().then(function(){
+  // ...
+});
+
+hexo.watch().then(function(){
+  // You can call hexo.unwatch() later to stop watching.
+});
+</code></pre>
+<h2 id="Execute-Commands"><a href="#Execute-Commands" class="headerlink" title="Execute Commands"></a>Execute Commands</h2><p>Any console command can be called explicitly using the <code>call</code> method on the Hexo instance. Such a call takes two arguments: the name of the console command, and an options argument. Different options are available for the different console commands.</p>
+<pre><code class="js">hexo.call(&#39;generate&#39;, {}).then(function(){
+  // ...
+});
+</code></pre>
+<pre><code class="js">hexo.call(&#39;list&#39;, { _: [&#39;post&#39;] }).then(function() {
+  // ...
+})
+</code></pre>
+<h2 id="Exit"><a href="#Exit" class="headerlink" title="Exit"></a>Exit</h2><p>You should call the <code>exit</code> method upon successful or unsuccessful completion of a console command. This allows Hexo to exit gracefully and finish up important things such as saving the database.</p>
+<pre><code class="js">hexo.call(&#39;generate&#39;).then(function(){
+  return hexo.exit();
+}).catch(function(err){
+  return hexo.exit(err);
+});
+</code></pre>

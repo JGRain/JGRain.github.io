@@ -1,0 +1,17 @@
+<hr>
+<h2 id="title-Файлы-с-данными"><a href="#title-Файлы-с-данными" class="headerlink" title="title: Файлы с данными"></a>title: Файлы с данными</h2><p>Иногда вам может понадобиться использовать данные в шаблонах, которых непосредственно нет в ваших сообщениях, или захотите использовать данные в других местах. Для таких случаев в Hexo 3 введены новые файлы данных. Эта утилита загружает YAML или JSON файлы из исходной папки <code>source/_data</code>, поэтому можно использовать их на вашем сайте.</p>
+<p>Например, добавить <code>menu.yml</code> в папку <code>source/_data</code>.</p>
+<pre><code class="yaml">Home: /
+Gallery: /gallery/
+Archives: /archives/
+</code></pre>
+<p>Можно использовать их и в шаблонах:</p>
+<pre><code>&lt;% for (var link in site.data.menu) { %&gt;
+  &lt;a href=&quot;&lt;%= site.data.menu[link] %&gt;&quot;&gt; &lt;%= link %&gt; &lt;/a&gt;
+&lt;% } %&gt;
+</code></pre>
+<p>будет преобразовано в:</p>
+<pre><code>&lt;a href=&quot;/&quot;&gt; Home &lt;/a&gt;
+&lt;a href=&quot;/gallery/&quot;&gt; Gallery &lt;/a&gt;
+&lt;a href=&quot;/archives/&quot;&gt; Archives &lt;/a&gt;
+</code></pre>

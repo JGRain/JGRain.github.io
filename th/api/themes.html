@@ -1,0 +1,16 @@
+<hr>
+<h2 id="title-Themes"><a href="#title-Themes" class="headerlink" title="title: Themes"></a>title: Themes</h2><p><code>hexo.theme</code> สืบทอดจาก <a href="box.html">Box</a> และสร้าง template ได้</p>
+<h2 id="Get-a-View"><a href="#Get-a-View" class="headerlink" title="Get a View"></a>Get a View</h2><pre><code class="js">hexo.theme.getView(path);
+</code></pre>
+<h2 id="Set-a-View"><a href="#Set-a-View" class="headerlink" title="Set a View"></a>Set a View</h2><pre><code class="js">hexo.theme.setView(path, data);
+</code></pre>
+<h2 id="Remove-a-View"><a href="#Remove-a-View" class="headerlink" title="Remove a View"></a>Remove a View</h2><pre><code class="js">hexo.theme.removeView(path);
+</code></pre>
+<h2 id="View"><a href="#View" class="headerlink" title="View"></a>View</h2><p>view มีสองวิธี: <code>render</code> และ <code>renderSync</code> ทั้งสองวิธีนี้เหมือนกัน แต่ตัวแรกเป็น asynchronous และตัวหลังเป็น synchronous ที่นี่จะพูดถึงแต่ <code>render</code> เท่านั้นเพื่อเป็นความเรียบง่าย</p>
+<pre><code class="js">var view = hexo.theme.getView(&#39;layout.swig&#39;);
+
+view.render({foo: 1, bar: 2}).then(function(result){
+  // ...
+});
+</code></pre>
+<p>โดยวิธี <code>render</code> ผู้ใช้สามารถรัน template ด้วย renderer ที่เกี่ยวข้องและโหลด <a href="helper.html">helpers</a> เมื่อเสร็จการ rendering hexo จะค้นหา layout ของมัน ถ้า <code>layout</code> เป็น <code>false</code> หรือไม่มีอยู่ จะมีการตอบรับผลโดยตรง</p>

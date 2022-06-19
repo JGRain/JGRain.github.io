@@ -1,0 +1,199 @@
+<hr>
+<h2 id="title-Tag-Plugins"><a href="#title-Tag-Plugins" class="headerlink" title="title: Tag Plugins"></a>title: Tag Plugins</h2><p>태그 플러그인은 포스트의 태그와는 다릅니다. Octopress로부터 가져온 것으로 특별한 컨텐츠를 당신의 포스트에 빠르게 추가할 수 있도록 도와주는 유용한 방법입니다.</p>
+<p>Although you can write your posts in any formats, but the tag plugins will always be available and syntax remains the same.</p>
+<p><em>Tag plugins should not be wrapped inside Markdown syntax, e.g. <code>[]({% post_path lorem-ipsum %})</code> is not supported.</em></p>
+<h2 id="Block-Quote"><a href="#Block-Quote" class="headerlink" title="Block Quote"></a>Block Quote</h2><p>인용구를 post, 소스, 제목에 추가하기 위한 완벽한 방법입니다. 옵션으로 인용구의 원작자를 추가할 수도 있습니다.</p>
+<p><strong>Alias:</strong> quote</p>
+<pre><code>{% blockquote [author[, source]] [link] [source_link_title] %}
+content
+{% endblockquote %}
+</code></pre>
+<h3 id="예시"><a href="#예시" class="headerlink" title="예시"></a>예시</h3><p><strong>인자가 없는 일반 인용</strong></p>
+<pre><code>{% blockquote %}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote %}<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.<br>{% endblockquote %}</p>
+<p><strong>책 인용하기</strong></p>
+<pre><code>{% blockquote David Levithan, Wide Awake %}
+Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote David Levithan, Wide Awake %}<br>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.<br>{% endblockquote %}</p>
+<p><strong>Twitter 인용하기</strong></p>
+<pre><code>{% blockquote @DevDocs https://twitter.com/devdocs/status/356095192085962752 %}
+NEW: DevDocs now comes with syntax highlighting. http://devdocs.io
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote @DevDocs <a href="https://twitter.com/devdocs/status/356095192085962752">https://twitter.com/devdocs/status/356095192085962752</a> %}<br>NEW: DevDocs now comes with syntax highlighting. <a href="http://devdocs.io/">http://devdocs.io</a><br>{% endblockquote %}</p>
+<p><strong>웹 게시물 인용하기</strong></p>
+<pre><code>{% blockquote Seth Godin http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html Welcome to Island Marketing %}
+Every interaction is both precious and an opportunity to delight.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote Seth Godin <a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html</a> Welcome to Island Marketing %}<br>Every interaction is both precious and an opportunity to delight.<br>{% endblockquote %}</p>
+<h2 id="Code-Block"><a href="#Code-Block" class="headerlink" title="Code Block"></a>Code Block</h2><p>코드 조각(snippet)을 포스트에 추가할 수 있는 유용한 기능입니다.</p>
+<p><strong>Alias:</strong> code</p>
+<pre><code>{% codeblock [title] [lang:language] [url] [link text] [additional options] %}
+code snippet
+{% endcodeblock %}
+</code></pre>
+<p>Specify additional options in <code>option:value</code> format, e.g. <code>line_number:false first_line:5</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Extra Options</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>line_number</code></td>
+<td>Show line number</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>line_threshold</code></td>
+<td>Only show line numbers as long as the numbers of lines of the code block exceed such threshold.</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>Enable code highlighting</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>first_line</code></td>
+<td>Specify the first line number</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>mark</code></td>
+<td>Line highlight specific line(s), each value separated by a comma. Specify number range using a dash<br>Example: <code>mark:1,4-7,10</code> will mark line 1, 4 to 7 and 10.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>wrap</code></td>
+<td>Wrap the code block in <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table"><code>&lt;table&gt;</code></a></td>
+<td><code>true</code></td>
+</tr>
+</tbody></table>
+<h3 id="예시-1"><a href="#예시-1" class="headerlink" title="예시"></a>예시</h3><p><strong>일반 code block 사용하기</strong></p>
+<pre><code>{% codeblock %}
+alert(&#39;Hello World!&#39;);
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock %}<br>alert(‘Hello World!’);<br>{% endcodeblock %}</p>
+<p><strong>언어 지정하기</strong></p>
+<pre><code>{% codeblock lang:objc %}
+[rectangle setX: 10 y: 10 width: 20 height: 20];
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock lang:objc %}<br>[rectangle setX: 10 y: 10 width: 20 height: 20];<br>{% endcodeblock %}</p>
+<p><strong>Code block에 제목 넣기</strong></p>
+<pre><code>{% codeblock Array.map %}
+array.map(callback[, thisArg])
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock Array.map %}<br>array.map(callback[, thisArg])<br>{% endcodeblock %}</p>
+<p><strong>제목과 URL 넣기</strong></p>
+<pre><code>{% codeblock _.compact http://underscorejs.org/#compact Underscore.js %}
+_.compact([0, 1, false, 2, &#39;&#39;, 3]);
+=&gt; [1, 2, 3]
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock _.compact <a href="http://underscorejs.org/#compact">http://underscorejs.org/#compact</a> Underscore.js %}<br>_.compact([0, 1, false, 2, ‘’, 3]);<br>&#x3D;&gt; [1, 2, 3]<br>{% endcodeblock %}</p>
+<h2 id="Backtick-Code-Block"><a href="#Backtick-Code-Block" class="headerlink" title="Backtick Code Block"></a>Backtick Code Block</h2><p>이 방법은 code block을 사용하는 것과 같습니다만 block을 구분하기 위해 세 개의 역 따옴표를 사용하는 점이 다릅니다.</p>
+<p>{% raw %}<br>&amp;#96<code> [language] [title] [url] [link text] code snippet &amp;#96;</code><br>{% endraw %}</p>
+<h2 id="Pull-Quote"><a href="#Pull-Quote" class="headerlink" title="Pull Quote"></a>Pull Quote</h2><p>pull 인용을 추가하기 위한 방법은 다음과 같습니다.</p>
+<pre><code>{% pullquote [class] %}
+content
+{% endpullquote %}
+</code></pre>
+<h2 id="jsFiddle"><a href="#jsFiddle" class="headerlink" title="jsFiddle"></a>jsFiddle</h2><p>jsFiddle을 포함시킬 수 있습니다.</p>
+<pre><code>{% jsfiddle shorttag [tabs] [skin] [width] [height] %}
+</code></pre>
+<h2 id="Gist"><a href="#Gist" class="headerlink" title="Gist"></a>Gist</h2><p>Gist를 포함시킬 수 있습니다.</p>
+<pre><code>{% gist gist_id [filename] %}
+</code></pre>
+<h2 id="iframe"><a href="#iframe" class="headerlink" title="iframe"></a>iframe</h2><p>iframe을 포함시킬 수 있습니다.</p>
+<pre><code>{% iframe url [width] [height] %}
+</code></pre>
+<h2 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h2><p>이미지의 사이즈를 지정하여 포함시킬 수 있습니다.</p>
+<pre><code>{% img [class names] /path/to/image [width] [height] &#39;&quot;title text&quot; &quot;alt text&quot;&#39; %}
+</code></pre>
+<h2 id="Link"><a href="#Link" class="headerlink" title="Link"></a>Link</h2><p><code>target=&quot;_blank&quot;</code> 속성으로 링크를 포함시킬 수 있습니다.</p>
+<pre><code>{% link text url [external] [title] %}
+</code></pre>
+<h2 id="Include-Code"><a href="#Include-Code" class="headerlink" title="Include Code"></a>Include Code</h2><p><code>source/downloads/code</code> 폴더에 있는 코드를 포함시킬 수 있습니다.</p>
+<pre><code>{% include_code [title] [lang:language] path/to/file %}
+</code></pre>
+<h2 id="YouTube"><a href="#YouTube" class="headerlink" title="YouTube"></a>YouTube</h2><p>YouTube video를 포함시킬 수 있습니다.</p>
+<pre><code>{% youtube video_id [type] [cookie] %}
+</code></pre>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><p><strong>Embed a video</strong></p>
+<pre><code>{% youtube lJIrF4YjHfQ %}
+</code></pre>
+<p><strong>Embed a playlist</strong></p>
+<pre><code>{% youtube PL9hW1uS6HUfscJ9DHkOSoOX45MjXduUxo &#39;playlist&#39; %}
+</code></pre>
+<p><strong>Enable privacy-enhanced mode</strong></p>
+<p>YouTube’s cookie is not used in this mode.</p>
+<pre><code>{% youtube lJIrF4YjHfQ &#39;video&#39; false %}
+{% youtube PL9hW1uS6HUfscJ9DHkOSoOX45MjXduUxo &#39;playlist&#39; false %}
+</code></pre>
+<h2 id="Vimeo"><a href="#Vimeo" class="headerlink" title="Vimeo"></a>Vimeo</h2><p>Vimeo video를 포함시킬 수 있습니다.</p>
+<pre><code>{% vimeo video_id %}
+</code></pre>
+<h2 id="Include-Posts"><a href="#Include-Posts" class="headerlink" title="Include Posts"></a>Include Posts</h2><p>다른 포스트의 링크를 포함시킬 수 있습니다.</p>
+<pre><code>{% post_path filename %}
+{% post_link filename [title] [escape] %}
+</code></pre>
+<p>You can ignore permalink and folder information, like languages and dates, when using this tag.</p>
+<p>For instance: <code>{% raw %}{% post_link how-to-bake-a-cake %}{% endraw %}</code>.</p>
+<p>This will work as long as the filename of the post is <code>how-to-bake-a-cake.md</code>, even if the post is located at <code>source/posts/2015-02-my-family-holiday</code> and has permalink <code>2018/en/how-to-bake-a-cake</code>.</p>
+<p>You can customize the text to display, instead of displaying the post’s title.</p>
+<p>Post’s title and custom text are escaped by default. You can use the <code>escape</code> option to disable escaping.</p>
+<p>For instance:</p>
+<p><strong>Display title of the post.</strong></p>
+<p><code>{% raw %}{% post_link hexo-3-8-released %}{% endraw %}</code></p>
+<p>{% post_link hexo-3-8-released %}</p>
+<p><strong>Display custom text.</strong></p>
+<p><code>{% raw %}{% post_link hexo-3-8-released &#39;Link to a post&#39; %}{% endraw %}</code></p>
+<p>{% post_link hexo-3-8-released ‘Link to a post’ %}</p>
+<p><strong>Escape title.</strong></p>
+<pre><code>{% post_link hexo-4-released &#39;How to use &lt;b&gt; tag in title&#39; %}
+</code></pre>
+<p>{% post_link hexo-4-released ‘How to use <b> tag in title’ %}</p>
+<p><strong>Do not escape title.</strong></p>
+<pre><code>{% post_link hexo-4-released &#39;&lt;b&gt;bold&lt;/b&gt; custom title&#39; false %}
+</code></pre>
+<p>{% post_link hexo-4-released ‘<b>bold</b> custom title’ false %}</p>
+<h2 id="Include-Assets"><a href="#Include-Assets" class="headerlink" title="Include Assets"></a>Include Assets</h2><p>포스트의 asset을 포함시킬 수 있습니다.</p>
+<pre><code>{% asset_path filename %}
+{% asset_img [class names] slug [width] [height] [title text [alt text]] %}
+{% asset_link filename [title] [escape] %}
+</code></pre>
+<h3 id="Embed-image"><a href="#Embed-image" class="headerlink" title="Embed image"></a>Embed image</h3><p><em>hexo-renderer-marked 3.1.0+ can (optionally) resolves the post’s path of an image automatically, refer to <a href="/docs/asset-folders#Embedding-an-image-using-markdown">this section</a> on how to enable it.</em></p>
+<p>“foo.jpg” is located at <code>http://example.com/2020/01/02/hello/foo.jpg</code>.</p>
+<p><strong>Default (no option)</strong></p>
+<p><code>{% asset_img foo.jpg %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot;&gt;
+</code></pre>
+<p><strong>Custom class</strong></p>
+<p><code>{% asset_img post-image foo.jpg %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; class=&quot;post-image&quot;&gt;
+</code></pre>
+<p><strong>Display size</strong></p>
+<p><code>{% asset_img foo.jpg 500 400 %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; width=&quot;500&quot; height=&quot;400&quot;&gt;
+</code></pre>
+<p><strong>Title &amp; Alt</strong></p>
+<p><code>{% asset_img logo.svg &quot;lorem ipsum&#39;dolor&#39;&quot; %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; title=&quot;lorem ipsum&quot; alt=&quot;dolor&quot;&gt;
+</code></pre>
+<h2 id="Raw"><a href="#Raw" class="headerlink" title="Raw"></a>Raw</h2><p>특정 컨텐츠가 당신의 포스트 내에서 문제를 일으킨다면, <code>raw</code> 태그를 사용하여 감싸주세요. 그러면 렌더링 에러를 피할 수 있습니다.</p>
+<pre><code>{% raw %}
+content
+{% endraw %}
+</code></pre>

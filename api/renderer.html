@@ -1,0 +1,77 @@
+<hr>
+<h2 id="title-Renderer"><a href="#title-Renderer" class="headerlink" title="title: Renderer"></a>title: Renderer</h2><p>A renderer is used to render content.</p>
+<h2 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h2><pre><code class="js">hexo.extend.renderer.register(name, output, function(data, options){
+  // ...
+}, sync);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>Input filename extension (lower case, without leading <code>.</code>)</td>
+</tr>
+<tr>
+<td><code>output</code></td>
+<td>Output filename extension (lower case, without leading <code>.</code>)</td>
+</tr>
+<tr>
+<td><code>sync</code></td>
+<td>Sync mode</td>
+</tr>
+</tbody></table>
+<p>Three arguments will be passed into the render function:</p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>Include two attributes: file path <code>path</code> and file content <code>text</code>. <code>path</code> won’t necessarily exist.</td>
+</tr>
+<tr>
+<td><code>option</code></td>
+<td>Options</td>
+</tr>
+<tr>
+<td><code>callback</code></td>
+<td>Callback function of two parameters <code>err</code>, <code>value</code>.</td>
+</tr>
+</tbody></table>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><h3 id="Async-Mode"><a href="#Async-Mode" class="headerlink" title="Async Mode"></a>Async Mode</h3><pre><code class="js">var stylus = require(&#39;stylus&#39;);
+
+// Callback
+hexo.extend.renderer.register(&#39;styl&#39;, &#39;css&#39;, function(data, options, callback){
+  stylus(data.text).set(&#39;filename&#39;, data.path).render(callback);
+});
+
+// Promise
+hexo.extend.renderer.register(&#39;styl&#39;, &#39;css&#39;, function(data, options){
+  return new Promise(function(resolve, reject){
+    resolve(&#39;test&#39;);
+  });
+});
+</code></pre>
+<h3 id="Sync-Mode"><a href="#Sync-Mode" class="headerlink" title="Sync Mode"></a>Sync Mode</h3><pre><code class="js">var ejs = require(&#39;ejs&#39;);
+
+hexo.extend.renderer.register(&#39;ejs&#39;, &#39;html&#39;, function(data, options){
+  options.filename = data.path;
+  return ejs.render(data.text, options);
+}, true);
+</code></pre>
+<h3 id="Disable-Nunjucks-tags"><a href="#Disable-Nunjucks-tags" class="headerlink" title="Disable Nunjucks tags"></a>Disable Nunjucks tags</h3><p>Nunjucks tags <code>{{ }}</code> or <code>{% %}</code> (utilized by <a href="/docs/tag-plugins">tag plugin</a>) are processed by default, to disable:</p>
+<pre><code class="js">function lessFn(data, options) {
+  // do something
+}
+
+lessFn.disableNunjucks = true
+
+hexo.extend.renderer.register(&#39;less&#39;, &#39;css&#39;, lessFn);
+</code></pre>

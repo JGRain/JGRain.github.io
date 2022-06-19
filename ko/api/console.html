@@ -1,0 +1,51 @@
+<hr>
+<h2 id="title-Console"><a href="#title-Console" class="headerlink" title="title: Console"></a>title: Console</h2><p>Console은 Hexo와 사용자 간의 교두보 역할을 합니다. 사용 가능한 console 명령어를 등록하고 설명합니다.</p>
+<h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><pre><code class="js">hexo.extend.console.register(name, desc, options, function(args){
+  // ...
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>인자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>이름</td>
+</tr>
+<tr>
+<td><code>desc</code></td>
+<td>설명</td>
+</tr>
+<tr>
+<td><code>options</code></td>
+<td>옵션</td>
+</tr>
+</tbody></table>
+<p><code>args</code> 인자는 사용자가 터미널에 입력한 값을 포함하여 함수 내로 전달됩니다. <a href="https://github.com/substack/minimist">Minimist</a>에 의해 파싱됩니다.</p>
+<h2 id="옵션"><a href="#옵션" class="headerlink" title="옵션"></a>옵션</h2><h3 id="사용법"><a href="#사용법" class="headerlink" title="사용법"></a>사용법</h3><p>Console 명령어의 사용법의 예시입니다:</p>
+<pre><code class="js">{usage: &#39;[layout] &lt;title&gt;&#39;}
+// hexo new [layout] &lt;title&gt;
+</code></pre>
+<h3 id="인자"><a href="#인자" class="headerlink" title="인자"></a>인자</h3><p>Console 명령어의 각 인자에 대한 예시입니다:</p>
+<pre><code class="js">{
+  arguments: [
+    {name: &#39;layout&#39;, desc: &#39;Post layout&#39;},
+    {name: &#39;title&#39;, desc: &#39;Post title&#39;}
+  ]
+}
+</code></pre>
+<h3 id="옵션-1"><a href="#옵션-1" class="headerlink" title="옵션"></a>옵션</h3><p>Console 명령어의 각 옵션에 대한 예시입니다:</p>
+<pre><code class="js">{
+  options: [
+    {name: &#39;-r, --replace&#39;, desc: &#39;Replace existing files&#39;}
+  ]
+}
+</code></pre>
+<h3 id="설명"><a href="#설명" class="headerlink" title="설명"></a>설명</h3><p>Console 명령어에 대한 더 자세한 정보입니다.</p>
+<h2 id="예시"><a href="#예시" class="headerlink" title="예시"></a>예시</h2><pre><code class="js">hexo.extend.console.register(&#39;config&#39;, &#39;Display configuration&#39;, function(args){
+  console.log(hexo.config);
+});
+</code></pre>

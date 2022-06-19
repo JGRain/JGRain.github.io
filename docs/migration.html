@@ -1,0 +1,31 @@
+<hr>
+<h2 id="title-Migration"><a href="#title-Migration" class="headerlink" title="title: Migration"></a>title: Migration</h2><h2 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h2><p>First, install the <code>hexo-migrator-rss</code> plugin.</p>
+<pre><code class="bash">$ npm install hexo-migrator-rss --save
+</code></pre>
+<p>Once the plugin is installed, run the following command to migrate all posts from RSS. <code>source</code> can be a file path or URL.</p>
+<pre><code class="bash">$ hexo migrate rss &lt;source&gt;
+</code></pre>
+<h2 id="Jekyll"><a href="#Jekyll" class="headerlink" title="Jekyll"></a>Jekyll</h2><p>Move all files in the Jekyll <code>_posts</code> folder to the <code>source/_posts</code> folder.</p>
+<p>Modify the <code>new_post_name</code> setting in <code>_config.yml</code>:</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="Octopress"><a href="#Octopress" class="headerlink" title="Octopress"></a>Octopress</h2><p>Move all files in the Octopress <code>source/_posts</code> folder to <code>source/_posts</code></p>
+<p>Modify the <code>new_post_name</code> setting in <code>_config.yml</code>:</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h2><p>First, install the <code>hexo-migrator-wordpress</code> plugin.</p>
+<pre><code class="bash">$ npm install hexo-migrator-wordpress --save
+</code></pre>
+<p>Export your WordPress site by going to “Tools” → “Export” → “WordPress” in the WordPress dashboard (see the <a href="http://en.support.wordpress.com/export/">WordPress support page</a> for more details).</p>
+<p>Now run:</p>
+<pre><code class="bash">$ hexo migrate wordpress &lt;source&gt;
+</code></pre>
+<p>Where <code>source</code> is the file path or URL to the WordPress export file.</p>
+<h2 id="Joomla"><a href="#Joomla" class="headerlink" title="Joomla"></a>Joomla</h2><p>First, install the <code>hexo-migrator-joomla</code> plugin.</p>
+<pre><code class="bash">$ npm install hexo-migrator-joomla --save
+</code></pre>
+<p>Export your Joomla articles using the <a href="http://extensions.joomla.org/extensions/migration-a-conversion/data-import-a-export/12816?qh=YToxOntpOjA7czo1OiJqMnhtbCI7fQ==">J2XML</a> component.</p>
+<p>Now run:</p>
+<pre><code class="bash">$ hexo migrate joomla &lt;source&gt;
+</code></pre>
+<p>Where <code>source</code> is the file path or URL to the Joomla export file.</p>

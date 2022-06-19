@@ -1,0 +1,441 @@
+<hr>
+<h2 id="title-One-Command-Deployment"><a href="#title-One-Command-Deployment" class="headerlink" title="title: One-Command Deployment"></a>title: One-Command Deployment</h2><p>Hexo provides a fast and easy deployment strategy. You only need one single command to deploy your site to your server.</p>
+<pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>Install the necessary plugin(s) that is compatible with the deployment method provided by your server&#x2F;repository.</p>
+<p>Deployment is usually configured through <strong>_config.yml</strong>. A valid configuration must have the <code>type</code> field. For example:</p>
+<pre><code class="yaml">deploy:
+  type: git
+</code></pre>
+<p>You can use multiple deployers. Hexo will execute each deployer in order.</p>
+<pre><code class="yaml">deploy:
+- type: git
+  repo:
+- type: heroku
+  repo:
+</code></pre>
+<p>Refer to the <a href="https://hexo.io/plugins/">Plugins</a> list for more deployment plugins.</p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><ol>
+<li>Install <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>.</li>
+</ol>
+<pre><code class="bash">$ npm install hexo-deployer-git --save
+</code></pre>
+<ol start="2">
+<li>Edit <strong>_config.yml</strong> (with example values shown below as comments):</li>
+</ol>
+<pre><code class="yaml">deploy:
+  type: git
+  repo: &lt;repository url&gt; # https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
+  branch: [branch]
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>URL of the target repository</td>
+<td></td>
+</tr>
+<tr>
+<td><code>branch</code></td>
+<td>Branch name.</td>
+<td><code>gh-pages</code> (GitHub)<br><code>coding-pages</code> (Coding.net)<br><code>master</code> (others)</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Customize commit message.</td>
+<td><code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code></td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td>Optional token value to authenticate with the repo. Prefix with <code>$</code> to read token from environment variable</td>
+<td></td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>Deploy your site <code>hexo clean &amp;&amp; hexo deploy</code>.</li>
+</ol>
+<ul>
+<li>You will be prompted with username and password of the target repository, unless you authenticate with a token or ssh key.</li>
+<li>hexo-deployer-git does not store your username and password. Use <a href="https://git-scm.com/docs/git-credential-cache">git-credential-cache</a> to store them temporarily.</li>
+</ul>
+<ol start="4">
+<li>Navigate to your repository settings and change the “Pages” branch to <code>gh-pages</code> (or the branch specified in your config). The deployed site should be live on the link shown on the “Pages” setting.</li>
+</ol>
+<h2 id="Heroku"><a href="#Heroku" class="headerlink" title="Heroku"></a>Heroku</h2><p>Install <a href="https://github.com/hexojs/hexo-deployer-heroku">hexo-deployer-heroku</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-heroku --save
+</code></pre>
+<p>Edit settings.</p>
+<pre><code class="yaml">deploy:
+  type: heroku
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code>, <code>repository</code></td>
+<td>Heroku repository URL</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Customize commit message (Default to <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="Netlify"><a href="#Netlify" class="headerlink" title="Netlify"></a>Netlify</h2><p><a href="https://www.netlify.com/">Netlify</a> provides continuous deployment (Git-triggered builds), an intelligent global CDN, full DNS (including custom domains), automated HTTPS, asset acceleration, and a lot more. It is a unified platform that automates your code to create high-performance, easily maintainable sites and web apps.</p>
+<p>There are two different ways to deploy your sites on Netlify. The most common way is to use the web UI. Go to the <a href="https://app.netlify.com/start">create a new site page</a>, select your project repo from GitHub, GitLab, or Bitbucket, and follow the prompts.</p>
+<p>Alternatively, you can use Netlify’s <a href="https://www.netlify.com/docs/cli/">Node based CLI</a> tool to manage and deploy sites on Netlify without leaving your terminal.</p>
+<p>You can also add a <a href="https://www.netlify.com/docs/deploy-button/">Deploy to Netlify Button</a> in your README.file to allow others to create a copy of your repository and be deployed to Netlify via one click.</p>
+<h2 id="Rsync"><a href="#Rsync" class="headerlink" title="Rsync"></a>Rsync</h2><p>Install <a href="https://github.com/hexojs/hexo-deployer-rsync">hexo-deployer-rsync</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-rsync --save
+</code></pre>
+<p>Edit settings.</p>
+<pre><code class="yaml">deploy:
+  type: rsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  root: &lt;root&gt;
+  port: [port]
+  delete: [true|false]
+  verbose: [true|false]
+  ignore_errors: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>Address of remote host</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>Username</td>
+<td></td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>Root directory of remote host</td>
+<td></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Port</td>
+<td>22</td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td>Delete old files on remote host</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>Display verbose messages</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>ignore_errors</code></td>
+<td>Ignore errors</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h2 id="OpenShift"><a href="#OpenShift" class="headerlink" title="OpenShift"></a>OpenShift</h2><p>Install <a href="https://github.com/hexojs/hexo-deployer-openshift">hexo-deployer-openshift</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-openshift --save
+</code></pre>
+<p>Edit settings.</p>
+<pre><code class="yaml">deploy:
+  type: openshift
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>OpenShift repository URL</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Customize commit message (Default to <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="FTPSync"><a href="#FTPSync" class="headerlink" title="FTPSync"></a>FTPSync</h2><p>Install <a href="https://github.com/hexojs/hexo-deployer-ftpsync">hexo-deployer-ftpsync</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-ftpsync --save
+</code></pre>
+<p>Edit settings.</p>
+<pre><code class="yaml">deploy:
+  type: ftpsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  pass: &lt;password&gt;
+  remote: [remote]
+  port: [port]
+  ignore: [ignore]
+  connections: [connections]
+  verbose: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>Address of remote host</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>Username</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>Password</td>
+<td></td>
+</tr>
+<tr>
+<td><code>remote</code></td>
+<td>Root directory of remote host</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Port</td>
+<td>21</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>Ignore the files on either host or remote</td>
+<td></td>
+</tr>
+<tr>
+<td><code>connections</code></td>
+<td>Connections number</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>Display verbose messages</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h2 id="SFTP"><a href="#SFTP" class="headerlink" title="SFTP"></a>SFTP</h2><p>Install <a href="https://github.com/lucascaro/hexo-deployer-sftp">hexo-deployer-sftp</a>. Deploys the site via SFTP, allowing for passwordless connections using ssh-agent.</p>
+<pre><code class="bash">$ npm install hexo-deployer-sftp --save
+</code></pre>
+<p>Edit settings.</p>
+<pre><code class="yaml">deploy:
+  type: sftp
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  pass: &lt;password&gt;
+  remotePath: [remote path]
+  port: [port]
+  privateKey: [path/to/privateKey]
+  passphrase: [passphrase]
+  agent: [path/to/agent/socket]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>Address of remote host</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>Username</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>Password</td>
+<td></td>
+</tr>
+<tr>
+<td><code>remotePath</code></td>
+<td>Root directory of remote host</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Port</td>
+<td>22</td>
+</tr>
+<tr>
+<td><code>privateKey</code></td>
+<td>Path to a ssh private key</td>
+<td></td>
+</tr>
+<tr>
+<td><code>passphrase</code></td>
+<td>Optional passphrase for the private key</td>
+<td></td>
+</tr>
+<tr>
+<td><code>agent</code></td>
+<td>Path to the ssh-agent socket</td>
+<td><code>$SSH_AUTH_SOCK</code></td>
+</tr>
+</tbody></table>
+<h2 id="Vercel"><a href="#Vercel" class="headerlink" title="Vercel"></a>Vercel</h2><p><a href="https://vercel.com/">Vercel</a> is a cloud platform that enables developers to host Jamstack websites and web services that deploy instantly, scale automatically, and requires no supervision, all with zero configuration. They provide a global edge network, SSL encryption, asset compression, cache invalidation, and more.</p>
+<p>Step 1: Add a build script to your <code>package.json</code> file:</p>
+<pre><code class="json">{
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;hexo generate&quot;
+  }
+}
+</code></pre>
+<p>Step 2: Deploy your Hexo Website to Vercel</p>
+<p>To deploy your Hexo app with a <a href="https://vercel.com/docs/git-integrations">Vercel for Git Integration</a>, make sure it has been pushed to a Git repository.</p>
+<p>Import the project into Vercel using the <a href="https://vercel.com/import/git">Import Flow</a>. During the import, you will find all relevant options preconfigured for you; however, you can choose to change any of these options, a list of which can be found <a href="https://vercel.com/docs/build-step#build-&-development-settings">here</a>.</p>
+<p>After your project has been imported, all subsequent pushes to branches will generate <a href="https://vercel.com/docs/platform/deployments#preview">Preview Deployments</a>, and all changes made to the <a href="https://vercel.com/docs/git-integrations#production-branch">Production Branch</a> (commonly “main”) will result in a <a href="https://vercel.com/docs/platform/deployments#production">Production Deployment</a>.</p>
+<p>Alternatively, you can click the deploy button below to create a new project:</p>
+<p><a href="https://vercel.com/new/hexo"><img src="https://vercel.com/button" alt="Deploy Vercel"></a></p>
+<h2 id="21YunBox"><a href="#21YunBox" class="headerlink" title="21YunBox"></a>21YunBox</h2><ol>
+<li>On <a href="https://www.21yunbox.com/">21YunBox</a>, setup up a new <code>Static Site</code> project from GitHub with the following settings:</li>
+</ol>
+<ul>
+<li><strong>Build command:</strong> <code>yarn &amp;&amp; hexo deploy</code></li>
+<li><strong>Publish directory:</strong> <code>public</code></li>
+</ul>
+<ol start="2">
+<li>Press Deploy Buton！</li>
+</ol>
+<p>That’s it! Your app will be live on your 21YunBox URL as soon as the build finishes.</p>
+<p>The sample app for <code>hexo</code> is deployed at <a href="https://hexo.21yunbox.com/">https://hexo.21yunbox.com/</a>.</p>
+<p>For more detail, follow this guide at <a href="https://www.21yunbox.com/docs/#/deploy-hexo">https://www.21yunbox.com/docs/#/deploy-hexo</a>.</p>
+<h2 id="Bip"><a href="#Bip" class="headerlink" title="Bip"></a>Bip</h2><p><a href="https://bip.sh/">Bip</a> is a commercial hosting service which provides zero downtime deployment, a global CDN, SSL, unlimited bandwidth and more for static websites. Plans are available on a pay as you go, per domain basis.</p>
+<p>Getting started is quick and easy, as Bip provides out the box support for Hexo. This guide assumes you already have <a href="https://bip.sh/getstarted">a Bip domain and Bip CLI installed</a>.</p>
+<p>1: Initialise your project directory</p>
+<pre><code class="bash">$ bip init
+</code></pre>
+<p>Follow the prompts, where you’ll be asked which domain you’d like to deploy to. Bip will detect that you’re using Hexo, and set project settings like the source file directory automatically.</p>
+<p>2: Deploy your website</p>
+<pre><code class="bash">$ hexo generate —deploy &amp;&amp; bip deploy
+</code></pre>
+<p>After a few moments, your website will be deployed.</p>
+<h2 id="RSS3"><a href="#RSS3" class="headerlink" title="RSS3"></a>RSS3</h2><p><a href="https://rss3.io/">RSS3</a> is an open protocol designed for content and social networks in the Web 3.0 era.</p>
+<ol>
+<li><p>Install <a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3">hexo-deployer-rss3</a>.</p>
+</li>
+<li><p>Modify the configuration.</p>
+</li>
+</ol>
+<pre><code class="yaml">deploy: # The root configuration block for all deployers
+- type: rss3
+  endpoint: https://hub.rss3.io
+  privateKey: 47e18d6c386898b424025cd9db446f779ef24ad33a26c499c87bb3d9372540ba
+  ipfs:
+    deploy: true
+    gateway: pinata
+    api:
+      key: d693df715d3631e489d6
+      secret: ee8b74626f12b61c1a4bde3b8c331ad390567c86ba779c9b18561ee92c1cbff0
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>endpoint</code></td>
+<td>a link to the RSS3 Hub</td>
+</tr>
+<tr>
+<td><code>privateKey</code></td>
+<td>your private key, 64 bytes</td>
+</tr>
+<tr>
+<td><code>ipfs/deploy</code></td>
+<td>whether to deploy to IPFS</td>
+</tr>
+<tr>
+<td><code>ipfs/gateway</code></td>
+<td>IPFS API gateway</td>
+</tr>
+<tr>
+<td><code>ipfs/api/key</code></td>
+<td>IPFS gateway-related authentication content</td>
+</tr>
+<tr>
+<td><code>ipfs/api/secret</code></td>
+<td>IPFS gateway-related authentication content</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li><p>generate static files</p>
+</li>
+<li><p>deploy</p>
+</li>
+</ol>
+<p>For deployment-related considerations, you can refer to <a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3/blob/develop/README.md">Our documentation</a>.</p>
+<h2 id="Layer0"><a href="#Layer0" class="headerlink" title="Layer0"></a>Layer0</h2><p><a href="https://www.layer0.co/">Layer0</a> is an all-in-one platform to develop, deploy, preview, experiment on, monitor, and run your headless frontend, focused on EdgeJS, predictive prefetching, and performance monitoring.</p>
+<ol>
+<li>In your hexo project directory, run:</li>
+</ol>
+<pre><code class="bash">npm i -g @layer0/cli
+0 init
+</code></pre>
+<ol start="2">
+<li>Update routes.js (created by 0 init):</li>
+</ol>
+<pre><code class="js">// This file was added by layer0 init.
+// You should commit this file to source control.
+
+import { Router } from &#39;@layer0/core/router&#39;
+
+export default new Router().static(&#39;public&#39;, ({ cache }) =&gt; {
+  cache({
+    edge: {
+      maxAgeSeconds: 60 * 60 * 60 * 365,
+      forcePrivateCaching: true,
+    },
+    browser: {
+      maxAgeSeconds: 0,
+      serviceWorkerSeconds: 60 * 60 * 24,
+    },
+  })
+})
+</code></pre>
+<ol start="3">
+<li>Deploy</li>
+</ol>
+<pre><code class="bash">hexo generate
+0 deploy
+</code></pre>
+<p>Alternatively, you can click the deploy button below to create a new project:</p>
+<p><a href="https://app.layer0.co/deploy?repo=https://github.com/layer0-docs/layer0-hexo-example"><img src="https://docs.layer0.co/button.svg" alt="Deploy Layer0"></a></p>
+<h2 id="Other-Methods"><a href="#Other-Methods" class="headerlink" title="Other Methods"></a>Other Methods</h2><p>All generated files are saved in the <code>public</code> folder. You can copy them to wherever you like.</p>

@@ -1,0 +1,79 @@
+<hr>
+<h2 id="title-Модуль"><a href="#title-Модуль" class="headerlink" title="title: Модуль"></a>title: Модуль</h2><p>Модуль представляет собой контейнер, используемый для обработки файлов в указанной папке. Hexo использует два модуля: <code>hexo.source</code> и <code>hexo.theme</code>. Первый используется для обработки папки с исходниками <code>source</code> с последующим применением указанной темы из папки <code>themes</code>.</p>
+<h2 id="Обработка-файлов-Load-Files"><a href="#Обработка-файлов-Load-Files" class="headerlink" title="Обработка файлов (Load Files)"></a>Обработка файлов (Load Files)</h2><p>Модули используют два способа загрузки файлов: <code>process</code> и <code>watch</code>. <code>process</code> обрабатывает все файлы в папке по команде. <code>watch</code> обрабатывает файлы при их изменении.</p>
+<pre><code class="js">box.process().then(function(){
+  // ...
+});
+
+box.watch().then(function(){
+  // Можно вызвать команду box.unwatch() после, чтобы остановить отслеживание файлов.
+});
+</code></pre>
+<h2 id="Сопоставление-папок-Path-Matching"><a href="#Сопоставление-папок-Path-Matching" class="headerlink" title="Сопоставление папок (Path Matching)"></a>Сопоставление папок (Path Matching)</h2><p>Модули поддерживают много способов для нахождения обрабатываемых папок. Можно использовать регулярные выражения, функции или строки шаблонов Express-style. Например:</p>
+<pre><code class="plain">posts/:id =&gt; posts/89
+posts/*path =&gt; posts/2015/title
+</code></pre>
+<p>Подробная информация (eng): <a href="https://github.com/hexojs/hexo-util#patternrule">util.Pattern</a>.</p>
+<h2 id="Обработчики"><a href="#Обработчики" class="headerlink" title="Обработчики"></a>Обработчики</h2><p>Обработчик является важнейшим элементом модуля и служит для преобразования файлов. Можно использовать сопоставление папок, как описано выше, для ограничения обрабатываемых файлов. Новый обработчик добавляется методом <code>addProcessor</code></p>
+<pre><code class="js">box.addProcessor(&#39;posts/:id&#39;, function(file){
+  //
+});
+</code></pre>
+<p>Модуль передаёт содержимое соответствующих файлов обработчикам. Информацию можно читать прямо из аргумента <code>file</code> в обратный вызов (callback):</p>
+<table>
+<thead>
+<tr>
+<th>Свойство</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source</code></td>
+<td>Полный путь к файлу</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Относительный путь к файлу модуля</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Тип файла. Возможные значения <code>create</code>, <code>update</code>, <code>skip</code>, <code>delete</code>.</td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td>Информация о сопоставлении путей.</td>
+</tr>
+</tbody></table>
+<p>Модуль содержит и другие методы, не нужно делать прямые вызовы к файлу самостоятельно.</p>
+<table>
+<thead>
+<tr>
+<th>Метод</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>read</code></td>
+<td>Чтение файла</td>
+</tr>
+<tr>
+<td><code>readSync</code></td>
+<td>Синхронное чтение файла</td>
+</tr>
+<tr>
+<td><code>stat</code></td>
+<td>Получение статуса файла</td>
+</tr>
+<tr>
+<td><code>statSync</code></td>
+<td>Синхронное получение статуса файла</td>
+</tr>
+<tr>
+<td><code>render</code></td>
+<td>Обработка файла</td>
+</tr>
+<tr>
+<td><code>renderSync</code></td>
+<td>Синхронная обработка файла</td>
+</tr>
+</tbody></table>

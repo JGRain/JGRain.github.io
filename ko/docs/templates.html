@@ -1,0 +1,87 @@
+<hr>
+<h2 id="title-Templates"><a href="#title-Templates" class="headerlink" title="title: Templates"></a>title: Templates</h2><p>템플릿은 당신의 웹 사이트를 외관을 어떻게 표현할지 정의합니다. 아래 표는 페이지에 따른 적절한 템플릿을 소개합니다. 테마는 최소한 <code>index</code> 템플릿은 가지고 있어야 합니다.</p>
+<table>
+<thead>
+<tr>
+<th>템플릿</th>
+<th>페이지</th>
+<th>대비책</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>index</code></td>
+<td>Home page</td>
+<td></td>
+</tr>
+<tr>
+<td><code>post</code></td>
+<td>Posts</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td>Pages</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>archive</code></td>
+<td>Archives</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td>Category archives</td>
+<td><code>archive</code></td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td>Tag archives</td>
+<td><code>archive</code></td>
+</tr>
+</tbody></table>
+<h2 id="레이아웃"><a href="#레이아웃" class="headerlink" title="레이아웃"></a>레이아웃</h2><p>페이지들이 비슷한 구조를 공유하는 경우 - 예를 들어, header와 footer를 갖는 두 개의 템플릿이 있다고 할 때 - 당신은 <code>layout</code>을 사용하여 구조적인 유사성을 나타낼 수 있습니다. 모든 레이아웃 파일은 템플릿의 컨텐츠를 표시할 <code>body</code> 변수를 가지고 있어야 합니다.</p>
+<pre><code class="html">index
+</code></pre>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;&lt;%- body %&gt;&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>yields:</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;index&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>기본적으로 <code>layout</code> 템플릿은 다른 모든 템플릿에서 사용합니다. 추가적인 레이아웃을 front-matter 내부에 지정할 수도 있고 <code>false</code>로 설정하여 비활성화 시킬 수도 있습니다. 심지어 최상위 레이아웃에 레이아웃 템플릿을 더 포함시켜서 복잡하게 중첩된 구조를 만들 수도 있습니다.</p>
+<h2 id="Partials"><a href="#Partials" class="headerlink" title="Partials"></a>Partials</h2><p>Partial은 템플릿끼리 구성 요소를 공유할 때 유용합니다. 일반적인 예로 header, footer, sidebar가 있습니다. Partial을 각각의 파일에 포함시켜서 당신의 웹 사이트를 좀 더 간단하게 유지보수 할 수 있습니다.</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= config.title %&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>yields:</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;My Site&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h2 id="지역-변수"><a href="#지역-변수" class="headerlink" title="지역 변수"></a>지역 변수</h2><p>템플릿 내에 지역 변수를 정의할 수 있고 이를 다른 팀플릿 내에서 사용할 수 있습니다.</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= title&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;, {title: &#39;Hello World&#39;}) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>yields:</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;Hello World&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h2 id="최적화"><a href="#최적화" class="headerlink" title="최적화"></a>최적화</h2><p>당신의 테마가 대단히 복잡하거나 매우 많은 수의 파일을 생성한다면, Hexo의 파일 생성 속도가 상당히 느려질 수 있습니다. 이 외에도 테마를 단순화 함으로써 Hexo 2.7에서 소개한 Fragment Caching을 사용할 수도 있습니다.</p>
+<p>이 기능은 <a href="http://guides.rubyonrails.org/caching_with_rails.html#fragment-caching">Ruby on Rails</a>에서 차용하였습니다. 이는 컨텐츠를 조각으로 나누어 저장하고 추가 요청이 발생할 때를 위해 캐시합니다. 이 방법으로 데이터베이스 쿼리 빈도를 낮출 수 있고 파일 생성 속도를 단축시킬 수 있습니다.</p>
+<p>Fragment caching은 header, footer, sidebar, 다른 정적인 컨텐츠를 사용할 때 최고입니다.</p>
+<pre><code class="js">&lt;%- fragment_cache(&#39;header&#39;, function(){
+  return &#39;&lt;header&gt;&lt;/header&gt;&#39;;
+});
+</code></pre>
+<p>그렇다 하더라도 Partial을 사용하는 것이 더 쉬울 수 있습니다.</p>
+<pre><code class="js">&lt;%- partial(&#39;header&#39;, {}, {cache: true});
+</code></pre>
+<p>{% note warn %}<br><code>fragment_cache()</code> will cache the rendered result and output the cached result to other pages. This should only be used on partials that are expected <strong>not</strong> to change across different pages. Otherwise, it should <strong>not</strong> be enabled.<br>For example, it should be disabled when <code>relative_link</code> is enabled in the config. This is because relative links may appear differently across pages.<br>{% endnote %}</p>

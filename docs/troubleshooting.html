@@ -1,0 +1,126 @@
+<hr>
+<h2 id="title-Troubleshooting"><a href="#title-Troubleshooting" class="headerlink" title="title: Troubleshooting"></a>title: Troubleshooting</h2><p>In case you’re experiencing problems with using Hexo, here is a list of solutions to some frequently encountered issues. If this page doesn’t help you solve your problem, try doing a search on <a href="https://github.com/hexojs/hexo/issues">GitHub</a> or our <a href="https://groups.google.com/group/hexo">Google Group</a>.</p>
+<h2 id="YAML-Parsing-Error"><a href="#YAML-Parsing-Error" class="headerlink" title="YAML Parsing Error"></a>YAML Parsing Error</h2><pre><code class="plain">JS-YAML: incomplete explicit mapping pair; a key node is missed at line 18, column 29:
+      last_updated: Last updated: %s
+</code></pre>
+<p>Wrap the string with quotations if it contains colons.</p>
+<pre><code class="plain">JS-YAML: bad indentation of a mapping entry at line 18, column 31:
+      last_updated:&quot;Last updated: %s&quot;
+</code></pre>
+<p>Make sure you are using soft tabs and add a space after colons.</p>
+<p>You can see <a href="http://www.yaml.org/spec/1.2/spec.html">YAML Spec</a> for more info.</p>
+<h2 id="EMFILE-Error"><a href="#EMFILE-Error" class="headerlink" title="EMFILE Error"></a>EMFILE Error</h2><pre><code class="plain">Error: EMFILE, too many open files
+</code></pre>
+<p>Though Node.js has non-blocking I&#x2F;O, the maximum number of synchronous I&#x2F;O is still limited by the system. You may come across an EMFILE error when trying to generate a large number of files. You can try to run the following command to increase the number of allowed synchronous I&#x2F;O operations.</p>
+<pre><code class="bash">$ ulimit -n 10000
+</code></pre>
+<p><strong>Error: cannot modify limit</strong></p>
+<p>If you encounter the following error:</p>
+<pre><code class="bash">$ ulimit -n 10000
+ulimit: open files: cannot modify limit: Operation not permitted
+</code></pre>
+<p>It means some system-wide configurations are preventing <code>ulimit</code> to being increased to a certain limit.</p>
+<p>To override the limit:</p>
+<ol>
+<li>Add the following line to “&#x2F;etc&#x2F;security&#x2F;limits.conf”:</li>
+</ol>
+<pre><code>* - nofile 10000
+
+# &#39;*&#39; applies to all users and &#39;-&#39; set both soft and hard limits
+</code></pre>
+<ul>
+<li>The above setting may not apply in some cases, ensure “&#x2F;etc&#x2F;pam.d&#x2F;login” and “&#x2F;etc&#x2F;pam.d&#x2F;lightdm” have the following line. (Ignore this step if those files do not exist)</li>
+</ul>
+<pre><code>session required pam_limits.so
+</code></pre>
+<ol start="2">
+<li>If you are on a <a href="https://en.wikipedia.org/wiki/Systemd#Adoption">systemd-based</a> distribution, systemd may override “limits.conf”. To set the limit in systemd, add the following line in “&#x2F;etc&#x2F;systemd&#x2F;system.conf” and “&#x2F;etc&#x2F;systemd&#x2F;user.conf”:</li>
+</ol>
+<pre><code>DefaultLimitNOFILE=10000
+</code></pre>
+<ol start="3">
+<li>Reboot</li>
+</ol>
+<h2 id="Process-Out-of-Memory"><a href="#Process-Out-of-Memory" class="headerlink" title="Process Out of Memory"></a>Process Out of Memory</h2><p>When you encounter this error during generation:</p>
+<pre><code>FATAL ERROR: CALL_AND_RETRY_LAST Allocation failed - process out of memory
+</code></pre>
+<p>Increase Node.js heap memory size by changing the first line of <code>hexo-cli</code> (<code>which hexo</code> to look for the file).</p>
+<pre><code>#!/usr/bin/env node --max_old_space_size=8192
+</code></pre>
+<p><a href="https://github.com/hexojs/hexo/issues/1735">Out of memory while generating a huge blog · Issue #1735 · hexojs&#x2F;hexo</a></p>
+<h2 id="Git-Deployment-Problems"><a href="#Git-Deployment-Problems" class="headerlink" title="Git Deployment Problems"></a>Git Deployment Problems</h2><h3 id="RPC-failed"><a href="#RPC-failed" class="headerlink" title="RPC failed"></a>RPC failed</h3><pre><code class="plain">error: RPC failed; result=22, HTTP code = 403
+
+fatal: &#39;username.github.io&#39; does not appear to be a git repository
+</code></pre>
+<p>Make sure you have <a href="https://help.github.com/articles/set-up-git">set up git</a> on your computer properly or try to use HTTPS repository URL instead.</p>
+<h3 id="Error-ENOENT-no-such-file-or-directory"><a href="#Error-ENOENT-no-such-file-or-directory" class="headerlink" title="Error: ENOENT: no such file or directory"></a>Error: ENOENT: no such file or directory</h3><p>If you get an error like <code>Error: ENOENT: no such file or directory</code> it’s probably due to to mixing uppercase and lowercase letters in your tags, categories, or filenames. Git cannot automatically merge this change so it breaks the automatic branching.</p>
+<p>To fix this, try</p>
+<ol>
+<li>Check every tag’s and category’s case and make sure they are the same.</li>
+<li>Commit</li>
+<li>Clean and build: <code>./node_modules/.bin/hexo clean &amp;&amp; ./node_modules/.bin/hexo generate</code></li>
+<li>Manually copy the public folder to your desktop</li>
+<li>Switch branch from your master branch to your deployment branch locally</li>
+<li>Copy the contents of the public folder from your desktop into the deployment branch</li>
+<li>Commit. You should see any merge conflicts appear that you can manually resolve.</li>
+<li>Switch back to your master branch and deploy normally: <code>./node_modules/.bin/hexo deploy</code></li>
+</ol>
+<h2 id="Server-Problems"><a href="#Server-Problems" class="headerlink" title="Server Problems"></a>Server Problems</h2><pre><code class="plain">Error: listen EADDRINUSE
+</code></pre>
+<p>You may have started two Hexo servers at the same time or there might be another application using the same port. Try to modify the <code>port</code> setting or start the Hexo server with the <code>-p</code> flag.</p>
+<pre><code class="bash">$ hexo server -p 5000
+</code></pre>
+<h2 id="Plugin-Installation-Problems"><a href="#Plugin-Installation-Problems" class="headerlink" title="Plugin Installation Problems"></a>Plugin Installation Problems</h2><pre><code class="plain">npm ERR! node-waf configure build
+</code></pre>
+<p>This error may occur when trying to install a plugin written in C, C++ or other non-JavaScript languages. Make sure you have installed the right compiler on your computer.</p>
+<h2 id="Error-with-DTrace-Mac-OS-X"><a href="#Error-with-DTrace-Mac-OS-X" class="headerlink" title="Error with DTrace (Mac OS X)"></a>Error with DTrace (Mac OS X)</h2><pre><code class="plain">{ [Error: Cannot find module &#39;./build/Release/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+{ [Error: Cannot find module &#39;./build/default/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+{ [Error: Cannot find module &#39;./build/Debug/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+</code></pre>
+<p>DTrace install may have issue, use this:</p>
+<pre><code class="sh">$ npm install hexo --no-optional
+</code></pre>
+<p>See <a href="https://github.com/hexojs/hexo/issues/1326#issuecomment-113871796">#1326</a></p>
+<h2 id="Iterate-Data-Model-on-Jade-or-Swig"><a href="#Iterate-Data-Model-on-Jade-or-Swig" class="headerlink" title="Iterate Data Model on Jade or Swig"></a>Iterate Data Model on Jade or Swig</h2><p>Hexo uses <a href="https://github.com/hexojs/warehouse">Warehouse</a> for its data model. It’s not an array so you may have to transform objects into iterables.</p>
+<pre><code>{% for post in site.posts.toArray() %}
+{% endfor %}
+</code></pre>
+<h2 id="Data-Not-Updated"><a href="#Data-Not-Updated" class="headerlink" title="Data Not Updated"></a>Data Not Updated</h2><p>Some data cannot be updated, or the newly generated files are identical to those of the last version. Clean the cache and try again.</p>
+<pre><code class="bash">$ hexo clean
+</code></pre>
+<h2 id="No-command-is-executed"><a href="#No-command-is-executed" class="headerlink" title="No command is executed"></a>No command is executed</h2><p>When you can’t get any command except <code>help</code>, <code>init</code> and <code>version</code> to work and you keep getting content of <code>hexo help</code>, it could be caused by a missing <code>hexo</code> in <code>package.json</code>:</p>
+<pre><code class="json">{
+  &quot;hexo&quot;: {
+    &quot;version&quot;: &quot;3.2.2&quot;
+  }
+}
+</code></pre>
+<h2 id="Escape-Contents"><a href="#Escape-Contents" class="headerlink" title="Escape Contents"></a>Escape Contents</h2><p>Hexo uses <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> to render posts (<a href="http://paularmstrong.github.io/swig/">Swig</a> was used in older version, which share a similar syntax). Content wrapped with <code>{{ }}</code> or <code>{% %}</code> will get parsed and may cause problems. You can skip the parsing by wrapping it with the <a href="/docs/tag-plugins#Raw"><code>raw</code></a> tag plugin, single backtick <code>`{{ }}`</code> or triple backtick.<br>Alternatively, Nunjucks tags can be disabled through the renderer’s option (if supported), <a href="/api/renderer#Disable-Nunjucks-tags">API</a> or <a href="/docs/front-matter">front-matter</a>.</p>
+<pre><code>{% raw %}
+Hello {{ world }}
+{% endraw %}
+</code></pre>
+<pre><code>```
+Hello {{ world }}
+```
+</code></pre>
+<h2 id="ENOSPC-Error-Linux"><a href="#ENOSPC-Error-Linux" class="headerlink" title="ENOSPC Error (Linux)"></a>ENOSPC Error (Linux)</h2><p>Sometimes when running the command <code>$ hexo server</code> it returns an error:</p>
+<pre><code>Error: watch ENOSPC ...
+</code></pre>
+<p>It can be fixed by running <code>$ npm dedupe</code> or, if that doesn’t help, try the following in the Linux console:</p>
+<pre><code>$ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;&amp; sudo sysctl -p
+</code></pre>
+<p>This will increase the limit for the number of files you can watch.</p>
+<h2 id="EMPERM-Error-Windows-Subsystem-for-Linux"><a href="#EMPERM-Error-Windows-Subsystem-for-Linux" class="headerlink" title="EMPERM Error (Windows Subsystem for Linux)"></a>EMPERM Error (Windows Subsystem for Linux)</h2><p>When running <code>$ hexo server</code> in a BashOnWindows environment, it returns the following error:</p>
+<pre><code>Error: watch /path/to/hexo/theme/ EMPERM
+</code></pre>
+<p>Unfortunately, WSL does not currently support filesystem watchers. Therefore, the live updating feature of hexo’s server is currently unavailable. You can still run the server from a WSL environment by first generating the files and then running it as a static server:</p>
+<pre><code class="sh">$ hexo generate
+$ hexo server -s
+</code></pre>
+<p>This is <a href="https://github.com/Microsoft/BashOnWindows/issues/216">a known BashOnWindows issue</a>, and on 15 Aug 2016, the Windows team said they would work on it. You can get progress updates and encourage them to prioritize it on <a href="https://wpdev.uservoice.com/forums/266908-command-prompt-console-bash-on-ubuntu-on-windo/suggestions/13469097-support-for-filesystem-watchers-like-inotify">the issue’s UserVoice suggestion page</a>.</p>
+<h2 id="Template-render-error"><a href="#Template-render-error" class="headerlink" title="Template render error"></a>Template render error</h2><p>Sometimes when running the command <code>$ hexo generate</code> it returns an error:</p>
+<pre><code>FATAL Something&#39;s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html
+Template render error: (unknown path)
+</code></pre>
+<p>One possible reason is that there are some unrecognizable words in your file, e.g. invisible zero width characters.</p>

@@ -1,0 +1,79 @@
+<hr>
+<h2 id="title-Box"><a href="#title-Box" class="headerlink" title="title: Box"></a>title: Box</h2><p>Box é um container usado para processar arquivos em um diretório específico. O Hexo usa dois Boxes diferentes: <code>hexo.source</code> e <code>hexo.theme</code>. O primeiro é usado para processar o diretório <code>source</code> e o segundo para processar o diretório <code>theme</code>.</p>
+<h2 id="Carregar-Arquivos"><a href="#Carregar-Arquivos" class="headerlink" title="Carregar Arquivos"></a>Carregar Arquivos</h2><p>O Box fornece dois métodos para carregar arquivos: <code>process</code> e <code>watch</code>. <code>process</code> carrega todos os arquivos no diretório. <code>watch</code> faz o mesmo, mas também começa a assistir as mudanças nos arquivos.</p>
+<pre><code class="js">box.process().then(function(){
+  // ...
+});
+
+box.watch().then(function(){
+  // You can call box.unwatch() later to stop watching.
+});
+</code></pre>
+<h2 id="Correspondencia-Caminho-Path-Matching"><a href="#Correspondencia-Caminho-Path-Matching" class="headerlink" title="Correspondência Caminho (Path Matching)"></a>Correspondência Caminho (Path Matching)</h2><p>O Box fornece muitas maneiras para a correspondência de caminho. Você pode usar uma expressão regular, uma função ou uma string no padrão Express-style. Por exemplo:</p>
+<pre><code class="plain">posts/:id =&gt; posts/89
+posts/*path =&gt; posts/2015/title
+</code></pre>
+<p>Veja <a href="https://github.com/hexojs/hexo-util#patternrule">util.Pattern</a> para mais informações.</p>
+<h2 id="Processors"><a href="#Processors" class="headerlink" title="Processors"></a>Processors</h2><p>Um <code>processor</code> é um elemento essencial do Box e é usado para processar arquivos. Você pode usar o path matching conforme descrito acima para restringir o que exatamente o <code>processor</code> deve processar. Registre um novo <code>processor</code> com o método <code>addProcessor</code>.</p>
+<pre><code class="js">box.addProcessor(&#39;posts/:id&#39;, function(file){
+  //
+});
+</code></pre>
+<p>O Box passa o conteúdo dos arquivos correspondentes aos processadores. Esta informação pode então ser lida diretamente do argumento <code>file</code> no retorno do callback:</p>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source</code></td>
+<td>Caminho completo do arquivo.</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Caminho relativo para o Box do arquivo.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Tipo de arquivo. O valor pode ser <code>create</code>, <code>update</code>, <code>skip</code> ou <code>delete</code>.</td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td>A informação do caminho correspondente.</td>
+</tr>
+</tbody></table>
+<p>O Box também fornece alguns métodos para que você não precise fazer o IO (entrada e saída) de arquivo por conta própria.</p>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>read</code></td>
+<td>Ler um arquivo.</td>
+</tr>
+<tr>
+<td><code>readSync</code></td>
+<td>Ler um arquivo de forma síncrona.</td>
+</tr>
+<tr>
+<td><code>stat</code></td>
+<td>Ler o status de um arquivo.</td>
+</tr>
+<tr>
+<td><code>statSync</code></td>
+<td>Ler o status de um arquivo de forma síncrona.</td>
+</tr>
+<tr>
+<td><code>render</code></td>
+<td>Renderizar um arquivo.</td>
+</tr>
+<tr>
+<td><code>renderSync</code></td>
+<td>Renderizar um arquivo de forma síncrona.</td>
+</tr>
+</tbody></table>

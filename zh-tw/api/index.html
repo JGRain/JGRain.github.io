@@ -1,0 +1,62 @@
+<hr>
+<h2 id="title-API"><a href="#title-API" class="headerlink" title="title: API"></a>title: API</h2><p>本文件提供您更豐富的 API 資訊，使您更容易修改 Hexo 原始碼或撰寫外掛。如果您只是想要查詢關於 Hexo 的基本使用方法，請參閱 <a href="../docs/">文件</a>。</p>
+<p>在開始之前，請注意本文件僅適用於 Hexo 3 及以上版本。</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>首先，我們必須建立一個 Hexo 實例（instance），第一個參數是網站的根目錄，也就是 <code>base_dir</code>，而第二個參數則是初始化的選項。接著執行 <code>init</code> 方法後，Hexo 會載入外掛及配置檔案。</p>
+<pre><code class="js">var Hexo = require(&#39;hexo&#39;);
+var hexo = new Hexo(process.cwd(), {});
+
+hexo.init().then(function(){
+  // ...
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>debug</code></td>
+<td>開啟除錯模式。在終端機中顯示除錯訊息，並在根目錄中儲存 <code>debug.log</code> 記錄檔。</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>safe</code></td>
+<td>開啟安全模式。不要載入任何外掛。</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>silent</code></td>
+<td>開啟安靜模式。不要在終端機中顯示任何訊息。</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>指定配置檔案的路徑。</td>
+<td><code>_config.yml</code></td>
+</tr>
+</tbody></table>
+<h2 id="載入檔案"><a href="#載入檔案" class="headerlink" title="載入檔案"></a>載入檔案</h2><p>Hexo 提供了兩種方法來載入檔案：<code>load</code>, <code>watch</code>，前者用於載入 <code>source</code> 資料夾內的所有檔案及主題資料；而後者除了執行 <code>load</code> 以外，還會繼續監看檔案變動。</p>
+<p>這兩個方法實際上所做的，就是載入檔案列表，並把檔案傳給相對應的處理器（Processor），當檔案全部處理完畢後，就執行產生器（Generator）來建立路由。</p>
+<pre><code class="js">hexo.load().then(function(){
+  // ...
+});
+
+hexo.watch().then(function(){
+  // 之後可呼叫 hexo.unwatch() 停止檔案監看
+});
+</code></pre>
+<h2 id="執行指令"><a href="#執行指令" class="headerlink" title="執行指令"></a>執行指令</h2><p>您可透過 <code>call</code> 方法來呼叫控制台（Console），第一個參數是控制台的名稱，而第二個參數是選項，根據不同控制台而有所不同。</p>
+<pre><code class="js">hexo.call(&#39;generate&#39;, {}).then(function(){
+  // ...
+});
+</code></pre>
+<h2 id="結束"><a href="#結束" class="headerlink" title="結束"></a>結束</h2><p>當指令完畢後，請執行 <code>exit</code> 方法讓 Hexo 完成結束前的準備工作（如儲存資料庫）。</p>
+<pre><code class="js">hexo.call(&#39;generate&#39;).then(function(){
+  return hexo.exit();
+}).catch(function(err){
+  return hexo.exit(err);
+});
+</code></pre>

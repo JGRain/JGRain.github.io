@@ -1,0 +1,16 @@
+<hr>
+<h2 id="title-主題"><a href="#title-主題" class="headerlink" title="title: 主題"></a>title: 主題</h2><p><code>hexo.theme</code> 除了繼承 <a href="box.html">盒子</a> 外，還身兼儲存模板的功能。</p>
+<h2 id="取得模板"><a href="#取得模板" class="headerlink" title="取得模板"></a>取得模板</h2><pre><code class="js">hexo.theme.getView(path);
+</code></pre>
+<h2 id="設定模板"><a href="#設定模板" class="headerlink" title="設定模板"></a>設定模板</h2><pre><code class="js">hexo.theme.setView(path, data);
+</code></pre>
+<h2 id="移除模板"><a href="#移除模板" class="headerlink" title="移除模板"></a>移除模板</h2><pre><code class="js">hexo.theme.removeView(path);
+</code></pre>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>模板本身有兩個方法可供使用：<code>render</code> 和 <code>renderSync</code>，兩者功能一樣，只是前者為非同步函數，而後者為同步函數，因此以下僅以 <code>render</code> 舉例。</p>
+<pre><code class="js">var view = hexo.theme.getView(&#39;layout.swig&#39;);
+
+view.render({foo: 1, bar: 2}).then(function(result){
+  // ...
+});
+</code></pre>
+<p>您可在 <code>render</code> 方法傳入選項作為參數，<code>render</code> 方法會先使用相應的渲染引擎進行處理，並載入 <a href="helper.html">輔助函數</a>，渲染完成後，會試著尋找佈局（layout）是否存在，當 <code>layout</code> 設為 <code>false</code> 或不存在時則會直接回傳渲染結果。</p>

@@ -1,0 +1,89 @@
+<hr>
+<h2 id="title-Шаблоны"><a href="#title-Шаблоны" class="headerlink" title="title: Шаблоны"></a>title: Шаблоны</h2><p>Шаблон определяет, как страница определённого вида будет выглядеть на вашем сайте. В таблице ниже приведены соответствующие шаблоны для любой страницы. Как минимум, тема должна содержать шаблон <code>index</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Шаблон</th>
+<th>Страница</th>
+<th>Резерв</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>index</code></td>
+<td>Домашняя страница</td>
+<td></td>
+</tr>
+<tr>
+<td><code>post</code></td>
+<td>Посты</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td>Страницы</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>archive</code></td>
+<td>Архив</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td>Категории архивов</td>
+<td><code>archive</code></td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td>Архив тегов</td>
+<td><code>archive</code></td>
+</tr>
+</tbody></table>
+<h2 id="Макеты"><a href="#Макеты" class="headerlink" title="Макеты"></a>Макеты</h2><p>Если страницы имеют схожую структуру, например, когда два шаблона имеют как верхний, так и нижний колонтитулы, тогда можно рассмотреть возможность использования макета <code>layout</code> для вынесения этих структурных сходств. Каждый файл разметки должен содержать переменную <code>body</code>, для отображения содержимого шаблона. Например:</p>
+<pre><code class="html">index
+</code></pre>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;&lt;%- body %&gt;&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>сформируется в:</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;index&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>По умолчанию макет <code>layout</code> используется всеми другими шаблонами. Вы можете указать дополнительные макеты в шапке файла или установить его значение в <code>false</code>, чтобы отключить. Также можно построить сложную вложенную структуру включив в верхней части макета другие макеты.</p>
+<!-- TODO: Добавить примеры использования -->
+
+<h2 id="Части"><a href="#Части" class="headerlink" title="Части"></a>Части</h2><p>Разбивка на части полезна для обмена компонентами между шаблонами. Типичные примеры включают в себя заголовки, нижние колонтитулы, боковые панели. Можно подставить ваш фрагмент в отдельные файлы, чтобы сделать поддержку сайта намного удобнее. Например:</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= config.title %&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>сформируется в:</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;My Site&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h2 id="Локальные-переменные"><a href="#Локальные-переменные" class="headerlink" title="Локальные переменные"></a>Локальные переменные</h2><p>Вы можете назначать локальные переменные в шаблонах и после использовать в других шаблонах.</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= title&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;, {title: &#39;Hello World&#39;}) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>сформируется в:</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;Hello World&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h2 id="Оптимизация"><a href="#Оптимизация" class="headerlink" title="Оптимизация"></a>Оптимизация</h2><p>Если созданная тема является чрезвычайно сложной или в ней количество файлов для создания становится слишком большим, производительность генерация файлов Hexo может начать значительно уменьшаться. Помимо упрощения вашей темы, можно попробовать кэширование фрагментов, оно было введено в Hexo 2.7.</p>
+<p>Эта было позаимствовано из <a href="http://guides.rubyonrails.org/caching_with_rails.html#fragment-caching">Ruby on Rails</a>. Он вызывает содержимое для сохранения в виде фрагментов и кэширует его, когда дополнительные запросы выполнены. Это может уменьшить количество запросов к базе данных, а также может ускорить создание файлов.</p>
+<p>Кэширование фрагментов лучше всего использовать для заголовков, колонтитулов, боковых панелей или другого статического контента, который вряд ли будет менятся от шаблона к шаблону. Например:</p>
+<pre><code class="js">&lt;%- fragment_cache(&#39;header&#39;, function(){
+  return &#39;&lt;header&gt;&lt;/header&gt;&#39;;
+});
+</code></pre>
+<p>Хотя это можно сделать проще, используя части:</p>
+<pre><code class="js">&lt;%- partial(&#39;header&#39;, {}, {cache: true});
+</code></pre>
+<p>{% note warn %}<br><code>fragment_cache()</code> will cache the rendered result and output the cached result to other pages. This should only be used on partials that are expected <strong>not</strong> to change across different pages. Otherwise, it should <strong>not</strong> be enabled.<br>For example, it should be disabled when <code>relative_link</code> is enabled in the config. This is because relative links may appear differently across pages.<br>{% endnote %}</p>

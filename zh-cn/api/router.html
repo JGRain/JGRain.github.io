@@ -1,0 +1,43 @@
+<hr>
+<h2 id="title-路由"><a href="#title-路由" class="headerlink" title="title: 路由"></a>title: 路由</h2><p>路由存储了网站中所用到的所有路径。</p>
+<h2 id="获取路径"><a href="#获取路径" class="headerlink" title="获取路径"></a>获取路径</h2><p><code>get</code> 方法会传回一个 <a href="http://nodejs.org/api/stream.html">Stream</a>，例如把该路径的资料存储到某个指定位置。</p>
+<pre><code class="js">var data = hexo.route.get(&#39;index.html&#39;);
+var dest = fs.createWriteStream(&#39;somewhere&#39;);
+
+data.pipe(dest);
+</code></pre>
+<h2 id="设置路径"><a href="#设置路径" class="headerlink" title="设置路径"></a>设置路径</h2><p>您可以在 <code>set</code> 方法中使用字符串、<a href="http://nodejs.org/api/buffer.html">Buffer</a> 或函数，如下：</p>
+<pre><code class="js">// String
+hexo.route.set(&#39;index.html&#39;, &#39;index&#39;)
+
+// Buffer
+hexo.route.set(&#39;index.html&#39;, new Buffer(&#39;index&#39;));
+
+// Function (Promise)
+hexo.route.set(&#39;index.html&#39;, function(){
+  return new Promise(function(resolve, reject){
+    resolve(&#39;index&#39;);
+  });
+});
+
+// Function (Callback)
+hexo.route.set(&#39;index.html&#39;, function(callback){
+  callback(null, &#39;index&#39;);
+});
+</code></pre>
+<p>您还可以设置该路径是否更新，这样在生成文件时便能忽略未更动的文件，加快生成时间。</p>
+<pre><code class="js">hexo.route.set(&#39;index.html&#39;, {
+    data: &#39;index&#39;,
+    modified: false
+});
+
+// hexo.route.isModified(&#39;index.html&#39;) =&gt; false
+</code></pre>
+<h2 id="移除路径"><a href="#移除路径" class="headerlink" title="移除路径"></a>移除路径</h2><pre><code class="js">hexo.route.remove(&#39;index.html&#39;);
+</code></pre>
+<h2 id="获得路由表"><a href="#获得路由表" class="headerlink" title="获得路由表"></a>获得路由表</h2><pre><code class="js">hexo.route.list();
+</code></pre>
+<h2 id="格式化路径"><a href="#格式化路径" class="headerlink" title="格式化路径"></a>格式化路径</h2><p><code>format</code> 方法可将字符串转为合法的路径。</p>
+<pre><code class="js">hexo.route.format(&#39;archives/&#39;);
+// archives/index.html
+</code></pre>

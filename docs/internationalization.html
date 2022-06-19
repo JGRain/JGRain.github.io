@@ -1,0 +1,33 @@
+<hr>
+<h2 id="title-Internationalization-i18n"><a href="#title-Internationalization-i18n" class="headerlink" title="title: Internationalization (i18n)"></a>title: Internationalization (i18n)</h2><p>You can use internationalization to present your site in different languages. The default language is set by modifying the <code>language</code> setting in <code>_config.yml</code>. You can also set multiple languages and modify the order of default languages.</p>
+<pre><code class="yaml">language: zh-tw
+
+language:
+- zh-tw
+- en
+</code></pre>
+<h3 id="Language-Files"><a href="#Language-Files" class="headerlink" title="Language Files"></a>Language Files</h3><p>Language files can be YAML or JSON files. You should put them into the <code>languages</code> folder in the theme. There is support for the <a href="https://github.com/alexei/sprintf.js">printf format</a> in language files.</p>
+<h3 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h3><p>Use <code>__</code> or <code>_p</code> helpers in templates to get the translated strings. The former is for normal usage and the latter is for plural strings. For example:</p>
+<pre><code class="yaml">index:
+  title: Home
+  add: Add
+  video:
+    zero: No videos
+    one: One video
+    other: %d videos
+</code></pre>
+<pre><code class="js">&lt;%= __(&#39;index.title&#39;) %&gt;
+// Home
+
+&lt;%= _p(&#39;index.video&#39;, 3) %&gt;
+// 3 videos
+</code></pre>
+<h3 id="Path"><a href="#Path" class="headerlink" title="Path"></a>Path</h3><p>You can set the language of pages in front-matter, or modify the <code>i18n_dir</code> setting in <code>_config.yml</code> to enable automatic detection by Hexo.</p>
+<pre><code class="yaml">i18n_dir: :lang
+</code></pre>
+<p>The default value of <code>i18n_dir</code> setting is <code>:lang</code>, which means that Hexo will detect the language within the first segment of URL. For example:</p>
+<pre><code class="plain">/index.html =&gt; en
+/archives/index.html =&gt; en
+/zh-tw/index.html =&gt; zh-tw
+</code></pre>
+<p>The string will only be served as a language when the language file exists. So <code>archives</code> in <code>/archives/index.html</code> (example 2) will not get served as a language.</p>

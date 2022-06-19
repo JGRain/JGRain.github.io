@@ -1,0 +1,43 @@
+<hr>
+<h2 id="title-Router"><a href="#title-Router" class="headerlink" title="title: Router"></a>title: Router</h2><p>The router saves all paths used in the site.</p>
+<h2 id="Get-a-Path"><a href="#Get-a-Path" class="headerlink" title="Get a Path"></a>Get a Path</h2><p>The <code>get</code> method returns a <a href="http://nodejs.org/api/stream.html">Stream</a>. For example, to save the path data to a specified destination:</p>
+<pre><code class="js">var data = hexo.route.get(&#39;index.html&#39;);
+var dest = fs.createWriteStream(&#39;somewhere&#39;);
+
+data.pipe(dest);
+</code></pre>
+<h2 id="Set-a-Path"><a href="#Set-a-Path" class="headerlink" title="Set a Path"></a>Set a Path</h2><p>The <code>set</code> method takes a string, a <a href="http://nodejs.org/api/buffer.html">Buffer</a> or a function.</p>
+<pre><code class="js">// String
+hexo.route.set(&#39;index.html&#39;, &#39;index&#39;)
+
+// Buffer
+hexo.route.set(&#39;index.html&#39;, new Buffer(&#39;index&#39;));
+
+// Function (Promise)
+hexo.route.set(&#39;index.html&#39;, function(){
+  return new Promise(function(resolve, reject){
+    resolve(&#39;index&#39;);
+  });
+});
+
+// Function (Callback)
+hexo.route.set(&#39;index.html&#39;, function(callback){
+  callback(null, &#39;index&#39;);
+});
+</code></pre>
+<p>You can also set a boolean for whether a path has been modified or not. This can speed up file generation as it allows for ignoring the unmodified files.</p>
+<pre><code class="js">hexo.route.set(&#39;index.html&#39;, {
+    data: &#39;index&#39;,
+    modified: false
+});
+
+// hexo.route.isModified(&#39;index.html&#39;) =&gt; false
+</code></pre>
+<h2 id="Remove-a-Path"><a href="#Remove-a-Path" class="headerlink" title="Remove a Path"></a>Remove a Path</h2><pre><code class="js">hexo.route.remove(&#39;index.html&#39;);
+</code></pre>
+<h2 id="Get-the-List-of-Routes"><a href="#Get-the-List-of-Routes" class="headerlink" title="Get the List of Routes"></a>Get the List of Routes</h2><pre><code class="js">hexo.route.list();
+</code></pre>
+<h2 id="Format-a-Path"><a href="#Format-a-Path" class="headerlink" title="Format a Path"></a>Format a Path</h2><p>The <code>format</code> method transforms a string to a valid path.</p>
+<pre><code class="js">hexo.route.format(&#39;archives/&#39;);
+// archives/index.html
+</code></pre>

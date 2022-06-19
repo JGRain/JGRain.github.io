@@ -1,0 +1,51 @@
+<hr>
+<h2 id="title-Консоль"><a href="#title-Консоль" class="headerlink" title="title: Консоль"></a>title: Консоль</h2><p>Консоль служит для взаимодействия пользователей с Hexo. Регистрирует и описывает доступные консольные команды.</p>
+<h2 id="Краткий-обзор"><a href="#Краткий-обзор" class="headerlink" title="Краткий обзор"></a>Краткий обзор</h2><pre><code class="js">hexo.extend.console.register(name, desc, options, function(args){
+  // ...
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Свойство</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>Имя</td>
+</tr>
+<tr>
+<td><code>desc</code></td>
+<td>Описание</td>
+</tr>
+<tr>
+<td><code>options</code></td>
+<td>Опции</td>
+</tr>
+</tbody></table>
+<p>Значение из аргумента <code>args</code> передаётся в функцию. Свойство описывает вводимые через терминал данные. Анализируется с помощью <a href="https://github.com/substack/minimist">Minimist</a>.</p>
+<h2 id="Опции"><a href="#Опции" class="headerlink" title="Опции"></a>Опции</h2><h3 id="usage"><a href="#usage" class="headerlink" title="usage"></a>usage</h3><p>Добавление используемых команд в консоль. Например:</p>
+<pre><code class="js">{usage: &#39;[layout] &lt;title&gt;&#39;}
+// hexo new [layout] &lt;title&gt;
+</code></pre>
+<h3 id="arguments"><a href="#arguments" class="headerlink" title="arguments"></a>arguments</h3><p>Описание аргументов в консоли. Например:</p>
+<pre><code class="js">{
+  arguments: [
+    {name: &#39;layout&#39;, desc: &#39;Post layout&#39;},
+    {name: &#39;title&#39;, desc: &#39;Post title&#39;}
+  ]
+}
+</code></pre>
+<h3 id="options"><a href="#options" class="headerlink" title="options"></a>options</h3><p>Описание опций в консоли. Например:</p>
+<pre><code class="js">{
+  options: [
+    {name: &#39;-r, --replace&#39;, desc: &#39;Replace existing files&#39;}
+  ]
+}
+</code></pre>
+<h3 id="desc"><a href="#desc" class="headerlink" title="desc"></a>desc</h3><p>Подробная информация о консольной команде.</p>
+<h2 id="Пример"><a href="#Пример" class="headerlink" title="Пример"></a>Пример</h2><pre><code class="js">hexo.extend.console.register(&#39;config&#39;, &#39;Display configuration&#39;, function(args){
+  console.log(hexo.config);
+});
+</code></pre>

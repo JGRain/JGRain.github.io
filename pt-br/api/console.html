@@ -1,0 +1,51 @@
+<hr>
+<h2 id="title-Console"><a href="#title-Console" class="headerlink" title="title: Console"></a>title: Console</h2><p>O <code>console</code> forma a ponte entre o Hexo e os usuários. Ele registra e descreve os comandos disponíveis para o terminal.</p>
+<h2 id="Resumo"><a href="#Resumo" class="headerlink" title="Resumo"></a>Resumo</h2><pre><code class="js">hexo.extend.console.register(name, desc, options, function(args){
+  // ...
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argumento</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>Nome</td>
+</tr>
+<tr>
+<td><code>desc</code></td>
+<td>Descrição</td>
+</tr>
+<tr>
+<td><code>options</code></td>
+<td>Opções</td>
+</tr>
+</tbody></table>
+<p>Um argumento <code>args</code> será passado para a função. Este é o argumento que os usuários digitam no terminal. Ele é analisado pelo <a href="https://github.com/substack/minimist">Minimist</a>.</p>
+<h2 id="Opcoes"><a href="#Opcoes" class="headerlink" title="Opções"></a>Opções</h2><h3 id="usage"><a href="#usage" class="headerlink" title="usage"></a>usage</h3><p>O uso de um comando de terminal. Por exemplo:</p>
+<pre><code class="js">{usage: &#39;[layout] &lt;title&gt;&#39;}
+// hexo new [layout] &lt;title&gt;
+</code></pre>
+<h3 id="arguments"><a href="#arguments" class="headerlink" title="arguments"></a>arguments</h3><p>A descrição de cada argumento de um comando de terminal. Por exemplo:</p>
+<pre><code class="js">{
+  arguments: [
+    {name: &#39;layout&#39;, desc: &#39;Post layout&#39;},
+    {name: &#39;title&#39;, desc: &#39;Post title&#39;}
+  ]
+}
+</code></pre>
+<h3 id="options"><a href="#options" class="headerlink" title="options"></a>options</h3><p>A descrição de cada opção de um comando de terminal. Por exemplo:</p>
+<pre><code class="js">{
+  options: [
+    {name: &#39;-r, --replace&#39;, desc: &#39;Replace existing files&#39;}
+  ]
+}
+</code></pre>
+<h3 id="desc"><a href="#desc" class="headerlink" title="desc"></a>desc</h3><p>Informações mais detalhadas sobre um comando de terminal.</p>
+<h2 id="Exemplo"><a href="#Exemplo" class="headerlink" title="Exemplo"></a>Exemplo</h2><pre><code class="js">hexo.extend.console.register(&#39;config&#39;, &#39;Display configuration&#39;, function(args){
+  console.log(hexo.config);
+});
+</code></pre>

@@ -1,0 +1,72 @@
+<hr>
+<h2 id="title-渲染引擎（Renderer）"><a href="#title-渲染引擎（Renderer）" class="headerlink" title="title: 渲染引擎（Renderer）"></a>title: 渲染引擎（Renderer）</h2><p>渲染引擎用于渲染内容。</p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><pre><code class="js">hexo.extend.renderer.register(name, output, function(data, options){
+}, sync);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>输入的扩展名（小写，不含开头的 <code>.</code>）</td>
+</tr>
+<tr>
+<td><code>output</code></td>
+<td>输出的扩展名（小写，不含开头的 <code>.</code>）</td>
+</tr>
+<tr>
+<td><code>sync</code></td>
+<td>同步模式</td>
+</tr>
+</tbody></table>
+<p>渲染函数中会传入两个参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>包含两个属性：文件路径 <code>path</code> 和文件内容 <code>text</code>。<code>path</code> 不一定存在。</td>
+</tr>
+<tr>
+<td><code>option</code></td>
+<td>选项</td>
+</tr>
+</tbody></table>
+<h2 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h2><h3 id="非同步模式"><a href="#非同步模式" class="headerlink" title="非同步模式"></a>非同步模式</h3><pre><code class="js">var stylus = require(&#39;stylus&#39;);
+
+// Callback
+hexo.extend.renderer.register(&#39;styl&#39;, &#39;css&#39;, function(data, options, callback){
+  stylus(data.text).set(&#39;filename&#39;, data.path).render(callback);
+});
+
+// Promise
+hexo.extend.renderer.register(&#39;styl&#39;, &#39;css&#39;, function(data, options){
+  return new Promise(function(resolve, reject){
+    resolve(&#39;test&#39;);
+  });
+});
+</code></pre>
+<h3 id="同步模式"><a href="#同步模式" class="headerlink" title="同步模式"></a>同步模式</h3><pre><code class="js">var ejs = require(&#39;ejs&#39;);
+
+hexo.extend.renderer.register(&#39;ejs&#39;, &#39;html&#39;, function(data, options){
+  options.filename = data.path;
+  return ejs.render(data.text, options);
+}, true);
+</code></pre>
+<h3 id="Disable-Nunjucks-tags"><a href="#Disable-Nunjucks-tags" class="headerlink" title="Disable Nunjucks tags"></a>Disable Nunjucks tags</h3><p>Nunjucks tags <code>{{ }}</code> or <code>{% %}</code> (utilized by <a href="/docs/tag-plugins">tag plugin</a>) are processed by default, to disable:</p>
+<pre><code class="js">function lessFn(data, options) {
+  // do something
+}
+
+lessFn.disableNunjucks = true
+
+hexo.extend.renderer.register(&#39;less&#39;, &#39;css&#39;, lessFn);
+</code></pre>

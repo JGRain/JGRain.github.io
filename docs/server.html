@@ -1,0 +1,24 @@
+<hr>
+<h2 id="title-Server"><a href="#title-Server" class="headerlink" title="title: Server"></a>title: Server</h2><h2 id="hexo-server"><a href="#hexo-server" class="headerlink" title="hexo-server"></a><a href="https://github.com/hexojs/hexo-server">hexo-server</a></h2><p>With the release of Hexo 3, the server has been separated from the main module. To start using the server, you will first have to install <a href="https://github.com/hexojs/hexo-server">hexo-server</a>.</p>
+<pre><code class="bash">$ npm install hexo-server --save
+</code></pre>
+<p>Once the server has been installed, run the following command to start the server. Your website will run at <code>http://localhost:4000</code> by default. When the server is running, Hexo will watch for file changes and update automatically so it’s not necessary to manually restart the server.</p>
+<pre><code class="bash">$ hexo server
+</code></pre>
+<p>If you want to change the port or if you’re encountering <code>EADDRINUSE</code> errors, use the <code>-p</code> option to set a different port.</p>
+<pre><code class="bash">$ hexo server -p 5000
+</code></pre>
+<h3 id="Static-Mode"><a href="#Static-Mode" class="headerlink" title="Static Mode"></a>Static Mode</h3><p>In static mode, only files in the <code>public</code> folder will be served and file watching is disabled. You have to run <code>hexo generate</code> before starting the server. Usually used in production.</p>
+<pre><code class="bash">$ hexo server -s
+</code></pre>
+<h3 id="Custom-IP"><a href="#Custom-IP" class="headerlink" title="Custom IP"></a>Custom IP</h3><p>Hexo runs the server at <code>0.0.0.0</code> by default. You can override the default IP setting.</p>
+<pre><code class="bash">$ hexo server -i 192.168.1.1
+</code></pre>
+<h2 id="Pow"><a href="#Pow" class="headerlink" title="Pow"></a>Pow</h2><p><a href="http://pow.cx/">Pow</a> is a zero-config Rack server for Mac.</p>
+<h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><pre><code class="bash">$ curl get.pow.cx | sh
+</code></pre>
+<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>Symlink the folder into <code>~/.pow</code></p>
+<pre><code class="bash">$ cd ~/.pow
+$ ln -s /path/to/myapp
+</code></pre>
+<p>Your website will be up and running at <code>http://myapp.test</code>. The URL is based on the name of the symlink.</p>

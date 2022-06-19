@@ -1,0 +1,31 @@
+<hr>
+<h2 id="title-Events"><a href="#title-Events" class="headerlink" title="title: Events"></a>title: Events</h2><p>O Hexo herda de <a href="https://nodejs.org/dist/latest/docs/api/events.html">EventEmitter</a>. Use o método <code>on</code> para ouvir os eventos emitidos pelo Hexo, e use o método <code>emit</code> para emitir eventos. Para obter mais informações, consulte a documentação da API do Node.js.</p>
+<h3 id="deployBefore"><a href="#deployBefore" class="headerlink" title="deployBefore"></a>deployBefore</h3><p>Emitido antes do deployment começar.</p>
+<h3 id="deployAfter"><a href="#deployAfter" class="headerlink" title="deployAfter"></a>deployAfter</h3><p>Emitido depois do deployment finalizado.</p>
+<h3 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit</h3><p>Emitido antes de Hexo sair.</p>
+<h3 id="generateBefore"><a href="#generateBefore" class="headerlink" title="generateBefore"></a>generateBefore</h3><p>Emitido antes da geração começar.</p>
+<h3 id="generateAfter"><a href="#generateAfter" class="headerlink" title="generateAfter"></a>generateAfter</h3><p>Emitido depois da geração finalizada.</p>
+<h3 id="new"><a href="#new" class="headerlink" title="new"></a>new</h3><p>Emitido depois de uma nova postagem ter sido criada. Este evento retorna os dados da postagem:</p>
+<pre><code class="js">hexo.on(&#39;new&#39;, function(post){
+  //
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Dados</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>post.path</code></td>
+<td>Caminho completo do arquivo da postagem</td>
+</tr>
+<tr>
+<td><code>post.content</code></td>
+<td>Conteúdo do arquivo da postagem</td>
+</tr>
+</tbody></table>
+<h3 id="processBefore"><a href="#processBefore" class="headerlink" title="processBefore"></a>processBefore</h3><p>Emitido antes do início do processamento. Este evento retorna um caminho que representa o diretório raiz do box.</p>
+<h3 id="processAfter"><a href="#processAfter" class="headerlink" title="processAfter"></a>processAfter</h3><p>Emitido depois do processamento finalizado. Este evento retorna um caminho que representa o diretório raiz do <code>box</code>.</p>
+<h3 id="ready"><a href="#ready" class="headerlink" title="ready"></a>ready</h3><p>Emitido depois da inicialização terminar.</p>

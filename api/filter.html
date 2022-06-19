@@ -1,0 +1,140 @@
+<hr>
+<h2 id="title-Filter"><a href="#title-Filter" class="headerlink" title="title: Filter"></a>title: Filter</h2><p>A filter is used to modify some specified data. Hexo passes data to filters in sequence and the filters then modify the data one after the other. This concept was borrowed from <a href="http://codex.wordpress.org/Plugin_API#Filters">WordPress</a>.</p>
+<h2 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h2><pre><code class="js">hexo.extend.filter.register(type, function() {
+  // User configuration
+  const { config } = this;
+  if (config.external_link.enable) // do something...
+
+  // Theme configuration
+  const { config: themeCfg } = this.theme;
+  if (themeCfg.fancybox) // do something...
+
+}, priority);
+</code></pre>
+<p>You can define the <code>priority</code>. Lower <code>priority</code> means that it will be executed first. The default <code>priority</code> is 10. We recommend using user-configurable priority value that user can specify in the config, e.g. <code>hexo.config.your_plugin.priority</code>.</p>
+<h2 id="Execute-Filters"><a href="#Execute-Filters" class="headerlink" title="Execute Filters"></a>Execute Filters</h2><pre><code class="js">hexo.extend.filter.exec(type, data, options);
+hexo.extend.filter.execSync(type, data, options);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>context</code></td>
+<td>Context</td>
+</tr>
+<tr>
+<td><code>args</code></td>
+<td>Arguments. This must be an array.</td>
+</tr>
+</tbody></table>
+<p>The first argument passed into each filter is <code>data</code>. The <code>data</code> passed into the next filter can be modified by returning a new value. If nothing is returned, the data remains unmodified. You can even use <code>args</code> to specify other arguments in filters. For example:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;test&#39;, function(data, arg1, arg2){
+  // data === &#39;some data&#39;
+  // arg1 === &#39;foo&#39;
+  // arg2 === &#39;bar&#39;
+
+  return &#39;something&#39;;
+});
+
+hexo.extend.filter.register(&#39;test&#39;, function(data, arg1, arg2){
+  // data === &#39;something&#39;
+});
+
+hexo.extend.filter.exec(&#39;test&#39;, &#39;some data&#39;, {
+  args: [&#39;foo&#39;, &#39;bar&#39;]
+});
+</code></pre>
+<p>You can also use the following methods to execute filters:</p>
+<pre><code class="js">hexo.execFilter(type, data, options);
+hexo.execFilterSync(type, data, options);
+</code></pre>
+<h2 id="Unregister-Filters"><a href="#Unregister-Filters" class="headerlink" title="Unregister Filters"></a>Unregister Filters</h2><pre><code class="js">hexo.extend.filter.unregister(type, filter);
+</code></pre>
+<p><strong>Example</strong></p>
+<pre><code class="js">// Unregister a filter which is registered with named function
+
+const filterFn = (data) =&gt; {
+  data = &#39;something&#39;;
+  return data;
+};
+hexo.extend.filter.register(&#39;example&#39;, filterFn);
+
+hexo.extend.filter.unregister(&#39;example&#39;, filterFn);
+</code></pre>
+<pre><code class="js">// Unregister a filter which is registered with commonjs module
+
+hexo.extend.filter.register(&#39;example&#39;, require(&#39;path/to/filter&#39;));
+
+hexo.extend.filter.unregister(&#39;example&#39;, require(&#39;path/to/filter&#39;));
+</code></pre>
+<h2 id="Filter-List"><a href="#Filter-List" class="headerlink" title="Filter List"></a>Filter List</h2><p>Here is a list of filters used by Hexo.</p>
+<h3 id="before-post-render"><a href="#before-post-render" class="headerlink" title="before_post_render"></a>before_post_render</h3><p>Executed before a post is rendered. Refer to <a href="posts.html#Render">post rendering</a> to learn the execution steps.</p>
+<p>For example, to transform the title to lower case:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_post_render&#39;, function(data){
+  data.title = data.title.toLowerCase();
+  return data;
+});
+</code></pre>
+<h3 id="after-post-render"><a href="#after-post-render" class="headerlink" title="after_post_render"></a>after_post_render</h3><p>Executed after a post is rendered. Refer to <a href="posts.html#Render">post rendering</a> to learn the execution steps.</p>
+<p>For example, to replace <code>@username</code> with a link to a Twitter profile:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_post_render&#39;, function(data){
+  data.content = data.content.replace(/@(\d+)/, &#39;&lt;a href=&quot;http://twitter.com/$1&quot;&gt;#$1&lt;/a&gt;&#39;);
+  return data;
+});
+</code></pre>
+<h3 id="before-exit"><a href="#before-exit" class="headerlink" title="before_exit"></a>before_exit</h3><p>Executed before Hexo is about to exit – this will run right after <code>hexo.exit</code> is called.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_exit&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="before-generate"><a href="#before-generate" class="headerlink" title="before_generate"></a>before_generate</h3><p>Executed before generation begins.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_generate&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="after-generate"><a href="#after-generate" class="headerlink" title="after_generate"></a>after_generate</h3><p>Executed after generation finishes.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_generate&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="template-locals"><a href="#template-locals" class="headerlink" title="template_locals"></a>template_locals</h3><p>Modify <a href="../docs/variables.html">local variables</a> in templates.</p>
+<p>For example, to add the current time to the local variables of templates:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;template_locals&#39;, function(locals){
+  locals.now = Date.now();
+  return locals;
+});
+</code></pre>
+<h3 id="after-init"><a href="#after-init" class="headerlink" title="after_init"></a>after_init</h3><p>Executed after Hexo is initialized – this will run right after <code>hexo.init</code> completes.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_init&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="new-post-path"><a href="#new-post-path" class="headerlink" title="new_post_path"></a>new_post_path</h3><p>Executed when creating a post to determine the path of new posts.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;new_post_path&#39;, function(data, replace){
+  // ...
+});
+</code></pre>
+<h3 id="post-permalink"><a href="#post-permalink" class="headerlink" title="post_permalink"></a>post_permalink</h3><p>Used to determine the permalink of posts.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;post_permalink&#39;, function(data){
+  // ...
+});
+</code></pre>
+<h3 id="after-render"><a href="#after-render" class="headerlink" title="after_render"></a>after_render</h3><p>Executed after rendering finishes. You can see <a href="rendering.html#after_render_Filters">rendering</a> for more info.</p>
+<h3 id="after-clean"><a href="#after-clean" class="headerlink" title="after_clean"></a>after_clean</h3><p>Executed after generated files and cache are removed with <code>hexo clean</code> command.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_clean&#39;, function(){
+  // remove some other temporary files
+});
+</code></pre>
+<h3 id="server-middleware"><a href="#server-middleware" class="headerlink" title="server_middleware"></a>server_middleware</h3><p>Add middleware to the server. <code>app</code> is a <a href="https://github.com/senchalabs/connect">Connect</a> instance.</p>
+<p>For example, to add <code>X-Powered-By: Hexo</code> to the response header:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;server_middleware&#39;, function(app){
+  app.use(function(req, res, next){
+    res.setHeader(&#39;X-Powered-By&#39;, &#39;Hexo&#39;);
+    next();
+  });
+});
+</code></pre>

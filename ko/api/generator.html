@@ -1,0 +1,86 @@
+<hr>
+<h2 id="title-Generator"><a href="#title-Generator" class="headerlink" title="title: Generator"></a>title: Generator</h2><p>Generator는 처리된 파일들을 기준으로 경로(route)를 생성합니다.</p>
+<h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><pre><code class="js">hexo.extend.generator.register(name, function(locals){
+  // ...
+});
+</code></pre>
+<p><code>locals</code>인자는 <a href="../docs/variables.html#Site-Variables">사이트 변수(site variables)</a>를 포함하며 함수를 통해 전달될 것입니다. 이 인자를 사용하면 데이터베이스에 직접 접근하지 않고도 웹 사이트의 데이터를 얻을 수 있습니다.</p>
+<h2 id="경로-route-업데이트"><a href="#경로-route-업데이트" class="headerlink" title="경로(route) 업데이트"></a>경로(route) 업데이트</h2><pre><code class="js">hexo.extend.generator.register(&#39;test&#39;, function(locals){
+  // Object
+  return {
+    path: &#39;foo&#39;,
+    data: &#39;foo&#39;
+  };
+
+  // Array
+  return [
+    {path: &#39;foo&#39;, data: &#39;foo&#39;},
+    {path: &#39;bar&#39;, data: &#39;bar&#39;}
+  ];
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>속성</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>path</code></td>
+<td>접두사 <code>/</code>를 포함하지 않는 경로.</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>데이터</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>레이아웃. 렌더링할 레이아웃을 지정합니다. 이 값은 string 또는 array입니다. 이 값이 무시된다면 <code>data</code>의 직접적인 경로가 반환됩니다.</td>
+</tr>
+</tbody></table>
+<p>소스 파일들이 업데이트 되면, Hexo는 모든 generator들을 실행하고 경로(route)를 재구성합니다. <strong>제발 라우터에 직접 접근하지 마시고 데이터를 리턴하세요.</strong></p>
+<h2 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h2><h3 id="Archive-Page"><a href="#Archive-Page" class="headerlink" title="Archive Page"></a>Archive Page</h3><p>Archive page를 <code>archives/index.html</code>에 생성합니다. 우리는 모든 포스트 데이터를 템플릿으로 전달합니다.이 데이터는 템플릿의 <code>page</code> 변수와 같습니다.</p>
+<p>다음, 테마 템플릿 렌더링을 위한 <code>layout</code> 속성을 설정합니다. 아래 예시에서 두 개의 레이아웃 설정을 확인할 수 있습니다. 만약 <code>archive</code> 레이아웃이 존재하지 않는다면 <code>index</code> 레이아웃이 사용될 것입니다.</p>
+<pre><code class="js">hexo.extend.generator.register(&#39;archive&#39;, function(locals){
+  return {
+    path: &#39;archives/index.html&#39;,
+    data: locals.posts,
+    layout: [&#39;archive&#39;, &#39;index&#39;]
+  }
+});
+</code></pre>
+<h3 id="Archive-Page에-Pagination-사용하기"><a href="#Archive-Page에-Pagination-사용하기" class="headerlink" title="Archive Page에 Pagination 사용하기"></a>Archive Page에 Pagination 사용하기</h3><p>Hexo 공식 툴인 <a href="https://github.com/hexojs/hexo-pagination">hexo-pagination</a>을 사용하여 간편하게 pagination을 구현할 수 있습니다.</p>
+<pre><code class="js">var pagination = require(&#39;hexo-pagination&#39;);
+
+hexo.extend.generator.register(&#39;archive&#39;, function(locals){
+  return pagination(&#39;archives/index.html&#39;, locals.posts, {
+    perPage: 10,
+    layout: [&#39;archive&#39;, &#39;index&#39;],
+    data: {}
+  });
+});
+</code></pre>
+<h3 id="모든-포스트-생성하기"><a href="#모든-포스트-생성하기" class="headerlink" title="모든 포스트 생성하기"></a>모든 포스트 생성하기</h3><p><code>locals.posts</code>에 포함된 모든 포스트들을 순회하고 각각의 포스트에 대한 경로(route)를 생성합니다.</p>
+<pre><code class="js">hexo.extend.generator.register(&#39;post&#39;, function(locals){
+  return locals.posts.map(function(post){
+    return {
+      path: post.path,
+      data: post,
+      layout: &#39;post&#39;
+    };
+  });
+});
+</code></pre>
+<h3 id="파일-복사"><a href="#파일-복사" class="headerlink" title="파일 복사"></a>파일 복사</h3><p>이 시점에 우리는 명시적인 데이터를 반환하지 않고 필요한 경우에만 경로(route)는 <code>fs.ReadStream</code>를 생성하기 위해 함수에 <code>data</code>를 설정합니다.</p>
+<pre><code class="js">var fs = require(&#39;hexo-fs&#39;);
+
+hexo.extend.generator.register(&#39;asset&#39;, function(locals){
+  return {
+    path: &#39;file.txt&#39;,
+    data: function(){
+      return fs.createReadStream(&#39;path/to/file.txt&#39;)
+    }
+  };
+});
+</code></pre>

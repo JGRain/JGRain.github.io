@@ -1,0 +1,85 @@
+<hr>
+<h2 id="title-GitHub-Pages"><a href="#title-GitHub-Pages" class="headerlink" title="title: GitHub Pages"></a>title: GitHub Pages</h2><p>In this tutorial, we use <a href="https://docs.github.com/en/actions">GitHub Actions</a> to deploy GitHub Pages. It works in both public and private repository. Skip to the <a href="#One-command-deployment">One-command deployment</a> section if you prefer not to upload your source folder to GitHub.</p>
+<ol>
+<li>Create a repo named <b><em>username</em>.github.io</b>, where username is your username on GitHub. If you have already uploaded to other repo, rename the repo instead.</li>
+<li>Push the files of your Hexo folder to the default branch of your repository. The default branch is usually <strong>main</strong>, older repository may use <strong>master</strong> branch.</li>
+</ol>
+<ul>
+<li><p>To push <code>main</code> branch to GitHub:</p>
+<pre><code>$ git push -u origin main
+</code></pre>
+</li>
+<li><p>The <code>public/</code> folder is not (and should not be) uploaded by default, make sure the <code>.gitignore</code> file contains <code>public/</code> line. The folder structure should be roughly similar to <a href="https://github.com/hexojs/hexo-starter">this repo</a>, without the <code>.gitmodules</code> file.</p>
+</li>
+</ul>
+<ol start="3">
+<li>Check what version of Node.js you are using on your local machine with <code>node --version</code>. Make a note of the major version (e.g., <code>v16.y.z</code>)</li>
+<li>Create <code>.github/workflows/pages.yml</code> in your repo with the following contents (substituting <code>16</code> to the major version of Node.js that you noted in previous step):</li>
+</ol>
+<pre><code class="yml">name: Pages
+
+on:
+  push:
+    branches:
+      - main  # default branch
+
+jobs:
+  pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: &#39;16&#39;
+      - name: Cache NPM dependencies
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-cache
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache
+      - name: Install Dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+</code></pre>
+<ol start="5">
+<li>Once the deployment is finished, the generated pages can be found in the <code>gh-pages</code> branch of your repository.</li>
+<li>In your GitHub repo’s setting, navigate to <strong>Settings</strong> &gt; <strong>Pages</strong> &gt; <strong>Source</strong>. Change the branch to <code>gh-pages</code> and save.</li>
+<li>Check the webpage at <em>username</em>.github.io.</li>
+</ol>
+<p>Note - if you specify a custom domain name with a <code>CNAME</code>, you need to add the <code>CNAME</code> file to the <code>source/</code> folder. <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site">More info</a>.</p>
+<h2 id="Project-page"><a href="#Project-page" class="headerlink" title="Project page"></a>Project page</h2><p>If you prefer to have a project page on GitHub:</p>
+<ol>
+<li>Navigate to your repo on GitHub. Go to the <strong>Settings</strong> tab. Change the <strong>Repository name</strong> so your blog is available at <b>username.github.io&#x2F;<em>repository</em></b>,  <strong>repository</strong> can be any name, like <em>blog</em> or <em>hexo</em>.</li>
+<li>Edit your <strong>_config.yml</strong>, change the <code>url:</code> value to <b>https:&#x2F;&#x2F;<em>username</em>.github.io&#x2F;<em>repository</em></b>.</li>
+<li>Commit and push to the default branch.</li>
+<li>Once the deployment is finished, the generated pages can be found in the <code>gh-pages</code> branch of your repository.</li>
+<li>In your GitHub repo’s setting, navigate to <strong>Settings</strong> &gt; <strong>Pages</strong> &gt; <strong>Source</strong>. Change the branch to <code>gh-pages</code> and save.</li>
+<li>Check the webpage at <em>username</em>.github.io&#x2F;<em>repository</em>.</li>
+</ol>
+<h2 id="One-command-deployment"><a href="#One-command-deployment" class="headerlink" title="One-command deployment"></a>One-command deployment</h2><p>The following instruction is adapted from <a href="/docs/one-command-deployment">one-command deployment</a> page.</p>
+<ol>
+<li>Install <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>.</li>
+<li>Add the following configurations to <strong>_config.yml</strong>, (remove existing lines if any).</li>
+</ol>
+<pre><code class="yml">deploy:
+  type: git
+  repo: https://github.com/&lt;username&gt;/&lt;project&gt;
+  # example, https://github.com/hexojs/hexojs.github.io
+  branch: gh-pages
+</code></pre>
+<ol start="3">
+<li>Run <code>hexo clean &amp;&amp; hexo deploy</code>.</li>
+<li>Check the webpage at <em>username</em>.github.io.</li>
+</ol>
+<h2 id="Useful-links"><a href="#Useful-links" class="headerlink" title="Useful links"></a>Useful links</h2><ul>
+<li><a href="https://docs.github.com/en/pages">GitHub Pages</a></li>
+<li><a href="https://github.com/marketplace/actions/github-pages-action">peaceiris&#x2F;actions-gh-pages</a></li>
+</ul>

@@ -1,0 +1,16 @@
+<hr>
+<h2 id="title-Temas"><a href="#title-Temas" class="headerlink" title="title: Temas"></a>title: Temas</h2><p>O <code>hexo.theme</code> herda de <a href="box.html">Box</a> e também guarda os templates.</p>
+<h2 id="Obter-uma-View"><a href="#Obter-uma-View" class="headerlink" title="Obter uma View"></a>Obter uma View</h2><pre><code class="js">hexo.theme.getView(path);
+</code></pre>
+<h2 id="Definir-uma-View"><a href="#Definir-uma-View" class="headerlink" title="Definir uma View"></a>Definir uma View</h2><pre><code class="js">hexo.theme.setView(path, data);
+</code></pre>
+<h2 id="Remover-uma-View"><a href="#Remover-uma-View" class="headerlink" title="Remover uma View"></a>Remover uma View</h2><pre><code class="js">hexo.theme.removeView(path);
+</code></pre>
+<h2 id="View"><a href="#View" class="headerlink" title="View"></a>View</h2><p>As Views têm dois métodos: <code>render</code> e <code>renderSync</code>. Esses dois métodos são idênticos, mas o primeiro é assíncrono e o segundo é síncrono. Por uma questão de simplicidade, só discutiremos <code>render</code> aqui.</p>
+<pre><code class="js">var view = hexo.theme.getView(&#39;layout.swig&#39;);
+
+view.render({foo: 1, bar: 2}).then(function(result){
+  // ...
+});
+</code></pre>
+<p>Você pode passar opções para o método <code>render</code> e ele tentará processar o template com o renderizador correspondente e carregar os <a href="helper.html">helpers</a>. Quando a renderização estiver completa, ele tentará descobrir se existe um layout. Se <code>layout</code> for <code>false</code> ou se não existir, o resultado será retornado diretamente.</p>

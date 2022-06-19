@@ -1,0 +1,92 @@
+<hr>
+<h2 id="title-寫作"><a href="#title-寫作" class="headerlink" title="title: 寫作"></a>title: 寫作</h2><p>{% youtube HLJ9jJy7CMg %}</p>
+<p>接下來，我們要在網誌中建立第一篇新文章，您可以直接從現有的範例文章「Hello World」改寫，但我們更建議您學習 <code>new</code> 指令。</p>
+<pre><code class="bash">$ hexo new [layout] &lt;title&gt;
+</code></pre>
+<p>您可以在指令中指定文章的佈局（layout），預設為 <code>post</code>，您可以透過修改 <code>_config.yml</code> 中的 <code>default_layout</code> 設定來指定預設佈局。</p>
+<h3 id="佈局（Layout）"><a href="#佈局（Layout）" class="headerlink" title="佈局（Layout）"></a>佈局（Layout）</h3><p>Hexo 有三種預設佈局：<code>post</code>、<code>page</code> 和 <code>draft</code>，它們分別對應不同的路徑，而您所自定的其他佈局和 <code>post</code> 相同，都儲存至 <code>source/_posts</code> 資料夾。</p>
+<table>
+<thead>
+<tr>
+<th>佈局</th>
+<th>路徑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>post</code></td>
+<td><code>source/_posts</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td><code>source</code></td>
+</tr>
+<tr>
+<td><code>draft</code></td>
+<td><code>source/_drafts</code></td>
+</tr>
+</tbody></table>
+<p>{% note tip Disabling layout %}<br>If you don’t want an article (post&#x2F;page) to be processed with a theme, set <code>layout: false</code> in its front-matter. Refer to <a href="/zh-tw/docs/front-matter#%E4%BD%88%E5%B1%80">this section</a> for more details.<br>{% endnote %}</p>
+<h3 id="檔案名稱"><a href="#檔案名稱" class="headerlink" title="檔案名稱"></a>檔案名稱</h3><p>Hexo 預設以標題做為檔案名稱，但您可編輯 <code>new_post_name</code> 設定來變更預設的檔案名稱，舉例來說，設為 <code>:year-:month-:day-:title.md</code> 可讓您更方便的透過日期來管理文章。</p>
+<table>
+<thead>
+<tr>
+<th>變數</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:title</code></td>
+<td>標題</td>
+</tr>
+<tr>
+<td><code>:year</code></td>
+<td>建立年份（4 位數）</td>
+</tr>
+<tr>
+<td><code>:month</code></td>
+<td>建立月份（2 位數）</td>
+</tr>
+<tr>
+<td><code>:i_month</code></td>
+<td>建立月份（去掉開頭的零）</td>
+</tr>
+<tr>
+<td><code>:day</code></td>
+<td>建立日期（2 位數）</td>
+</tr>
+<tr>
+<td><code>:i_day</code></td>
+<td>建立日期（去掉開頭的零）</td>
+</tr>
+</tbody></table>
+<h3 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h3><p>剛剛提到了 Hexo 的一種特殊佈局：<code>draft</code>，這種佈局在建立時會被儲存於 <code>source/_drafts</code> 資料夾，您可透過 <code>publish</code> 指令將草稿移動到 <code>source/_posts</code> 資料夾，這項指令的使用方式與 <code>new</code> 十分類似，您也可在指令中指定 <code>layout</code> 來指定佈局。</p>
+<pre><code class="bash">$ hexo publish [layout] &lt;title&gt;
+</code></pre>
+<p>草稿預設不會顯示於頁面中，您可在執行時加上 <code>--draft</code> 選項，或是把 <code>render_drafts</code> 設定改為 <code>true</code> 來預覽草稿。</p>
+<h3 id="鷹架（Scaffold）"><a href="#鷹架（Scaffold）" class="headerlink" title="鷹架（Scaffold）"></a>鷹架（Scaffold）</h3><p>在建立文章時，Hexo 會根據 <code>scaffolds</code> 資料夾內相對應的檔案來建立檔案，例如：</p>
+<pre><code class="bash">$ hexo new photo &quot;My Gallery&quot;
+</code></pre>
+<p>在執行這行指令時，Hexo 會嘗試在 <code>scaffolds</code> 資料夾中找尋 <code>photo.md</code>，並根據其內容建立文章，以下是您可在鷹架中使用的變數：</p>
+<table>
+<thead>
+<tr>
+<th>變數</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>layout</code></td>
+<td>佈局</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>標題</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>檔案建立日期</td>
+</tr>
+</tbody></table>
+<h3 id="Supported-Formats"><a href="#Supported-Formats" class="headerlink" title="Supported Formats"></a>Supported Formats</h3><p>Hexo support posts written in any format, as long as the corresponding renderer plugin is installed.</p>
+<p>For example, Hexo has <code>hexo-renderer-marked</code> and <code>hexo-renderer-ejs</code> installed by default, so you can write your posts in <code>markdown</code> or in <code>ejs</code>. If you have <code>hexo-renderer-pug</code> installed, then you can even write your post in pug template language.</p>
+<p>You can rename your posts and change to file extension from <code>.md</code> to <code>.ejs</code>, then Hexo will use <code>hexo-renderer-ejs</code> to render that file, so do the other formats.</p>

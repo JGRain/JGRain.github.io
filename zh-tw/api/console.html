@@ -1,0 +1,51 @@
+<hr>
+<h2 id="title-控制台（Console）"><a href="#title-控制台（Console）" class="headerlink" title="title: 控制台（Console）"></a>title: 控制台（Console）</h2><p>控制台是 Hexo 與使用者之間溝通的橋樑。</p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><pre><code class="js">hexo.extend.console.register(name, desc, options, function(args){
+  // ...
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>參數</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>名稱</td>
+</tr>
+<tr>
+<td><code>desc</code></td>
+<td>描述</td>
+</tr>
+<tr>
+<td><code>options</code></td>
+<td>選項</td>
+</tr>
+</tbody></table>
+<p>在函數中會傳入 <code>args</code> 參數，此參數是使用者在終端機所傳入的參數，是一個經 <a href="https://github.com/substack/minimist">Minimist</a> 解析的物件。</p>
+<h2 id="選項"><a href="#選項" class="headerlink" title="選項"></a>選項</h2><h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>控制台的操作方法，例如：</p>
+<pre><code class="js">{usage: &#39;[layout] &lt;title&gt;&#39;}
+// hexo new [layout] &lt;title&gt;
+</code></pre>
+<h3 id="參數"><a href="#參數" class="headerlink" title="參數"></a>參數</h3><p>控制台各個參數的說明，例如：</p>
+<pre><code class="js">{
+  arguments: [
+    {name: &#39;layout&#39;, desc: &#39;Post layout&#39;},
+    {name: &#39;title&#39;, desc: &#39;Post title&#39;}
+  ]
+}
+</code></pre>
+<h3 id="選項-1"><a href="#選項-1" class="headerlink" title="選項"></a>選項</h3><p>控制台的選項，例如：</p>
+<pre><code class="js">{
+  options: [
+    {name: &#39;-r, --replace&#39;, desc: &#39;Replace existing files&#39;}
+  ]
+}
+</code></pre>
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>控制台更詳細的說明。</p>
+<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><pre><code class="js">hexo.extend.console.register(&#39;config&#39;, &#39;Display configuration&#39;, function(args){
+  console.log(hexo.config);
+});
+</code></pre>

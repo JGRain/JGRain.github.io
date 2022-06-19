@@ -1,0 +1,24 @@
+<hr>
+<h2 id="title-Сервер"><a href="#title-Сервер" class="headerlink" title="title: Сервер"></a>title: Сервер</h2><h2 id="hexo-server"><a href="#hexo-server" class="headerlink" title="hexo-server"></a><a href="https://github.com/hexojs/hexo-server">hexo-server</a></h2><p>С релизом Hexo 3 сервер был отделен от основного модуля. Чтобы начать использовать сервер, нужно установить <a href="https://github.com/hexojs/hexo-server">hexo-server</a>.</p>
+<pre><code class="bash">$ npm install hexo-server --save
+</code></pre>
+<p>После установки сервера, выполните эту команду для запуска сервера. Ваш сайт будет доступен по адресу <code>http://localhost:4000</code> по умолчанию. Когда сервер запущен, Hexo будет отслеживать изменения файлов и автоматически обновлять содержание сайта, поэтому нет нужды вручную перезапускать сервер.</p>
+<pre><code class="bash">$ hexo server
+</code></pre>
+<p>Если вы хотите изменить порт или появляется ошибка <code>EADDRINUSE</code>, используйте опцию <code>-p</code> для задания другого порта.</p>
+<pre><code class="bash">$ hexo server -p 5000
+</code></pre>
+<h3 id="Статичный-режим"><a href="#Статичный-режим" class="headerlink" title="Статичный режим"></a>Статичный режим</h3><p>В статичном режиме, будут обработаны файлы только в общей папке <code>public</code>, отслеживание файлов будет отключено. Нужно запустить <code>hexo generate</code> перед запуском сервера. Обычно используется перед публикацией.</p>
+<pre><code class="bash">$ hexo server -s
+</code></pre>
+<h3 id="Другой-IP"><a href="#Другой-IP" class="headerlink" title="Другой IP"></a>Другой IP</h3><p>Hexo запускает сервер с IP <code>127.0.0.1</code> по умолчанию. Это можно изменить в настройках IP по умолчанию.</p>
+<pre><code class="bash">$ hexo server -i 192.168.1.1
+</code></pre>
+<h2 id="Pow"><a href="#Pow" class="headerlink" title="Pow"></a>Pow</h2><p><a href="http://pow.cx/">Pow</a> является нулевой конфигурацией сервера для Mac.</p>
+<h3 id="Установка"><a href="#Установка" class="headerlink" title="Установка"></a>Установка</h3><pre><code class="bash">$ curl get.pow.cx | sh
+</code></pre>
+<h3 id="Настройка"><a href="#Настройка" class="headerlink" title="Настройка"></a>Настройка</h3><p>Создайте символьную ссылку на папку <code>~/.pow</code></p>
+<pre><code class="bash">$ cd ~/.pow
+$ ln -s /path/to/myapp
+</code></pre>
+<p>Ваш сайт будет запущен и заработает по адресу <code>http://myapp.dev</code> основываясь на имени символической ссылки.</p>

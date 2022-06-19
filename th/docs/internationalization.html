@@ -1,0 +1,33 @@
+<hr>
+<h2 id="title-Internationalization-i18n"><a href="#title-Internationalization-i18n" class="headerlink" title="title: Internationalization (i18n)"></a>title: Internationalization (i18n)</h2><p>คุณสามารถใช้ internationalization มาโชว์ไซต์ของคุณด้วยภาษาต่างๆ ภาษา dafault<br>ของไซต์นั้นแก้ไขได้ใน  <code>language</code> ของ <code>_config.yml</code><br>คุณยังตั้งค่าหลายภาษาและแก้ไขลำดับของภาษา default ได้เช่นกัน</p>
+<pre><code class="yaml">language: zh-tw
+
+language:
+- zh-tw
+- en
+</code></pre>
+<h3 id="Language-Files"><a href="#Language-Files" class="headerlink" title="Language Files"></a>Language Files</h3><p>ไฟล์ของภาษาจะเป็นไฟล์ YAML หรือ JSON คุณต้องไลฟ์เหล่านี้อยู่ใน folder<br><code>language</code> ของธีม สำหรับข้อมูลเพิ่มเติมของไฟล์ภาษา ไปดูได้ท่ี <a href="https://github.com/alexei/sprintf.js">printf format</a></p>
+<h3 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h3><p>คุณใช้ helper ของ <code>__</code> หรือ <code>_p</code> ใน template ได้เพื่อได้  string ท่ีแปลมาแล้ว<br> ตัวแรกใช้ในกรณีทางการ ส่วนตัวหลังใช้ในกรณีท่ีมีหลาย string ยกตัวอย่างเช่น：</p>
+<pre><code class="yaml">index:
+  title: Home
+  add: Add
+  video:
+    zero: No videos
+    one: One video
+    other: %d videos
+</code></pre>
+<pre><code class="js">&lt;%= __(&#39;index.title&#39;) %&gt;
+// Home
+
+&lt;%= _p(&#39;index.video&#39;, 3) %&gt;
+// 3 videos
+</code></pre>
+<h3 id="Path"><a href="#Path" class="headerlink" title="Path"></a>Path</h3><p>คุณสามารถตั้งค่าภาษาของเพจได้ใน front-matter หรือแก้ไขการตั้งค่า  <code>i18n_dir</code><br>ได้ใน <code>_config.yml</code> เพื่อ enable การเฝ้าดูไฟล์ของ hexo</p>
+<pre><code class="yaml">i18n_dir: :lang
+</code></pre>
+<p>default value ของการตั้งค่า  <code>i18n_dir</code> คือ <code>:lang</code> ซึ่งหมายความว่า hexo<br>จะสืบค้นภาษาท่ีอยู่ใน segment ตัวแรกของ URL ยกตัวอย่างเช่น：</p>
+<pre><code class="plain">/index.html =&gt; en
+/archives/index.html =&gt; en
+/zh-tw/index.html =&gt; zh-tw
+</code></pre>
+<p>string นั้นจะมีผลได้ในแต่กรณีท่ีไลฟ์ภาษานั้นมีอยู่จริงๆ ดังนั้น <code>archives</code> ใน<br> <code>/archives/index.html</code> (ตัวอย่างท่ีสอง) จะไม่เกิดผลในการตั้งค่าภาษาของเว็บไซต์</p>

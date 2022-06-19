@@ -1,0 +1,42 @@
+<hr>
+<h2 id="title-渲染"><a href="#title-渲染" class="headerlink" title="title: 渲染"></a>title: 渲染</h2><p>在 Hexo 中，有两个方法可用于渲染文件或字符串，分别是非同步的 <code>hexo.render.render</code> 和同步的 <code>hexo.render.renderSync</code>，这两个方法的使用方式十分类似，因此以下仅以非同步的 <code>hexo.render.render</code> 为例。</p>
+<h2 id="渲染字符串"><a href="#渲染字符串" class="headerlink" title="渲染字符串"></a>渲染字符串</h2><p>在渲染字符串时，您必须指定 <code>engine</code>，如此一来 Hexo 才知道该使用哪个渲染引擎来渲染。</p>
+<pre><code class="js">hexo.render.render({text: &#39;example&#39;, engine: &#39;swig&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="渲染文件"><a href="#渲染文件" class="headerlink" title="渲染文件"></a>渲染文件</h2><p>在渲染文件时，您无须指定 <code>engine</code>，Hexo 会自动根据扩展名猜测所要使用的渲染引擎，当然您也可以使用 <code>engine</code> 指定。</p>
+<pre><code class="js">hexo.render.render({path: &#39;path/to/file.swig&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="渲染选项"><a href="#渲染选项" class="headerlink" title="渲染选项"></a>渲染选项</h2><p>在渲染时，您可以向第二个参数中传入参数。</p>
+<pre><code class="js">hexo.render.render({text: &#39;&#39;}, {foo: &#39;foo&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="after-render-过滤器"><a href="#after-render-过滤器" class="headerlink" title="after_render 过滤器"></a>after_render 过滤器</h2><p>在渲染完成后，Hexo 会自动执行相对应的 <code>after_render</code> 过滤器，举例来说，我们可以通过这个功能实现 JavaScript 的压缩。</p>
+<pre><code class="js">var UglifyJS = require(&#39;uglify-js&#39;);
+
+hexo.extend.filter.register(&#39;after_render:js&#39;, function(str, data){
+  var result = UglifyJS.minify(str);
+  return result.code;
+});
+</code></pre>
+<h2 id="检查文件是否可被渲染"><a href="#检查文件是否可被渲染" class="headerlink" title="检查文件是否可被渲染"></a>检查文件是否可被渲染</h2><p>您可以通过 <code>isRenderable</code> 或 <code>isRenderableSync</code> 两个方法检查文件路径是否可以被渲染，只有在相对应的渲染器（renderer）已注册的情况下才会返回 true。</p>
+<pre><code class="js">hexo.render.isRenderable(&#39;layout.swig&#39;) // true
+hexo.render.isRenderable(&#39;image.png&#39;) // false
+</code></pre>
+<h2 id="获取文件的输出扩展名"><a href="#获取文件的输出扩展名" class="headerlink" title="获取文件的输出扩展名"></a>获取文件的输出扩展名</h2><p>您可以通过 <code>getOutput</code> 方法取得文件路径输出后的扩展名，如果文件无法渲染，则会返回空字符串。</p>
+<pre><code class="js">hexo.render.getOutput(&#39;layout.swig&#39;) // html
+hexo.render.getOutput(&#39;image.png&#39;) // &#39;&#39;&#39;
+</code></pre>
+<h2 id="Disable-Nunjucks-tags"><a href="#Disable-Nunjucks-tags" class="headerlink" title="Disable Nunjucks tags"></a>Disable Nunjucks tags</h2><p>If you are not using a <a href="/docs/tag-plugins">tag plugin</a> and want to use <code>{{ }}</code> or <code>{% %}</code> in your post without using content <a href="/docs/troubleshooting#Escape-Contents">escaping</a>, you can disable processing of Nunjucks tag in existing renderer by:</p>
+<pre><code class="js">// following example only applies to &#39;.md&#39; file extension
+// you may need to cover other extensions, e.g. &#39;.markdown&#39;, &#39;.mkd&#39;, etc
+const renderer = hexo.render.renderer.get(&#39;md&#39;)
+if (renderer) {
+  renderer.disableNunjucks = true
+  hexo.extend.renderer.register(&#39;md&#39;, &#39;html&#39;, renderer)
+}
+</code></pre>

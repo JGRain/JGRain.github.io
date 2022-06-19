@@ -1,0 +1,135 @@
+<hr>
+<h2 id="title-Фильтры"><a href="#title-Фильтры" class="headerlink" title="title: Фильтры"></a>title: Фильтры</h2><p>Фильтры используются для изменения указанных данных. Hexo передает данные для фильтров в определенной последовательности и фильтров изменения данных один за другим. Эта концепция была заимствована из <a href="http://codex.wordpress.org/Plugin_API#Filters">WordPress</a></p>
+<h2 id="Краткий-обзор"><a href="#Краткий-обзор" class="headerlink" title="Краткий обзор"></a>Краткий обзор</h2><pre><code class="js">hexo.extend.filter.register(type, function() {
+  // User configuration
+  const { config } = this;
+  if (config.external_link.enable) // do something...
+
+  // Theme configuration
+  const { config: themeCfg } = this.theme;
+  if (themeCfg.fancybox) // do something...
+
+}, priority);
+</code></pre>
+<p>Вы можете определить приоритет. Низкий приоритет означает, что он будет выполняться в первую очередь. Приоритет по умолчанию равен 10. Рекомендуется использовать настраиваемое пользователем значение приоритета, которое возможно указать в конфигурации, например <code>hexo.config.your_plugin.priority</code>.</p>
+<h2 id="Использование-фильтров"><a href="#Использование-фильтров" class="headerlink" title="Использование фильтров"></a>Использование фильтров</h2><pre><code class="js">hexo.extend.filter.exec(type, data, options);
+hexo.extend.filter.execSync(type, data, options);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>context</code></td>
+<td>Контекст</td>
+</tr>
+<tr>
+<td><code>args</code></td>
+<td>Аргументы. Должны быть в виде массива.</td>
+</tr>
+</tbody></table>
+<p>Первый аргумент, передаваемый в каждый фильтр, это <code>data</code>. Данные <code>data</code>, передаваемые в следующий фильтр, могут быть изменены путем возврата нового значения. Если же ничего не возвращается, данные остаются без изменений. Вы даже можете использовать аргументы, чтобы указать другие аргументы в фильтрах. Например:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;test&#39;, function(data, arg1, arg2){
+  // data === &#39;some data&#39;
+  // arg1 === &#39;foo&#39;
+  // arg2 === &#39;bar&#39;
+
+  return &#39;something&#39;;
+});
+
+hexo.extend.filter.register(&#39;test&#39;, function(data, arg1, arg2){
+  // data === &#39;something&#39;
+});
+
+hexo.extend.filter.exec(&#39;test&#39;, &#39;some data&#39;, {
+  args: [&#39;foo&#39;, &#39;bar&#39;]
+});
+</code></pre>
+<p>Также можно использовать следующие методы для выполнения фильтров:</p>
+<pre><code class="js">hexo.execFilter(type, data, options);
+hexo.execFilterSync(type, data, options);
+</code></pre>
+<h2 id="Отмена-фильтров"><a href="#Отмена-фильтров" class="headerlink" title="Отмена фильтров"></a>Отмена фильтров</h2><pre><code class="js">hexo.extend.filter.unregister(type, filter);
+</code></pre>
+<p><strong>Example</strong></p>
+<pre><code class="js">// Unregister a filter which is registered with named function
+
+const filterFn = (data) =&gt; {
+  data = &#39;something&#39;;
+  return data;
+};
+hexo.extend.filter.register(&#39;example&#39;, filterFn);
+
+hexo.extend.filter.unregister(&#39;example&#39;, filterFn);
+</code></pre>
+<pre><code class="js">// Unregister a filter which is registered with commonjs module
+
+hexo.extend.filter.register(&#39;example&#39;, require(&#39;path/to/filter&#39;));
+
+hexo.extend.filter.unregister(&#39;example&#39;, require(&#39;path/to/filter&#39;));
+</code></pre>
+<h2 id="Список-фильтров"><a href="#Список-фильтров" class="headerlink" title="Список фильтров"></a>Список фильтров</h2><p>Здесь находится список фильтров, используемых в Hexo.</p>
+<h3 id="before-post-render"><a href="#before-post-render" class="headerlink" title="before_post_render"></a>before_post_render</h3><p>Выполняется перед началом обработки поста. См. <a href="posts.html#Render">post rendering</a> для изучения этапов обработки.</p>
+<p>Например, перевести название в нижний регистр:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_post_render&#39;, function(data){
+  data.title = data.title.toLowerCase();
+  return data;
+});
+</code></pre>
+<h3 id="after-post-render"><a href="#after-post-render" class="headerlink" title="after_post_render"></a>after_post_render</h3><p>Выполняется после завершения обработки поста. См. <a href="posts.html#%D0%9E%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0">post rendering</a> для изучения этапов выполнения.</p>
+<p>Например, чтобы заменить <code>@username</code> ссылкой на профиль в Twitter:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_post_render&#39;, function(data){
+  data.content = data.content.replace(/@(\d+)/, &#39;&lt;a href=&quot;http://twitter.com/$1&quot;&gt;#$1&lt;/a&gt;&#39;);
+  return data;
+});
+</code></pre>
+<h3 id="before-exit"><a href="#before-exit" class="headerlink" title="before_exit"></a>before_exit</h3><p>Выполняется перед выходом из Hexo. Срабатывает сразу после выполнения <code>hexo.exit</code>.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_exit&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="before-generate"><a href="#before-generate" class="headerlink" title="before_generate"></a>before_generate</h3><p>Выполнится перед началом генерации.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_generate&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="after-generate"><a href="#after-generate" class="headerlink" title="after_generate"></a>after_generate</h3><p>Выполнится после окончания генерации.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_generate&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="template-locals"><a href="#template-locals" class="headerlink" title="template_locals"></a>template_locals</h3><p>Позволяет изменять <a href="../docs/variables.html">локальные переменные</a> в шаблонах.</p>
+<p>Например, чтобы добавить переменную текущего времени в шаблон:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;template_locals&#39;, function(locals){
+  locals.now = Date.now();
+  return locals;
+});
+</code></pre>
+<h3 id="after-init"><a href="#after-init" class="headerlink" title="after_init"></a>after_init</h3><p>Выполнится после начала инициализации Hexo - запустится только после того, как полностью отработает команда <code>hexo.init</code>.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_init&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="new-post-path"><a href="#new-post-path" class="headerlink" title="new_post_path"></a>new_post_path</h3><p>Используется при создании поста для определения пути постоянной ссылки.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;new_post_path&#39;, function(data, replace){
+  // ...
+});
+</code></pre>
+<h3 id="post-permalink"><a href="#post-permalink" class="headerlink" title="post_permalink"></a>post_permalink</h3><p>Выполняется при создании поста для определения пути постоянной ссылки.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;post_permalink&#39;, function(data){
+  // ...
+});
+</code></pre>
+<h3 id="after-render"><a href="#after-render" class="headerlink" title="after_render"></a>after_render</h3><p>Выполнится после завершения обработки. См. <a href="rendering.html#after_render_Filters">рендеринг</a> для подробностей.</p>
+<h3 id="server-middleware"><a href="#server-middleware" class="headerlink" title="server_middleware"></a>server_middleware</h3><p>Добавляет промежуточные задачи для сервера. <code>app</code> является экземпляром <a href="https://github.com/senchalabs/connect">Connect</a>.</p>
+<p>Например, чтобы добавить <code>X-Powered-By: Hexo</code> в заголовке ответа:</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;server_middleware&#39;, function(app){
+  app.use(function(req, res, next){
+    res.setHeader(&#39;X-Powered-By&#39;, &#39;Hexo&#39;);
+    next();
+  });
+});
+</code></pre>

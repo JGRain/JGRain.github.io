@@ -1,0 +1,110 @@
+<hr>
+<h2 id="title-问题解答"><a href="#title-问题解答" class="headerlink" title="title: 问题解答"></a>title: 问题解答</h2><p>在使用 Hexo 时，您可能会遇到一些问题，下列的常见问题解答可能会对您有所帮助。如果您在这里找不到解答，可以在 <a href="https://github.com/hexojs/hexo/issues">GitHub</a> 或 <a href="https://groups.google.com/group/hexo">Google Group</a> 上提问。</p>
+<h2 id="YAML-解析错误"><a href="#YAML-解析错误" class="headerlink" title="YAML 解析错误"></a>YAML 解析错误</h2><pre><code class="plain">JS-YAML: incomplete explicit mapping pair; a key node is missed at line 18, column 29:
+      last_updated: Last updated: %s
+</code></pre>
+<p>如果 YAML 字符串中包含冒号（<code>:</code>）的话，请加上引号。</p>
+<pre><code class="plain">JS-YAML: bad indentation of a mapping entry at line 18, column 31:
+      last_updated:&quot;Last updated: %s&quot;
+</code></pre>
+<p>请确认您使用空格进行缩进（Soft tab），并确认冒号后有加上一个空格。</p>
+<p>您可参阅 <a href="http://www.yaml.org/spec/1.2/spec.html">YAML 规范</a> 以取得更多信息。</p>
+<h2 id="EMFILE-错误"><a href="#EMFILE-错误" class="headerlink" title="EMFILE 错误"></a>EMFILE 错误</h2><pre><code class="plain">Error: EMFILE, too many open files
+</code></pre>
+<p>虽然 Node.js 有非阻塞 I&#x2F;O，同步 I&#x2F;O 的数量仍被系统所限制，在生成大量静态文件的时候，您可能会碰到 EMFILE 错误，您可以尝试提高同步 I&#x2F;O 的限制数量来解决此问题。</p>
+<pre><code class="bash">$ ulimit -n 10000
+</code></pre>
+<p>（这一命令只对Linux系统有效）</p>
+<p><strong>Error: cannot modify limit</strong></p>
+<p>If you encounter the following error:</p>
+<pre><code class="bash">$ ulimit -n 10000
+ulimit: open files: cannot modify limit: Operation not permitted
+</code></pre>
+<p>It means some system-wide configurations are preventing <code>ulimit</code> to being increased to a certain limit.</p>
+<p>To override the limit:</p>
+<ol>
+<li>Add the following line to “&#x2F;etc&#x2F;security&#x2F;limits.conf”:</li>
+</ol>
+<pre><code>* - nofile 10000
+
+# &#39;*&#39; applies to all users and &#39;-&#39; set both soft and hard limits
+</code></pre>
+<ul>
+<li>The above setting may not apply in some cases, ensure “&#x2F;etc&#x2F;pam.d&#x2F;login” and “&#x2F;etc&#x2F;pam.d&#x2F;lightdm” have the following line. (Ignore this step if those files do not exist)</li>
+</ul>
+<pre><code>session required pam_limits.so
+</code></pre>
+<ol start="2">
+<li>If you are on a <a href="https://en.wikipedia.org/wiki/Systemd#Adoption">systemd-based</a> distribution, systemd may override “limits.conf”. To set the limit in systemd, add the following line in “&#x2F;etc&#x2F;systemd&#x2F;system.conf” and “&#x2F;etc&#x2F;systemd&#x2F;user.conf”:</li>
+</ol>
+<pre><code>DefaultLimitNOFILE=10000
+</code></pre>
+<ol start="3">
+<li>Reboot</li>
+</ol>
+<h2 id="Git-部署问题"><a href="#Git-部署问题" class="headerlink" title="Git 部署问题"></a>Git 部署问题</h2><h3 id="RPC-failed"><a href="#RPC-failed" class="headerlink" title="RPC failed"></a>RPC failed</h3><pre><code class="plain">error: RPC failed; result=22, HTTP code = 403
+
+fatal: &#39;username.github.io&#39; does not appear to be a git repository
+</code></pre>
+<p>请确认您已经在电脑上 <a href="https://help.github.com/articles/set-up-git">配置 git</a>，或改用 HTTPS 库（repository）地址。</p>
+<h3 id="Error-ENOENT-no-such-file-or-directory"><a href="#Error-ENOENT-no-such-file-or-directory" class="headerlink" title="Error: ENOENT: no such file or directory"></a>Error: ENOENT: no such file or directory</h3><p>如果你遇到了这个错误，有可能是你的文件名、分类或者标签的名字混淆了大写和小写，你可以尝试检查每一个标签和分类的名称，是否大小写一致来修复这一问题。</p>
+<h2 id="服务器问题"><a href="#服务器问题" class="headerlink" title="服务器问题"></a>服务器问题</h2><pre><code class="plain">Error: listen EADDRINUSE
+</code></pre>
+<p>您可能同时开启两个 Hexo 服务器，或者有其他应用程序正在占用相同的端口，请尝试修改 <code>port</code> 参数，或是在启动 Hexo 服务器时加上 <code>-p</code> 选项。</p>
+<pre><code class="bash">$ hexo server -p 5000
+</code></pre>
+<h2 id="插件安装问题"><a href="#插件安装问题" class="headerlink" title="插件安装问题"></a>插件安装问题</h2><pre><code class="plain">npm ERR! node-waf configure build
+</code></pre>
+<p>当您尝试安装以 C&#x2F;C++ 或其他非 JavaScript 语言所编写的插件时，可能会遇到此类问题，请确认您已经在电脑上安装相对应的编译器。</p>
+<h2 id="DTrace-错误-（Mac-OS-X）"><a href="#DTrace-错误-（Mac-OS-X）" class="headerlink" title="DTrace 错误 （Mac OS X）"></a>DTrace 错误 （Mac OS X）</h2><pre><code class="plain">{ [Error: Cannot find module &#39;./build/Release/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+{ [Error: Cannot find module &#39;./build/default/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+{ [Error: Cannot find module &#39;./build/Debug/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+</code></pre>
+<p>DTrace 安装可能有错误 , 使用下列命令:</p>
+<pre><code class="sh">$ npm install hexo --no-optional
+</code></pre>
+<p>参考 <a href="https://github.com/hexojs/hexo/issues/1326#issuecomment-113871796">#1326</a></p>
+<h2 id="在-Jade-或-Swig-遍历资料"><a href="#在-Jade-或-Swig-遍历资料" class="headerlink" title="在 Jade 或 Swig 遍历资料"></a>在 Jade 或 Swig 遍历资料</h2><p>Hexo 使用 <a href="https://github.com/hexojs/warehouse">Warehouse</a> 存储资料，它不是一般数组所以必须先进行类型转型才能遍历。</p>
+<pre><code>{% for post in site.posts.toArray() %}
+{% endfor %}
+</code></pre>
+<h2 id="资料没有更新"><a href="#资料没有更新" class="headerlink" title="资料没有更新"></a>资料没有更新</h2><p>有时资料可能没有被更新，或是生成的文件与修改前的相同，您可以尝试清除缓存并再执行一次。</p>
+<pre><code class="bash">$ hexo clean
+</code></pre>
+<h2 id="命令没有执行"><a href="#命令没有执行" class="headerlink" title="命令没有执行"></a>命令没有执行</h2><p>如果你除了 <code>hexo help</code>、<code>hexo init</code> 和 <code>hexo version</code> 以外不能执行任何命令、并且你的任何命令都只返回了 <code>hexo help</code> 的内容，这可能是由于 <code>package.json</code> 中缺乏 <code>hexo</code> 字段导致的。</p>
+<pre><code class="json">{
+  &quot;hexo&quot;: {
+    &quot;version&quot;: &quot;3.9.0&quot;
+  }
+}
+</code></pre>
+<h2 id="泄露（Escape）内容"><a href="#泄露（Escape）内容" class="headerlink" title="泄露（Escape）内容"></a>泄露（Escape）内容</h2><p>Hexo 使用 <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> 来解析文章（旧版本使用 <a href="http://paularmstrong.github.io/swig/">Swig</a>，两者语法类似），内容若包含 <code>{{ }}</code> 或 <code>{% %}</code> 可能导致解析错误，您可以用 <a href="/docs/tag-plugins#Raw"><code>raw</code></a> 标签包裹，single backtick <code>`{{ }}`</code> 或 triple backtick 来避免潜在问题发生。<br>Alternatively, Nunjucks tags can be disabled through the renderer’s option (if supported), <a href="/api/renderer#Disable-Nunjucks-tags">API</a> or <a href="/docs/front-matter">front-matter</a>.</p>
+<pre><code>{% raw %}
+Hello {{ world }}
+{% endraw %}
+</code></pre>
+<pre><code>```
+Hello {{ world }}
+```
+</code></pre>
+<h2 id="ENOSPC-错误-（Linux）"><a href="#ENOSPC-错误-（Linux）" class="headerlink" title="ENOSPC 错误 （Linux）"></a>ENOSPC 错误 （Linux）</h2><p>运行 <code>$ hexo server</code> 命令有时会返回这样的错误：</p>
+<pre><code>Error: watch ENOSPC ...
+</code></pre>
+<p>它可以用过运行 <code>$ npm dedupe</code> 来解决，如果不起作用的话，可以尝试在 Linux 终端中运行下列命令：</p>
+<pre><code>$ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;&amp; sudo sysctl -p
+</code></pre>
+<p>这将会提高你能监视的文件数量。</p>
+<h2 id="EMPERM-Error-Windows-Subsystem-for-Linux"><a href="#EMPERM-Error-Windows-Subsystem-for-Linux" class="headerlink" title="EMPERM Error (Windows Subsystem for Linux)"></a>EMPERM Error (Windows Subsystem for Linux)</h2><p>在执行 <code>hexo server</code> 后返回如下错误：</p>
+<pre><code>Error: watch /path/to/hexo/theme/ EMPERM
+</code></pre>
+<p>这是由于你使用的 WSL 版本不支持监听文件系统改动。 最新版的 WSL 已经解决了这一问题。</p>
+<p>您也仍然可以通过先使用 <code>hexo g</code> 生成文件然后将其作为静态服务器运行来从 WSL 环境运行服务器：</p>
+<pre><code class="sh">$ hexo generate
+$ hexo server -s
+</code></pre>
+<p>关于 WSL 的这一 Issue 请前往 <a href="https://github.com/Microsoft/BashOnWindows/issues/216">https://github.com/Microsoft/BashOnWindows/issues/216</a> 查看。目前这一问题已经得到了解决。</p>
+<h2 id="模板渲染错误"><a href="#模板渲染错误" class="headerlink" title="模板渲染错误"></a>模板渲染错误</h2><p>有的时候你在执行 <code>hexo generate</code> 时会返回以下错误信息：</p>
+<pre><code>FATAL Something&#39;s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html
+Template render error: (unknown path)
+</code></pre>
+<p>一种可能的原因是你的文件中存在一些不可被识别的字符，比如不可见的零宽度字符。</p>

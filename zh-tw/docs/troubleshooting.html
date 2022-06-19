@@ -1,0 +1,90 @@
+<hr>
+<h2 id="title-解決問題"><a href="#title-解決問題" class="headerlink" title="title: 解決問題"></a>title: 解決問題</h2><p>在使用 Hexo 時，您可能會遇到一些問題，下列的常見問題解答可能會對您有所幫助。如果您在這裡找不道解答，可以在 <a href="https://github.com/hexojs/hexo/issues">GitHub</a> 或 <a href="https://groups.google.com/group/hexo">Google Group</a> 上詢問。</p>
+<h2 id="YAML-解析錯誤"><a href="#YAML-解析錯誤" class="headerlink" title="YAML 解析錯誤"></a>YAML 解析錯誤</h2><pre><code class="plain">JS-YAML: incomplete explicit mapping pair; a key node is missed at line 18, column 29:
+      last_updated: Last updated: %s
+</code></pre>
+<p>如果 YAML 字串中包含冒號（<code>:</code>）的話，請加上引號。</p>
+<pre><code class="plain">JS-YAML: bad indentation of a mapping entry at line 18, column 31:
+      last_updated:&quot;Last updated: %s&quot;
+</code></pre>
+<p>請確認您使用空白進行縮排（Soft tab），並確認冒號後有加上一個空格。</p>
+<p>您可參閱 <a href="http://www.yaml.org/spec/1.2/spec.html">YAML 規格</a> 以取得更多資訊。</p>
+<h2 id="EMFILE-錯誤"><a href="#EMFILE-錯誤" class="headerlink" title="EMFILE 錯誤"></a>EMFILE 錯誤</h2><pre><code class="plain">Error: EMFILE, too many open files
+</code></pre>
+<p>雖然 Node.js 有非阻塞 I&#x2F;O，同步 I&#x2F;O 的數量仍被系統所限制，在產生大量靜態檔案的時候，您可能會碰到 EMFILE 錯誤，您可試著提高同步 I&#x2F;O 的限制來解決此問題。</p>
+<pre><code class="bash">$ ulimit -n 10000
+</code></pre>
+<p><strong>Error: cannot modify limit</strong></p>
+<p>If you encounter the following error:</p>
+<pre><code class="bash">$ ulimit -n 10000
+ulimit: open files: cannot modify limit: Operation not permitted
+</code></pre>
+<p>It means some system-wide configurations are preventing <code>ulimit</code> to being increased to a certain limit.</p>
+<p>To override the limit:</p>
+<ol>
+<li>Add the following line to “&#x2F;etc&#x2F;security&#x2F;limits.conf”:</li>
+</ol>
+<pre><code>* - nofile 10000
+
+# &#39;*&#39; applies to all users and &#39;-&#39; set both soft and hard limits
+</code></pre>
+<ul>
+<li>The above setting may not apply in some cases, ensure “&#x2F;etc&#x2F;pam.d&#x2F;login” and “&#x2F;etc&#x2F;pam.d&#x2F;lightdm” have the following line. (Ignore this step if those files do not exist)</li>
+</ul>
+<pre><code>session required pam_limits.so
+</code></pre>
+<ol start="2">
+<li>If you are on a <a href="https://en.wikipedia.org/wiki/Systemd#Adoption">systemd-based</a> distribution, systemd may override “limits.conf”. To set the limit in systemd, add the following line in “&#x2F;etc&#x2F;systemd&#x2F;system.conf” and “&#x2F;etc&#x2F;systemd&#x2F;user.conf”:</li>
+</ol>
+<pre><code>DefaultLimitNOFILE=10000
+</code></pre>
+<ol start="3">
+<li>Reboot</li>
+</ol>
+<h2 id="Git-佈署問題"><a href="#Git-佈署問題" class="headerlink" title="Git 佈署問題"></a>Git 佈署問題</h2><pre><code class="plain">fatal: &#39;username.github.io&#39; does not appear to be a git repository
+</code></pre>
+<p>請確認您已經在電腦上 <a href="https://help.github.com/articles/set-up-git">設定 git</a>，或改用 HTTPS 儲存庫（repository）網址。</p>
+<h2 id="伺服器問題"><a href="#伺服器問題" class="headerlink" title="伺服器問題"></a>伺服器問題</h2><pre><code class="plain">Error: listen EADDRINUSE
+</code></pre>
+<p>您可能同時開啟兩個 Hexo 伺服器，或者有其他應用程式正在佔用相同的連接埠，請試著修改 <code>port</code> 設定，或是在啟動 Hexo 伺服器時加上 <code>-p</code> 選項。</p>
+<pre><code class="bash">$ hexo server -p 5000
+</code></pre>
+<h2 id="外掛安裝問題"><a href="#外掛安裝問題" class="headerlink" title="外掛安裝問題"></a>外掛安裝問題</h2><pre><code class="plain">npm ERR! node-waf configure build
+</code></pre>
+<p>當您試著安裝以 C&#x2F;C++ 或其他非 JavaScript 語言所撰寫的外掛時，可能會遭遇此問題，請確認您已經在電腦上安裝相對應的編譯器。</p>
+<h2 id="在-Jade-或-Swig-遍歷資料"><a href="#在-Jade-或-Swig-遍歷資料" class="headerlink" title="在 Jade 或 Swig 遍歷資料"></a>在 Jade 或 Swig 遍歷資料</h2><p>Hexo 使用 <a href="https://github.com/hexojs/warehouse">Warehouse</a> 儲存資料，它不是一般陣列所以必須先轉型才能遍歷。</p>
+<pre><code>{% for post in site.posts.toArray() %}
+{% endfor %}
+</code></pre>
+<h2 id="資料沒有更新"><a href="#資料沒有更新" class="headerlink" title="資料沒有更新"></a>資料沒有更新</h2><p>有時資料可能沒有被更新，或是產生出的檔案與修改前的相同，您可試著清除快取並再試一次。</p>
+<pre><code class="bash">$ hexo clean
+</code></pre>
+<h2 id="脫逸（Escape）內容"><a href="#脫逸（Escape）內容" class="headerlink" title="脫逸（Escape）內容"></a>脫逸（Escape）內容</h2><p>Hexo 使用 <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> 來解析文章（舊版本使用 <a href="http://paularmstrong.github.io/swig/">Swig</a>，兩者語法類似），內容若包含 <code>{{ }}</code> 或 <code>{% %}</code> 可能導致解析錯誤，您可以用 <a href="/docs/tag-plugins#Raw"><code>raw</code></a> 標籤包裹，single backtick <code>`{{ }}`</code> 或 triple backtick 來避免潛在問題發生。<br>Alternatively, Nunjucks tags can be disabled through the renderer’s option (if supported), <a href="/api/renderer#Disable-Nunjucks-tags">API</a> or <a href="/docs/front-matter">front-matter</a>.</p>
+<pre><code>{% raw %}
+Hello {{ world }}
+{% endraw %}
+</code></pre>
+<pre><code>```
+Hello {{ world }}
+```
+</code></pre>
+<h2 id="ENOSPC-Error-Linux"><a href="#ENOSPC-Error-Linux" class="headerlink" title="ENOSPC Error (Linux)"></a>ENOSPC Error (Linux)</h2><p>Sometimes when running the command <code>$ hexo server</code> it returns an error:</p>
+<pre><code>Error: watch ENOSPC ...
+</code></pre>
+<p>It can be fixed by running <code>$ npm dedupe</code> or, if that doesn’t help, try the following in the Linux console:</p>
+<pre><code>$ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;&amp; sudo sysctl -p
+</code></pre>
+<p>This will increase the limit for the number of files you can watch.</p>
+<h2 id="EMPERM-Error-Windows-Subsystem-for-Linux"><a href="#EMPERM-Error-Windows-Subsystem-for-Linux" class="headerlink" title="EMPERM Error (Windows Subsystem for Linux)"></a>EMPERM Error (Windows Subsystem for Linux)</h2><p>When running <code>$ hexo server</code> in a BashOnWindows environment, it returns the following error:</p>
+<pre><code>Error: watch /path/to/hexo/theme/ EMPERM
+</code></pre>
+<p>Unfortunately, WSL does not currently support filesystem watchers. Therefore, the live updating feature of hexo’s server is currently unavailable. You can still run the server from a WSL environment by first generating the files and then running it as a static server:</p>
+<pre><code class="sh">$ hexo generate
+$ hexo server -s
+</code></pre>
+<p>This is <a href="https://github.com/Microsoft/BashOnWindows/issues/216">a known BashOnWindows issue</a>, and on 15 Aug 2016, the Windows team said they would work on it. You can get progress updates and encourage them to prioritize it on <a href="https://wpdev.uservoice.com/forums/266908-command-prompt-console-bash-on-ubuntu-on-windo/suggestions/13469097-support-for-filesystem-watchers-like-inotify">the issue’s UserVoice suggestion page</a>.</p>
+<h2 id="Template-render-error"><a href="#Template-render-error" class="headerlink" title="Template render error"></a>Template render error</h2><p>Sometimes when running the command <code>$ hexo generate</code> it returns an error:</p>
+<pre><code>FATAL Something&#39;s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html
+Template render error: (unknown path)
+</code></pre>
+<p>One possible reason is that there are some unrecognizable words in your file, e.g. invisible zero width characters.</p>

@@ -1,0 +1,38 @@
+<hr>
+<h2 id="title-Variaveis-Locais"><a href="#title-Variaveis-Locais" class="headerlink" title="title: Variáveis Locais"></a>title: Variáveis Locais</h2><p>As variáveis locais são usadas para renderização de template, que é a variável <code>site</code> em templates.</p>
+<h2 id="Variaveis-Padrao"><a href="#Variaveis-Padrao" class="headerlink" title="Variáveis Padrão"></a>Variáveis Padrão</h2><table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>posts</code></td>
+<td>Todas as postagens</td>
+</tr>
+<tr>
+<td><code>pages</code></td>
+<td>Todas as páginas</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>Todas as categorias</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>Todas as tags</td>
+</tr>
+</tbody></table>
+<h2 id="Obter-uma-Variavel"><a href="#Obter-uma-Variavel" class="headerlink" title="Obter uma Variável"></a>Obter uma Variável</h2><pre><code class="js">hexo.locals.get(&#39;posts&#39;)
+</code></pre>
+<h2 id="Atribuir-uma-Variavel"><a href="#Atribuir-uma-Variavel" class="headerlink" title="Atribuir uma Variável"></a>Atribuir uma Variável</h2><pre><code class="js">hexo.locals.set(&#39;posts&#39;, function(){
+  return ...
+});
+</code></pre>
+<h2 id="Remover-uma-Variavel"><a href="#Remover-uma-Variavel" class="headerlink" title="Remover uma Variável"></a>Remover uma Variável</h2><pre><code class="js">hexo.locals.remove(&#39;posts&#39;);
+</code></pre>
+<h2 id="Obter-Todos-as-Variaveis"><a href="#Obter-Todos-as-Variaveis" class="headerlink" title="Obter Todos as Variáveis"></a>Obter Todos as Variáveis</h2><pre><code class="js">hexo.locals.toObject();
+</code></pre>
+<h2 id="Invalidar-o-Cache"><a href="#Invalidar-o-Cache" class="headerlink" title="Invalidar o Cache"></a>Invalidar o Cache</h2><pre><code class="js">hexo.locals.invalidate();
+</code></pre>

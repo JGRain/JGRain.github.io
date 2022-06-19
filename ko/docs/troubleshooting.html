@@ -1,0 +1,94 @@
+<hr>
+<h2 id="title-Troubleshooting"><a href="#title-Troubleshooting" class="headerlink" title="title: Troubleshooting"></a>title: Troubleshooting</h2><p>Hexo 사용 중에 문제가 발생할 경우, 이 문서에 있는 해결책을 확인해 보세요. 자주 발생하는 문제에 대해 정리해 두었습니다. 만약 이 문서에서 해결 방안을 찾지 못하였다면 <a href="https://github.com/hexojs/hexo/issues">GitHub</a> 또는 <a href="https://groups.google.com/group/hexo">Google Group</a>을 검색해 보세요.</p>
+<h2 id="YAML-Parsing-Error"><a href="#YAML-Parsing-Error" class="headerlink" title="YAML Parsing Error"></a>YAML Parsing Error</h2><pre><code class="plain">JS-YAML: incomplete explicit mapping pair; a key node is missed at line 18, column 29:
+      last_updated: Last updated: %s
+</code></pre>
+<p>문자열이 콜론(:)을 포함하고 있다면 따옴표(“)로 감싸주세요.</p>
+<pre><code class="plain">JS-YAML: bad indentation of a mapping entry at line 18, column 31:
+      last_updated:&quot;Last updated: %s&quot;
+</code></pre>
+<p>Soft tab의 사용을 명확히 하고 콜론(:) 뒤에는 공백을 추가해 주세요.</p>
+<p><a href="http://www.yaml.org/spec/1.2/spec.html">YAML Spec</a>에서 더 많은 정보를 확인하실 수 있습니다.</p>
+<h2 id="EMFILE-Error"><a href="#EMFILE-Error" class="headerlink" title="EMFILE Error"></a>EMFILE Error</h2><pre><code class="plain">Error: EMFILE, too many open files
+</code></pre>
+<p>Node.js가 non-blocking I&#x2F;O를 가지고 있음에도 불구하고, 동기적 I&#x2F;O의 최대 개수는 아직도 시스템에 의해 제한됩니다. 많은 수의 파일을 생성하려 할 때 EMFILE error가 발생할 수 있습니다. 이 경우 동기적 I&#x2F;O의 개술를 증가시키기 위해 아래의 명령어를 수행해 보세요.</p>
+<pre><code class="bash">$ ulimit -n 10000
+</code></pre>
+<p><strong>Error: cannot modify limit</strong></p>
+<p>If you encounter the following error:</p>
+<pre><code class="bash">$ ulimit -n 10000
+ulimit: open files: cannot modify limit: Operation not permitted
+</code></pre>
+<p>It means some system-wide configurations are preventing <code>ulimit</code> to being increased to a certain limit.</p>
+<p>To override the limit:</p>
+<ol>
+<li>Add the following line to “&#x2F;etc&#x2F;security&#x2F;limits.conf”:</li>
+</ol>
+<pre><code>* - nofile 10000
+
+# &#39;*&#39; applies to all users and &#39;-&#39; set both soft and hard limits
+</code></pre>
+<ul>
+<li>The above setting may not apply in some cases, ensure “&#x2F;etc&#x2F;pam.d&#x2F;login” and “&#x2F;etc&#x2F;pam.d&#x2F;lightdm” have the following line. (Ignore this step if those files do not exist)</li>
+</ul>
+<pre><code>session required pam_limits.so
+</code></pre>
+<ol start="2">
+<li>If you are on a <a href="https://en.wikipedia.org/wiki/Systemd#Adoption">systemd-based</a> distribution, systemd may override “limits.conf”. To set the limit in systemd, add the following line in “&#x2F;etc&#x2F;systemd&#x2F;system.conf” and “&#x2F;etc&#x2F;systemd&#x2F;user.conf”:</li>
+</ol>
+<pre><code>DefaultLimitNOFILE=10000
+</code></pre>
+<ol start="3">
+<li>Reboot</li>
+</ol>
+<h2 id="process-out-of-memory"><a href="#process-out-of-memory" class="headerlink" title="process out of memory"></a><code>process out of memory</code></h2><p>생성(generation)중에 이 error가 발생할 수 있습니다.:</p>
+<pre><code>FATAL ERROR: CALL_AND_RETRY_LAST Allocation failed - process out of memory
+</code></pre>
+<p><code>hexo-cli</code>의 첫 줄에 있는 Node.js heap memory size를 증가시키세요(파일을 찾기 위해 <code>which hexo</code> 명령을 사용해 보세요).</p>
+<pre><code>#!/usr/bin/env node --max_old_space_size=8192
+</code></pre>
+<p><a href="https://github.com/hexojs/hexo/issues/1735">Out of memory while generating a huge blog · Issue #1735 · hexojs&#x2F;hexo</a></p>
+<h2 id="Git-Deployment-Problems"><a href="#Git-Deployment-Problems" class="headerlink" title="Git Deployment Problems"></a>Git Deployment Problems</h2><pre><code class="plain">error: RPC failed; result=22, HTTP code = 403
+
+fatal: &#39;username.github.io&#39; does not appear to be a git repository
+</code></pre>
+<p>당신의 컴퓨터에 <a href="https://help.github.com/articles/set-up-git">GIT 설정</a>이 제대로 되어있는지 확인하거나 HTTPS 저장소 URL을 사용해 보세요.</p>
+<h2 id="Server-Problems"><a href="#Server-Problems" class="headerlink" title="Server Problems"></a>Server Problems</h2><pre><code class="plain">Error: listen EADDRINUSE
+</code></pre>
+<p>동시에 두 개의 Hexo server를 실행시키려 하거나 다른 어플리케이션이 같은 포트를 사용하려고 할 때 발생합니다. <code>port</code> 설정을 수정하거나 Hexo server를 <code>-p</code> 플래그와 함께 시작해 보세요.</p>
+<pre><code class="bash">$ hexo server -p 5000
+</code></pre>
+<h2 id="Plugin-Installation-Problems"><a href="#Plugin-Installation-Problems" class="headerlink" title="Plugin Installation Problems"></a>Plugin Installation Problems</h2><pre><code class="plain">npm ERR! node-waf configure build
+</code></pre>
+<p>이 에러는 JavaScript가 아닌 C, C++ 등으로 작성된 플러그인을 설치하려 할 때 발생합니다. 컴퓨터에 맞는 올바른 컴파일러를 설치해 보세요.</p>
+<h2 id="Error-with-DTrace-Mac-OS-X"><a href="#Error-with-DTrace-Mac-OS-X" class="headerlink" title="Error with DTrace (Mac OS X)"></a>Error with DTrace (Mac OS X)</h2><pre><code class="plain">{ [Error: Cannot find module &#39;./build/Release/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+{ [Error: Cannot find module &#39;./build/default/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+{ [Error: Cannot find module &#39;./build/Debug/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+</code></pre>
+<p>DTrace의 설치가 문제를 일으킬 수 있습니다. 아래 명령을 사용해 보세요.</p>
+<pre><code class="sh">$ npm install hexo --no-optional
+</code></pre>
+<p><a href="https://github.com/hexojs/hexo/issues/1326#issuecomment-113871796">#1326</a> 이슈를 확인해 보세요.</p>
+<h2 id="Iterate-Data-Model-on-Jade-or-Swig"><a href="#Iterate-Data-Model-on-Jade-or-Swig" class="headerlink" title="Iterate Data Model on Jade or Swig"></a>Iterate Data Model on Jade or Swig</h2><p>Hexo는 데이터 모델로 <a href="https://github.com/hexojs/warehouse">Warehouse</a>을 사용합니다. 이는 배열(array)이 아니기 때문에 iterable하게 object를 변환해야 합니다.</p>
+<pre><code>{% for post in site.posts.toArray() %}
+{% endfor %}
+</code></pre>
+<h2 id="Data-Not-Updated"><a href="#Data-Not-Updated" class="headerlink" title="Data Not Updated"></a>Data Not Updated</h2><p>몇몇 데이터가 갱신되지 않거나 새로 생성되는 파일들이 마지막 버전과 동일할 경우입니다. 캐시를 정리하고 다시 시도해 보세요.</p>
+<pre><code class="bash">$ hexo clean
+</code></pre>
+<h2 id="Escape-Contents"><a href="#Escape-Contents" class="headerlink" title="Escape Contents"></a>Escape Contents</h2><p>Hexo는 포스트를 렌더링하는데 <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a>를 사용합니다(<a href="http://paularmstrong.github.io/swig/">Swig</a>은 이전 버전에서 사용했었습니다. 문법은 비슷합니다.). <code>{{ }}</code> 또는 <code>{% %}</code>로 감싼 컨텐츠는 파싱된 후에 문제를 발생시킵니다. You can skip the parsing by wrapping it with the <a href="/docs/tag-plugins#Raw"><code>raw</code></a> tag plugin, single backtick <code>`{{ }}`</code> or triple backtick.<br>Alternatively, Nunjucks tags can be disabled through the renderer’s option (if supported), <a href="/api/renderer#Disable-Nunjucks-tags">API</a> or <a href="/docs/front-matter">front-matter</a>.</p>
+<pre><code>{% raw %}
+Hello {{ world }}
+{% endraw %}
+</code></pre>
+<pre><code>```
+Hello {{ world }}
+```
+</code></pre>
+<h2 id="ENOSPC-Error-Linux"><a href="#ENOSPC-Error-Linux" class="headerlink" title="ENOSPC Error (Linux)"></a>ENOSPC Error (Linux)</h2><p><code>$ hexo server</code>명령어가 가끔 error를 반환할 때가 있습니다.</p>
+<pre><code>Error: watch ENOSPC ...
+</code></pre>
+<p><code>$ npm dedupe</code>를 실행하여도 해결되지 않는다면 Linux console에서 아래 명령을 수행해 보세요.</p>
+<pre><code>$ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;&amp; sudo sysctl -p
+</code></pre>
+<p>이 명령어는 감시(watch)할 수 있는 파일의 개수 제한을 증가시킵니다.</p>

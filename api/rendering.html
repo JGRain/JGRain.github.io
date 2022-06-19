@@ -1,0 +1,42 @@
+<hr>
+<h2 id="title-Rendering"><a href="#title-Rendering" class="headerlink" title="title: Rendering"></a>title: Rendering</h2><p>There are two methods for rendering files or strings in Hexo: the asynchronous <code>hexo.render.render</code> method and the synchronous <code>hexo.render.renderSync</code> method. Unsurprisingly, the two methods are very similar so only the asynchronous <code>hexo.render.render</code> will be further discussed in the below paragraphs.</p>
+<h2 id="Render-a-String"><a href="#Render-a-String" class="headerlink" title="Render a String"></a>Render a String</h2><p>When rendering a string, you must specify an <code>engine</code> to let Hexo know which rendering engine it should use.</p>
+<pre><code class="js">hexo.render.render({text: &#39;example&#39;, engine: &#39;swig&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="Render-a-File"><a href="#Render-a-File" class="headerlink" title="Render a File"></a>Render a File</h2><p>When rendering a file, it’s not necessary to specify an <code>engine</code> because Hexo will detect the relevant rendering engine automatically based on the extension of the file. Of course, you are also allowed to explicitly define the <code>engine</code>.</p>
+<pre><code class="js">hexo.render.render({path: &#39;path/to/file.swig&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="Render-Options"><a href="#Render-Options" class="headerlink" title="Render Options"></a>Render Options</h2><p>You can pass in an options object as the second argument.</p>
+<pre><code class="js">hexo.render.render({text: &#39;&#39;}, {foo: &#39;foo&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="after-render-Filters"><a href="#after-render-Filters" class="headerlink" title="after_render Filters"></a>after_render Filters</h2><p>When rendering is complete, Hexo will execute the corresponding <code>after_render</code> filters. For example, we can use this feature to implement a JavaScript minifier.</p>
+<pre><code class="js">var UglifyJS = require(&#39;uglify-js&#39;);
+
+hexo.extend.filter.register(&#39;after_render:js&#39;, function(str, data){
+  var result = UglifyJS.minify(str);
+  return result.code;
+});
+</code></pre>
+<h2 id="Check-Whether-a-File-is-Renderable"><a href="#Check-Whether-a-File-is-Renderable" class="headerlink" title="Check Whether a File is Renderable"></a>Check Whether a File is Renderable</h2><p>You can use the <code>isRenderable</code> or <code>isRenderableSync</code> method to check whether a file path is renderable. Only when a corresponding renderer has been registered will this method return true.</p>
+<pre><code class="js">hexo.render.isRenderable(&#39;layout.swig&#39;) // true
+hexo.render.isRenderable(&#39;image.png&#39;) // false
+</code></pre>
+<h2 id="Get-the-Output-Extension"><a href="#Get-the-Output-Extension" class="headerlink" title="Get the Output Extension"></a>Get the Output Extension</h2><p>Use the <code>getOutput</code> method to get the extension of the rendered output. If a file is not renderable, the method will return an empty string.</p>
+<pre><code class="js">hexo.render.getOutput(&#39;layout.swig&#39;) // html
+hexo.render.getOutput(&#39;image.png&#39;) // &#39;&#39;&#39;
+</code></pre>
+<h2 id="Disable-Nunjucks-tags"><a href="#Disable-Nunjucks-tags" class="headerlink" title="Disable Nunjucks tags"></a>Disable Nunjucks tags</h2><p>If you are not using a <a href="/docs/tag-plugins">tag plugin</a> and want to use <code>{{ }}</code> or <code>{% %}</code> in your post without using content <a href="/docs/troubleshooting#Escape-Contents">escaping</a>, you can disable processing of Nunjucks tag in existing renderer by:</p>
+<pre><code class="js">// following example only applies to &#39;.md&#39; file extension
+// you may need to cover other extensions, e.g. &#39;.markdown&#39;, &#39;.mkd&#39;, etc
+const renderer = hexo.render.renderer.get(&#39;md&#39;)
+if (renderer) {
+  renderer.disableNunjucks = true
+  hexo.extend.renderer.register(&#39;md&#39;, &#39;html&#39;, renderer)
+}
+</code></pre>

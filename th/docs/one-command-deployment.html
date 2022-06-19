@@ -1,0 +1,402 @@
+<hr>
+<h2 id="title-Deployment"><a href="#title-Deployment" class="headerlink" title="title: Deployment"></a>title: Deployment</h2><p>hexo สนับสนุนวิธีรวดเร็วและเรียบง่ายสำหรับ deployment คุณ deploy<br>เว็บไซต์ของคุณไปถึงเซร์ฟเวอร์ได้ด้วยคำสั่งบรรทัดเดียว</p>
+<pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>ก่อน deployment ครั้งแรกของคุณ คุณต้องการแก้ไขการตั้งค่าบางอย่างใน <code>_config .yml</code>  การตั้งค่า deployment ท่ีเกิดผลได้ต้องมี field ท่ีเป็น <code>type</code><br>ยกตัวอย่างเช่น:</p>
+<pre><code class="yaml">deploy:
+  type: git
+</code></pre>
+<p>คุณยังเลื่อก deployer ได้หลายตัว hexo จะ execute deployer ทุกตัวตามลำดับ</p>
+<pre><code class="yaml">deploy:
+- type: git
+  repo:
+- type: heroku
+  repo:
+</code></pre>
+<p>Refer to the <a href="https://hexo.io/plugins/">Plugins</a> list for more deployment plugins.</p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><ol>
+<li>Install <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>.</li>
+</ol>
+<pre><code class="bash">$ npm install hexo-deployer-git --save
+</code></pre>
+<ol start="2">
+<li>Edit <strong>_config.yml</strong> (with example values shown below as comments):</li>
+</ol>
+<pre><code class="yaml">deploy:
+  type: git
+  repo: &lt;repository url&gt; #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
+  branch: [branch]
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>URL of the target repository</td>
+<td></td>
+</tr>
+<tr>
+<td><code>branch</code></td>
+<td>Branch name.</td>
+<td><code>gh-pages</code> (GitHub)<br><code>coding-pages</code> (Coding.net)<br><code>master</code> (others)</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Customize commit message.</td>
+<td><code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code></td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td>Optional token value to authenticate with the repo. Prefix with <code>$</code> to read token from environment variable</td>
+<td></td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>Deploy your site <code>hexo clean &amp;&amp; hexo deploy</code>.</li>
+</ol>
+<ul>
+<li>You will be prompted with username and password of the target repository, unless you authenticate with a token or ssh key.</li>
+<li>hexo-deployer-git does not store your username and password. Use <a href="https://git-scm.com/docs/git-credential-cache">git-credential-cache</a> to store them temporarily.</li>
+</ul>
+<ol start="4">
+<li>Navigate to your repository settings and change the “Pages” branch to <code>gh-pages</code> (or the branch specified in your config). The deployed site should be live on the link shown on the “Pages” setting.</li>
+</ol>
+<h2 id="Heroku"><a href="#Heroku" class="headerlink" title="Heroku"></a>Heroku</h2><p>ติดตั้ง <a href="https://github.com/hexojs/hexo-deployer-heroku">hexo-deployer-heroku</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-heroku --save
+</code></pre>
+<p>แก้ไขการตั้งค่า</p>
+<pre><code class="yaml">deploy:
+  type: heroku
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code>, <code>repository</code></td>
+<td>Heroku repository URL</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Customize commit message (Default to <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="Netlify"><a href="#Netlify" class="headerlink" title="Netlify"></a>Netlify</h2><p><a href="https://www.netlify.com/">Netlify</a> สนับสนุน deployment ต่อเนื่องกัน<br>(ซึ้งสร้างด้วย git) สนับสนุน CDN แบบทั่วโลก DNS ทุกอย่าง（รวม domain<br>ท่ีตั้งค่าด้วยตนด้วย）HTTPS ท่ีควบคุมโดยขบวนการอัตโนมัติ<br>การเพิ่มความเร็วของวัตถุดิบ และสิ่งอื่นๆอีกมากมาย Netlify<br>เป็นแพลตฟอร์มซึ่งรวมทุกอย่างเป็นหนึ่งเดียว<br>ทำให้การสร้างไซต์หรือแอปของแว็บท่ีมีแระสิทธิภาพและรักษาได้ง่ายนั้นเป็นขบวนการอัตโนมัติ</p>
+<p> มีทั้งหมดสองวิธีในเรื่อง deploy เว็บไซต์ของตน  วิธีทั่วไปท่ีสุดคือการใช้ web<br>  UI คุณสามารถไปท่ี <a href="https://app.netlify.com/start">create a new site page</a> และเลือก repo ของ project คุณจาก Github Gitlab หรือ Bitbucket และทำตามวิธีการใช้</p>
+<p>วิธีท่ีสองคือ การใช้เครื่องมือ <a href="https://www.netlify.com/docs/cli/">Node based CLI</a> ของ Netlify เพื่อบริหารและ deploy ไซต์บน Netlify<br>โดยไม่ต้องผ่าน terminal</p>
+<p>คุณสามารถเพิ่ม <a href="https://www.netlify.com/docs/deploy-button/">Deploy to Netlify Button</a> ไปถึงไฟล์ README ของคุณ ดังนั้นจะอนุญาตให้คนอื่น<br>copy respository ของคุณและ deploy ไปถึง Netlify ด้วยคลิกเดียว</p>
+<h2 id="Rsync"><a href="#Rsync" class="headerlink" title="Rsync"></a>Rsync</h2><p>ติดตั้ง <a href="https://github.com/hexojs/hexo-deployer-rsync">hexo-deployer-rsync</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-rsync --save
+</code></pre>
+<p>แก้ไขการตั้งค่า</p>
+<pre><code class="yaml">deploy:
+  type: rsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  root: &lt;root&gt;
+  port: [port]
+  delete: [true|false]
+  verbose: [true|false]
+  ignore_errors: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>Address of remote host</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>Username</td>
+<td></td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>Root directory of remote host</td>
+<td></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Port</td>
+<td>22</td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td>Delete old files on remote host</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>Display verbose messages</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>ignore_errors</code></td>
+<td>Ignore errors</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h2 id="OpenShift"><a href="#OpenShift" class="headerlink" title="OpenShift"></a>OpenShift</h2><p>ติดตั้ง <a href="https://github.com/hexojs/hexo-deployer-openshift">hexo-deployer-openshift</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-openshift --save
+</code></pre>
+<p>แก้ไขการตั้งค่า</p>
+<pre><code class="yaml">deploy:
+  type: openshift
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>OpenShift repository URL</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Customize commit message (Default to <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="FTPSync"><a href="#FTPSync" class="headerlink" title="FTPSync"></a>FTPSync</h2><p>ติดตั้ง <a href="https://github.com/hexojs/hexo-deployer-ftpsync">hexo-deployer-ftpsync</a>.</p>
+<pre><code class="bash">$ npm install hexo-deployer-ftpsync --save
+</code></pre>
+<p>แก้ไขการตั้งค่า</p>
+<pre><code class="yaml">deploy:
+  type: ftpsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  pass: &lt;password&gt;
+  remote: [remote]
+  port: [port]
+  ignore: [ignore]
+  connections: [connections]
+  verbose: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>Address of remote host</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>Username</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>Password</td>
+<td></td>
+</tr>
+<tr>
+<td><code>remote</code></td>
+<td>Root directory of remote host</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Port</td>
+<td>21</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>Ignore the files on either host or remote</td>
+<td></td>
+</tr>
+<tr>
+<td><code>connections</code></td>
+<td>Connections number</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>Display verbose messages</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h2 id="SFTP"><a href="#SFTP" class="headerlink" title="SFTP"></a>SFTP</h2><p>ติดตั้ง [hexo-deployer-sftp]. deploy ไซต์ได้โดย SFTP และใช้ password ได้ด้วย ssh-agent</p>
+<pre><code class="bash">$ npm install hexo-deployer-sftp --save
+</code></pre>
+<p>แก้ไขการตั้งค่า</p>
+<pre><code class="yaml">deploy:
+  type: sftp
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  pass: &lt;password&gt;
+  remotePath: [remote path]
+  port: [port]
+  privateKey: [path/to/privateKey]
+  passphrase: [passphrase]
+  agent: [path/to/agent/socket]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>Address of remote host</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>Username</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>Password</td>
+<td></td>
+</tr>
+<tr>
+<td><code>remotePath</code></td>
+<td>Root directory of remote host</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Port</td>
+<td>22</td>
+</tr>
+<tr>
+<td><code>privateKey</code></td>
+<td>Path to a ssh private key</td>
+<td></td>
+</tr>
+<tr>
+<td><code>passphrase</code></td>
+<td>Optional passphrase for the private key</td>
+<td></td>
+</tr>
+<tr>
+<td><code>agent</code></td>
+<td>Path to the ssh-agent socket</td>
+<td><code>$SSH_AUTH_SOCK</code></td>
+</tr>
+</tbody></table>
+<h2 id="Vercel"><a href="#Vercel" class="headerlink" title="Vercel"></a>Vercel</h2><p><a href="https://vercel.com/">Vercel</a> is a cloud platform that enables developers to host Jamstack websites and web services that deploy instantly, scale automatically, and requires no supervision, all with zero configuration. They provide a global edge network, SSL encryption, asset compression, cache invalidation, and more.</p>
+<p>Step 1: Add a build script to your <code>package.json</code> file:</p>
+<pre><code class="json">{
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;hexo generate&quot;
+  }
+}
+</code></pre>
+<p>Step 2: Deploy your Hexo Website to Vercel</p>
+<p>To deploy your Hexo app with a <a href="https://vercel.com/docs/git-integrations">Vercel for Git Integration</a>, make sure it has been pushed to a Git repository.</p>
+<p>Import the project into Vercel using the <a href="https://vercel.com/import/git">Import Flow</a>. During the import, you will find all relevant options preconfigured for you; however, you can choose to change any of these options, a list of which can be found <a href="https://vercel.com/docs/build-step#build-&-development-settings">here</a>.</p>
+<p>After your project has been imported, all subsequent pushes to branches will generate <a href="https://vercel.com/docs/platform/deployments#preview">Preview Deployments</a>, and all changes made to the <a href="https://vercel.com/docs/git-integrations#production-branch">Production Branch</a> (commonly “main”) will result in a <a href="https://vercel.com/docs/platform/deployments#production">Production Deployment</a>.</p>
+<p>Alternatively, you can click the deploy button below to create a new project:</p>
+<p><a href="https://vercel.com/new/hexo"><img src="https://vercel.com/button" alt="Deploy Vercel"></a></p>
+<h2 id="21YunBox"><a href="#21YunBox" class="headerlink" title="21YunBox"></a>21YunBox</h2><ol>
+<li>ที่ <a href="https://www.21yunbox.com/">21YunBox</a> ให้ตั้งค่าโครงการ ‘ไซต์แบบคงที่’ ใหม่จาก GitHub ด้วยการตั้งค่าต่อไปนี้:</li>
+</ol>
+<ul>
+<li><strong>Build command:</strong> <code>yarn &amp;&amp; hexo deploy</code></li>
+<li><strong>Publish directory:</strong> <code>public</code></li>
+</ul>
+<p>2.กดปรับใช้บิวตัน!</p>
+<p>แค่นั้นเอง แอปของคุณจะอยู่บน URL 21YunBox ทันทีที่สร้างเสร็จสิ้น</p>
+<p>แอปตัวอย่างสําหรับ ‘hexo’ ถูกปรับใช้ที่ <a href="https://hexo.21yunbox.com/">https://hexo.21yunbox.com/</a></p>
+<p>สําหรับรายละเอียดเพิ่มเติม โปรดทําตามคําแนะนํานี้ที่ <a href="https://www.21yunbox.com/docs/#/deploy-hexo">https://www.21yunbox.com/docs/#/deploy-hexo</a></p>
+<h2 id="Bip"><a href="#Bip" class="headerlink" title="Bip"></a>Bip</h2><p><a href="https://bip.sh/">Bip</a> is a commercial hosting service which provides zero downtime deployment, a global CDN, SSL, unlimited bandwidth and more for static websites. Plans are available on a pay as you go, per domain basis.</p>
+<p>Getting started is quick and easy, as Bip provides out the box support for Hexo. This guide assumes you already have <a href="https://bip.sh/getstarted">a Bip domain and Bip CLI installed</a>.</p>
+<p>1: Initialise your project directory</p>
+<pre><code class="bash">$ bip init
+</code></pre>
+<p>Follow the prompts, where you’ll be asked which domain you’d like to deploy to. Bip will detect that you’re using Hexo, and set project settings like the source file directory automatically.</p>
+<p>2: Deploy your website</p>
+<pre><code class="bash">$ hexo generate —deploy &amp;&amp; bip deploy
+</code></pre>
+<p>After a few moments, your website will be deployed.</p>
+<h2 id="RSS3"><a href="#RSS3" class="headerlink" title="RSS3"></a>RSS3</h2><p><a href="https://rss3.io/">RSS3</a> เป็นโปรโตคอลแบบเปิดที่ออกแบบมาสำหรับเนื้อหาและเครือข่ายโซเชียลในยุค Web 3.0</p>
+<ol>
+<li><p>ติดตั้ง <a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3">hexo-deployer-rss3</a></p>
+</li>
+<li><p>แก้ไขการกำหนดค่า</p>
+</li>
+</ol>
+<pre><code class="yaml">deploy:
+- type: rss3
+  endpoint: https://hub.rss3.io
+  privateKey: 47e18d6c386898b424025cd9db446f779ef24ad33a26c499c87bb3d9372540ba
+  ipfs:
+    deploy: true
+    gateway: pinata
+    api:
+      key: d693df715d3631e489d6
+      secret: ee8b74626f12b61c1a4bde3b8c331ad390567c86ba779c9b18561ee92c1cbff0
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>พารามิเตอร์</th>
+<th>คำอธิบาย</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>deploy</code></td>
+<td>ลิงก์ไปยัง RSS3 Hub</td>
+</tr>
+<tr>
+<td><code>privateKey</code></td>
+<td>คีย์ส่วนตัวของคุณ 64 ไบต์</td>
+</tr>
+<tr>
+<td><code>ipfs/deploy</code></td>
+<td>ว่าจะปรับใช้กับ IPFS หรือไม่</td>
+</tr>
+<tr>
+<td><code>ipfs/gateway</code></td>
+<td>IPFS API เกตเวย์</td>
+</tr>
+<tr>
+<td><code>ipfs/api/key</code></td>
+<td>เนื้อหาการตรวจสอบที่เกี่ยวข้องกับเกตเวย์ IPFS</td>
+</tr>
+<tr>
+<td><code>ipfs/api/secret</code></td>
+<td>การตรวจสอบเนื้อหาที่เกี่ยวข้องกับเกตเวย์ IPFS</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li><p>สร้างไฟล์แบบคงที่</p>
+</li>
+<li><p>การปรับใช้</p>
+</li>
+</ol>
+<p>สำหรับข้อควรระวังที่เกี่ยวข้องกับการทำให้ใช้งานได้โดยเฉพาะ โปรดดู<a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3/tree/develop/docs/zh_CN/start.md">เอกสารประกอบของเรา</a></p>
+<h2 id="Other-Methods"><a href="#Other-Methods" class="headerlink" title="Other Methods"></a>Other Methods</h2><p>ไฟล์ท่ีต้องการ generate จะบันทึกอยู่ใน folder <code>public</code> คุณสามารถ copy<br>ไลฟ์เหล่านี้ไปถึงท่ีท่ีคุณอยากย้ายไป</p>

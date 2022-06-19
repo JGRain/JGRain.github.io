@@ -1,0 +1,71 @@
+<hr>
+<h2 id="title-貢獻"><a href="#title-貢獻" class="headerlink" title="title: 貢獻"></a>title: 貢獻</h2><p>We welcome you to join the development of Hexo. 🤗</p>
+<h2 id="開發"><a href="#開發" class="headerlink" title="開發"></a>開發</h2><p>我們非常歡迎您加入 Hexo 的開發，這份文件將幫助您了解開發流程。</p>
+<h3 id="開始之前"><a href="#開始之前" class="headerlink" title="開始之前"></a>開始之前</h3><p>請先閱讀 <a href="https://github.com/hexojs/hexo/blob/master/CODE_OF_CONDUCT.md">Contributor Covenant Code of Conduct</a>。</p>
+<p>請遵守以下準則：</p>
+<ul>
+<li>遵守 <a href="https://google.github.io/styleguide/jsguide.html">Google JavaScript 代碼風格</a>。</li>
+<li>使用 2 個空格縮排。</li>
+<li>不要把逗號放在最前面。</li>
+</ul>
+<p>此外，Hexo 有 <a href="https://github.com/hexojs/eslint-config-hexo">ESLint 設定</a>，因此請務必確認您的貢獻能夠通過 ESLint。</p>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ol>
+<li>Fork <a href="https://github.com/hexojs/hexo">hexojs&#x2F;hexo</a></li>
+<li>把檔案庫（repository）複製到電腦上，並安裝相依套件。</li>
+</ol>
+<pre><code class="bash">$ git clone https://github.com/&lt;username&gt;/hexo.git
+$ cd hexo
+$ npm install
+$ git submodule update --init
+</code></pre>
+<ol start="3">
+<li>新增一個功能分支。</li>
+</ol>
+<pre><code class="bash">$ git checkout -b new_feature
+</code></pre>
+<ol start="4">
+<li>開始開發。</li>
+<li>推送（push）分支。</li>
+</ol>
+<pre><code>$ git push origin new_feature
+</code></pre>
+<ol start="6">
+<li>建立一個新的合併申請（pull request）並描述變更。</li>
+</ol>
+<h3 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h3><ul>
+<li>不要修改 <code>package.json</code> 的版本號。</li>
+<li>只有在測試通過的情況下您的合併申請才會被核准，在提交前別忘了進行測試。</li>
+</ul>
+<pre><code class="bash">$ npm test
+</code></pre>
+<h2 id="Updating-official-plugins"><a href="#Updating-official-plugins" class="headerlink" title="Updating official-plugins"></a>Updating official-plugins</h2><p>Also, we welcome PR or issue to <a href="https://github.com/hexojs">official-plugins</a>. 🤗</p>
+<h2 id="更新文件"><a href="#更新文件" class="headerlink" title="更新文件"></a>更新文件</h2><p>Hexo 文件開放原始碼，您可以在 <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a> 找到原始碼。</p>
+<h3 id="工作流程-1"><a href="#工作流程-1" class="headerlink" title="工作流程"></a>工作流程</h3><ol>
+<li>Fork <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a></li>
+<li>把檔案庫（repository）複製到電腦上，並安裝相依套件。</li>
+</ol>
+<pre><code class="bash">$ npm install hexo-cli -g # If you don&#39;t have hexo-cli installed
+$ git clone https://github.com/&lt;username&gt;/site.git
+$ cd site
+$ npm install
+</code></pre>
+<ol start="3">
+<li>開始編輯文件，您可透過伺服器預覽變更。</li>
+</ol>
+<pre><code class="bash">$ hexo server
+</code></pre>
+<ol start="4">
+<li>推送（push）分支。</li>
+<li>建立一個新的合併申請（pull request）並描述變更。</li>
+</ol>
+<h3 id="翻譯"><a href="#翻譯" class="headerlink" title="翻譯"></a>翻譯</h3><ol>
+<li>在 <code>source</code> 資料夾中建立一個新的語言資料夾（全小寫）。</li>
+<li>把 <code>source</code> 資料夾中相關的檔案（Markdown 和模板檔案）複製到新的語言資料夾中。</li>
+<li>在 <code>source/_data/language.yml</code> 中新增語言。</li>
+<li>在 <code>themes/navy/languages</code> 複製 <code>en.yml</code> 並命名為語言名稱（全小寫）。</li>
+</ol>
+<h2 id="回報問題"><a href="#回報問題" class="headerlink" title="回報問題"></a>回報問題</h2><p>當您使用 Hexo 遭遇問題時，可試著在 <a href="troubleshooting.html">解決問題</a> 中尋找解答，或是在 <a href="https://github.com/hexojs/hexo/issues">GitHub</a> 或 <a href="https://groups.google.com/group/hexo">Google Group</a> 詢問。若找不到答案，請至 GitHub 回報。</p>
+<ol>
+<li>以 <a href="commands.html#%E9%99%A4%E9%8C%AF%E6%A8%A1%E5%BC%8F">除錯模式</a> 再執行一次。</li>
+<li>在 GitHub 上提交新 Issue 時，請按照問題模板中的步驟提供除錯資訊和版本資訊。</li>
+</ol>

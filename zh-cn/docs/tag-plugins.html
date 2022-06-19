@@ -1,0 +1,227 @@
+<hr>
+<h2 id="title-标签插件（Tag-Plugins）"><a href="#title-标签插件（Tag-Plugins）" class="headerlink" title="title: 标签插件（Tag Plugins）"></a>title: 标签插件（Tag Plugins）</h2><p>标签插件和 Front-matter 中的标签不同，它们是用于在文章中快速插入特定内容的插件。</p>
+<p>虽然你可以使用任何格式书写你的文章，但是标签插件永远可用，且语法也都是一致的。</p>
+<p><em>Tag plugins should not be wrapped inside Markdown syntax, e.g. <code>[]({% post_path lorem-ipsum %})</code> is not supported.</em></p>
+<h2 id="引用块"><a href="#引用块" class="headerlink" title="引用块"></a>引用块</h2><p>在文章中插入引言，可包含作者、来源和标题。</p>
+<p><strong>别号：</strong> quote</p>
+<pre><code>{% blockquote [author[, source]] [link] [source_link_title] %}
+content
+{% endblockquote %}
+</code></pre>
+<h3 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h3><p><strong>没有提供参数，则只输出普通的 blockquote</strong></p>
+<pre><code>{% blockquote %}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote %}<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.<br>{% endblockquote %}</p>
+<p><strong>引用书上的句子</strong></p>
+<pre><code>{% blockquote David Levithan, Wide Awake %}
+Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote David Levithan, Wide Awake %}<br>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.<br>{% endblockquote %}</p>
+<p><strong>引用 Twitter</strong></p>
+<pre><code>{% blockquote @DevDocs https://twitter.com/devdocs/status/356095192085962752 %}
+NEW: DevDocs now comes with syntax highlighting. http://devdocs.io
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote @DevDocs <a href="https://twitter.com/devdocs/status/356095192085962752">https://twitter.com/devdocs/status/356095192085962752</a> %}<br>NEW: DevDocs now comes with syntax highlighting. <a href="http://devdocs.io/">http://devdocs.io</a><br>{% endblockquote %}</p>
+<p><strong>引用网络上的文章</strong></p>
+<pre><code>{% blockquote Seth Godin http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html Welcome to Island Marketing %}
+Every interaction is both precious and an opportunity to delight.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote Seth Godin <a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html</a> Welcome to Island Marketing %}<br>Every interaction is both precious and an opportunity to delight.<br>{% endblockquote %}</p>
+<h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>在文章中插入代码。</p>
+<p><strong>别名：</strong> code</p>
+<pre><code>{% codeblock [title] [lang:language] [url] [link text] [additional options] %}
+code snippet
+{% endcodeblock %}
+</code></pre>
+<p>Specify additional options in <code>option:value</code> format, e.g. <code>line_number:false first_line:5</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Extra Options</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>line_number</code></td>
+<td>Show line number</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>line_threshold</code></td>
+<td>Only show line numbers as long as the numbers of lines of the code block exceed such threshold.</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>Enable code highlighting</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>first_line</code></td>
+<td>Specify the first line number</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>mark</code></td>
+<td>Line highlight specific line(s), each value separated by a comma. Specify number range using a dash<br>Example: <code>mark:1,4-7,10</code> will mark line 1, 4 to 7 and 10.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>wrap</code></td>
+<td>Wrap the code block in <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table"><code>&lt;table&gt;</code></a></td>
+<td><code>true</code></td>
+</tr>
+</tbody></table>
+<h3 id="样例-1"><a href="#样例-1" class="headerlink" title="样例"></a>样例</h3><p><strong>普通的代码块</strong></p>
+<pre><code>{% codeblock %}
+alert(&#39;Hello World!&#39;);
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock %}<br>alert(‘Hello World!’);<br>{% endcodeblock %}</p>
+<p><strong>指定语言</strong></p>
+<pre><code>{% codeblock lang:objc %}
+[rectangle setX: 10 y: 10 width: 20 height: 20];
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock lang:objc %}<br>[rectangle setX: 10 y: 10 width: 20 height: 20];<br>{% endcodeblock %}</p>
+<p><strong>附加说明</strong></p>
+<pre><code>{% codeblock Array.map %}
+array.map(callback[, thisArg])
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock Array.map %}<br>array.map(callback[, thisArg])<br>{% endcodeblock %}</p>
+<p><strong>附加说明和网址</strong></p>
+<pre><code>{% codeblock _.compact http://underscorejs.org/#compact Underscore.js %}
+_.compact([0, 1, false, 2, &#39;&#39;, 3]);
+=&gt; [1, 2, 3]
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock _.compact <a href="http://underscorejs.org/#compact">http://underscorejs.org/#compact</a> Underscore.js %}<br>_.compact([0, 1, false, 2, ‘’, 3]);<br>&#x3D;&gt; [1, 2, 3]<br>{% endcodeblock %}</p>
+<h2 id="反引号代码块"><a href="#反引号代码块" class="headerlink" title="反引号代码块"></a>反引号代码块</h2><p>另一种形式的代码块，不同的是它使用三个反引号来包裹。</p>
+<p>{% raw %}<br>&amp;#96<code> [language] [title] [url] [link text] code snippet &amp;#96;</code><br>{% endraw %}</p>
+<h2 id="Pull-Quote"><a href="#Pull-Quote" class="headerlink" title="Pull Quote"></a>Pull Quote</h2><p>在文章中插入 Pull quote。</p>
+<pre><code>{% pullquote [class] %}
+content
+{% endpullquote %}
+</code></pre>
+<h2 id="jsFiddle"><a href="#jsFiddle" class="headerlink" title="jsFiddle"></a>jsFiddle</h2><p>在文章中嵌入 jsFiddle。</p>
+<pre><code>{% jsfiddle shorttag [tabs] [skin] [width] [height] %}
+</code></pre>
+<h2 id="Gist"><a href="#Gist" class="headerlink" title="Gist"></a>Gist</h2><p>在文章中嵌入 Gist。</p>
+<pre><code>{% gist gist_id [filename] %}
+</code></pre>
+<h2 id="iframe"><a href="#iframe" class="headerlink" title="iframe"></a>iframe</h2><p>在文章中插入 iframe。</p>
+<pre><code>{% iframe url [width] [height] %}
+</code></pre>
+<h2 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h2><p>在文章中插入指定大小的图片。</p>
+<pre><code>{% img [class names] /path/to/image [width] [height] &#39;&quot;title text&quot; &quot;alt text&quot;&#39; %}
+</code></pre>
+<h2 id="Link"><a href="#Link" class="headerlink" title="Link"></a>Link</h2><p>在文章中插入链接，并自动给外部链接添加 <code>target=&quot;_blank&quot;</code> 属性。</p>
+<pre><code>{% link text url [external] [title] %}
+</code></pre>
+<h2 id="Include-Code"><a href="#Include-Code" class="headerlink" title="Include Code"></a>Include Code</h2><p>插入 <code>source/downloads/code</code> 文件夹内的代码文件。<code>source/downloads/code</code> 不是固定的，取决于你在配置文件中 <code>code_dir</code> 的配置。</p>
+<pre><code>{% include_code [title] [lang:language] [from:line] [to:line] path/to/file %}
+</code></pre>
+<h3 id="样例-2"><a href="#样例-2" class="headerlink" title="样例"></a>样例</h3><p><strong>嵌入 test.js 文件全文</strong></p>
+<pre><code>{% include_code lang:javascript test.js %}
+</code></pre>
+<p><strong>只嵌入第 3 行</strong></p>
+<pre><code>{% include_code lang:javascript from:3 to:3 test.js %}
+</code></pre>
+<p><strong>嵌入第 5 行至第 8 行</strong></p>
+<pre><code>{% include_code lang:javascript from:5 to:8 test.js %}
+</code></pre>
+<p><strong>嵌入第 5 行至文件结束</strong></p>
+<pre><code>{% include_code lang:javascript from:5 test.js %}
+</code></pre>
+<p><strong>嵌入第 1 行至第 8 行</strong></p>
+<pre><code>{% include_code lang:javascript to:8 test.js %}
+</code></pre>
+<h2 id="Youtube"><a href="#Youtube" class="headerlink" title="Youtube"></a>Youtube</h2><p>在文章中插入 Youtube 视频。</p>
+<pre><code>{% youtube video_id [type] [cookie] %}
+</code></pre>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><p><strong>视频</strong></p>
+<pre><code>{% youtube lJIrF4YjHfQ %}
+</code></pre>
+<p><strong>播放列表</strong></p>
+<pre><code>{% youtube PL9hW1uS6HUfscJ9DHkOSoOX45MjXduUxo &#39;playlist&#39; %}
+</code></pre>
+<p><strong>隐私模式</strong></p>
+<p>禁止 YouTube cookie</p>
+<pre><code>{% youtube lJIrF4YjHfQ false %}
+{% youtube PL9hW1uS6HUfscJ9DHkOSoOX45MjXduUxo &#39;playlist&#39; false %}
+</code></pre>
+<h2 id="Vimeo"><a href="#Vimeo" class="headerlink" title="Vimeo"></a>Vimeo</h2><p>在文章中插入 Vimeo 视频。</p>
+<pre><code>{% vimeo video_id %}
+</code></pre>
+<h2 id="引用文章"><a href="#引用文章" class="headerlink" title="引用文章"></a>引用文章</h2><p>引用其他文章的链接。</p>
+<pre><code>{% post_path filename %}
+{% post_link filename [title] [escape] %}
+</code></pre>
+<p>在使用此标签时可以忽略文章文件所在的路径或者文章的永久链接信息、如语言、日期。</p>
+<p>例如，在文章中使用 <code>{% raw %}{% post_link how-to-bake-a-cake %}{% endraw %}</code> 时，只需有一个名为 <code>how-to-bake-a-cake.md</code> 的文章文件即可。即使这个文件位于站点文件夹的 <code>source/posts/2015-02-my-family-holiday</code> 目录下、或者文章的永久链接是 <code>2018/en/how-to-bake-a-cake</code>，都没有影响。</p>
+<p>默认链接文字是文章的标题，你也可以自定义要显示的文本。</p>
+<p>默认对文章的标题和自定义标题里的特殊字符进行转义。可以使用<code>escape</code>选项，禁止对特殊字符进行转义。</p>
+<p><strong>链接使用文章的标题</strong></p>
+<p><code>{% raw %}{% post_link hexo-3-8-released %}{% endraw %}</code></p>
+<p>{% post_link hexo-3-8-released %}</p>
+<p><strong>链接使用自定义文字</strong></p>
+<p><code>{% raw %}{% post_link hexo-3-8-released &#39;通往文章的链接&#39; %}{% endraw %}</code></p>
+<p>{% post_link hexo-3-8-released ‘通往文章的链接’ %}</p>
+<p><strong>对标题的特殊字符进行转义</strong></p>
+<pre><code>{% post_link hexo-4-released &#39;How to use &lt;b&gt; tag in title&#39; %}
+</code></pre>
+<p>{% post_link hexo-4-released ‘How to use <b> tag in title’ %}</p>
+<p><strong>禁止对标题的特殊字符进行转义</strong></p>
+<pre><code>{% post_link hexo-4-released &#39;&lt;b&gt;bold&lt;/b&gt; custom title&#39; false %}
+</code></pre>
+<p>{% post_link hexo-4-released ‘<b>bold</b> custom title’ false %}</p>
+<h2 id="引用资源"><a href="#引用资源" class="headerlink" title="引用资源"></a>引用资源</h2><p>引用文章的资源。</p>
+<pre><code>{% asset_path filename %}
+{% asset_img [class names] slug [width] [height] [title text [alt text]] %}
+{% asset_link filename [title] [escape] %}
+</code></pre>
+<h3 id="Embed-image"><a href="#Embed-image" class="headerlink" title="Embed image"></a>Embed image</h3><p><em>hexo-renderer-marked 3.1.0+ can (optionally) resolves the post’s path of an image automatically, refer to <a href="/docs/asset-folders#Embedding-an-image-using-markdown">this section</a> on how to enable it.</em></p>
+<p>“foo.jpg” is located at <code>http://example.com/2020/01/02/hello/foo.jpg</code>.</p>
+<p><strong>Default (no option)</strong></p>
+<p><code>{% asset_img foo.jpg %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot;&gt;
+</code></pre>
+<p><strong>Custom class</strong></p>
+<p><code>{% asset_img post-image foo.jpg %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; class=&quot;post-image&quot;&gt;
+</code></pre>
+<p><strong>Display size</strong></p>
+<p><code>{% asset_img foo.jpg 500 400 %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; width=&quot;500&quot; height=&quot;400&quot;&gt;
+</code></pre>
+<p><strong>Title &amp; Alt</strong></p>
+<p><code>{% asset_img logo.svg &quot;lorem ipsum&#39;dolor&#39;&quot; %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; title=&quot;lorem ipsum&quot; alt=&quot;dolor&quot;&gt;
+</code></pre>
+<h2 id="Raw"><a href="#Raw" class="headerlink" title="Raw"></a>Raw</h2><p>如果您想在文章中插入 Swig 标签，可以尝试使用 Raw 标签，以免发生解析异常。</p>
+<pre><code>{% raw %}
+content
+{% endraw %}
+</code></pre>
+<h2 id="文章摘要和截断"><a href="#文章摘要和截断" class="headerlink" title="文章摘要和截断"></a>文章摘要和截断</h2><p>在文章中使用 <code>&lt;!-- more --&gt;</code>，那么 <code>&lt;!-- more --&gt;</code> 之前的文字将会被视为摘要。首页中将只出现这部分文字，同时这部分文字也会出现在正文之中。</p>
+<p>例如：</p>
+<pre><code>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+&lt;!-- more --&gt;
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</code></pre>
+<p>首页中将只会出现</p>
+<pre><code>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+</code></pre>
+<p>正文中则会出现</p>
+<pre><code>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</code></pre>
+<p>注意，摘要可能会被 Front Matter 中的 <code>excerpt</code> 覆盖。</p>

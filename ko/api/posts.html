@@ -1,0 +1,108 @@
+<hr>
+<h2 id="title-Posts"><a href="#title-Posts" class="headerlink" title="title: Posts"></a>title: Posts</h2><h2 id="포스트-생성"><a href="#포스트-생성" class="headerlink" title="포스트 생성"></a>포스트 생성</h2><pre><code class="js">hexo.post.create(data, replace);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>인자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>데이터</td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>존재하는 파일을 대체함</td>
+</tr>
+</tbody></table>
+<p>포스트의 속성은 <code>data</code>에 정의할 수 있습니다. 아래의 표는 완벽하진 않습니다. 추가 속성은 앞의 내용(front-matter)에 추가할 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>데이터</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>타이틀</td>
+</tr>
+<tr>
+<td><code>slug</code></td>
+<td>URL</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>레이아웃. 기본 값은 <code>default_layout</code> 설정을 따릅니다.</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>경로. Hexo는 기본적으로 <code>new_post_path</code>를 기반으로 경로를 설정합니다.</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>날짜. 기본 값은 현재 시간입니다.</td>
+</tr>
+</tbody></table>
+<h2 id="Draft-배포"><a href="#Draft-배포" class="headerlink" title="Draft 배포"></a>Draft 배포</h2><pre><code class="js">hexo.post.publish(data, replace);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>인자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>데이터</td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>존재하는 파일을 대체함</td>
+</tr>
+</tbody></table>
+<p>포스트의 속성은 <code>data</code>에 정의할 수 있습니다. 아래의 표는 완벽하진 않습니다. 추가 속성은 앞의 내용(front-matter)에 추가할 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>데이터</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>slug</code></td>
+<td>파일명 (Required)</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>레이아웃. 기본 값은 <code>default_layout</code> 설정을 따릅니다.</td>
+</tr>
+</tbody></table>
+<h2 id="그리기-Render"><a href="#그리기-Render" class="headerlink" title="그리기 (Render)"></a>그리기 (Render)</h2><pre><code class="js">hexo.post.render(source, data);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>인자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source</code></td>
+<td>파일의 전체 경로 (Optional)</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>데이터</td>
+</tr>
+</tbody></table>
+<p>데이터는 반드시 <code>content</code> 속성 내에 포함되어야 합니다. 그렇지 않을 경우, Hexo는 원본 파일을 읽으려고 시도할 것입니다. 이 함수의 실행 단계는 아래와 같습니다.</p>
+<ul>
+<li><code>before_post_render</code> filter를 실행합니다.</li>
+<li>Markdown 또는 다른 렌더러를 통해 렌더링 합니다. (확장자명에 따라 다릅니다.)</li>
+<li><a href="https://mozilla.github.io/nunjucks/">Nunjucks</a>를 사용하여 렌더링 합니다.</li>
+<li><code>after_post_render</code> filter를 실행합니다.</li>
+</ul>

@@ -1,0 +1,22 @@
+<hr>
+<h2 id="title-輔助函數（Helper）"><a href="#title-輔助函數（Helper）" class="headerlink" title="title: 輔助函數（Helper）"></a>title: 輔助函數（Helper）</h2><p>輔助函數幫助您在模板中快速插入內容，建議您把複雜的程式碼放在輔助函數而非模板中。</p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><pre><code class="js">hexo.extend.helper.register(name, function(){
+  // ...
+});
+</code></pre>
+<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><pre><code class="js">hexo.extend.helper.register(&#39;js&#39;, function(path){
+  return &#39;&lt;script src=&quot;&#39; + path + &#39;&quot;&gt;&lt;/script&gt;&#39;;
+});
+</code></pre>
+<pre><code class="js">&lt;%- js(&#39;script.js&#39;) %&gt;
+// &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><h3 id="定制-helper-應該放在哪裡？"><a href="#定制-helper-應該放在哪裡？" class="headerlink" title="定制 helper 應該放在哪裡？"></a>定制 helper 應該放在哪裡？</h3><p>放置在 <code>scripts/</code> 或 <code>themes/&lt;yourtheme&gt;/scripts/</code> 資料夾內。</p>
+<h3 id="如何在我的定制-helper-中使用另外一個已經註冊的-helper？"><a href="#如何在我的定制-helper-中使用另外一個已經註冊的-helper？" class="headerlink" title="如何在我的定制 helper 中使用另外一個已經註冊的 helper？"></a>如何在我的定制 helper 中使用另外一個已經註冊的 helper？</h3><p>All helpers are executed in the same context. For example, to use <a href="/docs/helpers#url-for"><code>url_for()</code></a> inside a custom helper:</p>
+<pre><code class="js">hexo.extend.helper.register(&#39;lorem&#39;, function(path) {
+  return &#39;&lt;script src=&quot;&#39; + this.url_for(path) + &#39;&quot;&gt;&lt;/script&gt;&#39;;
+});
+</code></pre>
+<h3 id="如何在其他插件中使用已經註冊的-helper"><a href="#如何在其他插件中使用已經註冊的-helper" class="headerlink" title="如何在其他插件中使用已經註冊的 helper?"></a>如何在其他插件中使用已經註冊的 helper?</h3><p><code>hexo.extend.helper.get</code> 會返回一個指定名字的 helper，但是你還需要一個 <code>bind(hexo)</code>，就像這樣：</p>
+<pre><code class="js">const url_for = hexo.extend.helper.get(&#39;url_for&#39;).bind(hexo);
+</code></pre>

@@ -1,0 +1,50 @@
+<hr>
+<h2 id="title-Themes"><a href="#title-Themes" class="headerlink" title="title: Themes"></a>title: Themes</h2><p>{% youtube 5ROIU_9dYe4 %}</p>
+<p>การสร้างธีมของ hexo เป็นเรื่องเรียบง่าย - คุณต้องการสร้าง folder ใหม่ เพื่อเริ่มใช้ธีมของคุณ ไปแก้ไขการตั้งค่าของ <code>theme</code> ในไฟล์ <code>_config.yml</code> ธีมของ hexo จะมีโครงสร้างต่อไป:</p>
+<pre><code class="plain">.
+├── _config.yml
+├── languages
+├── layout
+├── scripts
+└── source
+</code></pre>
+<h3 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h3><p>ไฟล์การตั้งค่าธีม  Unlike the site’s primary configuration file  การแก้ไขไฟล์นี้แล้วไม่ต้องเปิดเซิร์ฟเวอร์ใหม่</p>
+<h3 id="languages"><a href="#languages" class="headerlink" title="languages"></a>languages</h3><p>folder ภาษา สำหรับข้อมูลเพิ่มเติมไปดูท่ี <a href="internationalization.html">internationalization (i18n)</a></p>
+<h3 id="layout"><a href="#layout" class="headerlink" title="layout"></a>layout</h3><p>layout folder. ใน folder นี้มีไฟล์ template ของธีม ซึ่งตั้งค่ารูปลักษณ์ของเว็บไซต์   hexo ใช้ <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> เป็น template engine by default แต่คุณเปลี่ยนเป็น engine อื่นๆได้ เช่น <a href="https://github.com/hexojs/hexo-renderer-ejs">EJS</a>, <a href="https://github.com/hexojs/hexo-renderer-haml">Haml</a>, <a href="https://github.com/hexojs/hexo-renderer-jade">Jade</a> หรือ <a href="https://github.com/maxknee/hexo-render-pug">Pug</a> hexo เลือก engine ของ template ตาม extension ของไฟล์ ยกตัวอย่างเช่น:</p>
+<pre><code class="plain">layout.ejs   - uses EJS
+layout.njk   - uses Nunjucks
+</code></pre>
+<p>สำหรับข้อมูลเพิ่มเติม ไปดูที่ <a href="templates.html">templates</a></p>
+<h3 id="scripts"><a href="#scripts" class="headerlink" title="scripts"></a>scripts</h3><p>folder ของ script.  hexo  จะโหลดไฟล์ JavaScript ทั้งหมดใน folder นี้ในช่วง<br>initialization สำหรับข้อมูลเพิ่มเติม ไปดูท่ี <a href="plugins.html">plugins</a></p>
+<h3 id="source"><a href="#source" class="headerlink" title="source"></a>source</h3><p>source folder. คุณวางไฟล์ของตน(เช่น ไฟล์ CSS และ JavaScript)ได้ท่ีนี่ hexo<br>ละเลย ไฟล์ท่ีซ่อนอยู่และไฟล์ท่ีมี <code>_</code> เป็นคำนำหน้าในชื่อ</p>
+<p>hexo จะจัดการและบันทึกไฟล์ทั้งหมดท่ี renderable ไปถึง folder <code>public</code><br>ส่วนไฟล์ท่ี non-renderable จะถูก copy ไปถึง folder <code>public</code> โดยตรง</p>
+<h3 id="Publishing"><a href="#Publishing" class="headerlink" title="Publishing"></a>Publishing</h3><p>เมื่อคุณเสร็จการสร้างธีมของตน คุณสามารถประกาศไปถึง <a href="/themes">theme list</a><br>ก่อนการประกาศคุณต้องรัน [theme unit test](<a href="https://github/">https://github</a><br>.com&#x2F;hexojs&#x2F;hexo-theme-unit-test)<br>เพื่อทำให้แน่ใจว่าทุกสิ่งทุกอย่างเป็นไปได้ดี<br>ขั้นตอนการประกาศธีมจะคล้ายกับขั้นตอนของ <a href="contributing.html#Updating_Documentation">updating documentation</a></p>
+<ol>
+<li><p>Fork <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a></p>
+</li>
+<li><p>Clone the repository to your computer and install dependencies.</p>
+<pre><code class="shell">$ git clone https://github.com/&lt;username&gt;/site.git
+$ cd site
+$ npm install
+</code></pre>
+</li>
+<li><p>Edit <code>source/_data/themes.yml</code> and add your theme. For example:</p>
+<pre><code class="yaml">- name: landscape
+  description: A brand new default theme for Hexo.
+  link: https://github.com/hexojs/hexo-theme-landscape
+  preview: http://hexo.io/hexo-theme-landscape
+  tags:
+    - official
+    - responsive
+    - widget
+    - two_column
+    - one_column
+</code></pre>
+</li>
+<li><p>Add a screenshot (with the same name as the theme) to <code>source/themes/screenshots</code>. It must be a 800*500px PNG.</p>
+</li>
+<li><p>Push the branch.</p>
+</li>
+<li><p>Create a pull request and describe the change.</p>
+</li>
+</ol>

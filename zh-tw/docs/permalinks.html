@@ -1,0 +1,134 @@
+<hr>
+<h2 id="title-永久連結（Permalinks）"><a href="#title-永久連結（Permalinks）" class="headerlink" title="title: 永久連結（Permalinks）"></a>title: 永久連結（Permalinks）</h2><p>您可以在設定中調整網站的永久連結。</p>
+<h3 id="變數"><a href="#變數" class="headerlink" title="變數"></a>變數</h3><p>除了下列變數外，您還可使用 Front-matter 中的所有屬性。</p>
+<table>
+<thead>
+<tr>
+<th>變數</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year</code></td>
+<td>文章的發表年份（4 位數）</td>
+</tr>
+<tr>
+<td><code>:month</code></td>
+<td>文章的發表月份（2 位數）</td>
+</tr>
+<tr>
+<td><code>:i_month</code></td>
+<td>文章的發表月份（去掉開頭的零）</td>
+</tr>
+<tr>
+<td><code>:day</code></td>
+<td>文章的發表日期 (2 位數)</td>
+</tr>
+<tr>
+<td><code>:i_day</code></td>
+<td>文章的發表日期（去掉開頭的零）</td>
+</tr>
+<tr>
+<td><code>:hour</code></td>
+<td>文章發表時的小時 (2 位數)</td>
+</tr>
+<tr>
+<td><code>:minute</code></td>
+<td>文章發表時的分鐘 (2 位數)</td>
+</tr>
+<tr>
+<td><code>:second</code></td>
+<td>文章發表時的秒鐘 (2 位數)</td>
+</tr>
+<tr>
+<td><code>:title</code></td>
+<td>檔案名稱 (relative to “source&#x2F;_posts&#x2F;“ folder)</td>
+</tr>
+<tr>
+<td><code>:name</code></td>
+<td>檔案名稱</td>
+</tr>
+<tr>
+<td><code>:post_title</code></td>
+<td>文章標題</td>
+</tr>
+<tr>
+<td><code>:id</code></td>
+<td>文章 ID (<em>not persistent across <a href="/zh-tw/docs/commands#clean">cache reset</a></em>)</td>
+</tr>
+<tr>
+<td><code>:category</code></td>
+<td>分類。如果文章沒有分類，則是 <code>default_category</code> 設定。</td>
+</tr>
+<tr>
+<td><code>:hash</code></td>
+<td>SHA1 hash of filename (same as <code>:title</code>) and date (12-hexadecimal)</td>
+</tr>
+</tbody></table>
+<p>您可在 <code>permalink_defaults</code> 設定中調整永久連結中各變數的預設值：</p>
+<pre><code class="yaml">permalink_defaults:
+  lang: en
+</code></pre>
+<h3 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h3><pre><code class="yaml">title: Hello World
+date: 2013-07-14 17:01:34
+categories:
+- foo
+- bar
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>設定</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year/:month/:day/:title/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:year-:month-:day-:title.html</code></td>
+<td>2013-07-14-hello-world.html</td>
+</tr>
+<tr>
+<td><code>:category/:title/</code></td>
+<td>foo&#x2F;bar&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:title-:hash/</code></td>
+<td>hello-world-a2c8ac003b43&#x2F;</td>
+</tr>
+</tbody></table>
+<pre><code class="yaml">title: Hello World
+date: 2013-07-14 17:01:34
+categories:
+- foo
+- bar
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>設定</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year/:month/:day/:title/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;lorem&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:year/:month/:day/:name/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;hello-world&#x2F;</td>
+</tr>
+</tbody></table>
+<h3 id="多語系支援"><a href="#多語系支援" class="headerlink" title="多語系支援"></a>多語系支援</h3><p>若要建立一個多語系的網站，您可修改 <code>new_post_name</code> 和 <code>permalink</code> 設定，如下：</p>
+<pre><code class="yaml">new_post_name: :lang/:title.md
+permalink: :lang/:title/
+</code></pre>
+<p>當您建立新文章時，文章會被儲存至：</p>
+<pre><code class="bash">$ hexo new &quot;Hello World&quot; --lang tw
+# =&gt; source/_posts/tw/Hello-World.md
+</code></pre>
+<p>而網址會是：</p>
+<pre><code class="plain">http://localhost:4000/tw/hello-world/
+</code></pre>

@@ -1,0 +1,17 @@
+<hr>
+<h2 id="title-数据文件"><a href="#title-数据文件" class="headerlink" title="title: 数据文件"></a>title: 数据文件</h2><p>有时您可能需要在主题中使用某些资料，而这些资料并不在文章内，并且是需要重复使用的，那么您可以考虑使用 Hexo 3.0 新增的「数据文件」功能。此功能会载入 <code>source/_data</code> 内的 YAML 或 JSON 文件，如此一来您便能在网站中复用这些文件了。</p>
+<p>举例来说，在 <code>source/_data</code> 文件夹中新建 <code>menu.yml</code> 文件：</p>
+<pre><code class="yaml">Home: /
+Gallery: /gallery/
+Archives: /archives/
+</code></pre>
+<p>您就能在模板中使用这些资料：</p>
+<pre><code>&lt;% for (var link in site.data.menu) { %&gt;
+  &lt;a href=&quot;&lt;%= site.data.menu[link] %&gt;&quot;&gt; &lt;%= link %&gt; &lt;/a&gt;
+&lt;% } %&gt;
+</code></pre>
+<p>渲染结果如下 :</p>
+<pre><code>&lt;a href=&quot;/&quot;&gt; Home &lt;/a&gt;
+&lt;a href=&quot;/gallery/&quot;&gt; Gallery &lt;/a&gt;
+&lt;a href=&quot;/archives/&quot;&gt; Archives &lt;/a&gt;
+</code></pre>

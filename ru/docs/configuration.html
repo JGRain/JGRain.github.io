@@ -1,0 +1,433 @@
+<hr>
+<h2 id="title-Конфигурация"><a href="#title-Конфигурация" class="headerlink" title="title: Конфигурация"></a>title: Конфигурация</h2><p>Можно изменить настройки в файле <code>_config.yml</code>.</p>
+<h3 id="Сайт"><a href="#Сайт" class="headerlink" title="Сайт"></a>Сайт</h3><table>
+<thead>
+<tr>
+<th>Настройки</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>Название сайта</td>
+</tr>
+<tr>
+<td><code>subtitle</code></td>
+<td>Подзаголовок сайта</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Описание сайта</td>
+</tr>
+<tr>
+<td><code>keywords</code></td>
+<td>Ключевые слова вашего сайта. Поддерживает несколько значений.</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>Ваше имя</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>Язык сайта. Используйте <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">2-значный код ISO-639-1</a>. По умолчанию: <code>en</code>.</td>
+</tr>
+<tr>
+<td><code>timezone</code></td>
+<td>Временной пояс. Hexo использует настройки компьютера по умолчанию. Список доступных часовых поясов можно найти <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">здесь</a>. Несколько примеров: <code>America/New_York</code>, <code>Japan</code> и <code>UTC</code>.</td>
+</tr>
+</tbody></table>
+<h3 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h3><table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+<th>Умолчание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>url</code></td>
+<td>URL-адрес сайта, должен начинаться с <code>http://</code> или <code>https://</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>Корневая папка сайта</td>
+<td><code>url&#39;s pathname</code></td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td><a href="permalinks.html">Постоянная ссылка</a> используются ссылки на статьи</td>
+<td><code>:year/:month/:day/:title/</code></td>
+</tr>
+<tr>
+<td><code>permalink_defaults</code></td>
+<td>Значение по умолчанию для каждого сегмента постоянной ссылки</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pretty_urls</code></td>
+<td>Переопределите <a href="variables.html"><code>permalink</code></a> переменную для создания “красивых” URLs ссылок.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_index</code></td>
+<td>Включает показывание <code>index.html</code>, установите значение <code>false</code> для удаления.</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_html</code></td>
+<td>Включает показывание <code>.html</code>, установите значение <code>false</code> для удаления (<em>не применяется к показу <code>index.html</code></em>)</td>
+<td><code>true</code></td>
+</tr>
+</tbody></table>
+<p>{% note info Сайт в подпапке %}<br>Если ваш сайт располагается в поддиректории (к примеру <code>http://example.org/blog</code>) поменяйте значение <code>url</code> на <code>http://example.org/blog</code> и установите переменной <code>root</code> значение <code>/blog/</code>.<br>{% endnote %}</p>
+<h3 id="Папки"><a href="#Папки" class="headerlink" title="Папки"></a>Папки</h3><table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+<th>Умолчание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source_dir</code></td>
+<td>Папка с исходниками. Здесь хранится контент</td>
+<td><code>source</code></td>
+</tr>
+<tr>
+<td><code>public_dir</code></td>
+<td>Папка публикации. Здесь хранится сгенерированный сайт</td>
+<td><code>public</code></td>
+</tr>
+<tr>
+<td><code>tag_dir</code></td>
+<td>Папка с тегами</td>
+<td><code>tags</code></td>
+</tr>
+<tr>
+<td><code>archive_dir</code></td>
+<td>Папка с архивами</td>
+<td><code>archives</code></td>
+</tr>
+<tr>
+<td><code>category_dir</code></td>
+<td>Папка с категориями</td>
+<td><code>categories</code></td>
+</tr>
+<tr>
+<td><code>code_dir</code></td>
+<td>Папка с кодом</td>
+<td><code>downloads/code</code></td>
+</tr>
+<tr>
+<td><code>i18n_dir</code></td>
+<td>Папка  i18n</td>
+<td><code>:lang</code></td>
+</tr>
+<tr>
+<td><code>skip_render</code></td>
+<td>Пути, которые исключены из обработки. Можно использовать <a href="https://github.com/micromatch/micromatch#extended-globbing">глобальные выражения</a> для определения путей</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Написание"><a href="#Написание" class="headerlink" title="Написание"></a>Написание</h3><table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+<th>Умолчание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>new_post_name</code></td>
+<td>Имя файла для создания новых постов</td>
+<td><code>:title.md</code></td>
+</tr>
+<tr>
+<td><code>default_layout</code></td>
+<td>Макет по умолчанию</td>
+<td><code>post</code></td>
+</tr>
+<tr>
+<td><code>titlecase</code></td>
+<td>Преобразовать заголовки в заглавные буквы?</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>external_link</code></td>
+<td>Открывать внешние ссылки в новой вкладке?</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>external_link.enable</code></td>
+<td>Открывать внешние ссылки в новой вкладке?</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>external_link.field</code></td>
+<td>Применяется только ко всему <code>site</code> или <code>post</code></td>
+<td><code>site</code></td>
+</tr>
+<tr>
+<td><code>external_link.exclude</code></td>
+<td>Исключить имя хоста. Укажите поддомен, когда это применимо, включая <code>www</code></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>filename_case</code></td>
+<td>Преобразовать имена файлов в <code>1</code> нижний регистр; <code>2</code> верхний регистр</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>render_drafts</code></td>
+<td>Отображать черновики?</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>post_asset_folder</code></td>
+<td>Включать <a href="asset-folders.html">папку с материалами</a>?</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>relative_link</code></td>
+<td>Создание ссылок относительно корневой папки?</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>future</code></td>
+<td>Отображать будущие посты?</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>Настройки блоков кода, см. <a href="/docs/syntax-highlight#Highlight-js">Highlight.js</a> раздел для руководства по использованию</td>
+<td></td>
+</tr>
+<tr>
+<td><code>prismjs</code></td>
+<td>Настройки блоков кода, см. <a href="/docs/syntax-highlight#PrismJS">PrismJS</a> раздел для руководства по использованию</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Категории-и-теги"><a href="#Категории-и-теги" class="headerlink" title="Категории и теги"></a>Категории и теги</h3><table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+<th>Умолчание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>default_category</code></td>
+<td>Категория по умолчанию</td>
+<td><code>uncategorized</code></td>
+</tr>
+<tr>
+<td><code>category_map</code></td>
+<td>Карта категорий</td>
+<td></td>
+</tr>
+<tr>
+<td><code>tag_map</code></td>
+<td>Карта тегов</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Даты-x2F-Времени-формат"><a href="#Даты-x2F-Времени-формат" class="headerlink" title="Даты &#x2F; Времени формат"></a>Даты &#x2F; Времени формат</h3><p>Hexo использует <a href="http://momentjs.com/">Moment.js</a> для работы с датами.</p>
+<table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+<th>Умолчание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>date_format</code></td>
+<td>Формат даты</td>
+<td><code>YYYY-MM-DD</code></td>
+</tr>
+<tr>
+<td><code>time_format</code></td>
+<td>Формат времени</td>
+<td><code>HH:mm:ss</code></td>
+</tr>
+<tr>
+<td><code>updated_option</code></td>
+<td>Значение <a href="/ru/docs/variables#%D0%9F%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%8B"><code>обновлено</code></a> используется, если оно не указано в front-matter</td>
+<td><code>mtime</code></td>
+</tr>
+</tbody></table>
+<p>{% note info updated_option %}<br><code>updated_option</code> управляет значением <code>updated</code> если оно не указано в front-matter:</p>
+<ul>
+<li><code>mtime</code>: Использует дату изменения файла для показа <code>обновлено</code>. Это введено в Hexo по умолчанию с версии 3.0.0</li>
+<li><code>date</code>: Использует дату изменения для показа <code>обновлено</code>. Обычно используется с рабочим процессом Git, когда дата изменения файла может отличаться.</li>
+<li><code>empty</code>: Просто не использует <code>updated</code>, если оно не указано. Может быть несовместимо с большинством тем и плагинов.</li>
+</ul>
+<p><code>use_date_for_updated</code> устарел и будет удален в следующей основной версии. Пожалуйста, используйте вместо этого <code>updated_option: &#39;date&#39;</code>.<br>{% endnote %}</p>
+<h3 id="Разбивка-на-страницы"><a href="#Разбивка-на-страницы" class="headerlink" title="Разбивка на страницы"></a>Разбивка на страницы</h3><table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+<th>Умолчание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>per_page</code></td>
+<td>Количество постов, отображаемых на странице. <code>0</code> отключает разбивку.</td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td><code>pagination_dir</code></td>
+<td>Каталог разбивки</td>
+<td><code>page</code></td>
+</tr>
+</tbody></table>
+<h3 id="Расширения"><a href="#Расширения" class="headerlink" title="Расширения"></a>Расширения</h3><table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>theme</code></td>
+<td>Имя темы. <code>false</code> отключает применение тем</td>
+</tr>
+<tr>
+<td><code>deploy</code></td>
+<td>Параметры публикации</td>
+</tr>
+<tr>
+<td><code>meta_generator</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#Attributes">Meta generator</a> тегов. <code>false</code> отключает ввод тегов.</td>
+</tr>
+</tbody></table>
+<h3 id="Включить-x2F-Исключить-файлы-или-каталоги"><a href="#Включить-x2F-Исключить-файлы-или-каталоги" class="headerlink" title="Включить&#x2F;Исключить файлы или каталоги"></a>Включить&#x2F;Исключить файлы или каталоги</h3><p>В файле конфигурации, установите ключ include&#x2F;exclude, чтобы hexo обрабатывал или игнорировал, указанные файлы&#x2F;каталоги.</p>
+<p><code>include</code> и <code>exclude</code> опции применяются только к папке <code>source/</code>, тогда как опция <code>ignore</code> применяется ко всем папкам.</p>
+<table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>include</code></td>
+<td>По умолчанию Hexo игнорирует скрытые архивы и директории, укажите это значение, чтобы Hexo их обрабатывал</td>
+</tr>
+<tr>
+<td><code>exclude</code></td>
+<td>В Hexo будет игнорировать файлы и каталоги, перечисленные в этой переменной</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>Игнорирует файлы&#x2F;папки</td>
+</tr>
+</tbody></table>
+<p>Примеры:</p>
+<pre><code class="yaml"># Incluir/Excluir Arquivos/Diretórios
+include:
+  - &quot;.nojekyll&quot;
+  # Include &#39;source/css/_typing.css&#39;.
+  - &quot;css/_typing.css&quot;
+  # Include any file in &#39;source/_css/&#39;.
+  - &quot;_css/*&quot;
+  # Include any file and subfolder in &#39;source/_css/&#39;.
+  - &quot;_css/**/*&quot;
+
+exclude:
+  # Exclude &#39;source/js/test.js&#39;.
+  - &quot;js/test.js&quot;
+  # Exclude any file in &#39;source/js/&#39;.
+  - &quot;js/*&quot;
+  # Exclude any file and subfolder in &#39;source/js/&#39;.
+  - &quot;js/**/*&quot;
+  # Exclude any file with filename that starts with &#39;test&#39; in &#39;source/js/&#39;.
+  - &quot;js/test*&quot;
+  # Exclude any file with filename that starts with &#39;test&#39; in &#39;source/js/&#39; and its subfolders.
+  - &quot;js/**/test*&quot;
+  # Do not use this to exclude posts in the &#39;source/_posts/&#39;.
+  # Use skip_render for that. Or prepend an underscore to the filename.
+  # - &quot;_posts/hello-world.md&quot; # Does not work.
+
+ignore:
+  # Ignore any folder named &#39;foo&#39;.
+  - &quot;**/foo&quot;
+  # Ignore &#39;foo&#39; folder in &#39;themes/&#39; only.
+  - &quot;**/themes/*/foo&quot;
+  # Same as above, but applies to every subfolders of &#39;themes/&#39;.
+  - &quot;**/themes/**/foo&quot;
+</code></pre>
+<p>Каждое значение в списке должно быть заключено в одинарные&#x2F;двойные кавычки.</p>
+<p><code>include:</code> и <code>exclude:</code> не применяются к папке <code>themes/</code>. Либо используйте <code>ignore:</code>, либо, как вариант, добавьте подчеркивание к имени файла&#x2F;папки, чтобы исключить.</p>
+<p>* Заметным исключением является папка <code>source/_posts</code>, но любой файл или папка с именем, начинающимся с подчеркивания в этой папке, все равно будут игнорироваться. Использование правила <code>include:</code> в этой папке не рекомендуется.</p>
+<h3 id="Указание-альтернативного-файла-конфигурации"><a href="#Указание-альтернативного-файла-конфигурации" class="headerlink" title="Указание альтернативного файла конфигурации"></a>Указание альтернативного файла конфигурации</h3><p>Пользовательский файл конфигурации может быть указан при добавлении флага <code>--config</code> в команду <code>hexo</code> с указанием пути к альтрнативному файу конфигурации YAML или JSON, или даже списку с разделителями-запятыми (без пробелов) нескольких файлов YAML или JSON.</p>
+<pre><code class="bash"># usando &#39;custom.yml&#39; no lugar de &#39;_config.yml&#39;
+$ hexo server --config custom.yml
+
+# usando &#39;custom.yml&#39; e &#39;custom2.json&#39;, priorizando &#39;custom2.json&#39;
+$ hexo server --config custom.yml,custom2.json
+</code></pre>
+<p>Использование нескольких файлов включает в себя все файлы, настройки и указанные параметры объединены в <code>_multiconfig.yml</code>. Значения последующих преобладают. Эта функция работает с любым количеством файлов JSON и YAML с объектами, сколь угодно глубоких. Обратите внимание, что <strong>нет места разрешается в списке</strong>.</p>
+<p>Например, в приведенном выше примере, если <code>foo: bar</code> находящийся в файле <code>custom.yml</code>, но <code>&quot;foo&quot;: &quot;dinosaur&quot;</code> в <code> &quot;custom2&quot;.json</code>, <code>_multiconfig.yml</code> будет сохранено значение <code>&quot;foo&quot;: &quot;dinosaur&quot;</code>.</p>
+<h3 id="Альтернативная-конфигурация-темы"><a href="#Альтернативная-конфигурация-темы" class="headerlink" title="Альтернативная конфигурация темы"></a>Альтернативная конфигурация темы</h3><p>Темы Hexo - это независимые проекты с отдельными файлами <code>_config.yml</code>.</p>
+<p>Вместо того чтобы делать ответвление(форк) темы и поддерживать пользовательскую ветвь с вашими настройками, вы можете настроить ее где-нибудь в другом месте.</p>
+<p>** <code>theme_config</code> в основном файле конфигурации сайта**</p>
+<blockquote>
+<p>Поддерживается начиная с Hexo 2.8.2</p>
+</blockquote>
+<pre><code class="yml"># _config.yml
+theme: &quot;my-theme&quot;
+theme_config:
+  bio: &quot;My awesome bio&quot;
+  foo:
+    bar: &#39;a&#39;
+</code></pre>
+<pre><code class="yml"># themes/my-theme/_config.yml
+bio: &quot;Some generic bio&quot;
+logo: &quot;a-cool-image.png&quot;
+  foo:
+    baz: &#39;b&#39;
+</code></pre>
+<p>В результате чего создается конфигурация темы:</p>
+<pre><code class="json">{
+  bio: &quot;My awesome bio&quot;,
+  logo: &quot;a-cool-image.png&quot;,
+  foo: {
+    bar: &quot;a&quot;,
+    baz: &quot;b&quot;
+  }
+}
+</code></pre>
+<p><strong>альтернативный <code>_config.[theme].yml</code> файл</strong></p>
+<blockquote>
+<p>Поддерживается начиная с Hexo 5.0.0</p>
+</blockquote>
+<p>Файл должен быть помещен в папку вашего сайта, поддерживаются как <code>yml</code>, так и <code>json</code>. <code>theme</code> внутри <code>_config.yml</code> должна быть настроена так, чтобы Hexo считывал <code>_config.[theme].yml</code></p>
+<pre><code class="yml"># _config.yml
+theme: &quot;my-theme&quot;
+</code></pre>
+<pre><code class="yml"># _config.my-theme.yml
+bio: &quot;My awesome bio&quot;
+foo:
+  bar: &#39;a&#39;
+</code></pre>
+<pre><code class="yml"># themes/my-theme/_config.yml
+bio: &quot;Some generic bio&quot;
+logo: &quot;a-cool-image.png&quot;
+  foo:
+    baz: &#39;b&#39;
+</code></pre>
+<p>В результате чего создастся конфигурация темы:</p>
+<pre><code class="json">{
+  bio: &quot;My awesome bio&quot;,
+  logo: &quot;a-cool-image.png&quot;,
+  foo: {
+    bar: &quot;a&quot;,
+    baz: &quot;b&quot;
+  }
+}
+</code></pre>
+<p>{% note %}<br>Мы настоятельно рекомендуем вам хранить конфигурацию вашей темы в одном месте. Но, в случае, если вам нужно хранить конфигурацию темы отдельно, эта информация очень важна: <code>theme_config</code> внутри основного файла конфигурации сайта имеет наивысший приоритет при объединении, затем выделенный файл конфигурации темы. Файл <code>_config.yml</code> в каталоге темы имеет самый низкий приоритет.<br>{% endnote %}</p>

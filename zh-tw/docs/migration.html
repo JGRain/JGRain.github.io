@@ -1,0 +1,29 @@
+<hr>
+<h2 id="title-轉移"><a href="#title-轉移" class="headerlink" title="title: 轉移"></a>title: 轉移</h2><h2 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h2><p>首先，安裝 <code>hexo-migrator-rss</code> 外掛。</p>
+<pre><code class="bash">$ npm install hexo-migrator-rss --save
+</code></pre>
+<p>一旦外掛安裝完成，執行下列指令，從 RSS 轉移所有文章。<code>source</code> 可以是檔案路徑或網址。</p>
+<pre><code class="bash">$ hexo migrate rss &lt;source&gt;
+</code></pre>
+<h2 id="Jekyll"><a href="#Jekyll" class="headerlink" title="Jekyll"></a>Jekyll</h2><p>把 <code>_posts</code> 資料夾內的所有檔案複製至 <code>source/_posts</code> 資料夾，並在 <code>_config.yml</code> 中修改 <code>new_post_name</code> 設定。</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="Octopress"><a href="#Octopress" class="headerlink" title="Octopress"></a>Octopress</h2><p>把 Octopress 的 <code>source/_posts</code> 資料夾內的所有檔案轉移至 Hexo 的 <code>source/_posts</code> 資料夾，並修改 <code>_config.yml</code> 中的 <code>new_post_name</code> 設定。</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h2><p>首先，安裝 <code>hexo-migrator-wordpress</code> 外掛。</p>
+<pre><code class="bash">$ npm install hexo-migrator-wordpress --save
+</code></pre>
+<p>由 WordPress 儀表板的 “工具” → “匯出” → “WordPress” 匯出網站資料 (詳情請參見 <a href="http://en.support.wordpress.com/export/">WordPress 支援頁</a>)。</p>
+<p>接著執行：</p>
+<pre><code class="bash">$ hexo migrate wordpress &lt;source&gt;
+</code></pre>
+<p><code>source</code> 為 WordPress 匯出檔案的路徑或網址：</p>
+<h2 id="Joomla"><a href="#Joomla" class="headerlink" title="Joomla"></a>Joomla</h2><p>首先，安裝 <code>hexo-migrator-joomla</code> 外掛</p>
+<pre><code class="bash">$ npm install hexo-migrator-joomla --save
+</code></pre>
+<p>並使用 <a href="http://extensions.joomla.org/extensions/migration-a-conversion/data-import-a-export/12816?qh=YToxOntpOjA7czo1OiJqMnhtbCI7fQ==">J2XML</a> 元件匯出你的 Joomla 文章。</p>
+<p>接著執行：</p>
+<pre><code class="bash">$ hexo migrate joomla &lt;source&gt;
+</code></pre>
+<p><code>source</code> 為 Joomla 匯出檔案的路徑或網址。</p>

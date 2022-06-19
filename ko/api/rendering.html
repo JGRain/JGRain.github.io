@@ -1,0 +1,42 @@
+<hr>
+<h2 id="title-Rendering"><a href="#title-Rendering" class="headerlink" title="title: Rendering"></a>title: Rendering</h2><p>Hexo에서 파일 또는 문자열을 렌더링 하기위해 두 가지의 메소드를 사용할 수 있습니다. 비동기 메소드인 <code>hexo.render.render</code>와 동기 메소드인 <code>hexo.render.renderSync</code>입니다. 두 가지의 메소드는 매우 유사하기 때문에 이 문서에서는 비동기 메소드인 <code>hexo.render.render</code> 에 대해 알아보겠습니다.</p>
+<h2 id="문자열의-렌더링"><a href="#문자열의-렌더링" class="headerlink" title="문자열의 렌더링"></a>문자열의 렌더링</h2><p>문자열을 렌더링하기 위해 Hexo가 어떤 엔진을 사용하여 렌더링하면 되는지 <code>engine</code> 을 통해 알려줘야 합니다.</p>
+<pre><code class="js">hexo.render.render({text: &#39;example&#39;, engine: &#39;swig&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="파일의-렌더링"><a href="#파일의-렌더링" class="headerlink" title="파일의 렌더링"></a>파일의 렌더링</h2><p>파일을 렌더링할 때에는 <code>engine</code>을 반드시 지정할 필요는 없습니다. 왜냐하면 Hexo는 파일 확장자를 보고 자동으로 연관된 렌더링 엔진을 찾기 때문입니다. 물론, 명시적으로 <code>engine</code>을 지정해도 상관 없습니다.</p>
+<pre><code class="js">hexo.render.render({path: &#39;path/to/file.swig&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="렌더링-옵션"><a href="#렌더링-옵션" class="headerlink" title="렌더링 옵션"></a>렌더링 옵션</h2><p>두 번째 인자인 옵션은 꼭 넣지 않아도 됩니다.</p>
+<pre><code class="js">hexo.render.render({text: &#39;&#39;}, {foo: &#39;foo&#39;}).then(function(result){
+  // ...
+});
+</code></pre>
+<h2 id="after-render-Filters"><a href="#after-render-Filters" class="headerlink" title="after_render Filters"></a>after_render Filters</h2><p>렌더링이 완료되면 Hexo는 적절한 <code>after_render</code> filter를 실행합니다. 예를 들어, 우리는 이 기능을 JavaScript minifier를 구현하는데 사용할 수 있습니다.</p>
+<pre><code class="js">var UglifyJS = require(&#39;uglify-js&#39;);
+
+hexo.extend.filter.register(&#39;after_render:js&#39;, function(str, data){
+  var result = UglifyJS.minify(str);
+  return result.code;
+});
+</code></pre>
+<h2 id="렌더링-가능한-파일인지-확인하기"><a href="#렌더링-가능한-파일인지-확인하기" class="headerlink" title="렌더링 가능한 파일인지 확인하기"></a>렌더링 가능한 파일인지 확인하기</h2><p>파일의 경로가 렌더링 가능한지 확인하기 위해 <code>isRenderable</code> 또는 <code>isRenderableSync</code> 메소드를 사용할 수 있습니다. 이 메소드는 적절한 렌더러가 등록되어 있을 때에만 true를 반환합니다.</p>
+<pre><code class="js">hexo.render.isRenderable(&#39;layout.swig&#39;) // true
+hexo.render.isRenderable(&#39;image.png&#39;) // false
+</code></pre>
+<h2 id="출력-확장자-가져오기"><a href="#출력-확장자-가져오기" class="headerlink" title="출력 확장자 가져오기"></a>출력 확장자 가져오기</h2><p><code>getOutput</code>메소드를 사용하면 렌더링된 출력의 확장자를 불러올 수 있습니다. 파일이 렌더링 불가능하다면, 이 메소드는 빈 문자열을 반환할 것입니다.</p>
+<pre><code class="js">hexo.render.getOutput(&#39;layout.swig&#39;) // html
+hexo.render.getOutput(&#39;image.png&#39;) // &#39;&#39;&#39;
+</code></pre>
+<h2 id="Disable-Nunjucks-tags"><a href="#Disable-Nunjucks-tags" class="headerlink" title="Disable Nunjucks tags"></a>Disable Nunjucks tags</h2><p>If you are not using a <a href="/docs/tag-plugins">tag plugin</a> and want to use <code>{{ }}</code> or <code>{% %}</code> in your post without using content <a href="/docs/troubleshooting#Escape-Contents">escaping</a>, you can disable processing of Nunjucks tag in existing renderer by:</p>
+<pre><code class="js">// following example only applies to &#39;.md&#39; file extension
+// you may need to cover other extensions, e.g. &#39;.markdown&#39;, &#39;.mkd&#39;, etc
+const renderer = hexo.render.renderer.get(&#39;md&#39;)
+if (renderer) {
+  renderer.disableNunjucks = true
+  hexo.extend.renderer.register(&#39;md&#39;, &#39;html&#39;, renderer)
+}
+</code></pre>

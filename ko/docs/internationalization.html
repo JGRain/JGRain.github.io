@@ -1,0 +1,33 @@
+<hr>
+<h2 id="title-Internationalization-i18n"><a href="#title-Internationalization-i18n" class="headerlink" title="title: Internationalization (i18n)"></a>title: Internationalization (i18n)</h2><p>당신의 웹 사이트를 서로 다른 언어로 표시하기 위해 internationalization을 사용할 수 있습니다. 기본 언어의 변경은 <code>_config.yml</code> 파일의 <code>language</code>를 수정하면 됩니다. 다중 언어를 설정할 수도 있고 기본 언어의 순서를 수정할 수도 있습니다.</p>
+<pre><code class="yaml">language: zh-tw
+
+language:
+- zh-tw
+- en
+</code></pre>
+<h3 id="언어-파일"><a href="#언어-파일" class="headerlink" title="언어 파일"></a>언어 파일</h3><p>언어 파일로 YAML 또는 JSON 파일을 사용할 수 있습니다. 테마의 <code>languages</code> 폴더에 이 파일을 넣어두면 됩니다. 언어 파일의 <a href="https://github.com/alexei/sprintf.js">printf format</a>을 지원합니다.</p>
+<h3 id="템플릿"><a href="#템플릿" class="headerlink" title="템플릿"></a>템플릿</h3><p><code>__</code> 또는 <code>_p</code>를 사용하면 템플릿에서의 문자열의 번역을 위한 helper를 사용할 수 있습니다. <code>__</code>는 일반적인 사용 방법이고 <code>_p</code>는 여러 개의 문자열을 위해 사용하는 방법입니다. 아래 예시를 보세요.</p>
+<pre><code class="yaml">index:
+  title: Home
+  add: Add
+  video:
+    zero: No videos
+    one: One video
+    other: %d videos
+</code></pre>
+<pre><code class="js">&lt;%= __(&#39;index.title&#39;) %&gt;
+// Home
+
+&lt;%= _p(&#39;index.video&#39;, 3) %&gt;
+// 3 videos
+</code></pre>
+<h3 id="경로"><a href="#경로" class="headerlink" title="경로"></a>경로</h3><p>페이지에서 사용할 언어는 front-matter에서도 설정이 가능합니다. <code>_config.yml</code> 파일의 <code>i18n_dir</code> 항목을 수정하면 Hexo가 자동으로 감지할 수 있습니다.</p>
+<pre><code class="yaml">i18n_dir: :lang
+</code></pre>
+<p><code>i18n_dir</code> 설정의 기본 값은 <code>:lang</code> 이며, Hexo는 URL의 첫 번째 세그먼트에서 언어를 감지합니다.</p>
+<pre><code class="plain">/index.html =&gt; en
+/archives/index.html =&gt; en
+/zh-tw/index.html =&gt; zh-tw
+</code></pre>
+<p>언어 파일이 존재할 때에만 문자열이 서로 다른 언어로 제공됩니다. 따라서 위 예시에서 <code>/archives/index.html</code>의 <code>archives</code>는 다른 언어로 제공되지 않습니다.</p>

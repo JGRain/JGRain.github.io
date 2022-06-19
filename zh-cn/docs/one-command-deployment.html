@@ -1,0 +1,410 @@
+<hr>
+<h2 id="title-部署"><a href="#title-部署" class="headerlink" title="title: 部署"></a>title: 部署</h2><p>{% youtube B0yVJ46CTR8 %}</p>
+<p>Hexo 提供了快速方便的一键部署功能，让您只需一条命令就能将网站部署到服务器上。</p>
+<pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>在开始之前，您必须先在 <code>_config.yml</code> 中修改参数，一个正确的部署配置中至少要有 <code>type</code> 参数，例如：</p>
+<pre><code class="yaml">deploy:
+  type: git
+</code></pre>
+<p>您可同时使用多个 deployer，Hexo 会依照顺序执行每个 deployer。</p>
+<pre><code class="yaml">deploy:
+- type: git
+  repo:
+- type: heroku
+  repo:
+</code></pre>
+<p>Refer to the <a href="https://hexo.io/plugins/">Plugins</a> list for more deployment plugins.</p>
+<p>{% note warn 缩进 %}<br>YAML依靠缩进来确定元素间的从属关系。因此，请确保每个deployer的缩进长度相同，并且使用空格缩进。<br>{% endnote %}</p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><ol>
+<li>安装 <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>。</li>
+</ol>
+<pre><code class="bash">$ npm install hexo-deployer-git --save
+</code></pre>
+<ol start="2">
+<li>修改配置。</li>
+</ol>
+<pre><code class="yaml">deploy:
+  type: git
+  repo: &lt;repository url&gt; #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
+  branch: [branch]
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>库（Repository）地址</td>
+<td></td>
+</tr>
+<tr>
+<td><code>branch</code></td>
+<td>分支名称</td>
+<td><code>gh-pages</code> (GitHub)<br><code>coding-pages</code> (Coding.net)<br><code>master</code> (others)</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>自定义提交信息</td>
+<td><code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td>Optional token value to authenticate with the repo. Prefix with <code>$</code> to read token from environment variable</td>
+<td></td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>生成站点文件并推送至远程库。执行 <code>hexo clean &amp;&amp; hexo deploy</code>。</li>
+</ol>
+<ul>
+<li>You will be prompted with username and password of the target repository, unless you authenticate with a token or ssh key.</li>
+<li>hexo-deployer-git does not store your username and password. Use <a href="https://git-scm.com/docs/git-credential-cache">git-credential-cache</a> to store them temporarily.</li>
+</ul>
+<ol start="4">
+<li>登入 Github&#x2F;BitBucket&#x2F;Gitlab，请在库设置（Repository Settings）中将默认分支设置为<code>_config.yml</code>配置中的分支名称。稍等片刻，您的站点就会显示在您的Github Pages中。</li>
+</ol>
+<h3 id="这一切是如何发生的？"><a href="#这一切是如何发生的？" class="headerlink" title="这一切是如何发生的？"></a>这一切是如何发生的？</h3><p>当执行 <code>hexo deploy</code> 时，Hexo 会将 <code>public</code> 目录中的文件和目录推送至 <code>_config.yml</code> 中指定的远端仓库和分支中，并且<strong>完全覆盖</strong>该分支下的已有内容。</p>
+<p>{% note warn For 使用 Git 管理站点目录的用户 %}<br>由于 Hexo 的部署默认使用分支 <code>master</code>，所以如果你同时正在使用 Git 管理你的站点目录，你应当注意你的部署分支应当不同于写作分支。<br>一个好的实践是将站点目录和 Pages 分别存放在两个不同的 Git 仓库中，可以有效避免相互覆盖。<br>Hexo 在部署你的站点生成的文件时并不会更新你的站点目录。因此你应该手动提交并推送你的写作分支。<br>{% endnote %}</p>
+<p>此外，如果您的 Github Pages 需要使用 CNAME 文件<strong>自定义域名</strong>，请将 CNAME 文件置于 <code>source</code> 目录下，只有这样 <code>hexo deploy</code> 才能将 CNAME 文件一并推送至部署分支。</p>
+<h2 id="Heroku"><a href="#Heroku" class="headerlink" title="Heroku"></a>Heroku</h2><p>安装 <a href="https://github.com/hexojs/hexo-deployer-heroku">hexo-deployer-heroku</a>。</p>
+<pre><code class="bash">$ npm install hexo-deployer-heroku --save
+</code></pre>
+<p>修改配置。</p>
+<pre><code class="yaml">deploy:
+  type: heroku
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>Heroku 库（Repository）地址</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>自定提交信息 (默认为 <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="Netlify"><a href="#Netlify" class="headerlink" title="Netlify"></a>Netlify</h2><p><a href="https://www.netlify.com/">Netlify</a> 是一个提供网络托管的综合平台。它集持续集成（CI）CDN 自定义域名 HTTPS 持续部署（CD）等诸多功能于一身。您可以通过以下两种方式将Hexo站点部署到Netlify。</p>
+<p>首先，也是最通用的方式，就是使用Netlify提供的网页端用户界面。前往<a href="https://app.netlify.com/start">新建一个网站页面</a>，选择需要关联的 Github&#x2F;BitBucket&#x2F;Gitlab 库，然后遵循网站提示。</p>
+<p>另一种方式是使用Netlify提供的命令行客户端工具 <a href="https://www.netlify.com/docs/cli/">Node based CLI</a> 管理和部署您的站点。</p>
+<p>此外，您还可以在项目的README中增加一个 <a href="https://www.netlify.com/docs/deploy-button/">部署至Netlify按钮</a>，这样其他用户在fork或clone了您的项目之后可以方便快捷地一键部署。</p>
+<h2 id="Rsync"><a href="#Rsync" class="headerlink" title="Rsync"></a>Rsync</h2><p>安装 <a href="https://github.com/hexojs/hexo-deployer-rsync">hexo-deployer-rsync</a>。</p>
+<pre><code class="bash">$ npm install hexo-deployer-rsync --save
+</code></pre>
+<p>修改配置。</p>
+<pre><code class="yaml">deploy:
+  type: rsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  root: &lt;root&gt;
+  port: [port]
+  delete: [true|false]
+  verbose: [true|false]
+  ignore_errors: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>远程主机的地址</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>使用者名称</td>
+<td></td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>远程主机的根目录</td>
+<td></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>端口</td>
+<td>22</td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td>删除远程主机上的旧文件</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>显示调试信息</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>ignore_errors</code></td>
+<td>忽略错误</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<p>{% note info rsync部署模块的工作方式 %}<br>需要注意的是，要求您提供的实际上是一个能通过SSH登陆远程主机的Linux用户。Hexo会自动处理关于rsync使用的一切操作。因此，您需要在远程主机上为您的Hexo站点建立一个用户，并允许其通过SSH登陆。不过，这里的<code>port</code>，的确是指rsync监听的端口，请确保防火墙打开了该端口。<br>{% endnote %}</p>
+<h2 id="OpenShift"><a href="#OpenShift" class="headerlink" title="OpenShift"></a>OpenShift</h2><p>安装 <a href="https://github.com/hexojs/hexo-deployer-openshift">hexo-deployer-openshift</a>。</p>
+<pre><code class="bash">$ npm install hexo-deployer-openshift --save
+</code></pre>
+<p>修改配置。</p>
+<pre><code class="yaml">deploy:
+  type: openshift
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>OpenShift 库（Repository）地址</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>自定提交信息 (默认为 <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="FTPSync"><a href="#FTPSync" class="headerlink" title="FTPSync"></a>FTPSync</h2><p>安装 <a href="https://github.com/hexojs/hexo-deployer-ftpsync">hexo-deployer-ftpsync</a>。</p>
+<pre><code class="bash">$ npm install hexo-deployer-ftpsync --save
+</code></pre>
+<p>修改配置。</p>
+<pre><code class="yaml">deploy:
+  type: ftpsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  pass: &lt;password&gt;
+  remote: [remote]
+  port: [port]
+  ignore: [ignore]
+  connections: [connections]
+  verbose: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>远程主机的地址</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>使用者名称</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>密码</td>
+<td></td>
+</tr>
+<tr>
+<td><code>remote</code></td>
+<td>远程主机的根目录</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>端口</td>
+<td>21</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>忽略的文件或目录</td>
+<td></td>
+</tr>
+<tr>
+<td><code>connections</code></td>
+<td>使用的连接数</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>显示调试信息</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<p>{% note warn FTP部署可能出现的问题 %}<br>您可能需要预先通过其他方式将所有文件上传到远程主机中。否则初次使用ftpsync插件就可能出现报错。另外，由于FTP协议的特征，它每传送一个文件就需要一次握手，相对速度较慢。<br>{% endnote %}</p>
+<h2 id="SFTP"><a href="#SFTP" class="headerlink" title="SFTP"></a>SFTP</h2><p>安装 <a href="https://github.com/lucascaro/hexo-deployer-sftp">hexo-deployer-sftp</a>。</p>
+<pre><code class="bash">$ npm install hexo-deployer-sftp --save
+</code></pre>
+<p>修改配置。</p>
+<pre><code class="yaml">deploy:
+  type: sftp
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  pass: &lt;password&gt;
+  remotePath: [remote path]
+  port: [port]
+  privateKey: [path/to/privateKey]
+  passphrase: [passphrase]
+  agent: [path/to/agent/socket]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>远程主机的地址</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>使用者名称</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>密码</td>
+<td></td>
+</tr>
+<tr>
+<td><code>remotePath</code></td>
+<td>远程主机的根目录</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>端口</td>
+<td>22</td>
+</tr>
+<tr>
+<td><code>privateKey</code></td>
+<td>ssh私钥的目录地址</td>
+<td></td>
+</tr>
+<tr>
+<td><code>passphrase</code></td>
+<td>（可省略）ssh私钥的密码短语</td>
+<td></td>
+</tr>
+<tr>
+<td><code>agent</code></td>
+<td>ssh套接字的目录地址</td>
+<td><code>$SSH_AUTH_SOCK</code></td>
+</tr>
+</tbody></table>
+<h2 id="Vercel"><a href="#Vercel" class="headerlink" title="Vercel"></a>Vercel</h2><p><a href="https://vercel.com/">Vercel</a> is a cloud platform that enables developers to host Jamstack websites and web services that deploy instantly, scale automatically, and requires no supervision, all with zero configuration. They provide a global edge network, SSL encryption, asset compression, cache invalidation, and more.</p>
+<p>Step 1: Add a build script to your <code>package.json</code> file:</p>
+<pre><code class="json">{
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;hexo generate&quot;
+  }
+}
+</code></pre>
+<p>Step 2: Deploy your Hexo Website to Vercel</p>
+<p>To deploy your Hexo app with a <a href="https://vercel.com/docs/git-integrations">Vercel for Git Integration</a>, make sure it has been pushed to a Git repository.</p>
+<p>Import the project into Vercel using the <a href="https://vercel.com/import/git">Import Flow</a>. During the import, you will find all relevant options preconfigured for you; however, you can choose to change any of these options, a list of which can be found <a href="https://vercel.com/docs/build-step#build-&-development-settings">here</a>.</p>
+<p>After your project has been imported, all subsequent pushes to branches will generate <a href="https://vercel.com/docs/platform/deployments#preview">Preview Deployments</a>, and all changes made to the <a href="https://vercel.com/docs/git-integrations#production-branch">Production Branch</a> (commonly “main”) will result in a <a href="https://vercel.com/docs/platform/deployments#production">Production Deployment</a>.</p>
+<p>Alternatively, you can click the deploy button below to create a new project:</p>
+<p><a href="https://vercel.com/new/hexo"><img src="https://vercel.com/button" alt="Deploy Vercel"></a></p>
+<h2 id="21云盒子"><a href="#21云盒子" class="headerlink" title="21云盒子"></a>21云盒子</h2><ol>
+<li>在 <a href="https://www.21yunbox.com/">21云盒子</a> 中， 创建一个新的 <code>静态网页</code>，然后使用以下设置：</li>
+</ol>
+<ul>
+<li><strong>构建命令:</strong> <code>yarn &amp;&amp; hexo deploy</code></li>
+<li><strong>发布目录:</strong> <code>public</code></li>
+</ul>
+<ol start="2">
+<li>点击 “部署” 按钮！</li>
+</ol>
+<p>样例已经部署在 <a href="https://hexo.21yunbox.com/">https://hexo.21yunbox.com/</a>.</p>
+<p>请查看 <a href="https://www.21yunbox.com/docs/#/deploy-hexo">用 21云盒子 部署一个 Hexo 样例</a>.</p>
+<h2 id="Bip"><a href="#Bip" class="headerlink" title="Bip"></a>Bip</h2><p><a href="https://bip.sh/">Bip</a> is a commercial hosting service which provides zero downtime deployment, a global CDN, SSL, unlimited bandwidth and more for static websites. Plans are available on a pay as you go, per domain basis.</p>
+<p>Getting started is quick and easy, as Bip provides out the box support for Hexo. This guide assumes you already have <a href="https://bip.sh/getstarted">a Bip domain and Bip CLI installed</a>.</p>
+<p>1: Initialise your project directory</p>
+<pre><code class="bash">$ bip init
+</code></pre>
+<p>Follow the prompts, where you’ll be asked which domain you’d like to deploy to. Bip will detect that you’re using Hexo, and set project settings like the source file directory automatically.</p>
+<p>2: Deploy your website</p>
+<pre><code class="bash">$ hexo generate —deploy &amp;&amp; bip deploy
+</code></pre>
+<p>After a few moments, your website will be deployed.</p>
+<h2 id="RSS3"><a href="#RSS3" class="headerlink" title="RSS3"></a>RSS3</h2><p><a href="https://rss3.io/">RSS3</a> 是一个为 Web 3.0 时代的内容和社交网络设计的开放协议。</p>
+<ol>
+<li><p>安装 <a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3">hexo-deployer-rss3</a></p>
+</li>
+<li><p>修改配置。</p>
+</li>
+</ol>
+<pre><code class="yaml">deploy: # 所有部署器的根配置块
+- type: rss3
+  endpoint: https://hub.rss3.io
+  privateKey: 47e18d6c386898b424025cd9db446f779ef24ad33a26c499c87bb3d9372540ba
+  ipfs:
+    deploy: true
+    gateway: pinata
+    api:
+      key: d693df715d3631e489d6
+      secret: ee8b74626f12b61c1a4bde3b8c331ad390567c86ba779c9b18561ee92c1cbff0
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>endpoint</code></td>
+<td>一个 RSS3 Hub 的链接</td>
+</tr>
+<tr>
+<td><code>privateKey</code></td>
+<td>您的私钥， 64 字节</td>
+</tr>
+<tr>
+<td><code>ipfs/deploy</code></td>
+<td>是否部署到 IPFS 上</td>
+</tr>
+<tr>
+<td><code>ipfs/gateway</code></td>
+<td>IPFS API 网关</td>
+</tr>
+<tr>
+<td><code>ipfs/api/key</code></td>
+<td>IPFS 网关相关的验证内容</td>
+</tr>
+<tr>
+<td><code>ipfs/api/secret</code></td>
+<td>IPFS 网关相关的验证内容</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li><p>生成静态文件</p>
+</li>
+<li><p>部署</p>
+</li>
+</ol>
+<p>关于具体部署相关的注意事项，您可以参阅 <a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3/tree/develop/docs/zh_CN/start.md">我们的文档</a> 。</p>
+<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p>Hexo 生成的所有文件都放在 <code>public</code> 文件夹中，您可以将它们复制到您喜欢的地方。</p>

@@ -1,0 +1,94 @@
+<hr>
+<h2 id="title-Решение-проблем"><a href="#title-Решение-проблем" class="headerlink" title="title: Решение проблем"></a>title: Решение проблем</h2><p>Если вы столкнулись с проблемами при использовании Hexo, на этот случай существует эта страница со списком ответов на часто возникающие вопросы. Если она не помогла, попробуйте поискать решение на <a href="https://github.com/hexojs/hexo/issues">GitHub</a> или в нашей группе <a href="https://groups.google.com/group/hexo">Google Group</a>.</p>
+<h2 id="Ошибка-обработки-YAML"><a href="#Ошибка-обработки-YAML" class="headerlink" title="Ошибка обработки YAML"></a>Ошибка обработки YAML</h2><pre><code class="plain">JS-YAML: incomplete explicit mapping pair; a key node is missed at line 18, column 29:
+      last_updated: Last updated: %s
+</code></pre>
+<p>Заключите строку в кавычки, если она содержит двоеточия.</p>
+<pre><code class="plain">JS-YAML: bad indentation of a mapping entry at line 18, column 31:
+      last_updated:&quot;Last updated: %s&quot;
+</code></pre>
+<p>Убедитесь, что используются табы вместо пробелов, и добавьте пробелы после двоеточий.</p>
+<p>Больше информации см. здесь <a href="http://www.yaml.org/spec/1.2/spec.html">YAML Spec</a>.</p>
+<h2 id="Ошибка-EMFILE"><a href="#Ошибка-EMFILE" class="headerlink" title="Ошибка EMFILE"></a>Ошибка EMFILE</h2><pre><code class="plain">Error: EMFILE, too many open files
+</code></pre>
+<p>Хотя Node.js и использует неблокирующий ввод&#x2F;вывод, максимальное количество одновременных операций I&#x2F;O по-прежнему ограничено. Можно встретить ошибку EMFILE при попытке создания большого количества файлов. Попробуйте запустить следующую команду, чтобы увеличить количество синхронных операций ввода-вывода:</p>
+<pre><code class="bash">$ ulimit -n 10000
+</code></pre>
+<p><strong>Error: cannot modify limit</strong></p>
+<p>If you encounter the following error:</p>
+<pre><code class="bash">$ ulimit -n 10000
+ulimit: open files: cannot modify limit: Operation not permitted
+</code></pre>
+<p>It means some system-wide configurations are preventing <code>ulimit</code> to being increased to a certain limit.</p>
+<p>To override the limit:</p>
+<ol>
+<li>Add the following line to “&#x2F;etc&#x2F;security&#x2F;limits.conf”:</li>
+</ol>
+<pre><code>* - nofile 10000
+
+# &#39;*&#39; applies to all users and &#39;-&#39; set both soft and hard limits
+</code></pre>
+<ul>
+<li>The above setting may not apply in some cases, ensure “&#x2F;etc&#x2F;pam.d&#x2F;login” and “&#x2F;etc&#x2F;pam.d&#x2F;lightdm” have the following line. (Ignore this step if those files do not exist)</li>
+</ul>
+<pre><code>session required pam_limits.so
+</code></pre>
+<ol start="2">
+<li>If you are on a <a href="https://en.wikipedia.org/wiki/Systemd#Adoption">systemd-based</a> distribution, systemd may override “limits.conf”. To set the limit in systemd, add the following line in “&#x2F;etc&#x2F;systemd&#x2F;system.conf” and “&#x2F;etc&#x2F;systemd&#x2F;user.conf”:</li>
+</ol>
+<pre><code>DefaultLimitNOFILE=10000
+</code></pre>
+<ol start="3">
+<li>Reboot</li>
+</ol>
+<h2 id="process-out-of-memory"><a href="#process-out-of-memory" class="headerlink" title="process out of memory"></a><code>process out of memory</code></h2><p>Когда вы сталкиваетесь с этой ошибкой во время создания</p>
+<pre><code>FATAL ERROR: CALL_AND_RETRY_LAST Allocation failed - process out of memory
+</code></pre>
+<p>Повысить размер динамической памяти Node.js можно, изменив в первой строке <code>hexo-cli</code> команду (для нахождения местоположения файла используйте <code>which hexo</code>).</p>
+<pre><code>#!/usr/bin/env node --max_old_space_size=8192
+</code></pre>
+<p><a href="https://github.com/hexojs/hexo/issues/1735">Заканчивается память при создании большого блога · Issue #1735 · hexojs&#x2F;hexo (eng)</a></p>
+<h2 id="Проблемы-с-публикацией-в-Git"><a href="#Проблемы-с-публикацией-в-Git" class="headerlink" title="Проблемы с публикацией в Git"></a>Проблемы с публикацией в Git</h2><pre><code class="plain">error: RPC failed; result=22, HTTP code = 403
+
+fatal: &#39;username.github.io&#39; does not appear to be a git repository
+</code></pre>
+<p>Убедитесь, что вы настроили <a href="https://help.github.com/articles/set-up-git/#setting-up-git">git</a> на своём компьютере. Или можно попробовать использовать вместо репозитория URL-адрес https.</p>
+<h2 id="Проблемы-с-сервером"><a href="#Проблемы-с-сервером" class="headerlink" title="Проблемы с сервером"></a>Проблемы с сервером</h2><pre><code class="plain">Error: listen EADDRINUSE
+</code></pre>
+<p>Были запущены два сервера Hexo одновременно, или возможно другое приложение использует тот же порт. Попробуйте изменить настройки порта или запустить сервер Hexo с флагом <code>-p</code>.</p>
+<pre><code class="bash">$ hexo server -p 5000
+</code></pre>
+<h2 id="Проблема-установки-плагина"><a href="#Проблема-установки-плагина" class="headerlink" title="Проблема установки плагина"></a>Проблема установки плагина</h2><pre><code class="plain">npm ERR! node-waf configure build
+</code></pre>
+<p>Эта ошибка может возникать при попытке установить плагин, написанный на C, C++ или любой другой, написанный не на JavaScript. Убедитесь, что вы установили правильный компилятор на компьютере.</p>
+<h2 id="Ошибка-с-DTrace-Mac-OS-X"><a href="#Ошибка-с-DTrace-Mac-OS-X" class="headerlink" title="Ошибка с DTrace (Mac OS X)"></a>Ошибка с DTrace (Mac OS X)</h2><pre><code class="plain">{ [Error: Cannot find module &#39;./build/Release/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+{ [Error: Cannot find module &#39;./build/default/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+{ [Error: Cannot find module &#39;./build/Debug/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+</code></pre>
+<p>Проблема в DTrace попробуйте эту команду:</p>
+<pre><code class="sh">$ npm install hexo --no-optional
+</code></pre>
+<p>См. также <a href="https://github.com/hexojs/hexo/issues/1326#issuecomment-113871796">#1326</a></p>
+<h2 id="Iterate-Data-Model-on-Jade-or-Swig"><a href="#Iterate-Data-Model-on-Jade-or-Swig" class="headerlink" title="Iterate Data Model on Jade or Swig"></a>Iterate Data Model on Jade or Swig</h2><p>Hexo использует склад <a href="https://github.com/hexojs/warehouse">Warehouse</a> для своей модели данных. Это не массив, так что его можно использовать для преобразования списка объектов в итераторы.</p>
+<pre><code>{% for post in site.posts.toArray() %}
+{% endfor %}
+</code></pre>
+<h2 id="Данные-не-обновляются"><a href="#Данные-не-обновляются" class="headerlink" title="Данные не обновляются"></a>Данные не обновляются</h2><p>Некоторые данные не могут быть обновлены или вновь созданные файлы идентичны последней версии. Очистите кэш и попробуйте снова.</p>
+<pre><code class="bash">$ hexo clean
+</code></pre>
+<h2 id="Содержимое-не-найдено"><a href="#Содержимое-не-найдено" class="headerlink" title="Содержимое не найдено"></a>Содержимое не найдено</h2><p>Hexo использует <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> для отображения сообщения (<a href="http://paularmstrong.github.io/swig/">Swig</a> использовался в предыдущей версии, он использует похожий синтаксис). Содержимое, обёрнутое, в <code>{{ }}</code> или <code>{% %}</code>, поможет вам разобраться, какая часть вызвала проблемы. You can skip the parsing by wrapping it with the <a href="/docs/tag-plugins#Raw"><code>raw</code></a> tag plugin, single backtick <code>`{{ }}`</code> or triple backtick.<br>Alternatively, Nunjucks tags can be disabled through the renderer’s option (if supported), <a href="/api/renderer#Disable-Nunjucks-tags">API</a> or <a href="/docs/front-matter">front-matter</a>.</p>
+<pre><code>{% raw %}
+Hello {{ world }}
+{% endraw %}
+</code></pre>
+<pre><code>```
+Hello {{ world }}
+```
+</code></pre>
+<h2 id="ENOSPC-Error-Linux"><a href="#ENOSPC-Error-Linux" class="headerlink" title="ENOSPC Error (Linux)"></a>ENOSPC Error (Linux)</h2><p>Иногда команда <code>$ hexo server</code> возвращает ошибку:</p>
+<pre><code class="plain">Error: watch ENOSPC ...
+</code></pre>
+<p>Это может быть исправлено путем запуска <code>$ npm dedupe</code>, или, если это не поможет, попробуйте выполнить следующие действия в консоли Linux.</p>
+<pre><code class="plain">$ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;&amp; sudo sysctl -p
+</code></pre>
+<p>Это позволит увеличить лимит количества файлов, которые можно просматривать одновременно.</p>

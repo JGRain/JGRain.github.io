@@ -1,0 +1,31 @@
+<hr>
+<h2 id="title-Events"><a href="#title-Events" class="headerlink" title="title: Events"></a>title: Events</h2><p>Hexo inherits from <a href="http://nodejs.org/api/events.html">EventEmitter</a>. Use the <code>on</code> method to listen for events emitted by Hexo, and use the <code>emit</code> method to emit events. For more information, refer to the Node.js API documentation.</p>
+<h3 id="deployBefore"><a href="#deployBefore" class="headerlink" title="deployBefore"></a>deployBefore</h3><p>Emitted before deployment begins.</p>
+<h3 id="deployAfter"><a href="#deployAfter" class="headerlink" title="deployAfter"></a>deployAfter</h3><p>Emitted after deployment finishes.</p>
+<h3 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit</h3><p>Emitted before Hexo exits.</p>
+<h3 id="generateBefore"><a href="#generateBefore" class="headerlink" title="generateBefore"></a>generateBefore</h3><p>Emitted before generation begins.</p>
+<h3 id="generateAfter"><a href="#generateAfter" class="headerlink" title="generateAfter"></a>generateAfter</h3><p>Emitted after generation finishes.</p>
+<h3 id="new"><a href="#new" class="headerlink" title="new"></a>new</h3><p>Emitted after a new post has been created. This event returns the post data:</p>
+<pre><code class="js">hexo.on(&#39;new&#39;, function(post){
+  //
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>post.path</code></td>
+<td>Full path of the post file</td>
+</tr>
+<tr>
+<td><code>post.content</code></td>
+<td>Content of the post file</td>
+</tr>
+</tbody></table>
+<h3 id="processBefore"><a href="#processBefore" class="headerlink" title="processBefore"></a>processBefore</h3><p>Emitted before processing begins. This event returns a path representing the root directory of the box.</p>
+<h3 id="processAfter"><a href="#processAfter" class="headerlink" title="processAfter"></a>processAfter</h3><p>Emitted after processing finishes. This event returns a path representing the root directory of the box.</p>
+<h3 id="ready"><a href="#ready" class="headerlink" title="ready"></a>ready</h3><p>Emitted after initialization finishes.</p>

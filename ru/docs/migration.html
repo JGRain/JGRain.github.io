@@ -1,0 +1,31 @@
+<hr>
+<h2 id="title-Миграция"><a href="#title-Миграция" class="headerlink" title="title: Миграция"></a>title: Миграция</h2><h2 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h2><p>Прежде нужно установить плагин <code>hexo-migrator-rss</code>.</p>
+<pre><code class="bash">$ npm install hexo-migrator-rss --save
+</code></pre>
+<p>После установки плагина запустите следующую команду для миграции всех постов в RSS. <code>source</code> может быть путём к файлу или URL ссылкой.</p>
+<pre><code class="bash">$ hexo migrate rss &lt;source&gt;
+</code></pre>
+<h2 id="Jekyll"><a href="#Jekyll" class="headerlink" title="Jekyll"></a>Jekyll</h2><p>Переместите все файлы из папки Jekyll <code>_posts</code> в папку <code>source/_posts</code>.</p>
+<p>Измените переменную <code>new_post_name</code> в <code>_config.yml</code>:</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="Octopress"><a href="#Octopress" class="headerlink" title="Octopress"></a>Octopress</h2><p>Переместите все файлы из папки Octopress <code>source/_posts</code> в папку <code>source/_posts</code>.</p>
+<p>Измените переменную <code>new_post_name</code> в <code>_config.yml</code>:</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h2><p>Сначала установите плагин <code>hexo-migrator-wordpress</code>.</p>
+<pre><code class="bash">$ npm install hexo-migrator-wordpress --save
+</code></pre>
+<p>Экспортируйте WordPress сайт, зайдя в “Инструменты” → “Экспорт” → “Wordpress” в панели WordPress (см. страницу <a href="https://wordpress.com/ru/support/export/">поддержки WordPress</a> для более подробной информации.</p>
+<p>Выполните:</p>
+<pre><code class="bash">$ hexo migrate wordpress &lt;source&gt;
+</code></pre>
+<p>Где <code>source</code> — это путь или URL файла экспортированного из WordPress.</p>
+<h2 id="Joomla"><a href="#Joomla" class="headerlink" title="Joomla"></a>Joomla</h2><p>Во-первых, нужно установить плагин <code>hexo-migrator-joomla</code>.</p>
+<pre><code class="bash">$ npm install hexo-migrator-joomla --save
+</code></pre>
+<p>Экспортируйте статьи Joomla с помощью компонента <a href="http://extensions.joomla.org/extensions/migration-a-conversion/data-import-a-export/12816?qh=YToxOntpOjA7czo1OiJqMnhtbCI7fQ==">J2XML</a></p>
+<p>Выполните:</p>
+<pre><code class="bash">$ hexo migrate joomla &lt;source&gt;
+</code></pre>
+<p>Где <code>source</code> — это путь или URL файла экспортированного из Joomla.</p>

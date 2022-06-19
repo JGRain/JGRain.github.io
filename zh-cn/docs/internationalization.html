@@ -1,0 +1,33 @@
+<hr>
+<h2 id="title-国际化（i18n）"><a href="#title-国际化（i18n）" class="headerlink" title="title: 国际化（i18n）"></a>title: 国际化（i18n）</h2><p>若要让您的网站以不同语言呈现，您可使用国际化（internationalization）功能。请先在 <code>_config.yml</code> 中调整 <code>language</code> 设定，这代表的是预设语言，您也可设定多个语言来调整预设语言的顺位。</p>
+<pre><code class="yaml">language: zh-tw
+
+language: 
+- zh-tw
+- en
+</code></pre>
+<h3 id="语言文件"><a href="#语言文件" class="headerlink" title="语言文件"></a>语言文件</h3><p>语言文件可以使用 YAML 或 JSON 编写，并放在主题文件夹中的 <code>languages</code> 文件夹。您可以在语言文件中使用 <a href="https://github.com/alexei/sprintf.js">printf 格式</a>。</p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><p>在模板中，透过 <code>__</code> 或 <code>_p</code> 辅助函数，即可取得翻译后的字符串，前者用于一般使用；而后者用于复数字符串。例如：</p>
+<pre><code class="yaml">index:
+  title: Home
+  add: Add
+  video:
+    zero: No videos
+    one: One video
+    other: %d videos
+</code></pre>
+<pre><code class="js">&lt;%= __(&#39;index.title&#39;) %&gt;
+// Home
+
+&lt;%= _p(&#39;index.video&#39;, 3) %&gt;
+// 3 videos
+</code></pre>
+<h3 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h3><p>您可在 front-matter 中指定该页面的语言，也可在 <code>_config.yml</code> 中修改 <code>i18n_dir</code> 设定，让 Hexo 自动侦测。</p>
+<pre><code class="yaml">i18n_dir: :lang
+</code></pre>
+<p><code>i18n_dir</code> 的预设值是 <code>:lang</code>，也就是说 Hexo 会捕获网址中的第一段以检测语言，举例来说：</p>
+<pre><code class="plain">/index.html =&gt; en
+/archives/index.html =&gt; en
+/zh-tw/index.html =&gt; zh-tw
+</code></pre>
+<p>捕获到的字符串唯有在语言文件存在的情况下，才会被当作是语言，因此例二 <code>/archives/index.html</code> 中的 <code>archives</code> 就不被当成是语言。</p>

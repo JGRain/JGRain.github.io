@@ -1,0 +1,1094 @@
+<hr>
+<h2 id="title-Helpers"><a href="#title-Helpers" class="headerlink" title="title: Helpers"></a>title: Helpers</h2><p>Helpers are used in templates to help you insert snippets quickly.  Helpers cannot be used in source files.</p>
+<p>You could easily <a href="https://hexo.io/api/helper.html">write your own custom helper</a> or use our ready-made helpers.</p>
+<p>{% youtube Uc53pW0GJHU %}</p>
+<h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><h3 id="url-for"><a href="#url-for" class="headerlink" title="url_for"></a>url_for</h3><p>Returns a url with the root path prefixed. Output is encoded automatically.</p>
+<pre><code class="js">&lt;%- url_for(path, [option]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>relative</code></td>
+<td>Output relative link</td>
+<td>Value of <code>config.relative_link</code></td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="yml">_config.yml
+root: /blog/ # example
+</code></pre>
+<pre><code class="js">&lt;%- url_for(&#39;/a/path&#39;) %&gt;
+// /blog/a/path
+</code></pre>
+<p>Relative link, follows <code>relative_link</code> option by default<br>e.g. post&#x2F;page path is ‘&#x2F;foo&#x2F;bar&#x2F;index.html’</p>
+<pre><code class="yml">_config.yml
+relative_link: true
+</code></pre>
+<pre><code class="js">&lt;%- url_for(&#39;/css/style.css&#39;) %&gt;
+// ../../css/style.css
+
+/* Override option
+ * you could also disable it to output a non-relative link,
+ * even when `relative_link` is enabled and vice versa.
+ */
+&lt;%- url_for(&#39;/css/style.css&#39;, {relative: false}) %&gt;
+// /css/style.css
+</code></pre>
+<h3 id="relative-url"><a href="#relative-url" class="headerlink" title="relative_url"></a>relative_url</h3><p>Returns the relative URL from <code>from</code> to <code>to</code>.</p>
+<pre><code class="js">&lt;%- relative_url(from, to) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- relative_url(&#39;foo/bar/&#39;, &#39;css/style.css&#39;) %&gt;
+// ../../css/style.css
+</code></pre>
+<h3 id="full-url-for"><a href="#full-url-for" class="headerlink" title="full_url_for"></a>full_url_for</h3><p>Returns a url with the <code>config.url</code> prefixed. Output is encoded automatically.</p>
+<pre><code class="js">&lt;%- full_url_for(path) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="yml">_config.yml
+url: https://example.com/blog # example
+</code></pre>
+<pre><code class="js">&lt;%- full_url_for(&#39;/a/path&#39;) %&gt;
+// https://example.com/blog/a/path
+</code></pre>
+<h3 id="gravatar"><a href="#gravatar" class="headerlink" title="gravatar"></a>gravatar</h3><p>Returns the gravatar image url from an email.</p>
+<p>If you didn’t specify the [options] parameter, the default options will apply. Otherwise, you can set it to a number which will then be passed on as the size parameter to Gravatar. Finally, if you set it to an object, it will be converted into a query string of parameters for Gravatar.</p>
+<pre><code class="js">&lt;%- gravatar(email, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>s</code></td>
+<td>Output image size</td>
+<td>80</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>Default image</td>
+<td></td>
+</tr>
+<tr>
+<td><code>f</code></td>
+<td>Force default</td>
+<td></td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>Rating</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>More info: <a href="https://en.gravatar.com/site/implement/images/">Gravatar</a></p>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- gravatar(&#39;a@abc.com&#39;) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787
+
+&lt;%- gravatar(&#39;a@abc.com&#39;, 40) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787?s=40
+
+&lt;%- gravatar(&#39;a@abc.com&#39; {s: 40, d: &#39;https://via.placeholder.com/150&#39;}) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787?s=40&amp;d=https%3A%2F%2Fvia.placeholder.com%2F150
+</code></pre>
+<h2 id="HTML-Tags"><a href="#HTML-Tags" class="headerlink" title="HTML Tags"></a>HTML Tags</h2><h3 id="css"><a href="#css" class="headerlink" title="css"></a>css</h3><p>Loads CSS files. <code>path</code> can be an array or a string. <code>path</code> can be a string, an array, an object or an array of objects. <a href="/docs/configuration#URL"><code>/&lt;root&gt;/</code></a> value is prepended while <code>.css</code> extension is appended to the <code>path</code> automatically. Use object type for custom attributes.</p>
+<pre><code class="js">&lt;%- css(path, ...) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- css(&#39;style.css&#39;) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot;&gt;
+
+&lt;%- css([&#39;style.css&#39;, &#39;screen.css&#39;]) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot;&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/screen.css&quot;&gt;
+
+&lt;%- css({ href: &#39;style.css&#39;, integrity: &#39;foo&#39; }) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot; integrity=&quot;foo&quot;&gt;
+
+&lt;%- css([{ href: &#39;style.css&#39;, integrity: &#39;foo&#39; }, { href: &#39;screen.css&#39;, integrity: &#39;bar&#39; }]) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot; integrity=&quot;foo&quot;&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/screen.css&quot; integrity=&quot;bar&quot;&gt;
+</code></pre>
+<h3 id="js"><a href="#js" class="headerlink" title="js"></a>js</h3><p>Loads JavaScript files. <code>path</code> can be a string, an array, an object or an array of objects. <a href="/docs/configuration#URL"><code>/&lt;root&gt;/</code></a> value is prepended while <code>.js</code> extension is appended to the <code>path</code> automatically. Use object type for custom attributes.</p>
+<pre><code class="js">&lt;%- js(path, ...) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- js(&#39;script.js&#39;) %&gt;
+// &lt;script src=&quot;/script.js&quot;&gt;&lt;/script&gt;
+
+&lt;%- js([&#39;script.js&#39;, &#39;gallery.js&#39;]) %&gt;
+// &lt;script src=&quot;/script.js&quot;&gt;&lt;/script&gt;
+// &lt;script src=&quot;/gallery.js&quot;&gt;&lt;/script&gt;
+
+&lt;%- js({ src: &#39;script.js&#39;, integrity: &#39;foo&#39;, async: true }) %&gt;
+// &lt;script src=&quot;/script.js&quot; integrity=&quot;foo&quot; async&gt;&lt;/script&gt;
+
+&lt;%- js([{ src: &#39;script.js&#39;, integrity: &#39;foo&#39; }, { src: &#39;gallery.js&#39;, integrity: &#39;bar&#39; }]) %&gt;
+// &lt;script src=&quot;/script.js&quot; integrity=&quot;foo&quot;&gt;&lt;/script&gt;
+// &lt;script src=&quot;/gallery.js&quot; integrity=&quot;bar&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h3 id="link-to"><a href="#link-to" class="headerlink" title="link_to"></a>link_to</h3><p>Inserts a link.</p>
+<pre><code class="js">&lt;%- link_to(path, [text], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>external</code></td>
+<td>Opens the link in a new tab</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class name</td>
+<td></td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- link_to(&#39;http://www.google.com&#39;) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;http://www.google.com&quot;&gt;http://www.google.com&lt;/a&gt;
+
+&lt;%- link_to(&#39;http://www.google.com&#39;, &#39;Google&#39;) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;Google&quot;&gt;Google&lt;/a&gt;
+
+&lt;%- link_to(&#39;http://www.google.com&#39;, &#39;Google&#39;, {external: true}) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;Google&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google&lt;/a&gt;
+</code></pre>
+<h3 id="mail-to"><a href="#mail-to" class="headerlink" title="mail_to"></a>mail_to</h3><p>Inserts a mail link.</p>
+<pre><code class="js">&lt;%- mail_to(path, [text], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>Class name</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+</tr>
+<tr>
+<td><code>subject</code></td>
+<td>Mail subject</td>
+</tr>
+<tr>
+<td><code>cc</code></td>
+<td>CC</td>
+</tr>
+<tr>
+<td><code>bcc</code></td>
+<td>BCC</td>
+</tr>
+<tr>
+<td><code>body</code></td>
+<td>Mail content</td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- mail_to(&#39;a@abc.com&#39;) %&gt;
+// &lt;a href=&quot;mailto:a@abc.com&quot; title=&quot;a@abc.com&quot;&gt;a@abc.com&lt;/a&gt;
+
+&lt;%- mail_to(&#39;a@abc.com&#39;, &#39;Email&#39;) %&gt;
+// &lt;a href=&quot;mailto:a@abc.com&quot; title=&quot;Email&quot;&gt;Email&lt;/a&gt;
+</code></pre>
+<h3 id="image-tag"><a href="#image-tag" class="headerlink" title="image_tag"></a>image_tag</h3><p>Inserts an image.</p>
+<pre><code class="js">&lt;%- image_tag(path, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>alt</code></td>
+<td>Alternative text of the image</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class name</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td>Image width</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>Image height</td>
+</tr>
+</tbody></table>
+<h3 id="favicon-tag"><a href="#favicon-tag" class="headerlink" title="favicon_tag"></a>favicon_tag</h3><p>Inserts a favicon.</p>
+<pre><code class="js">&lt;%- favicon_tag(path) %&gt;
+</code></pre>
+<h3 id="feed-tag"><a href="#feed-tag" class="headerlink" title="feed_tag"></a>feed_tag</h3><p>Inserts a feed link.</p>
+<pre><code class="js">&lt;%- feed_tag(path, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>Feed title</td>
+<td><code>config.title</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Feed type</td>
+<td>atom</td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- feed_tag(&#39;atom.xml&#39;) %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;Hexo&quot; type=&quot;application/atom+xml&quot;&gt;
+
+&lt;%- feed_tag(&#39;rss.xml&#39;, { title: &#39;RSS Feed&#39;, type: &#39;rss&#39; }) %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;RSS Feed&quot; type=&quot;application/atom+xml&quot;&gt;
+
+/* Defaults to hexo-generator-feed&#39;s config if no argument */
+&lt;%- feed_tag() %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;Hexo&quot; type=&quot;application/atom+xml&quot;&gt;
+</code></pre>
+<h2 id="Conditional-Tags"><a href="#Conditional-Tags" class="headerlink" title="Conditional Tags"></a>Conditional Tags</h2><h3 id="is-current"><a href="#is-current" class="headerlink" title="is_current"></a>is_current</h3><p>Check whether <code>path</code> matches the URL of the current page. Use <code>strict</code> options to enable strict matching.</p>
+<pre><code class="js">&lt;%- is_current(path, [strict]) %&gt;
+</code></pre>
+<h3 id="is-home"><a href="#is-home" class="headerlink" title="is_home"></a>is_home</h3><p>Check whether the current page is home page.</p>
+<pre><code class="js">&lt;%- is_home() %&gt;
+</code></pre>
+<h3 id="is-post"><a href="#is-post" class="headerlink" title="is_post"></a>is_post</h3><p>Check whether the current page is a post.</p>
+<pre><code class="js">&lt;%- is_post() %&gt;
+</code></pre>
+<h3 id="is-page"><a href="#is-page" class="headerlink" title="is_page"></a>is_page</h3><p>Check whether the current page is a page.</p>
+<pre><code class="js">&lt;%- is_page() %&gt;
+</code></pre>
+<h3 id="is-archive"><a href="#is-archive" class="headerlink" title="is_archive"></a>is_archive</h3><p>Check whether the current page is an archive page.</p>
+<pre><code class="js">&lt;%- is_archive() %&gt;
+</code></pre>
+<h3 id="is-year"><a href="#is-year" class="headerlink" title="is_year"></a>is_year</h3><p>Check whether the current page is a yearly archive page.</p>
+<pre><code class="js">&lt;%- is_year() %&gt;
+</code></pre>
+<h3 id="is-month"><a href="#is-month" class="headerlink" title="is_month"></a>is_month</h3><p>Check whether the current page is a monthly archive page.</p>
+<pre><code class="js">&lt;%- is_month() %&gt;
+</code></pre>
+<h3 id="is-category"><a href="#is-category" class="headerlink" title="is_category"></a>is_category</h3><p>Check whether the current page is a category page.<br>If a string is given as parameter, check whether the current page match the given category.</p>
+<pre><code class="js">&lt;%- is_category() %&gt;
+&lt;%- is_category(&#39;hobby&#39;) %&gt;
+</code></pre>
+<h3 id="is-tag"><a href="#is-tag" class="headerlink" title="is_tag"></a>is_tag</h3><p>Check whether the current page is a tag page.<br>If a string is given as parameter, check whether the current page match the given tag.</p>
+<pre><code class="js">&lt;%- is_tag() %&gt;
+&lt;%- is_tag(&#39;hobby&#39;) %&gt;
+</code></pre>
+<h2 id="String-Manipulation"><a href="#String-Manipulation" class="headerlink" title="String Manipulation"></a>String Manipulation</h2><h3 id="trim"><a href="#trim" class="headerlink" title="trim"></a>trim</h3><p>Removes prefixing and trailing spaces of a string.</p>
+<pre><code class="js">&lt;%- trim(string) %&gt;
+</code></pre>
+<h3 id="strip-html"><a href="#strip-html" class="headerlink" title="strip_html"></a>strip_html</h3><p>Sanitizes all HTML tags in a string.</p>
+<pre><code class="js">&lt;%- strip_html(string) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- strip_html(&#39;It\&#39;s not &lt;b&gt;important&lt;/b&gt; anymore!&#39;) %&gt;
+// It&#39;s not important anymore!
+</code></pre>
+<h3 id="titlecase"><a href="#titlecase" class="headerlink" title="titlecase"></a>titlecase</h3><p>Transforms a string into proper title caps.</p>
+<pre><code class="js">&lt;%- titlecase(string) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- titlecase(&#39;this is an apple&#39;) %&gt;
+# This is an Apple
+</code></pre>
+<h3 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h3><p>Renders a string with Markdown.</p>
+<pre><code class="js">&lt;%- markdown(str) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- markdown(&#39;make me **strong**&#39;) %&gt;
+// make me &lt;strong&gt;strong&lt;/strong&gt;
+</code></pre>
+<h3 id="render"><a href="#render" class="headerlink" title="render"></a>render</h3><p>Renders a string.</p>
+<pre><code class="js">&lt;%- render(str, engine, [options]) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- render(&#39;p(class=&quot;example&quot;) Test&#39;, &#39;pug&#39;); %&gt;
+// &lt;p class=&quot;example&quot;&gt;Test&lt;/p&gt;
+</code></pre>
+<p>See <a href="https://hexo.io/api/rendering">Rendering</a> for more details.</p>
+<h3 id="word-wrap"><a href="#word-wrap" class="headerlink" title="word_wrap"></a>word_wrap</h3><p>Wraps text into lines no longer than <code>length</code>. <code>length</code> is 80 by default.</p>
+<pre><code class="js">&lt;%- word_wrap(str, [length]) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- word_wrap(&#39;Once upon a time&#39;, 8) %&gt;
+// Once upon\n a time
+</code></pre>
+<h3 id="truncate"><a href="#truncate" class="headerlink" title="truncate"></a>truncate</h3><p>Truncates text after certain <code>length</code>. Default is 30 characters.</p>
+<pre><code class="js">&lt;%- truncate(text, [options]) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- truncate(&#39;Once upon a time in a world far far away&#39;, {length: 17}) %&gt;
+// Once upon a ti...
+
+&lt;%- truncate(&#39;Once upon a time in a world far far away&#39;, {length: 17, separator: &#39; &#39;}) %&gt;
+// Once upon a...
+
+&lt;%- truncate(&#39;And they found that many people were sleeping better.&#39;, {length: 25, omission: &#39;... (continued)&#39;}) %&gt;
+// And they f... (continued)
+</code></pre>
+<h3 id="escape-html"><a href="#escape-html" class="headerlink" title="escape_html"></a>escape_html</h3><p>Escapes HTML entities in a string.</p>
+<pre><code class="js">&lt;%- escape_html(str) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- escape_html(&#39;&lt;p&gt;Hello &quot;world&quot;.&lt;/p&gt;&#39;) %&gt;
+// &amp;lt;p&amp;gt;Hello &amp;quot;world&amp;quot;.&amp;lt;&amp;#x2F;p&amp;gt;
+</code></pre>
+<h2 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h2><h3 id="partial"><a href="#partial" class="headerlink" title="partial"></a>partial</h3><p>Loads other template files. You can define local variables in <code>locals</code>.</p>
+<pre><code class="js">&lt;%- partial(layout, [locals], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cache</code></td>
+<td>Cache contents (Use fragment cache)</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>only</code></td>
+<td>Strict local variables. Only use variables set in <code>locals</code> in templates.</td>
+<td><code>false</code></td>
+</tr>
+</tbody></table>
+<h3 id="fragment-cache"><a href="#fragment-cache" class="headerlink" title="fragment_cache"></a>fragment_cache</h3><p>Caches the contents in a fragment. It saves the contents within a fragment and serves the cache when the next request comes in.</p>
+<pre><code class="js">&lt;%- fragment_cache(id, fn);
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- fragment_cache(&#39;header&#39;, function(){
+  return &#39;&lt;header&gt;&lt;/header&gt;&#39;;
+}) %&gt;
+</code></pre>
+<h2 id="Date-amp-Time"><a href="#Date-amp-Time" class="headerlink" title="Date &amp; Time"></a>Date &amp; Time</h2><h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>Inserts formatted date. <code>date</code> can be unix time, ISO string, date object, or <a href="http://momentjs.com/">Moment.js</a> object. <code>format</code> is <code>date_format</code> setting by default.</p>
+<pre><code class="js">&lt;%- date(date, [format]) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- date(Date.now()) %&gt;
+// 2013-01-01
+
+&lt;%- date(Date.now(), &#39;YYYY/M/D&#39;) %&gt;
+// Jan 1 2013
+</code></pre>
+<h3 id="date-xml"><a href="#date-xml" class="headerlink" title="date_xml"></a>date_xml</h3><p>Inserts date in XML format. <code>date</code> can be unix time, ISO string, date object, or <a href="http://momentjs.com/">Moment.js</a> object.</p>
+<pre><code class="js">&lt;%- date_xml(date) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- date_xml(Date.now()) %&gt;
+// 2013-01-01T00:00:00.000Z
+</code></pre>
+<h3 id="time"><a href="#time" class="headerlink" title="time"></a>time</h3><p>Inserts formatted time. <code>date</code> can be unix time, ISO string, date object, or <a href="http://momentjs.com/">Moment.js</a> object. <code>format</code> is <code>time_format</code> setting by default.</p>
+<pre><code class="js">&lt;%- time(date, [format]) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- time(Date.now()) %&gt;
+// 13:05:12
+
+&lt;%- time(Date.now(), &#39;h:mm:ss a&#39;) %&gt;
+// 1:05:12 pm
+</code></pre>
+<h3 id="full-date"><a href="#full-date" class="headerlink" title="full_date"></a>full_date</h3><p>Inserts formatted date and time. <code>date</code> can be unix time, ISO string, date object, or <a href="http://momentjs.com/">Moment.js</a> object. <code>format</code> is <code>date_format + time_format</code> setting by default.</p>
+<pre><code class="js">&lt;%- full_date(date, [format]) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- full_date(new Date()) %&gt;
+// Jan 1, 2013 0:00:00
+
+&lt;%- full_date(new Date(), &#39;dddd, MMMM Do YYYY, h:mm:ss a&#39;) %&gt;
+// Tuesday, January 1st 2013, 12:00:00 am
+</code></pre>
+<h3 id="moment"><a href="#moment" class="headerlink" title="moment"></a>moment</h3><p><a href="http://momentjs.com/">Moment.js</a> library.</p>
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><h3 id="list-categories"><a href="#list-categories" class="headerlink" title="list_categories"></a>list_categories</h3><p>Inserts a list of all categories.</p>
+<pre><code class="js">&lt;%- list_categories([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>Order of categories</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Sort of order. <code>1</code>, <code>asc</code> for ascending; <code>-1</code>, <code>desc</code> for descending</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>Display the number of posts for each category</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Style to display the category list. <code>list</code> displays categories in an unordered list.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Separator between categories. (Only works if <code>style</code> is not <code>list</code>)</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>depth</code></td>
+<td>Levels of categories to be displayed. <code>0</code> displays all categories and child categories; <code>-1</code> is similar to <code>0</code> but displayed in flat; <code>1</code> displays only top level categories.</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class name of category list.</td>
+<td>category</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>The function that changes the display of category name.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td>Add a suffix to link.</td>
+<td>None</td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- list_categories(post.categories, {
+  class: &#39;post-category&#39;,
+  transform(str) {
+    return titlecase(str);
+  }
+}) %&gt;
+
+&lt;%- list_categories(post.categories, {
+  class: &#39;post-category&#39;,
+  transform(str) {
+    return str.toUpperCase();
+  }
+}) %&gt;
+</code></pre>
+<h3 id="list-tags"><a href="#list-tags" class="headerlink" title="list_tags"></a>list_tags</h3><p>Inserts a list of all tags.</p>
+<pre><code class="js">&lt;%- list_tags([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>Order of categories</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Sort of order. <code>1</code>, <code>asc</code> for ascending; <code>-1</code>, <code>desc</code> for descending</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>Display the number of posts for each tag</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Style to display the tag list. <code>list</code> displays tags in an unordered list.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Separator between categories. (Only works if <code>style</code> is not <code>list</code>)</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class name of tag list (string) or customize each tag’s class (object, see below).</td>
+<td>tag</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>The function that changes the display of tag name. See examples in <a href="#list-categories">list_categories</a>.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>The number of tags to display (0 &#x3D; unlimited)</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td>Add a suffix to link.</td>
+<td>None</td>
+</tr>
+</tbody></table>
+<p>Class advanced customization:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class.ul</code></td>
+<td><code>&lt;ul&gt;</code> class name (only for style <code>list</code>)</td>
+<td><code>tag-list</code> (list style)</td>
+</tr>
+<tr>
+<td><code>class.li</code></td>
+<td><code>&lt;li&gt;</code> class name (only for style <code>list</code>)</td>
+<td><code>tag-list-item</code> (list style)</td>
+</tr>
+<tr>
+<td><code>class.a</code></td>
+<td><code>&lt;a&gt;</code> class name</td>
+<td><code>tag-list-link</code> (list style) <code>tag-link</code> (normal style)</td>
+</tr>
+<tr>
+<td><code>class.label</code></td>
+<td><code>&lt;span&gt;</code> class name where the tag label is stored (only for normal style, when <code>class.label</code> is set the label is put in a <code>&lt;span&gt;</code>)</td>
+<td><code>tag-label</code> (normal style)</td>
+</tr>
+<tr>
+<td><code>class.count</code></td>
+<td><code>&lt;span&gt;</code> class name where the tag counter is stored (only when <code>show_count</code> is <code>true</code>)</td>
+<td><code>tag-list-count</code> (list style) <code>tag-count</code> (normal style)</td>
+</tr>
+</tbody></table>
+<p>Examples:</p>
+<pre><code class="ejs">&lt;%- list_tags(site.tags, {class: &#39;classtest&#39;, style: false, separator: &#39; | &#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: &#39;classtest&#39;, style: &#39;list&#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: {ul: &#39;ululul&#39;, li: &#39;lilili&#39;, a: &#39;aaa&#39;, count: &#39;ccc&#39;}, style: false, separator: &#39; | &#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: {ul: &#39;ululul&#39;, li: &#39;lilili&#39;, a: &#39;aaa&#39;, count: &#39;ccc&#39;}, style: &#39;list&#39;}) %&gt;
+</code></pre>
+<h3 id="list-archives"><a href="#list-archives" class="headerlink" title="list_archives"></a>list_archives</h3><p>Inserts a list of archives.</p>
+<pre><code class="js">&lt;%- list_archives([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>type</code></td>
+<td>Type. This value can be <code>yearly</code> or <code>monthly</code>.</td>
+<td>monthly</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Sort of order. <code>1</code>, <code>asc</code> for ascending; <code>-1</code>, <code>desc</code> for descending</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>Display the number of posts for each archive</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>Date format</td>
+<td>MMMM YYYY</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Style to display the archive list. <code>list</code> displays archives in an unordered list.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Separator between archives. (Only works if <code>style</code> is not <code>list</code>)</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class name of archive list.</td>
+<td>archive</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>The function that changes the display of archive name. See examples in <a href="#list-categories">list_categories</a>.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="list-posts"><a href="#list-posts" class="headerlink" title="list_posts"></a>list_posts</h3><p>Inserts a list of posts.</p>
+<pre><code class="js">&lt;%- list_posts([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>Order of posts</td>
+<td>date</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Sort of order. <code>1</code>, <code>asc</code> for ascending; <code>-1</code>, <code>desc</code> for descending</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Style to display the post list. <code>list</code> displays posts in an unordered list.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Separator between posts. (Only works if <code>style</code> is not <code>list</code>)</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class name of post list.</td>
+<td>post</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>The number of posts to display (0 &#x3D; unlimited)</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>The function that changes the display of post name. See examples in <a href="#list-categories">list_categories</a>.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="tagcloud"><a href="#tagcloud" class="headerlink" title="tagcloud"></a>tagcloud</h3><p>Inserts a tag cloud.</p>
+<pre><code class="js">&lt;%- tagcloud([tags], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>min_font</code></td>
+<td>Minimum font size</td>
+<td>10</td>
+</tr>
+<tr>
+<td><code>max_font</code></td>
+<td>Maximum font size</td>
+<td>20</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>Unit of font size</td>
+<td>px</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>Total amount of tags</td>
+<td>unlimited</td>
+</tr>
+<tr>
+<td><code>orderby</code></td>
+<td>Order of tags</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Sort order. <code>1</code>, <code>asc</code> as ascending; <code>-1</code>, <code>desc</code> as descending</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td>Colorizes the tag cloud</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>start_color</code></td>
+<td>Start color. You can use hex (<code>#b700ff</code>), rgba (<code>rgba(183, 0, 255, 1)</code>), hsla (<code>hsla(283, 100%, 50%, 1)</code>) or <a href="http://www.w3.org/TR/css3-color/#svg-color">color keywords</a>. This option only works when <code>color</code> is true.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>end_color</code></td>
+<td>End color. You can use hex (<code>#b700ff</code>), rgba (<code>rgba(183, 0, 255, 1)</code>), hsla (<code>hsla(283, 100%, 50%, 1)</code>) or <a href="http://www.w3.org/TR/css3-color/#svg-color">color keywords</a>. This option only works when <code>color</code> is true.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class name prefix of tags</td>
+<td></td>
+</tr>
+<tr>
+<td><code>level</code></td>
+<td>The number of different class names. This option only works when <code>class</code> is set.</td>
+<td>10</td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">// Default options
+&lt;%- tagcloud() %&gt;
+
+// Limit number of tags to 30
+&lt;%- tagcloud({amount: 30}) %&gt;
+</code></pre>
+<h2 id="Miscellaneous"><a href="#Miscellaneous" class="headerlink" title="Miscellaneous"></a>Miscellaneous</h2><h3 id="paginator"><a href="#paginator" class="headerlink" title="paginator"></a>paginator</h3><p>Inserts a paginator.</p>
+<pre><code class="js">&lt;%- paginator(options) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>base</code></td>
+<td>Base URL</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>URL format</td>
+<td>page&#x2F;%d&#x2F;</td>
+</tr>
+<tr>
+<td><code>total</code></td>
+<td>The number of pages</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>current</code></td>
+<td>Current page number</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>prev_text</code></td>
+<td>The link text of previous page. Works only if <code>prev_next</code> is set to true.</td>
+<td>Prev</td>
+</tr>
+<tr>
+<td><code>next_text</code></td>
+<td>The link text of next page. Works only if <code>prev_next</code> is set to true.</td>
+<td>Next</td>
+</tr>
+<tr>
+<td><code>space</code></td>
+<td>The space text</td>
+<td>&amp;hellp;</td>
+</tr>
+<tr>
+<td><code>prev_next</code></td>
+<td>Display previous and next links</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>end_size</code></td>
+<td>The number of pages displayed on the start and the end side</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>mid_size</code></td>
+<td>The number of pages displayed between current page, but not including current page</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>show_all</code></td>
+<td>Display all pages. If this is set to true, <code>end_size</code> and <code>mid_size</code> will not work</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>escape</code></td>
+<td>Escape HTML tags</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- paginator({
+  prev_text: &#39;&lt;&#39;,
+  next_text: &#39;&gt;&#39;
+}) %&gt;
+</code></pre>
+<pre><code class="html">&lt;!-- Rendered as --&gt;
+&lt;a href=&quot;/1/&quot;&gt;&amp;lt;&lt;/a&gt;
+&lt;a href=&quot;/1/&quot;&gt;1&lt;/a&gt;
+2
+&lt;a href=&quot;/3/&quot;&gt;3&lt;/a&gt;
+&lt;a href=&quot;/3/&quot;&gt;&amp;gt;&lt;/a&gt;
+</code></pre>
+<pre><code class="js">&lt;%- paginator({
+  prev_text: &#39;&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;/i&gt;&#39;,
+  next_text: &#39;&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;&#39;,
+  escape: false
+}) %&gt;
+</code></pre>
+<pre><code class="html">&lt;!-- Rendered as --&gt;
+&lt;a href=&quot;/1/&quot;&gt;&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;a href=&quot;/1/&quot;&gt;1&lt;/a&gt;
+2
+&lt;a href=&quot;/3/&quot;&gt;3&lt;/a&gt;
+&lt;a href=&quot;/3/&quot;&gt;&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+</code></pre>
+<h3 id="search-form"><a href="#search-form" class="headerlink" title="search_form"></a>search_form</h3><p>Inserts a Google search form.</p>
+<pre><code class="js">&lt;%- search_form(options) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>The class name of form</td>
+<td>search-form</td>
+</tr>
+<tr>
+<td><code>text</code></td>
+<td>Search hint word</td>
+<td>Search</td>
+</tr>
+<tr>
+<td><code>button</code></td>
+<td>Display search button. The value can be a boolean or a string. If the value is a string, it’ll be the text of the button.</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h3 id="number-format"><a href="#number-format" class="headerlink" title="number_format"></a>number_format</h3><p>Formats a number.</p>
+<pre><code class="js">&lt;%- number_format(number, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>precision</code></td>
+<td>The precision of number. The value can be <code>false</code> or a nonnegative integer.</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>delimiter</code></td>
+<td>The thousands delimiter</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>The separator between the fractional and integer digits.</td>
+<td>.</td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- number_format(12345.67, {precision: 1}) %&gt;
+// 12,345.68
+
+&lt;%- number_format(12345.67, {precision: 4}) %&gt;
+// 12,345.6700
+
+&lt;%- number_format(12345.67, {precision: 0}) %&gt;
+// 12,345
+
+&lt;%- number_format(12345.67, {delimiter: &#39;&#39;}) %&gt;
+// 12345.67
+
+&lt;%- number_format(12345.67, {separator: &#39;/&#39;}) %&gt;
+// 12,345/67
+</code></pre>
+<h3 id="meta-generator"><a href="#meta-generator" class="headerlink" title="meta_generator"></a>meta_generator</h3><p>Inserts <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta">generator tag</a>.</p>
+<pre><code class="js">&lt;%- meta_generator() %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- meta_generator() %&gt;
+// &lt;meta name=&quot;generator&quot; content=&quot;Hexo 4.0.0&quot;&gt;
+</code></pre>
+<h3 id="open-graph"><a href="#open-graph" class="headerlink" title="open_graph"></a>open_graph</h3><p>Inserts <a href="http://ogp.me/">Open Graph</a> data.</p>
+<pre><code class="js">&lt;%- open_graph([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>Page title (<code>og:title</code>)</td>
+<td><code>page.title</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Page type (<code>og:type</code>)</td>
+<td>blog</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>Page URL (<code>og:url</code>)</td>
+<td><code>url</code></td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>Page images (<code>og:image</code>)</td>
+<td>All images in the content</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>Article author (<code>og:article:author</code>)</td>
+<td><code>config.author</code></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Article published time (<code>og:article:published_time</code>)</td>
+<td>Page published time</td>
+</tr>
+<tr>
+<td><code>updated</code></td>
+<td>Article modified time (<code>og:article:modified_time</code>)</td>
+<td>Page modified time</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>Article language (<code>og:locale</code>)</td>
+<td>&#96;page.lang</td>
+</tr>
+<tr>
+<td><code>site_name</code></td>
+<td>Site name (<code>og:site_name</code>)</td>
+<td><code>config.title</code></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Page description (<code>og:description</code>)</td>
+<td>Page excerpt or first 200 characters of the content</td>
+</tr>
+<tr>
+<td><code>twitter_card</code></td>
+<td>Twitter card type (<code>twitter:card</code>)</td>
+<td>summary</td>
+</tr>
+<tr>
+<td><code>twitter_id</code></td>
+<td>Twitter ID (<code>twitter:creator</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>twitter_site</code></td>
+<td>Twitter Site (<code>twitter:site</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>google_plus</code></td>
+<td>Google+ profile link</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fb_admins</code></td>
+<td>Facebook admin ID</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fb_app_id</code></td>
+<td>Facebook App ID</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="toc"><a href="#toc" class="headerlink" title="toc"></a>toc</h3><p>Parses all heading tags (h1~h6) in the content and inserts a table of contents.</p>
+<pre><code class="js">&lt;%- toc(str, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>Class name</td>
+<td>toc</td>
+</tr>
+<tr>
+<td><code>list_number</code></td>
+<td>Displays list number</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>max_depth</code></td>
+<td>Maximum heading depth of generated toc</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>min_depth</code></td>
+<td>Minimum heading depth of generated toc</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- toc(page.content) %&gt;
+</code></pre>
+<h4 id="data-toc-unnumbered-6-1-0"><a href="#data-toc-unnumbered-6-1-0" class="headerlink" title="data-toc-unnumbered (+6.1.0)"></a>data-toc-unnumbered (+6.1.0)</h4><p>Headings with attribute <code>data-toc-unnumbered=&quot;true&quot;</code> will be marked as unnumbered (list number will not be display).</p>
+<p>{% note warn “Warning!” %}<br>For using <code>data-toc-unnumbered=&quot;true&quot;</code>, the renderer must have the option to add CSS classes.</p>
+<p>Please see below PRs.</p>
+<ul>
+<li><a href="https://github.com/hexojs/hexo/pull/4871">https://github.com/hexojs/hexo/pull/4871</a></li>
+<li><a href="https://github.com/hexojs/hexo-util/pull/269">https://github.com/hexojs/hexo-util/pull/269</a></li>
+<li><a href="https://github.com/hexojs/hexo-renderer-markdown-it/pull/174">https://github.com/hexojs/hexo-renderer-markdown-it/pull/174</a><br>{% endnote %}</li>
+</ul>

@@ -1,0 +1,49 @@
+<hr>
+<h2 id="title-Темы"><a href="#title-Темы" class="headerlink" title="title: Темы"></a>title: Темы</h2><p>Создать тему Hexo легко, надо просто создать новую папку. Чтобы начать использовать темы, измените настройки <code>theme</code> в файле сайта <code>_config</code>. Тема должна иметь следующую структуру:</p>
+<pre><code class="plain">.
+├── _config.yml
+├── languages
+├── layout
+├── scripts
+└── source
+</code></pre>
+<h3 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h3><p>Файл конфигурации темы. Unlike the site’s primary configuration file, Изменения не требуют перезагрузки сервера.</p>
+<h3 id="languages"><a href="#languages" class="headerlink" title="languages"></a>languages</h3><p>Папка с языковыми файлами. См. подробней <a href="internationalization.html">Интернационализация (i18n)</a>.</p>
+<h3 id="layout"><a href="#layout" class="headerlink" title="layout"></a>layout</h3><p>Папка шаблонов. Эта папка содержит файлы шаблонов темы, которые определяют внешний вид сайта. Hexo использует шаблонизатор <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> по умолчанию, но вы легко сможете установить дополнительные плагины, чтобы поддерживать альтернативные системы, такие как <a href="https://github.com/hexojs/hexo-renderer-ejs">EJS</a>, <a href="https://github.com/hexojs/hexo-renderer-haml">Haml</a> или <a href="https://github.com/hexojs/hexo-renderer-jade">Jade</a>. Hexo выбирает шаблонизатор на основе расширения файла. Например:</p>
+<pre><code class="plain">layout.ejs   - uses EJS
+layout.njk   - uses Nunjucks
+</code></pre>
+<p>Дополнительные сведения см. в разделе <a href="templates.html">шаблоны</a>.</p>
+<h3 id="scripts"><a href="#scripts" class="headerlink" title="scripts"></a>scripts</h3><p>Папка скриптов. Hexo автоматически загрузит все JavaScript-файлы в этой папке во время инициализации. Дополнительные сведения см. в разделе <a href="plugins.html">плагины</a>.</p>
+<h3 id="source"><a href="#source" class="headerlink" title="source"></a>source</h3><p>Папка исходников. Разместите свои материалы здесь (например, CSS- и javascript-файлы). Hexo игнорирует скрытые файлы и файлы или папки с префиксом <code>_</code> (подчёркивание).</p>
+<p>Hexo будет сохранять все обработанные файлы в общую папку <code>public</code>. Не обрабатываемые файлы будут копироваться в общую папку <code>public</code> напрямую.</p>
+<h3 id="Публикация"><a href="#Публикация" class="headerlink" title="Публикация"></a>Публикация</h3><p>Когда вы закончили свою тему, можно опубликовать её в <a href="/themes">списке тем</a>. Прежде чем сделать это, нужно запустить <a href="https://github.com/hexojs/hexo-theme-unit-test">тест модулей темы</a>, чтобы убедиться, что все работает, как нужно. Публикация темы очень похожа на обновление документации.</p>
+<ol>
+<li><p>Создайте форк <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a></p>
+</li>
+<li><p>Клонируйте репозиторий на компьютер и установите все зависимости.</p>
+<pre><code class="shell">git clone ttps://github.com/&lt;username&gt;/site.git
+cd site
+npm install
+</code></pre>
+</li>
+<li><p>Отредактируйте <code>source/_data/themes.yml</code> и добавьте свою тему. Например:</p>
+<pre><code class="yaml">- name: landscape
+  description: Новая тема по умолчанию для Hexo.
+  link: https://github.com/hexojs/hexo-theme-landscape
+  preview: http://hexo.io/hexo-theme-landscape
+  tags:
+    - official
+    - responsive
+    - widget
+    - two_column
+    - one_column
+</code></pre>
+</li>
+<li><p>Добавьте скриншот темы (с таким же, как и тема, названием) в папку <code>source/themes/screenshots</code>. Он должен быть размером 800*500px в формате PNG.</p>
+</li>
+<li><p>Загрузите ветку.</p>
+</li>
+<li><p>Создайте запрос на слияние с описанием изменений.</p>
+</li>
+</ol>

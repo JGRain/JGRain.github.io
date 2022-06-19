@@ -1,0 +1,43 @@
+<hr>
+<h2 id="title-Router"><a href="#title-Router" class="headerlink" title="title: Router"></a>title: Router</h2><p>Router는 사이트의 모든 경로를 저장합니다.</p>
+<h2 id="경로-가져오기"><a href="#경로-가져오기" class="headerlink" title="경로 가져오기"></a>경로 가져오기</h2><p><code>get</code> 메소드는 <a href="http://nodejs.org/api/stream.html">Stream</a>을 반환합니다. 아래는 특정한 목적지로 가기 위한 경로 데이터를 저장하는 동작 예시입니다.</p>
+<pre><code class="js">var data = hexo.route.get(&#39;index.html&#39;);
+var dest = fs.createWriteStream(&#39;somewhere&#39;);
+
+data.pipe(dest);
+</code></pre>
+<h2 id="경로-설정하기"><a href="#경로-설정하기" class="headerlink" title="경로 설정하기"></a>경로 설정하기</h2><p><code>set</code> 메소드는 문자열과 <a href="http://nodejs.org/api/buffer.html">Buffer</a> 또는 함수를 통해 얻어옵니다.</p>
+<pre><code class="js">// String
+hexo.route.set(&#39;index.html&#39;, &#39;index&#39;)
+
+// Buffer
+hexo.route.set(&#39;index.html&#39;, new Buffer(&#39;index&#39;));
+
+// Function (Promise)
+hexo.route.set(&#39;index.html&#39;, function(){
+  return new Promise(function(resolve, reject){
+    resolve(&#39;index&#39;);
+  });
+});
+
+// Function (Callback)
+hexo.route.set(&#39;index.html&#39;, function(callback){
+  callback(null, &#39;index&#39;);
+});
+</code></pre>
+<p>경로가 수정되었는지 아닌지에 대해 boolean값을 통해 확인할 수 있습니다. 이는 수정되지 않은 파일을 무시하여 파일의 빠른 생성을 도와줍니다.</p>
+<pre><code class="js">hexo.route.set(&#39;index.html&#39;, {
+    data: &#39;index&#39;,
+    modified: false
+});
+
+// hexo.route.isModified(&#39;index.html&#39;) =&gt; false
+</code></pre>
+<h2 id="경로-제거하기"><a href="#경로-제거하기" class="headerlink" title="경로 제거하기"></a>경로 제거하기</h2><pre><code class="js">hexo.route.remove(&#39;index.html&#39;);
+</code></pre>
+<h2 id="경로-route-목록-가져오기"><a href="#경로-route-목록-가져오기" class="headerlink" title="경로(route) 목록 가져오기"></a>경로(route) 목록 가져오기</h2><pre><code class="js">hexo.route.list();
+</code></pre>
+<h2 id="경로-형식-지정하기"><a href="#경로-형식-지정하기" class="headerlink" title="경로 형식 지정하기"></a>경로 형식 지정하기</h2><p><code>format</code> 메소드는 문자열을 사용 가능한 경로로 변환해줍니다.</p>
+<pre><code class="js">hexo.route.format(&#39;archives/&#39;);
+// archives/index.html
+</code></pre>

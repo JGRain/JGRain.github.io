@@ -1,0 +1,78 @@
+<hr>
+<h2 id="title-Documentation"><a href="#title-Documentation" class="headerlink" title="title: Documentation"></a>title: Documentation</h2><p>ยินดีต้อนรับเข้าสู่ documentation ของ hexo ถ้าคุณพบเจอปัญหาใดๆเวลาใช้ hexo<br>ไปดูข้อมูลได้ท่ี  <a href="troubleshooting.html">troubleshooting guide</a> ไปเสนอ issue<br>ได้ที่ <a href="https://github.com/hexojs/hexo/issues">GitHub</a> หรือไปเปิด topic ได้ท่ี <a href="https://groups.google.com/group/hexo">Google Group</a></p>
+<h2 id="What-is-Hexo"><a href="#What-is-Hexo" class="headerlink" title="What is Hexo?"></a>What is Hexo?</h2><p>hexo เป็นกรอบบล็อกท่ีรวดเร็ว เรียบง่ายและมีประสิทธิภาพ<br>คุณเขียนโพสต์ได้ด้วยภาษา [Markdown](<a href="http://daringfireball/">http://daringfireball</a><br>.net&#x2F;projects&#x2F;markdown&#x2F;)(หรือภาษาอื่นๆ) และ hexo จะ generate<br>ไฟล์คงที่ท่ีประกอบด้วยธีมสวยงามภายในเวลาไม่กี่วินาที</p>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>การติดตั้ง hexo ต้องการเวลาหลายนาทีเท่านั้น ถ้าคุณพบเจอปัญหาท่ีแก้ไขไม่ได้<br>กรุณาไปเสนอ issue ได้ท่ี <a href="https://github.com/hexojs/hexo/issues">submit a GitHub issue</a></p>
+<p>{% youtube ARted4RniaU %}</p>
+<h3 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h3><p>การติดตั้ง hexo เป็นเรื่องง่ายๆ แต่คุณต้องการติดตั้งบางสิ่งก่อน:</p>
+<ul>
+<li><a href="http://nodejs.org/">Node.js</a> (Should be at least Node.js 10.13, recommends 12.0 or higher)</li>
+<li><a href="http://git-scm.com/">Git</a></li>
+</ul>
+<p>ถ้าคุณติดตั้งสองสิ่งนี้อยู่แล้วในคอม ขอแสดงความยินดี คุณจะติดตั้ง hexo ด้วย npm ได้อย่างนี้:</p>
+<pre><code class="bash">$ npm install -g hexo-cli
+</code></pre>
+<p>ถ้าคุณยังไม่ได้ติดตั้งสองสิ่งนี้ กรุณาปฏิบัติตามวิธีการใช้เพื่อติดตั้งทุกสิ่งท่ีต้องการ<br>{% note warn For Mac users %}<br>คุณอาจจะพบปัญหาบ้างเมื่อ compiling กรุณาติดตั้ง Xcode จาก App Store ก่อน<br>เสร็จแล้วค่อยไปเปิด Xcode และ ไปถึง <strong>Preferences -&gt; Download -&gt; Command Line<br> Tools -&gt; Install</strong> เพื่อติดตั้งเครื่องมือคำสั่ง<br>{% endnote %}</p>
+<h3 id="Install-Git"><a href="#Install-Git" class="headerlink" title="Install Git"></a>Install Git</h3><ul>
+<li>Windows: ดาวน์โหลด &amp; ติดตั้ง <a href="https://git-scm.com/download/win">git</a>.</li>
+<li>Mac: ติดตั้งด้วย <a href="http://mxcl.github.com/homebrew/">Homebrew</a>, [MacPorts]<br>(<a href="http://www.macports.org/">http://www.macports.org/</a>) หรือ [installer](<a href="http://sourceforge/">http://sourceforge</a><br>.net&#x2F;projects&#x2F;git-osx-installer&#x2F;).</li>
+<li>Linux (Ubuntu, Debian): <code>sudo apt-get install git-core</code></li>
+<li>Linux (Fedora, Red Hat, CentOS): <code>sudo yum install git-core</code></li>
+</ul>
+<h3 id="Install-Node-js"><a href="#Install-Node-js" class="headerlink" title="Install Node.js"></a>Install Node.js</h3><p>Node.js provides <a href="https://nodejs.org/en/download/">official installer</a> for most platforms.</p>
+<p>Alternative installation methods:</p>
+<ul>
+<li>Windows: Install it with <a href="https://github.com/jasongin/nvs/">nvs</a> (recommended) or <a href="https://github.com/nvm-sh/nvm">nvm</a>.</li>
+<li>Mac: Install it with <a href="https://brew.sh/">Homebrew</a> or <a href="http://www.macports.org/">MacPorts</a>.</li>
+<li>Linux (DEB&#x2F;RPM-based): Install it with <a href="https://github.com/nodesource/distributions">NodeSource</a>.</li>
+<li>Others: Install it through respective package manager. Refer to <a href="https://nodejs.org/en/download/package-manager/">the guide</a> provided by Node.js.</li>
+</ul>
+<p>nvs is also recommended for Mac and Linux to avoid possible permission issue.</p>
+<p>{% note info Windows %}<br>If you use the official installer, make sure <strong>Add to PATH</strong> is checked (it’s checked by default).<br>{% endnote %}</p>
+<p>{% note warn Mac &#x2F; Linux %}<br>If you encounter <code>EACCES</code> permission error when trying to install Hexo, please follow <a href="https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally">the workaround</a> provided by npmjs; overriding with root&#x2F;sudo is highly discouraged.<br>{% endnote %}</p>
+<p>{% note info Linux %}<br>If you installed Node.js using Snap, you may need to manually run <code>npm install</code> in the target folder when <a href="/docs/commands#init">initializing</a> a blog.<br>{% endnote %}</p>
+<h3 id="Install-Hexo"><a href="#Install-Hexo" class="headerlink" title="Install Hexo"></a>Install Hexo</h3><p>เมื่อความต้องการทุกอย่างได้ติดตั้งเรียบร้อยแล้ว คุณสามารถติดตั้ง hexo ด้วย npm</p>
+<pre><code class="bash">$ npm install -g hexo-cli
+</code></pre>
+<h3 id="Minimum-required-Node-js-version"><a href="#Minimum-required-Node-js-version" class="headerlink" title="Minimum required Node.js version"></a>Minimum required Node.js version</h3><p>If you are stuck with older Node.js, you can consider installing a past version of Hexo.</p>
+<p>Please note we do not provide bugfixes to past versions of Hexo.</p>
+<p>We highly recommend to always install the <a href="https://www.npmjs.com/package/hexo?activeTab=versions">latest version</a> of Hexo and the <a href="#Requirements">recommended version</a> of Node.js, whenever possible.</p>
+<table>
+<thead>
+<tr>
+<th>Hexo version</th>
+<th>Minimum Node.js version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>6.0+</td>
+<td>12.13.0</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>10.13.0</td>
+</tr>
+<tr>
+<td>4.1 - 4.2</td>
+<td>8.10</td>
+</tr>
+<tr>
+<td>4.0</td>
+<td>8.6</td>
+</tr>
+<tr>
+<td>3.3 - 3.9</td>
+<td>6.9</td>
+</tr>
+<tr>
+<td>3.2 - 3.3</td>
+<td>0.12</td>
+</tr>
+<tr>
+<td>3.0 - 3.1</td>
+<td>0.10 or iojs</td>
+</tr>
+<tr>
+<td>0.0.1 - 2.8</td>
+<td>0.10</td>
+</tr>
+</tbody></table>

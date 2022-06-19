@@ -1,0 +1,256 @@
+<hr>
+<h2 id="title-Переменные"><a href="#title-Переменные" class="headerlink" title="title: Переменные"></a>title: Переменные</h2><h3 id="Глобальные-переменные"><a href="#Глобальные-переменные" class="headerlink" title="Глобальные переменные"></a>Глобальные переменные</h3><table>
+<thead>
+<tr>
+<th>Переменная</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>site</code></td>
+<td>Информация о сайте.</td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td>Информация о конкретной странице и переменные в шапке страницы.</td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>Конфигурация сайта.</td>
+</tr>
+<tr>
+<td><code>theme</code></td>
+<td>Конфигурация темы. Наследуется от конфигурации сайта.</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Путь текущей страницы.</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>Полная URL ссылка на текущую страницу.</td>
+</tr>
+<tr>
+<td><code>env</code></td>
+<td>Переменные среды.</td>
+</tr>
+</tbody></table>
+<p>{% note warn %}<br>Lodash has been removed from global variables since Hexo 5.0.0. <a href="https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore">You-Dont-Need-Lodash-Underscore</a> might be helpful for your migration.<br>{% endnote %}</p>
+<h3 id="Переменные-сайта"><a href="#Переменные-сайта" class="headerlink" title="Переменные сайта"></a>Переменные сайта</h3><table>
+<thead>
+<tr>
+<th>Переменная</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>site.posts</code></td>
+<td>Все посты</td>
+</tr>
+<tr>
+<td><code>site.pages</code></td>
+<td>Все страницы</td>
+</tr>
+<tr>
+<td><code>site.categories</code></td>
+<td>Все категории</td>
+</tr>
+<tr>
+<td><code>site.tags</code></td>
+<td>Все теги</td>
+</tr>
+</tbody></table>
+<h3 id="Переменные-страницы"><a href="#Переменные-страницы" class="headerlink" title="Переменные страницы"></a>Переменные страницы</h3><p><strong>Страница (page)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Переменная</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.title</code></td>
+<td>Название страницы</td>
+</tr>
+<tr>
+<td><code>page.date</code></td>
+<td>Дата создания страницы (Объект <a href="http://momentjs.com/">Moment.js</a>)</td>
+</tr>
+<tr>
+<td><code>page.updated</code></td>
+<td>Дата последнего обновления (Объект <a href="http://momentjs.com/">Moment.js</a>)</td>
+</tr>
+<tr>
+<td><code>page.comments</code></td>
+<td>Включены ли комментарии</td>
+</tr>
+<tr>
+<td><code>page.layout</code></td>
+<td>Имя макета</td>
+</tr>
+<tr>
+<td><code>page.content</code></td>
+<td>Полностью обработанное содержание страницы</td>
+</tr>
+<tr>
+<td><code>page.excerpt</code></td>
+<td>Отрывок страницы</td>
+</tr>
+<tr>
+<td><code>page.more</code></td>
+<td>Содержимое страницы без отрывка</td>
+</tr>
+<tr>
+<td><code>page.source</code></td>
+<td>Путь к исходному файлу</td>
+</tr>
+<tr>
+<td><code>page.full_source</code></td>
+<td>Полный путь к исходному файлу</td>
+</tr>
+<tr>
+<td><code>page.path</code></td>
+<td>URL текущей страницы без корневой части адреса. Обычно используется <code>url_for(page.path)</code> в теме.</td>
+</tr>
+<tr>
+<td><code>page.permalink</code></td>
+<td>Полный URL-адрес страницы</td>
+</tr>
+<tr>
+<td><code>page.prev</code></td>
+<td>Предыдущий пост. <code>null</code>, если пост первый.</td>
+</tr>
+<tr>
+<td><code>page.next</code></td>
+<td>Следующий пост. <code>null</code>, если пост последний.</td>
+</tr>
+<tr>
+<td><code>page.raw</code></td>
+<td>Исходники страницы</td>
+</tr>
+<tr>
+<td><code>page.photos</code></td>
+<td>Фотографии из страницы (Используется в галерее постов)</td>
+</tr>
+<tr>
+<td><code>page.link</code></td>
+<td>Внешняя ссылка на статью (Используется в ссылках поста)</td>
+</tr>
+</tbody></table>
+<p><strong>Пост (post)</strong>: такие же переменные, как и у страницы, но добавлены следующие переменные.</p>
+<table>
+<thead>
+<tr>
+<th>Переменные</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.published</code></td>
+<td><code>true</code>, если пост не проект</td>
+</tr>
+<tr>
+<td><code>page.categories</code></td>
+<td>Все категории поста</td>
+</tr>
+<tr>
+<td><code>page.tags</code></td>
+<td>Все теги поста</td>
+</tr>
+</tbody></table>
+<p><strong>Главная страница (index)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Переменная</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.per_page</code></td>
+<td>Количество постов, отображаемых на странице</td>
+</tr>
+<tr>
+<td><code>page.total</code></td>
+<td>Общее число постов</td>
+</tr>
+<tr>
+<td><code>page.current</code></td>
+<td>Номер текущей страницы</td>
+</tr>
+<tr>
+<td><code>page.current_url</code></td>
+<td>URL текущей страницы</td>
+</tr>
+<tr>
+<td><code>page.posts</code></td>
+<td>Посты на этой странице ([Data Model])</td>
+</tr>
+<tr>
+<td><code>page.prev</code></td>
+<td>Номер предыдущей страницы. <code>0</code>, если текущая страница является первой.</td>
+</tr>
+<tr>
+<td><code>page.prev_link</code></td>
+<td>Ссылка на предыдущую страницу. Равна <code>&#39;&#39;</code>, если текущая страница является первой.</td>
+</tr>
+<tr>
+<td><code>page.next</code></td>
+<td>Номер следующей страницы. Равно <code>0</code>, если текущая страница является последней.</td>
+</tr>
+<tr>
+<td><code>page.next_link</code></td>
+<td>Ссылка на следующую страницу. Равно <code>&#39;&#39;</code>, если текущая страница является последней.</td>
+</tr>
+<tr>
+<td><code>page.path</code></td>
+<td>URL текущей страницы без корневой части адреса. Обычно используется <code>url_for(page.path)</code> в теме.</td>
+</tr>
+</tbody></table>
+<p><strong>Архив (archive):</strong> Такой же, как макет <code>index</code>, но добавлены следующие переменные.</p>
+<table>
+<thead>
+<tr>
+<th>Переменная</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.archive</code></td>
+<td>Приравнивается к <code>true</code></td>
+</tr>
+<tr>
+<td><code>page.year</code></td>
+<td>Год архива (4-х значное)</td>
+</tr>
+<tr>
+<td><code>page.month</code></td>
+<td>Месяц архива (2-х значное без ведущих нулей)</td>
+</tr>
+</tbody></table>
+<p><strong>Категория (category):</strong> Такая же, как макет <code>index</code>, но добавлены следующие переменные.</p>
+<table>
+<thead>
+<tr>
+<th>Переменная</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.category</code></td>
+<td>Имя категории</td>
+</tr>
+</tbody></table>
+<p><strong>Тег (tag):</strong> Такой же, как макет <code>index</code>, но добавлены следующие переменные.</p>
+<table>
+<thead>
+<tr>
+<th>Переменная</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.tag</code></td>
+<td>Имя тега</td>
+</tr>
+</tbody></table>

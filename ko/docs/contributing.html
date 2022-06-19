@@ -1,0 +1,71 @@
+<hr>
+<h2 id="title-Contributing"><a href="#title-Contributing" class="headerlink" title="title: Contributing"></a>title: Contributing</h2><p>We welcome you to join the development of Hexo. 🤗</p>
+<h2 id="개발"><a href="#개발" class="headerlink" title="개발"></a>개발</h2><p>우리는 당신이 Hexo의 개발에 참여하는 것을 환영합니다. 이 문서는 당신의 개발 프로세스에 도움을 줄 겁니다.</p>
+<h3 id="시작하기-전에…"><a href="#시작하기-전에…" class="headerlink" title="시작하기 전에…"></a>시작하기 전에…</h3><p>Please read <a href="https://github.com/hexojs/hexo/blob/master/CODE_OF_CONDUCT.md">Contributor Covenant Code of Conduct</a> first.</p>
+<p>아래의 코딩 스타일을 지켜주세요.</p>
+<ul>
+<li><a href="https://google.github.io/styleguide/jsguide.html">Google JavaScript Style Guide</a>를 따릅니다.</li>
+<li>두 개의 공백을 사용한 soft-tab을 사용합니다.</li>
+<li>콤마로 시작하지 마세요.</li>
+</ul>
+<p>Also, Hexo has its own <a href="https://github.com/hexojs/eslint-config-hexo">ESLint config</a>, so please make sure your contribution will make ESLint happy.</p>
+<h3 id="워크플로우"><a href="#워크플로우" class="headerlink" title="워크플로우"></a>워크플로우</h3><ol>
+<li>Fork <a href="https://github.com/hexojs/hexo">hexojs&#x2F;hexo</a>.</li>
+<li>저장소를 당신의 컴퓨터에 clone하고 의존 사항들을 설치합니다.</li>
+</ol>
+<pre><code class="bash">$ git clone https://github.com/&lt;username&gt;/hexo.git
+$ cd hexo
+$ npm install
+$ git submodule update --init
+</code></pre>
+<ol start="3">
+<li>기능 branch를 생성합니다.</li>
+</ol>
+<pre><code class="bash">$ git checkout -b new_feature
+</code></pre>
+<ol start="4">
+<li>개발합니다.</li>
+<li>Branch를 push합니다.</li>
+</ol>
+<pre><code>$ git push origin new_feature
+</code></pre>
+<ol start="6">
+<li>변경사항에 대한 설명을 포함하여 Pull request를 생성합니다.</li>
+</ol>
+<h3 id="공지사항"><a href="#공지사항" class="headerlink" title="공지사항"></a>공지사항</h3><ul>
+<li><code>package.json</code>의 version number는 수정하지 마세요.</li>
+<li>당신의 Pull request는 테스트를 통과했을 때에만 merge됩니다. 반영하기 전에 test를 돌려보세요.</li>
+</ul>
+<pre><code class="bash">$ npm test
+</code></pre>
+<h2 id="Updating-official-plugins"><a href="#Updating-official-plugins" class="headerlink" title="Updating official-plugins"></a>Updating official-plugins</h2><p>Also, we welcome PR or issue to <a href="https://github.com/hexojs">official-plugins</a>. 🤗</p>
+<h2 id="문서의-갱신"><a href="#문서의-갱신" class="headerlink" title="문서의 갱신"></a>문서의 갱신</h2><p>Hexo 문서는 opensource이며 <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a>에서 소스 코드를 검색할 수 있습니다.</p>
+<h3 id="Workflow"><a href="#Workflow" class="headerlink" title="Workflow"></a>Workflow</h3><ol>
+<li>Fork <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a></li>
+<li>저장소를 당신의 컴퓨터에 clone하고 의존 사항들을 설치합니다.</li>
+</ol>
+<pre><code class="bash">$ npm install hexo-cli -g # If you don&#39;t have hexo-cli installed
+$ git clone https://github.com/&lt;username&gt;/site.git
+$ cd site
+$ npm install
+</code></pre>
+<ol start="3">
+<li>문서를 수정하세요. Server를 돌려서 실시간으로 확인할 수 있습니다.</li>
+</ol>
+<pre><code class="bash">$ hexo server
+</code></pre>
+<ol start="4">
+<li>Branch를 push합니다.</li>
+<li>당신의 변경사항에 대한 설명을 포함하여 Pull request를 생성합니다.</li>
+</ol>
+<h3 id="번역"><a href="#번역" class="headerlink" title="번역"></a>번역</h3><ol>
+<li><code>source</code> 폴더 안에 새 언어에 대한 폴더를 생성하세요. (소문자로 생성하세요.)</li>
+<li><code>source</code> 폴더의 Markdown 및 템플릿 파일들을 새 언어 폴더에 복사하세요.</li>
+<li><code>source/_data/language.yml</code>에 새 언어를 추가하세요.</li>
+<li><code>themes/navy/languages</code>에 <code>en.yml</code> 파일을 복사하고 새 언어로 이름을 변경하세요. (소문자로 변경하세요.)</li>
+</ol>
+<h2 id="이슈-보고"><a href="#이슈-보고" class="headerlink" title="이슈 보고"></a>이슈 보고</h2><p>Hexo를 사용하다가 문제를 발견하면, <a href="troubleshooting.html">Troubleshooting</a>, <a href="https://github.com/hexojs/hexo/issues">GitHub</a>, <a href="https://groups.google.com/group/hexo">Google Group</a>에서 이슈에 대해 답을 찾아보세요. 만약 답이 없다면 Github에 문제를 보고해 주세요.</p>
+<ol>
+<li>문제 재현은 <a href="commands.html#Debug_mode">debug mode</a>에서 해주세요.</li>
+<li>Follow the steps from issue template to provide debug message and version when submitting a new issue at GitHub.</li>
+</ol>

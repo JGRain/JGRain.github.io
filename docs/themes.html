@@ -1,0 +1,50 @@
+<hr>
+<h2 id="title-Themes"><a href="#title-Themes" class="headerlink" title="title: Themes"></a>title: Themes</h2><p>{% youtube 5ROIU_9dYe4 %}</p>
+<p>It’s easy to build a Hexo theme - you just have to create a new folder. To start using your theme, modify the <code>theme</code> setting in your site’s <code>_config.yml</code>. A theme should have the following structure:</p>
+<pre><code class="plain">.
+├── _config.yml
+├── languages
+├── layout
+├── scripts
+└── source
+</code></pre>
+<h3 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h3><p>Theme configuration file. Unlike the site’s primary configuration file, modifying this doesn’t require a server restart.</p>
+<h3 id="languages"><a href="#languages" class="headerlink" title="languages"></a>languages</h3><p>Language folder. See <a href="internationalization.html">internationalization (i18n)</a> for more info.</p>
+<h3 id="layout"><a href="#layout" class="headerlink" title="layout"></a>layout</h3><p>Layout folder. This folder contains the theme’s template files, which define the appearance of your website. Hexo provides the <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> template engine by default, but you can easily install additional plugins to support alternative engines such as <a href="https://github.com/hexojs/hexo-renderer-ejs">EJS</a>, <a href="https://github.com/hexojs/hexo-renderer-haml">Haml</a>, <a href="https://github.com/hexojs/hexo-renderer-jade">Jade</a>, or <a href="https://github.com/maxknee/hexo-render-pug">Pug</a>. Hexo chooses the template engine based on the file extension of the template (just like the posts). For example:</p>
+<pre><code class="plain">layout.ejs   - uses EJS
+layout.njk   - uses Nunjucks
+</code></pre>
+<p>See <a href="templates.html">templates</a> for more info.</p>
+<h3 id="scripts"><a href="#scripts" class="headerlink" title="scripts"></a>scripts</h3><p>Script folder. Hexo will automatically load all JavaScript files in this folder during initialization. For more info, see <a href="plugins.html">plugins</a>.</p>
+<h3 id="source"><a href="#source" class="headerlink" title="source"></a>source</h3><p>Source folder. Place your assets (e.g. CSS and JavaScript files) here. Hexo ignores hidden files and files or folders prefixed with <code>_</code> (underscore).</p>
+<p>Hexo will process and save all renderable files to the <code>public</code> folder. Non-renderable files will be copied to the <code>public</code> folder directly.</p>
+<h3 id="Publishing"><a href="#Publishing" class="headerlink" title="Publishing"></a>Publishing</h3><p>When you have finished building your theme, you can publish it to the <a href="/themes">theme list</a>. Before doing so, you should run the <a href="https://github.com/hexojs/hexo-theme-unit-test">theme unit test</a> to ensure that everything works. The steps for publishing a theme are very similar to those for <a href="contributing.html#Updating_Documentation">updating documentation</a>.</p>
+<ol>
+<li><p>Fork <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a></p>
+</li>
+<li><p>Clone the repository to your computer and install dependencies.</p>
+<pre><code class="shell">$ git clone https://github.com/&lt;username&gt;/site.git
+$ cd site
+$ npm install
+</code></pre>
+</li>
+<li><p>Edit <code>source/_data/themes.yml</code> and add your theme. For example:</p>
+<pre><code class="yaml">- name: landscape
+  description: A brand new default theme for Hexo.
+  link: https://github.com/hexojs/hexo-theme-landscape
+  preview: http://hexo.io/hexo-theme-landscape
+  tags:
+    - official
+    - responsive
+    - widget
+    - two_column
+    - one_column
+</code></pre>
+</li>
+<li><p>Add a screenshot (with the same name as the theme) to <code>source/themes/screenshots</code>. It must be a 800*500px PNG.</p>
+</li>
+<li><p>Push the branch.</p>
+</li>
+<li><p>Create a pull request and describe the change.</p>
+</li>
+</ol>

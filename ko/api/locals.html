@@ -1,0 +1,38 @@
+<hr>
+<h2 id="title-Local-Variables"><a href="#title-Local-Variables" class="headerlink" title="title: Local Variables"></a>title: Local Variables</h2><p>지역 변수는 템플릿의 <code>site</code> 변수처럼 템플릿 렌더링을 위해 사용됩니다.</p>
+<h2 id="기본적인-변수"><a href="#기본적인-변수" class="headerlink" title="기본적인 변수"></a>기본적인 변수</h2><table>
+<thead>
+<tr>
+<th>변수</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>posts</code></td>
+<td>모든 포스트</td>
+</tr>
+<tr>
+<td><code>pages</code></td>
+<td>모든 페이지</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>모든 카테고리</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>모든 태그</td>
+</tr>
+</tbody></table>
+<h2 id="변수-얻어오기"><a href="#변수-얻어오기" class="headerlink" title="변수 얻어오기"></a>변수 얻어오기</h2><pre><code class="js">hexo.locals.get(&#39;posts&#39;)
+</code></pre>
+<h2 id="변수-설정"><a href="#변수-설정" class="headerlink" title="변수 설정"></a>변수 설정</h2><pre><code class="js">hexo.locals.set(&#39;posts&#39;, function(){
+  return ...
+});
+</code></pre>
+<h2 id="변수-제거"><a href="#변수-제거" class="headerlink" title="변수 제거"></a>변수 제거</h2><pre><code class="js">hexo.locals.remove(&#39;posts&#39;);
+</code></pre>
+<h2 id="모든-변수-얻어오기"><a href="#모든-변수-얻어오기" class="headerlink" title="모든 변수 얻어오기"></a>모든 변수 얻어오기</h2><pre><code class="js">hexo.locals.toObject();
+</code></pre>
+<h2 id="캐시-무효화"><a href="#캐시-무효화" class="headerlink" title="캐시 무효화"></a>캐시 무효화</h2><pre><code class="js">hexo.locals.invalidate();
+</code></pre>

@@ -1,0 +1,12 @@
+<hr>
+<h2 id="title-生成文件"><a href="#title-生成文件" class="headerlink" title="title: 生成文件"></a>title: 生成文件</h2><p>使用 Hexo 生成静态文件快速而且简单。</p>
+<pre><code class="bash">$ hexo generate
+</code></pre>
+<h3 id="监视文件变动"><a href="#监视文件变动" class="headerlink" title="监视文件变动"></a>监视文件变动</h3><p>Hexo 能够监视文件变动并立即重新生成静态文件，在生成时会比对文件的 SHA1 checksum，只有变动的文件才会写入。</p>
+<pre><code class="bash">$ hexo generate --watch
+</code></pre>
+<h3 id="完成后部署"><a href="#完成后部署" class="headerlink" title="完成后部署"></a>完成后部署</h3><p>您可执行下列的其中一个命令，让 Hexo 在生成完毕后自动部署网站，两个命令的作用是相同的。</p>
+<pre><code class="bash">$ hexo generate --deploy
+$ hexo deploy --generate
+</code></pre>
+<p>{% note info 简写 %}<br>上面两个命令可以简写为<br>$ hexo g -d<br>$ hexo d -g<br>{% endnote %}</p>

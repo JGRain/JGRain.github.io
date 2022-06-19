@@ -1,0 +1,38 @@
+<hr>
+<h2 id="title-局部变量"><a href="#title-局部变量" class="headerlink" title="title: 局部变量"></a>title: 局部变量</h2><p>局部变量用于模版渲染，也就是模版中的 <code>site</code> 变量。</p>
+<h2 id="默认变量"><a href="#默认变量" class="headerlink" title="默认变量"></a>默认变量</h2><table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>posts</code></td>
+<td>所有文章</td>
+</tr>
+<tr>
+<td><code>pages</code></td>
+<td>所有分页</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>所有分类</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>所有标签</td>
+</tr>
+</tbody></table>
+<h2 id="获取变量"><a href="#获取变量" class="headerlink" title="获取变量"></a>获取变量</h2><pre><code class="js">hexo.locals.get(&#39;posts&#39;)
+</code></pre>
+<h2 id="设置变量"><a href="#设置变量" class="headerlink" title="设置变量"></a>设置变量</h2><pre><code class="js">hexo.locals.set(&#39;posts&#39;, function(){
+  return ...
+});
+</code></pre>
+<h2 id="移除变量"><a href="#移除变量" class="headerlink" title="移除变量"></a>移除变量</h2><pre><code class="js">hexo.locals.remove(&#39;posts&#39;);
+</code></pre>
+<h2 id="获取所有变量"><a href="#获取所有变量" class="headerlink" title="获取所有变量"></a>获取所有变量</h2><pre><code class="js">hexo.locals.toObject();
+</code></pre>
+<h2 id="清除缓存"><a href="#清除缓存" class="headerlink" title="清除缓存"></a>清除缓存</h2><pre><code class="js">hexo.locals.invalidate();
+</code></pre>

@@ -1,0 +1,159 @@
+<hr>
+<h2 id="title-Commands"><a href="#title-Commands" class="headerlink" title="title: Commands"></a>title: Commands</h2><h2 id="init"><a href="#init" class="headerlink" title="init"></a>init</h2><pre><code class="bash">$ hexo init [folder]
+</code></pre>
+<p>Initializes a website. If no <code>folder</code> is provided, Hexo will set up a website in the current directory.</p>
+<p>This command is a shortcut that runs the following steps:</p>
+<ol>
+<li>Git clone <a href="https://github.com/hexojs/hexo-starter">hexo-starter</a> including <a href="https://github.com/hexojs/hexo-theme-landscape">hexo-theme-landscape</a> into the current directory or a target folder if specified.</li>
+<li>Install dependencies using a package manager: <a href="https://classic.yarnpkg.com/lang/en/">Yarn 1</a>, <a href="https://pnpm.js.org/">pnpm</a> or <a href="https://docs.npmjs.com/cli/install">npm</a>, whichever is installed; if there are more than one installed, the priority is as listed. npm is bundled with <a href="/docs/#Install-Node-js">Node.js</a> by default.</li>
+</ol>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><pre><code class="bash">$ hexo new [layout] &lt;title&gt;
+</code></pre>
+<p>Creates a new article. If no <code>layout</code> is provided, Hexo will use the <code>default_layout</code> from <a href="configuration.html">_config.yml</a>. If the <code>title</code> contains spaces, surround it with quotation marks.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-p</code>, <code>--path</code></td>
+<td>Post path. Customize the path of the post.</td>
+</tr>
+<tr>
+<td><code>-r</code>, <code>--replace</code></td>
+<td>Replace the current post if existed.</td>
+</tr>
+<tr>
+<td><code>-s</code>, <code>--slug</code></td>
+<td>Post slug. Customize the URL of the post.</td>
+</tr>
+</tbody></table>
+<p>By default, Hexo will use the title to define the path of the file. For pages, it will create a directory of that name and an <code>index.md</code> file in it. Use the <code>--path</code> option to override that behaviour and define the file path:</p>
+<pre><code class="bash">hexo new page --path about/me &quot;About me&quot;
+</code></pre>
+<p>will create <code>source/about/me.md</code> file with the title “About me” set in the front matter.</p>
+<p>Please note that the title is mandatory. For example, this will not result in the behaviour you might expect:</p>
+<pre><code class="bash">hexo new page --path about/me
+</code></pre>
+<p>will create the post <code>source/_posts/about/me.md</code> with the title “page” in the front matter. This is because there is only one argument (<code>page</code>) and the default layout is <code>post</code>.</p>
+<h2 id="generate"><a href="#generate" class="headerlink" title="generate"></a>generate</h2><pre><code class="bash">$ hexo generate
+</code></pre>
+<p>Generates static files.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-d</code>, <code>--deploy</code></td>
+<td>Deploy after generation finishes</td>
+</tr>
+<tr>
+<td><code>-w</code>, <code>--watch</code></td>
+<td>Watch file changes</td>
+</tr>
+<tr>
+<td><code>-b</code>, <code>--bail</code></td>
+<td>Raise an error if any unhandled exception is thrown during generation</td>
+</tr>
+<tr>
+<td><code>-f</code>, <code>--force</code></td>
+<td>Force regenerate</td>
+</tr>
+<tr>
+<td><code>-c</code>, <code>--concurrency</code></td>
+<td>Maximum number of files to be generated in parallel. Default is infinity</td>
+</tr>
+</tbody></table>
+<h2 id="publish"><a href="#publish" class="headerlink" title="publish"></a>publish</h2><pre><code class="bash">$ hexo publish [layout] &lt;filename&gt;
+</code></pre>
+<p>Publishes a draft.</p>
+<h2 id="server"><a href="#server" class="headerlink" title="server"></a>server</h2><pre><code class="bash">$ hexo server
+</code></pre>
+<p>Starts a local server. By default, this is at <code>http://localhost:4000/</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-p</code>, <code>--port</code></td>
+<td>Override default port</td>
+</tr>
+<tr>
+<td><code>-s</code>, <code>--static</code></td>
+<td>Only serve static files</td>
+</tr>
+<tr>
+<td><code>-l</code>, <code>--log</code></td>
+<td>Enable logger. Override logger format.</td>
+</tr>
+</tbody></table>
+<h2 id="deploy"><a href="#deploy" class="headerlink" title="deploy"></a>deploy</h2><pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>Deploys your website.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-g</code>, <code>--generate</code></td>
+<td>Generate before deployment</td>
+</tr>
+</tbody></table>
+<h2 id="render"><a href="#render" class="headerlink" title="render"></a>render</h2><pre><code class="bash">$ hexo render &lt;file1&gt; [file2] ...
+</code></pre>
+<p>Renders files.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-o</code>, <code>--output</code></td>
+<td>Output destination</td>
+</tr>
+</tbody></table>
+<h2 id="migrate"><a href="#migrate" class="headerlink" title="migrate"></a>migrate</h2><pre><code class="bash">$ hexo migrate &lt;type&gt;
+</code></pre>
+<p><a href="migration.html">Migrates</a> content from other blog systems.</p>
+<h2 id="clean"><a href="#clean" class="headerlink" title="clean"></a>clean</h2><pre><code class="bash">$ hexo clean
+</code></pre>
+<p>Cleans the cache file (<code>db.json</code>) and generated files (<code>public</code>).</p>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><pre><code class="bash">$ hexo list &lt;type&gt;
+</code></pre>
+<p>Lists all routes.</p>
+<h2 id="version"><a href="#version" class="headerlink" title="version"></a>version</h2><pre><code class="bash">$ hexo version
+</code></pre>
+<p>Displays version information.</p>
+<h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><h3 id="Safe-mode"><a href="#Safe-mode" class="headerlink" title="Safe mode"></a>Safe mode</h3><pre><code class="bash">$ hexo --safe
+</code></pre>
+<p>Disables loading plugins and scripts. Try this if you encounter problems after installing a new plugin.</p>
+<h3 id="Debug-mode"><a href="#Debug-mode" class="headerlink" title="Debug mode"></a>Debug mode</h3><pre><code class="bash">$ hexo --debug
+</code></pre>
+<p>Logs verbose messages to the terminal and to <code>debug.log</code>. Try this if you encounter any problems with Hexo. If you see errors, please <a href="https://github.com/hexojs/hexo/issues/new">raise a GitHub issue</a>.</p>
+<h3 id="Silent-mode"><a href="#Silent-mode" class="headerlink" title="Silent mode"></a>Silent mode</h3><pre><code class="bash">$ hexo --silent
+</code></pre>
+<p>Silences output to the terminal.</p>
+<h3 id="Customize-config-file-path"><a href="#Customize-config-file-path" class="headerlink" title="Customize config file path"></a>Customize config file path</h3><pre><code class="bash">$ hexo --config custom.yml
+</code></pre>
+<p>Uses a custom config file (instead of <code>_config.yml</code>). Also accepts a comma-separated list (no spaces) of JSON or YAML config files that will combine the files into a single <code>_multiconfig.yml</code>.</p>
+<pre><code class="bash">$ hexo --config custom.yml,custom2.json
+</code></pre>
+<h3 id="Display-drafts"><a href="#Display-drafts" class="headerlink" title="Display drafts"></a>Display drafts</h3><pre><code class="bash">$ hexo --draft
+</code></pre>
+<p>Displays draft posts (stored in the <code>source/_drafts</code> folder).</p>
+<h3 id="Customize-CWD"><a href="#Customize-CWD" class="headerlink" title="Customize CWD"></a>Customize CWD</h3><pre><code class="bash">$ hexo --cwd /path/to/cwd
+</code></pre>
+<p>Customizes the path of current working directory.</p>

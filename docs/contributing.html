@@ -1,0 +1,71 @@
+<hr>
+<h2 id="title-Contributing"><a href="#title-Contributing" class="headerlink" title="title: Contributing"></a>title: Contributing</h2><p>We welcome you to join the development of Hexo. 🤗</p>
+<h2 id="Development"><a href="#Development" class="headerlink" title="Development"></a>Development</h2><p>We welcome you to join the development of Hexo. This document will help you through the process.</p>
+<h3 id="Before-You-Start"><a href="#Before-You-Start" class="headerlink" title="Before You Start"></a>Before You Start</h3><p>Please read <a href="https://github.com/hexojs/hexo/blob/master/CODE_OF_CONDUCT.md">Contributor Covenant Code of Conduct</a> first.</p>
+<p>Please follow the coding style:</p>
+<ul>
+<li>Follow <a href="https://google.github.io/styleguide/jsguide.html">Google JavaScript Style Guide</a>.</li>
+<li>Use soft-tabs with a two space indent.</li>
+<li>Don’t put commas first.</li>
+</ul>
+<p>Also, Hexo has its own <a href="https://github.com/hexojs/eslint-config-hexo">ESLint config</a>, so please make sure your contribution will make ESLint happy.</p>
+<h3 id="Workflow"><a href="#Workflow" class="headerlink" title="Workflow"></a>Workflow</h3><ol>
+<li>Fork <a href="https://github.com/hexojs/hexo">hexojs&#x2F;hexo</a>.</li>
+<li>Clone the repository to your computer and install dependencies.</li>
+</ol>
+<pre><code class="bash">$ git clone https://github.com/&lt;username&gt;/hexo.git
+$ cd hexo
+$ npm install
+$ git submodule update --init
+</code></pre>
+<ol start="3">
+<li>Create a feature branch.</li>
+</ol>
+<pre><code class="bash">$ git checkout -b new_feature
+</code></pre>
+<ol start="4">
+<li>Start hacking.</li>
+<li>Push the branch:</li>
+</ol>
+<pre><code>$ git push origin new_feature
+</code></pre>
+<ol start="6">
+<li>Create a pull request and describe the change.</li>
+</ol>
+<h3 id="Notice"><a href="#Notice" class="headerlink" title="Notice"></a>Notice</h3><ul>
+<li>Please don’t modify version number in <code>package.json</code>.</li>
+<li>Your pull request will only get merged when tests passed. Don’t forget to run tests before submission.</li>
+</ul>
+<pre><code class="bash">$ npm test
+</code></pre>
+<h2 id="Updating-official-plugins"><a href="#Updating-official-plugins" class="headerlink" title="Updating official-plugins"></a>Updating official-plugins</h2><p>Also, we welcome PR or issue to <a href="https://github.com/hexojs">official-plugins</a>. 🤗</p>
+<h2 id="Updating-Documentation"><a href="#Updating-Documentation" class="headerlink" title="Updating Documentation"></a>Updating Documentation</h2><p>The Hexo documentation is open source and you can find the source code on <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a>.</p>
+<h3 id="Workflow-1"><a href="#Workflow-1" class="headerlink" title="Workflow"></a>Workflow</h3><ol>
+<li>Fork <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a></li>
+<li>Clone the repository to your computer and install dependencies.</li>
+</ol>
+<pre><code class="bash">$ npm install hexo-cli -g # If you don&#39;t have hexo-cli installed
+$ git clone https://github.com/&lt;username&gt;/site.git
+$ cd site
+$ npm install
+</code></pre>
+<ol start="3">
+<li>Start editing the documentation. You can start the server for live previewing.</li>
+</ol>
+<pre><code class="bash">$ hexo server
+</code></pre>
+<ol start="4">
+<li>Push the branch.</li>
+<li>Create a pull request and describe the change.</li>
+</ol>
+<h3 id="Translating"><a href="#Translating" class="headerlink" title="Translating"></a>Translating</h3><ol>
+<li>Add a new language folder in <code>source</code> folder. (All lower case)</li>
+<li>Copy Markdown and template files in <code>source</code> folder to the new language folder.</li>
+<li>Add the new language to <code>source/_data/language.yml</code>.</li>
+<li>Copy <code>en.yml</code> in <code>themes/navy/languages</code> and rename to the language name (all lower case).</li>
+</ol>
+<h2 id="Reporting-Issues"><a href="#Reporting-Issues" class="headerlink" title="Reporting Issues"></a>Reporting Issues</h2><p>When you encounter some problems when using Hexo, you can find the solutions in <a href="troubleshooting.html">Troubleshooting</a> or ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a> or <a href="https://groups.google.com/group/hexo">Google Group</a>. If you can’t find the answer, please report it on GitHub.</p>
+<ol>
+<li>Represent the problem in <a href="commands.html#Debug_mode">debug mode</a>.</li>
+<li>Follow the steps from issue template to provide debug message and version when submitting a new issue at GitHub.</li>
+</ol>

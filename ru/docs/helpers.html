@@ -1,0 +1,982 @@
+<hr>
+<h2 id="title-Помощники"><a href="#title-Помощники" class="headerlink" title="title: Помощники"></a>title: Помощники</h2><p>Помощники используются в шаблонах, чтобы быстро вставлять фрагменты. Помощники не могут быть использованы в исходных файлах .</p>
+<h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><h3 id="url-for"><a href="#url-for" class="headerlink" title="url_for"></a>url_for</h3><p>Возвращает URL-адрес корневого пути с префиксом. Нужно использовать этот помощник вместо <code>config.root + path</code>, начиная с Hexo версии 2.7.</p>
+<pre><code class="js">&lt;%- url_for(path) %&gt;
+</code></pre>
+<h3 id="relative-url"><a href="#relative-url" class="headerlink" title="relative_url"></a>relative_url</h3><p>Возвращает относительный URL путь от <code>from</code> до <code>to</code>.</p>
+<pre><code class="js">&lt;%- relative_url(from, to) %&gt;
+</code></pre>
+<h3 id="gravatar"><a href="#gravatar" class="headerlink" title="gravatar"></a>gravatar</h3><p>Вставка изображения с Gravatar.<br>Если не указать в параметрах, будет применена опция по умолчанию. Иначе можно установить число, которое будет передаваться в качестве параметра размера изображения, получаемого с Gravatar. Наконец, если установить его ссылкой на объект, он будет преобразован в строку запроса параметров для Gravatar.</p>
+<pre><code class="js">&lt;%- gravatar(email, [options]) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- gravatar(&#39;a@abc.com&#39;) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787
+
+&lt;%- gravatar(&#39;a@abc.com&#39;, 40) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787?s=40
+
+&lt;%- gravatar(&#39;a@abc.com&#39; {s: 40, d: &#39;https://via.placeholder.com/150&#39;}) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787?s=40&amp;d=https%3A%2F%2Fvia.placeholder.com%2F150
+</code></pre>
+<h2 id="HTML-теги"><a href="#HTML-теги" class="headerlink" title="HTML теги"></a>HTML теги</h2><h3 id="css"><a href="#css" class="headerlink" title="css"></a>css</h3><p>Загружает CSS-файлы. <code>path</code> может быть массивом или строкой. Если путь не начинается с префикса <code>/</code> или с любого протокола, то будет начинаться с корневого URL-адреса. Если не добавить <code>.css</code> в конце пути, он будет подставлен автоматически. Используйте тип объекта для пользовательских атрибутов.</p>
+<pre><code class="js">&lt;%- css(path, ...) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- css(&#39;style.css&#39;) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot;&gt;
+
+&lt;%- css([&#39;style.css&#39;, &#39;screen.css&#39;]) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot;&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/screen.css&quot;&gt;
+
+&lt;%- css({ href: &#39;style.css&#39;, integrity: &#39;foo&#39; }) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot; integrity=&quot;foo&quot;&gt;
+
+&lt;%- css([{ href: &#39;style.css&#39;, integrity: &#39;foo&#39; }, { href: &#39;screen.css&#39;, integrity: &#39;bar&#39; }]) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot; integrity=&quot;foo&quot;&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/screen.css&quot; integrity=&quot;bar&quot;&gt;
+</code></pre>
+<h3 id="js"><a href="#js" class="headerlink" title="js"></a>js</h3><p>Загружает JavaScript файлы. <code>path</code> может быть массивом или строкой. Если путь не начинается с префикса <code>/</code> или с любого протокола, то будет начинаться с корневого URL-адреса. Если не добавить <code>.js</code> в конце пути, он будет подставлен автоматически. Используйте тип объекта для пользовательских атрибутов.</p>
+<pre><code class="js">&lt;%- js(path, ...) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- js(&#39;script.js&#39;) %&gt;
+// &lt;script src=&quot;/script.js&quot;&gt;&lt;/script&gt;
+
+&lt;%- js([&#39;script.js&#39;, &#39;gallery.js&#39;]) %&gt;
+// &lt;script src=&quot;/script.js&quot;&gt;&lt;/script&gt;
+// &lt;script src=&quot;/gallery.js&quot;&gt;&lt;/script&gt;
+
+&lt;%- js({ src: &#39;script.js&#39;, integrity: &#39;foo&#39;, async: true }) %&gt;
+// &lt;script src=&quot;/script.js&quot; integrity=&quot;foo&quot; async&gt;&lt;/script&gt;
+
+&lt;%- js([{ src: &#39;script.js&#39;, integrity: &#39;foo&#39; }, { src: &#39;gallery.js&#39;, integrity: &#39;bar&#39; }]) %&gt;
+// &lt;script src=&quot;/script.js&quot; integrity=&quot;foo&quot;&gt;&lt;/script&gt;
+// &lt;script src=&quot;/gallery.js&quot; integrity=&quot;bar&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h3 id="link-to"><a href="#link-to" class="headerlink" title="link_to"></a>link_to</h3><p>Вставляет ссылку.</p>
+<pre><code class="js">&lt;%- link_to(path, [text], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опции</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>external</code></td>
+<td>Открывает ссылку в новой вкладке</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Имя класса</td>
+<td></td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- link_to(&#39;http://www.google.com&#39;) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;http://www.google.com&quot;&gt;http://www.google.com&lt;/a&gt;
+
+&lt;%- link_to(&#39;http://www.google.com&#39;, &#39;Google&#39;) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;Google&quot;&gt;Google&lt;/a&gt;
+
+&lt;%- link_to(&#39;http://www.google.com&#39;, &#39;Google&#39;, {external: true}) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;Google&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google&lt;/a&gt;
+</code></pre>
+<h3 id="mail-to"><a href="#mail-to" class="headerlink" title="mail_to"></a>mail_to</h3><p>Вставка почтовой ссылки.</p>
+<pre><code class="js">&lt;%- mail_to(path, [text], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>Имя класса</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+</tr>
+<tr>
+<td><code>subject</code></td>
+<td>Тема письма</td>
+</tr>
+<tr>
+<td><code>cc</code></td>
+<td>Копия</td>
+</tr>
+<tr>
+<td><code>bcc</code></td>
+<td>Скрытая копия</td>
+</tr>
+<tr>
+<td><code>body</code></td>
+<td>Содержание сообщения</td>
+</tr>
+</tbody></table>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- mail_to(&#39;a@abc.com&#39;) %&gt;
+// &lt;a href=&quot;mailto:a@abc.com&quot; title=&quot;a@abc.com&quot;&gt;a@abc.com&lt;/a&gt;
+
+&lt;%- mail_to(&#39;a@abc.com&#39;, &#39;Email&#39;) %&gt;
+// &lt;a href=&quot;mailto:a@abc.com&quot; title=&quot;Email&quot;&gt;Email&lt;/a&gt;
+</code></pre>
+<h3 id="image-tag"><a href="#image-tag" class="headerlink" title="image_tag"></a>image_tag</h3><p>Вставка изображения.</p>
+<pre><code class="js">&lt;%- image_tag(path, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>alt</code></td>
+<td>Альтернативный текст изображения</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Имя класса</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td>Ширина изображения</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>Высота изображения</td>
+</tr>
+</tbody></table>
+<h3 id="favicon-tag"><a href="#favicon-tag" class="headerlink" title="favicon_tag"></a>favicon_tag</h3><p>Вставка иконки сайта (favicon).</p>
+<pre><code class="js">&lt;%- favicon_tag(path) %&gt;
+</code></pre>
+<h3 id="feed-tag"><a href="#feed-tag" class="headerlink" title="feed_tag"></a>feed_tag</h3><p>Вставка ссылки на канал.</p>
+<pre><code class="js">&lt;%- feed_tag(path, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опции</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>Имя канала</td>
+<td><code>config.title</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Тип канала</td>
+<td>atom</td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- feed_tag(&#39;atom.xml&#39;) %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;Hexo&quot; type=&quot;application/atom+xml&quot;&gt;
+
+&lt;%- feed_tag(&#39;rss.xml&#39;, { title: &#39;RSS Feed&#39;, type: &#39;rss&#39; }) %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;RSS Feed&quot; type=&quot;application/rss+xml&quot;&gt;
+
+/* Defaults to hexo-generator-feed&#39;s config if no argument */
+&lt;%- feed_tag() %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;Hexo&quot; type=&quot;application/atom+xml&quot;&gt;
+</code></pre>
+<h3 id="Условные-теги"><a href="#Условные-теги" class="headerlink" title="Условные теги"></a>Условные теги</h3><h3 id="is-current"><a href="#is-current" class="headerlink" title="is_current"></a>is_current</h3><p>Проверить, соответствует ли <code>path</code> URL-адресу текущей страницы. Используйте <code>strict</code> для обеспечения строгого соответствия.</p>
+<pre><code class="js">&lt;%- is_current(path, [strict]) %&gt;
+</code></pre>
+<h3 id="is-home"><a href="#is-home" class="headerlink" title="is_home"></a>is_home</h3><p>Проверить, является ли текущая страница главной.</p>
+<pre><code class="js">&lt;%- is_home() %&gt;
+</code></pre>
+<h3 id="is-post"><a href="#is-post" class="headerlink" title="is_post"></a>is_post</h3><p>Проверить, является ли текущая страница постом.</p>
+<pre><code class="js">&lt;%- is_post() %&gt;
+</code></pre>
+<h3 id="is-archive"><a href="#is-archive" class="headerlink" title="is_archive"></a>is_archive</h3><p>Проверить, является ли текущая страница архивом.</p>
+<pre><code class="js">&lt;%- is_archive() %&gt;
+</code></pre>
+<h3 id="is-year"><a href="#is-year" class="headerlink" title="is_year"></a>is_year</h3><p>Проверить, является ли текущая страница годовым архивом.</p>
+<pre><code class="js">&lt;%- is_year() %&gt;
+</code></pre>
+<h3 id="is-month"><a href="#is-month" class="headerlink" title="is_month"></a>is_month</h3><p>Проверить, является ли текущая страница месячным архивом.</p>
+<pre><code class="js">&lt;%- is_month() %&gt;
+</code></pre>
+<h3 id="is-category"><a href="#is-category" class="headerlink" title="is_category"></a>is_category</h3><p>Проверить, является ли текущая страница страницей категории.<br>Если строка содержит параметр, проверяется, соответствует ли текущая страница заданной категории.</p>
+<pre><code class="js">&lt;%- is_category() %&gt;
+&lt;%- is_category(&#39;hobby&#39;) %&gt;
+</code></pre>
+<h3 id="is-tag"><a href="#is-tag" class="headerlink" title="is_tag"></a>is_tag</h3><p>Проверить, является ли текущая страница страницей тега. Если строка содержит параметр, проверяется, соответствует ли текущая страница заданному тегу.</p>
+<pre><code class="js">&lt;%- is_tag() %&gt;
+&lt;%- is_tag(&#39;hobby&#39;) %&gt;
+</code></pre>
+<h2 id="Работа-со-строками"><a href="#Работа-со-строками" class="headerlink" title="Работа со строками"></a>Работа со строками</h2><h3 id="trim"><a href="#trim" class="headerlink" title="trim"></a>trim</h3><p>Удаляет префиксы и конечные пробелы из строки.</p>
+<pre><code class="js">&lt;%- trim(string) %&gt;
+</code></pre>
+<h3 id="strip-html"><a href="#strip-html" class="headerlink" title="strip_html"></a>strip_html</h3><p>Санирует(sanitizes) все HTML-теги в строку.</p>
+<pre><code class="js">&lt;%- strip_html(string) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- strip_html(&#39;It\&#39;s not &lt;b&gt;important&lt;/b&gt; anymore!&#39;) %&gt;
+// It&#39;s not important anymore!
+</code></pre>
+<h3 id="titlecase"><a href="#titlecase" class="headerlink" title="titlecase"></a>titlecase</h3><p>Правильно расставляет заглавные буквы в строке заголовка.</p>
+<pre><code class="js">&lt;%- titlecase(string) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- titlecase(&#39;this is an apple&#39;) %&gt;
+# This is an Apple
+</code></pre>
+<h3 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h3><p>Преобразует строку с помощью Markdown.</p>
+<pre><code class="js">&lt;%- markdown(str) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- markdown(&#39;make me **strong**&#39;) %&gt;
+// make me &lt;strong&gt;strong&lt;/strong&gt;
+</code></pre>
+<h3 id="render"><a href="#render" class="headerlink" title="render"></a>render</h3><p>Обрабатывает строку.</p>
+<pre><code class="js">&lt;%- render(str, engine, [options]) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- render(&#39;p(class=&quot;example&quot;) Test&#39;, &#39;pug&#39;); %&gt;
+// &lt;p class=&quot;example&quot;&gt;Test&lt;/p&gt;
+</code></pre>
+<p>См. <a href="https://hexo.io/ru/api/rendering">отрисовка</a> для получения более подробной информации.</p>
+<h3 id="word-wrap"><a href="#word-wrap" class="headerlink" title="word_wrap"></a>word_wrap</h3><p>Переносит строки длиннее указанного в <code>length</code> количества символов. <code>length</code> равняется 80 по умолчанию.</p>
+<pre><code class="js">&lt;%- word_wrap(str, [length]) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- word_wrap(&#39;Once upon a time&#39;, 8) %&gt;
+// Once upon\n a time
+</code></pre>
+<h3 id="truncate"><a href="#truncate" class="headerlink" title="truncate"></a>truncate</h3><p>Обрезает текст после определённого в <code>length</code> количества символов. По умолчанию <code>length</code> 30 символов.</p>
+<pre><code class="js">&lt;%- truncate(text, [options]) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- truncate(&#39;Once upon a time in a world far far away&#39;, {length: 17}) %&gt;
+// Once upon a ti...
+
+&lt;%- truncate(&#39;Once upon a time in a world far far away&#39;, {length: 17, separator: &#39; &#39;}) %&gt;
+// Once upon a...
+
+&lt;%- truncate(&#39;And they found that many people were sleeping better.&#39;, {length: 25, omission: &#39;... (continued)&#39;}) %&gt;
+// And they f... (continued)
+</code></pre>
+<h3 id="escape-html"><a href="#escape-html" class="headerlink" title="escape_html"></a>escape_html</h3><p>Escapes HTML entities in a string.</p>
+<pre><code class="js">&lt;%- escape_html(str) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- escape_html(&#39;&lt;p&gt;Hello &quot;world&quot;.&lt;/p&gt;&#39;) %&gt;
+// &amp;lt;p&amp;gt;Hello &amp;quot;world&amp;quot;.&amp;lt;&amp;#x2F;p&amp;gt;
+</code></pre>
+<h2 id="Шаблоны"><a href="#Шаблоны" class="headerlink" title="Шаблоны"></a>Шаблоны</h2><h3 id="partial"><a href="#partial" class="headerlink" title="partial"></a>partial</h3><p>Загружает другие файлы шаблонов. Можно назначить локальные переменные в <code>locals</code>.</p>
+<pre><code class="js">&lt;%- partial(layout, [locals], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cache</code></td>
+<td>Кэшировать содержимое (Использовать кэш фрагментов.)</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>only</code></td>
+<td>Строгие локальные переменные. Использовать только указанные в шаблоне переменные <code>locals</code>.</td>
+<td><code>false</code></td>
+</tr>
+</tbody></table>
+<h3 id="fragment-cache"><a href="#fragment-cache" class="headerlink" title="fragment_cache"></a>fragment_cache</h3><p>Кэширует содержимое фрагмента. Сохраняет содержимое внутри фрагмента в кэш и при следующем запросе берет значения из него.</p>
+<pre><code class="js">&lt;%- fragment_cache(id, fn);
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- fragment_cache(&#39;header&#39;, function(){
+  return &#39;&lt;header&gt;&lt;/header&gt;&#39;;
+}) %&gt;
+</code></pre>
+<h2 id="Дата-и-время"><a href="#Дата-и-время" class="headerlink" title="Дата и время"></a>Дата и время</h2><h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>Вставляет отформатированную дату. <code>date</code> может быть в формате времени Unix, строки ISO, объекта date, или <a href="https://momentjs.com/">Moment.js</a> объекта. Параметр <code>format</code> по умолчанию равен <code>date_format</code>.</p>
+<pre><code class="js">&lt;%- date(date, [format]) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- date(Date.now()) %&gt;
+// 2013-01-01
+
+&lt;%- date(Date.now(), &#39;YYYY/M/D&#39;) %&gt;
+// Jan 1 2013
+</code></pre>
+<h3 id="date-xml"><a href="#date-xml" class="headerlink" title="date_xml"></a>date_xml</h3><p>Вставляет дату в формате XML. <code>date</code> может быть в формате времени Unix, строки ISO, объекта date или <a href="https://momentjs.com/">Moment.js</a> объекта.</p>
+<pre><code class="js">&lt;%- date_xml(date) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- date_xml(Date.now()) %&gt;
+// 2013-01-01T00:00:00.000Z
+</code></pre>
+<h3 id="time"><a href="#time" class="headerlink" title="time"></a>time</h3><p>Вставляет отформатированное время. <code>date</code> может быть в формате времени Unix, строки ISO, объекта date или <a href="https://momentjs.com/">Moment.js</a> объекта. Параметр <code>format</code> по умолчанию равен  <code>time_format</code>.</p>
+<pre><code class="js">&lt;%- time(date, [format]) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- time(Date.now()) %&gt;
+// 13:05:12
+
+&lt;%- time(Date.now(), &#39;h:mm:ss a&#39;) %&gt;
+// 1:05:12 pm
+</code></pre>
+<h3 id="full-date"><a href="#full-date" class="headerlink" title="full_date"></a>full_date</h3><p>Вставляет отформатированные дату и время. <code>date</code> может быть в формате времени Unix, строки ISO, объекта date или <a href="https://momentjs.com/">Moment.js</a> объекта. Параметр <code>format</code> по умолчанию равен <code>date_format + time_format</code>.</p>
+<pre><code class="js">&lt;%- full_date(date, [format]) %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- full_date(new Date()) %&gt;
+// Jan 1, 2013 0:00:00
+
+&lt;%- full_date(new Date(), &#39;dddd, MMMM Do YYYY, h:mm:ss a&#39;) %&gt;
+// Tuesday, January 1st 2013, 12:00:00 am
+</code></pre>
+<h3 id="moment"><a href="#moment" class="headerlink" title="moment"></a>moment</h3><p>Библиотека <a href="https://momentjs.com/">Moment.js</a>.</p>
+<h2 id="Списки"><a href="#Списки" class="headerlink" title="Списки"></a>Списки</h2><h3 id="list-categories"><a href="#list-categories" class="headerlink" title="list_categories"></a>list_categories</h3><p>Вставляет список всех категорий.</p>
+<pre><code class="js">&lt;%- list_categories([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>Упорядочивание категорий</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Порядок сортировки. <code>1</code>, <code>asc</code> для сортировки по возрастанию; <code>-1</code>, <code>desc</code> для сортировки по убыванию</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>Отображать количество постов для каждой категории</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Стиль показа списка категорий. <code>list</code> отображает категории в неупорядоченном списке.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Разделитель категорий. (Работает если только стиль <code>style</code> не задан как <code>list</code>)</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>depth</code></td>
+<td>Глубина вложенных категорий для отображения. <code>0</code> отображает все категории и подкатегории; <code>-1</code> похож на <code>0</code> но отображается в плоскости; <code>1</code> отображает только разделы верхнего уровня.</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Имя класса списка категорий.</td>
+<td>category</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>Функция, позволяющая изменить отображаемое имя категории.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="list-tags"><a href="#list-tags" class="headerlink" title="list_tags"></a>list_tags</h3><p>Вставка списка всех тегов.</p>
+<pre><code class="js">&lt;%- list_tags([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>Сортировать по категориям</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Порядок сортировки. <code>1</code>, <code>asc</code> по возрастанию; <code>-1</code>, <code>desc</code> по убыванию</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>Отображать количество постов для каждого тега.</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Стиль показа списка тегов. <code>list</code> отображает категории в неупорядоченном списке.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Разделитель тегов. (Работает если только стиль <code>style</code> не задан как <code>list</code>)</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Имя класса списка тегов (string) или настройте класс каждого тега (object, см. Ниже).</td>
+<td>tag</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>Функция, позволяющая изменить отображаемое имя категории.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>Ограничение количества отображаемых тегов (0 &#x3D; неограниченно)</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td>Добавьте суффикс к ссылке.</td>
+<td>None</td>
+</tr>
+</tbody></table>
+<p>Расширенная настройка класса:</p>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class.ul</code></td>
+<td><code>&lt;ul&gt;</code> имя класса (только для стиля <code>list</code>)</td>
+<td><code>tag-list</code> (стиль списка)</td>
+</tr>
+<tr>
+<td><code>class.li</code></td>
+<td><code>&lt;li&gt;</code> имя класса (только для стиля <code>list</code>)</td>
+<td><code>tag-list-item</code> (стиль списка)</td>
+</tr>
+<tr>
+<td><code>class.a</code></td>
+<td><code>&lt;a&gt;</code> имя класса</td>
+<td><code>tag-list-link</code> (list style) <code>tag-link</code> (обычный стиль)</td>
+</tr>
+<tr>
+<td><code>class.label</code></td>
+<td>имя класса <code>&lt;span&gt;</code>, в котором хранится метка тега (только для обычного стиля, когда задан <code>class.label</code>, метка помещается в <code>&lt;span&gt;</code>)</td>
+<td><code>tag-label</code> (обычный стиль)</td>
+</tr>
+<tr>
+<td><code>class.count</code></td>
+<td>имя класса <code>&lt;span&gt;</code>, в котором хранится счетчик тегов (только если <code>show_count</code> имеет значение <code>true</code>)</td>
+<td><code>tag-list-count</code> (стиль списка) <code>tag-count</code> (обычный стиль)</td>
+</tr>
+</tbody></table>
+<p>Примеры:</p>
+<pre><code class="ejs">&lt;%- list_tags(site.tags, {class: &#39;classtest&#39;, style: false, separator: &#39; | &#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: &#39;classtest&#39;, style: &#39;list&#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: {ul: &#39;ululul&#39;, li: &#39;lilili&#39;, a: &#39;aaa&#39;, count: &#39;ccc&#39;}, style: false, separator: &#39; | &#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: {ul: &#39;ululul&#39;, li: &#39;lilili&#39;, a: &#39;aaa&#39;, count: &#39;ccc&#39;}, style: &#39;list&#39;}) %&gt;
+</code></pre>
+<h3 id="list-archives"><a href="#list-archives" class="headerlink" title="list_archives"></a>list_archives</h3><p>Вставка списка архивов.</p>
+<pre><code class="js">&lt;%- list_archives([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>type</code></td>
+<td>Тип. Значение может быть год <code>yearly</code> или месяц <code>monthly</code>.</td>
+<td>monthly</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Порядок сортировки. <code>1</code>, <code>asc</code> по возрастанию; <code>-1</code>, <code>desc</code> по убывантю</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>Отобразить количество сообщений для каждого архива</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>Формат даты</td>
+<td>MMMM YYYY</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Стиль показа списка архивов. <code>list</code> отображает категории в неупорядоченном списке.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Разделитель архивов. (Работает если только стиль <code>style</code> не задан как <code>list</code>)</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Имя класса списка архивов.</td>
+<td>archive</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>Функция, позволяющая изменить отображаемое имя архива.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="list-posts"><a href="#list-posts" class="headerlink" title="list_posts"></a>list_posts</h3><p>Список постов.</p>
+<pre><code class="js">&lt;%- list_posts([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>Сортировка постов</td>
+<td>date</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Порядок сортировки. <code>1</code>, <code>asc</code> по возрастанию; <code>-1</code>, <code>desc</code> по убыванию</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Стиль показа списка постов. <code>list</code> отображает категории в неупорядоченном списке.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Разделитель постов. (Работает если только стиль <code>style</code> не задан как <code>list</code>)</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Имя класса списка постов.</td>
+<td>post</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>Ограничени количества отображаемых постов (0 &#x3D; неограниченно)</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>Функция, позволяющая изменить отображаемое имя поста.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="tagcloud"><a href="#tagcloud" class="headerlink" title="tagcloud"></a>tagcloud</h3><p>Облако тегов.</p>
+<pre><code class="js">&lt;%- tagcloud([tags], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>min_font</code></td>
+<td>Минимальный размер шрифта</td>
+<td>10</td>
+</tr>
+<tr>
+<td><code>max_font</code></td>
+<td>Максимальный размер шрифта</td>
+<td>20</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>Единица измерения размера шрифта</td>
+<td>px</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>Общая сумма тегов</td>
+<td>40</td>
+</tr>
+<tr>
+<td><code>orderby</code></td>
+<td>Упорядочить по тегу</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Порядок сортировки. <code>1</code>, <code>asc</code> по возрастанию; <code>-1</code>, <code>desc</code> по убыванию</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td>Цветное облако тегов</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>start_color</code></td>
+<td>Стартовый цвет. Можно использовать hex (<code>#b700ff</code>), rgba (<code>rgba(183, 0, 255, 1)</code>), hsla (<code>hsla(283, 100%, 50%, 1)</code>) или <a href="http://www.w3.org/TR/css3-color/#svg-color">имена цветов</a>. Эта опция работает только если <code>color</code> установлен в <code>true</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>end_color</code></td>
+<td>Конечный цвет. Можно использовать hex (<code>#b700ff</code>), rgba (<code>rgba(183, 0, 255, 1)</code>), hsla (<code>hsla(283, 100%, 50%, 1)</code>) или <a href="http://www.w3.org/TR/css3-color/#svg-color">имена цветов</a>. Эта опция работает только если <code>color</code> установлен в <code>true</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Префикс имени класса тегов</td>
+<td></td>
+</tr>
+<tr>
+<td><code>level</code></td>
+<td>Количество различных имен классов. Эта опция работает только тогда, когда переменная <code>class</code> установлена.</td>
+<td>10</td>
+</tr>
+</tbody></table>
+<h2 id="Разное"><a href="#Разное" class="headerlink" title="Разное"></a>Разное</h2><h3 id="paginator"><a href="#paginator" class="headerlink" title="paginator"></a>paginator</h3><p>Вставляет нумерацию страниц.</p>
+<pre><code class="js">&lt;%- paginator(options) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>base</code></td>
+<td>Базовый URL-адрес</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>Формат URL-адреса</td>
+<td>page&#x2F;%d&#x2F;</td>
+</tr>
+<tr>
+<td><code>total</code></td>
+<td>Количество страниц</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>current</code></td>
+<td>Номер текущей страницы</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>prev_text</code></td>
+<td>Ссылка на предыдущую страницу. Работает только если <code>prev_next</code> имеет значение <code>true</code>.</td>
+<td>Prev</td>
+</tr>
+<tr>
+<td><code>next_text</code></td>
+<td>Ссылка на следующую страницу. Работает только если <code>prev_next</code> имеет значение <code>true</code>.</td>
+<td>Next</td>
+</tr>
+<tr>
+<td><code>space</code></td>
+<td>Пространство в тексте</td>
+<td>&amp;hellp;</td>
+</tr>
+<tr>
+<td><code>prev_next</code></td>
+<td>Отображает ссылки на предыдущую и следующую страницы</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>end_size</code></td>
+<td>Количество страниц, отображаемых с начала и конца.</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>mid_size</code></td>
+<td>Количество страниц, отображаемых от текущей страницы. Текущая страница не включена.</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>show_all</code></td>
+<td>Отобразить все страницы. Если установлено в <code>true</code>, <code>end_size</code> и <code>mid_size</code> не работают.</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>escape</code></td>
+<td>Экранирование HTML-тегов</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- paginator({
+  prev_text: &#39;&lt;&#39;,
+  next_text: &#39;&gt;&#39;
+}) %&gt;
+</code></pre>
+<pre><code class="html">&lt;!-- Rendered as --&gt;
+&lt;a href=&quot;/1/&quot;&gt;&amp;lt;&lt;/a&gt;
+&lt;a href=&quot;/1/&quot;&gt;1&lt;/a&gt;
+2
+&lt;a href=&quot;/3/&quot;&gt;3&lt;/a&gt;
+&lt;a href=&quot;/3/&quot;&gt;&amp;gt;&lt;/a&gt;
+</code></pre>
+<pre><code class="js">&lt;%- paginator({
+  prev_text: &#39;&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;/i&gt;&#39;,
+  next_text: &#39;&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;&#39;,
+  escape: false
+}) %&gt;
+</code></pre>
+<pre><code class="html">&lt;!-- Rendered as --&gt;
+&lt;a href=&quot;/1/&quot;&gt;&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;a href=&quot;/1/&quot;&gt;1&lt;/a&gt;
+2
+&lt;a href=&quot;/3/&quot;&gt;3&lt;/a&gt;
+&lt;a href=&quot;/3/&quot;&gt;&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+</code></pre>
+<h3 id="search-form"><a href="#search-form" class="headerlink" title="search_form"></a>search_form</h3><p>Вставляет форму поиска Google.</p>
+<pre><code class="js">&lt;%- search_form(options) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опции</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>Имя класса формы</td>
+<td>search-form</td>
+</tr>
+<tr>
+<td><code>text</code></td>
+<td>Подсказка поиска</td>
+<td>Search</td>
+</tr>
+<tr>
+<td><code>button</code></td>
+<td>Отображать кнопку поиска. Значение может быть логическим или строковым. Если значение — строка, тогда она подставится в текст кнопки.</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h3 id="number-format"><a href="#number-format" class="headerlink" title="number_format"></a>number_format</h3><p>Формат чисел.</p>
+<pre><code class="js">&lt;%- number_format(number, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>precision</code></td>
+<td>Точность чисел. Значение можно установить в <code>false</code> или неотрицательное целое число.</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>delimiter</code></td>
+<td>Разделитель тысяч</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Разделитель дробной части числа от целой.</td>
+<td>.</td>
+</tr>
+</tbody></table>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- number_format(12345.67, {precision: 1}) %&gt;
+// 12,345.68
+
+&lt;%- number_format(12345.67, {precision: 4}) %&gt;
+// 12,345.6700
+
+&lt;%- number_format(12345.67, {precision: 0}) %&gt;
+// 12,345
+
+&lt;%- number_format(12345.67, {delimiter: &#39;&#39;}) %&gt;
+// 12345.67
+
+&lt;%- number_format(12345.67, {separator: &#39;/&#39;}) %&gt;
+// 12,345/67
+</code></pre>
+<h3 id="meta-generator"><a href="#meta-generator" class="headerlink" title="meta_generator"></a>meta_generator</h3><p>Добавляет <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta">генерирование тегов</a>.</p>
+<pre><code class="js">&lt;%- meta_generator() %&gt;
+</code></pre>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- meta_generator() %&gt;
+// &lt;meta name=&quot;generator&quot; content=&quot;Hexo 4.0.0&quot;&gt;
+</code></pre>
+<h3 id="open-graph"><a href="#open-graph" class="headerlink" title="open_graph"></a>open_graph</h3><p>Вставляет график <a href="http://ogp.me/">Open Graph</a>.</p>
+<pre><code class="js">&lt;%- open_graph([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>Заголовок страницы (<code>og:title</code>)</td>
+<td><code>page.title</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Тип страницы (<code>og:type</code>)</td>
+<td>blog</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>URL-адрес страницы (<code>og:url</code>)</td>
+<td><code>url</code></td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>Обложка страницы (<code>og:image</code>)</td>
+<td>Все изображения в материалах</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>Автор статьи (<code>og:article:author</code>)</td>
+<td><code>config.author</code></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Время публикации статьи (<code>og:article:published_time</code>)</td>
+<td>Время публикации страницы</td>
+</tr>
+<tr>
+<td><code>updated</code></td>
+<td>Время изменения статьи (<code>og:article:modified_time</code>)</td>
+<td>Время изменения страницы</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>Язык статьи (<code>og:locale</code>)</td>
+<td>&#96;page.lang</td>
+</tr>
+<tr>
+<td><code>site_name</code></td>
+<td>Имя сайта (<code>og:site_name</code>)</td>
+<td><code>config.title</code></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Описание страницы (<code>og:description</code>)</td>
+<td>Отрывок страницы или первые 200 символов содержимого</td>
+</tr>
+<tr>
+<td><code>twitter_card</code></td>
+<td>Карточка Twitter (<code>twitter:card</code>)</td>
+<td>Краткое изложение</td>
+</tr>
+<tr>
+<td><code>twitter_id</code></td>
+<td>Twitter ID (<code>twitter:creator</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>twitter_site</code></td>
+<td>Сайт Twitter (<code>twitter:site</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>google_plus</code></td>
+<td>Ссылка на профиль Google+</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fb_admins</code></td>
+<td>Facebook ID администратора</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fb_app_id</code></td>
+<td>Facebook ID приложения</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="toc"><a href="#toc" class="headerlink" title="toc"></a>toc</h3><p>Анализирует все теги заголовков (H1~н6) на странице и создаёт на их основе оглавление.</p>
+<pre><code class="js">&lt;%- toc(str, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Опция</th>
+<th>Описание</th>
+<th>Значение по умолчанию</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>Имя класса</td>
+<td>toc</td>
+</tr>
+<tr>
+<td><code>list_number</code></td>
+<td>Отображать нумерацию</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>max_depth</code></td>
+<td>Максимальная глубина генерации заголовков toc</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>min_depth</code></td>
+<td>Минимальная глубина генерации заголовков toc</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p><strong>Примеры:</strong></p>
+<pre><code class="js">&lt;%- toc(page.content) %&gt;
+</code></pre>
+<h4 id="data-toc-unnumbered-6-1-0"><a href="#data-toc-unnumbered-6-1-0" class="headerlink" title="data-toc-unnumbered (+6.1.0)"></a>data-toc-unnumbered (+6.1.0)</h4><p>Headings with attribute <code>data-toc-unnumbered=&quot;true&quot;</code> will be marked as unnumbered (list number will not be display).</p>
+<p>{% note warn “Warning!” %}<br>For using <code>data-toc-unnumbered=&quot;true&quot;</code>, the renderer must have the option to add CSS classes.</p>
+<p>Please see below PRs.</p>
+<ul>
+<li><a href="https://github.com/hexojs/hexo/pull/4871">https://github.com/hexojs/hexo/pull/4871</a></li>
+<li><a href="https://github.com/hexojs/hexo-util/pull/269">https://github.com/hexojs/hexo-util/pull/269</a></li>
+<li><a href="https://github.com/hexojs/hexo-renderer-markdown-it/pull/174">https://github.com/hexojs/hexo-renderer-markdown-it/pull/174</a><br>{% endnote %}</li>
+</ul>

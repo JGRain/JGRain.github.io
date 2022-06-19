@@ -1,0 +1,98 @@
+<hr>
+<h2 id="title-Front-matter"><a href="#title-Front-matter" class="headerlink" title="title: Front-matter"></a>title: Front-matter</h2><p>{% youtube pfD6FCZdW4Q %}</p>
+<p>Front-matter é um bloco de YAML ou JSON no início do arquivo que é usado para definir configurações para o conteúdo que será escrito (como páginas ou postagens). O Front-matter é terminado por três traços quando escrito em YAML ou três ponto e vírgula quando escrito em JSON.</p>
+<p><strong>YAML</strong></p>
+<pre><code class="yaml">---
+title: Hello World
+date: 2013/7/13 20:46:25
+---
+</code></pre>
+<p><strong>JSON</strong></p>
+<pre><code class="json">&quot;title&quot;: &quot;Hello World&quot;,
+&quot;date&quot;: &quot;2013/7/13 20:46:25&quot;
+;;;
+</code></pre>
+<h3 id="Configuracoes-e-Seus-Valores-Padrao"><a href="#Configuracoes-e-Seus-Valores-Padrao" class="headerlink" title="Configurações e Seus Valores Padrão"></a>Configurações e Seus Valores Padrão</h3><table>
+<thead>
+<tr>
+<th>Configuração</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>layout</code></td>
+<td>Layout</td>
+<td><a href="/pt-br/docs/configuration#Escrita"><code>config.default_layout</code></a></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Título</td>
+<td>Filename (posts only)</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Data de publicação</td>
+<td>Data de criação do arquivo</td>
+</tr>
+<tr>
+<td><code>updated</code></td>
+<td>Data de atualização</td>
+<td>Data de atualização do arquivo</td>
+</tr>
+<tr>
+<td><code>comments</code></td>
+<td>Habilita o recurso de comentário para a postagem</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>Tags (Não disponível para páginas)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>Categorias (Não disponível para páginas)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>Substitui o permalink padrão da postagem</td>
+<td></td>
+</tr>
+<tr>
+<td><code>excerpt</code></td>
+<td>Page excerpt in plain text. Use <a href="/docs/tag-plugins#Post-Excerpt">this plugin</a> to format the text</td>
+<td></td>
+</tr>
+<tr>
+<td><code>disableNunjucks</code></td>
+<td>Disable rendering of Nunjucks tag <code>{{ }}</code>&#x2F;<code>{% %}</code> and <a href="/docs/tag-plugins">tag plugins</a> when enabled</td>
+<td></td>
+</tr>
+<tr>
+<td><code>lang</code></td>
+<td>Set the language to override <a href="/docs/internationalization#Path">auto-detection</a></td>
+<td>Inherited from <code>_config.yml</code></td>
+</tr>
+</tbody></table>
+<h4 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h4><p>The default layout is <code>post</code>, in accordance to the value of <a href="(/docs/configuration#Writing)"><code>default_layout</code></a> setting in <code>_config.yml</code>. When the layout is disabled (<code>layout: false</code>) in an article, it will not be processed with a theme. However, it will still be rendered by any available renderer: if an article is written in Markdown and a Markdown renderer (like the default <a href="https://github.com/hexojs/hexo-renderer-marked">hexo-renderer-marked</a>) is installed, it will be rendered to HTML.</p>
+<p><a href="/docs/tag-plugins">Tag plugins</a> are always processed regardless of layout, unless disabled by the <code>disableNunjucks</code> setting or <a href="/api/renderer#Disable-Nunjucks-tags">renderer</a>.</p>
+<h4 id="Categorias-amp-Tags"><a href="#Categorias-amp-Tags" class="headerlink" title="Categorias &amp; Tags"></a>Categorias &amp; Tags</h4><p>Somente postagens aceitam o uso de categorias e tags. As categorias aplicam-se à postagens em ordem, resultando em uma hierarquia de classificações e subclassificações. As tags são todas definidas no mesmo nível hierárquico, de modo que a ordem em que aparecem não é importante.</p>
+<p><strong>Exemplo</strong></p>
+<pre><code class="yaml">categories:
+- Sports
+- Baseball
+tags:
+- Injury
+- Fight
+- Shocking
+</code></pre>
+<p>Se você quiser aplicar várias hierarquias de categorias, use uma lista de nomes em vez de um único nome. Se o Hexo encontar qualquer categoria definida dessa forma em uma postagem, ele tratará cada categoria para essa postagem com sua própria hierarquia independente.</p>
+<p><strong>Exemplo</strong></p>
+<pre><code class="yaml">categories:
+- [Sports, Baseball]
+- [MLB, American League, Boston Red Sox]
+- [MLB, American League, New York Yankees]
+- Rivalries
+</code></pre>

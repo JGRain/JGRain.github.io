@@ -1,0 +1,35 @@
+<hr>
+<h2 id="title-Интернационализация-i18n"><a href="#title-Интернационализация-i18n" class="headerlink" title="title: Интернационализация (i18n)"></a>title: Интернационализация (i18n)</h2><p><a href="https://ru.wiktionary.org/wiki/i18n">Что такое: i18n</a></p>
+<p>Можно использовать интернационализацию на вашем сайте для поддержки многоязычности. Язык по умолчанию устанавливается путём изменения настройки языка <code>language</code> в <code>_config.yml</code>. Возможно также установить несколько языков и изменить их порядок по умолчанию.</p>
+<pre><code class="yaml">language: ru
+
+language:
+- ru
+- en
+- zh-tw
+</code></pre>
+<h3 id="Языковые-файлы"><a href="#Языковые-файлы" class="headerlink" title="Языковые файлы"></a>Языковые файлы</h3><p>Языковые файлы могут быть в формате YAML или JSON. Нужно поместить их в папку языков <code>languages</code> в теме. Также поддерживается формат <a href="https://github.com/alexei/sprintf.js">printf</a>.</p>
+<h3 id="Шаблоны"><a href="#Шаблоны" class="headerlink" title="Шаблоны"></a>Шаблоны</h3><p>Используйте <code>__</code> или <code>_p</code>  в шаблонах помощников, чтобы получить переведённые строки. Первое предназначено для нормального использования, а второе для многострочного использования. Например:</p>
+<pre><code class="yaml">index:
+  title: Главная
+  add: Добавить
+  video:
+    zero: Нет видео
+    one: Одно видео
+    other: %d видео
+</code></pre>
+<pre><code class="js">&lt;%= __(&#39;index.title&#39;) %&gt;
+// Home
+
+&lt;%= _p(&#39;index.video&#39;, 3) %&gt;
+// 3 videos
+</code></pre>
+<h3 id="Путь"><a href="#Путь" class="headerlink" title="Путь"></a>Путь</h3><p>Вы можете установить язык в шапке страницы или изменить <code>i18n_dir</code>, установив значение в <code>_config.yml</code> для поддержки автоматического обнаружения в Hexo.</p>
+<pre><code class="yaml">i18n_dir: :lang
+</code></pre>
+<p>Значение по умолчанию <code>i18n_dir</code> параметр <code>:lang</code> означает, что Hexo будет определять язык в первом сегменте URL-адреса. Например:</p>
+<pre><code class="plain">/index.html =&gt; en
+/archives/index.html =&gt; en
+/zh-tw/index.html =&gt; zh-tw
+</code></pre>
+<p>Строка языка применяется только при наличии языкового файла. Так архивы <code>archives</code> в <code>/archives/index.html</code> (из второй строки примера) не будет обработана как другой язык.</p>

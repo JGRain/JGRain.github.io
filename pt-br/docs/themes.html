@@ -1,0 +1,50 @@
+<hr>
+<h2 id="title-Temas"><a href="#title-Temas" class="headerlink" title="title: Temas"></a>title: Temas</h2><p>{% youtube 5ROIU_9dYe4 %}</p>
+<p>É fácil construir um tema para o Hexo - você só precisa criar um no diretório. Para começar a usar o seu tema, modifique a configuração <code>theme</code> do arquivo <code>_config.yml</code> do seu site. Um tema deve ter a seguinte estrutura:</p>
+<pre><code class="plain">.
+├── _config.yml
+├── languages
+├── layout
+├── scripts
+└── source
+</code></pre>
+<h3 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h3><p>Arquivo de configuração do tema. Unlike the site’s primary configuration file, modificações neste arquivo não requerem uma reinicialização do servidor.</p>
+<h3 id="languages"><a href="#languages" class="headerlink" title="languages"></a>languages</h3><p>Diretório de idiomas. Veja <a href="internationalization.html">internacionalização (i18n)</a> para obter mais informações.</p>
+<h3 id="layout"><a href="#layout" class="headerlink" title="layout"></a>layout</h3><p>Diretório de layouts. Este diretório contém os arquivos de template do tema, que definem a aparência do seu site. O Hexo fornece o mecanismo de template <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> por padrão, mas você pode instalar plugins adicionais para suportar mecanismos alternativos, como <a href="https://github.com/hexojs/hexo-renderer-ejs">EJS</a>, <a href="https://github.com/hexojs/hexo-renderer-haml">Haml</a>, <a href="https://github.com/hexojs/hexo-renderer-jade">Jade</a> ou <a href="https://github.com/maxknee/hexo-render-pug">Pug</a>. O Hexo escolhe o mecanismo de template com base na extensão do arquivo deste. Por exemplo:</p>
+<pre><code class="plain">layout.ejs   - uses EJS
+layout.njk   - uses Nunjucks
+</code></pre>
+<p>Veja <a href="templates.html">templates</a> para obter mais informações.</p>
+<h3 id="scripts"><a href="#scripts" class="headerlink" title="scripts"></a>scripts</h3><p>Diretório de scripts. O Hexo carregará automaticamente todos os arquivos JavaScript deste diretório durante a inicialização. Para mais informações, veja <a href="plugins.html">plugins</a>.</p>
+<h3 id="source"><a href="#source" class="headerlink" title="source"></a>source</h3><p>Diretório com os fontes do tema. Os assets (arquivos CSS e JavaScript por exemplo) ficam aqui. O Hexo ignora arquivos ocultos e arquivos ou diretórios com prefixo <code>_</code> (sublinhado).</p>
+<p>O Hexo processará e salvará todos os arquivos renderizáveis no diretório <code>public</code>. Os arquivos não renderizáveis serão copiados diretamente para o diretório <code>public</code>.</p>
+<h3 id="Publicando"><a href="#Publicando" class="headerlink" title="Publicando"></a>Publicando</h3><p>Quando você terminar de criar seu tema, você pode publicá-lo na <a href="/themes">lista de temas</a>. Antes de fazer isso, você deve executar o <a href="https://github.com/hexojs/hexo-theme-unit-test">teste da unidade do tema</a> para ter certeza de que tudo está funcionando corretamente. As etapas para publicar um tema são muito semelhantes às de <a href="contributing.html#Updating_Documentation">atualizar a documentação</a>.</p>
+<ol>
+<li><p>Faça um fork <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a></p>
+</li>
+<li><p>Clone o repositório no seu computador e instale dependências.</p>
+<pre><code class="shell">$ git clone https://github.com/&lt;username&gt;/site.git
+$ cd site
+$ npm install
+</code></pre>
+</li>
+<li><p>Edite o arquivo <code>source/_data/themes.yml</code> e adicione seu tema. Por exemplo:</p>
+<pre><code class="yaml">- name: landscape
+  description: A brand new default theme for Hexo.
+  link: https://github.com/hexojs/hexo-theme-landscape
+  preview: http://hexo.io/hexo-theme-landscape
+  tags:
+    - official
+    - responsive
+    - widget
+    - two_column
+    - one_column
+</code></pre>
+</li>
+<li><p>Adicione um print de tela (com o mesmo nome do tema) no diretório <code>source/themes/screenshots</code>. Deve ser um arquivo PNG com resolução de 800x500 pixels.</p>
+</li>
+<li><p>Faça um push para o seu repositório remoto.</p>
+</li>
+<li><p>Crie um pull request e descreva as mudanças.</p>
+</li>
+</ol>

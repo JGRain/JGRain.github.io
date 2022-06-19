@@ -1,0 +1,87 @@
+<hr>
+<h2 id="title-Generator"><a href="#title-Generator" class="headerlink" title="title: Generator"></a>title: Generator</h2><p>generator สร้าง route บนพื้นฐานของไฟล์ท่ีได้จัดการ</p>
+<h2 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h2><pre><code class="js">hexo.extend.generator.register(name, function(locals){
+  // ...
+});
+</code></pre>
+<p>argument <code>locals</code> จะส่งเข้า function โดยมี <a href="../docs/variables.html#Site-Variables">site variables</a> เข้าด้วยกัน ผู้ใช้สามารถใช้ argument นี้เพื่อได้ data ของเว็บไซต์ ด้งนั้นจะไม่ต้องเข้าถึง database โดยตรง</p>
+<h2 id="Update-Routes"><a href="#Update-Routes" class="headerlink" title="Update Routes"></a>Update Routes</h2><pre><code class="js">hexo.extend.generator.register(&#39;test&#39;, function(locals){
+  // Object
+  return {
+    path: &#39;foo&#39;,
+    data: &#39;foo&#39;
+  };
+
+  // Array
+  return [
+    {path: &#39;foo&#39;, data: &#39;foo&#39;},
+    {path: &#39;bar&#39;, data: &#39;bar&#39;}
+  ];
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>path</code></td>
+<td>Path not including the prefixing <code>/</code>.</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Data</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>Layout. Specify the layouts for rendering. The value can be a string or an array. If it’s ignored then the route will return <code>data</code> directly.</td>
+</tr>
+</tbody></table>
+<p>เมื่ออัปเดท source file แฃ้ว hexo จะ execute generator ทั้งหมดและสร้างขึ้น route ใหม่ <strong>กรุณาอย่าเข้าถึง router โดยตรง</strong></p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><h3 id="Archive-Page"><a href="#Archive-Page" class="headerlink" title="Archive Page"></a>Archive Page</h3><p>สร้างเพจ archive ได้ท่ี <code>archives/index.html</code>  โพสต์จะเป็นแบบ  data ท่ีส่งเข้า template. data นี้คล้ายกับ variable <code>page</code> ของ template</p>
+<p>ต่อไปจะตั้งค่า attribute ของ <code>layout</code> เพื่อ render theme template เฉพาะ ในตัวอย่างต่อไปจะตั้งค่า layout อย่างนี้: ถ้า layout  <code>archive</code> ไม่มี จะใช้ layout <code>index</code> แทน</p>
+<pre><code class="js">hexo.extend.generator.register(&#39;archive&#39;, function(locals){
+  return {
+    path: &#39;archives/index.html&#39;,
+    data: locals,
+    layout: [&#39;archive&#39;, &#39;index&#39;]
+  }
+});
+</code></pre>
+<h3 id="Archive-Page-with-Pagination"><a href="#Archive-Page-with-Pagination" class="headerlink" title="Archive Page with Pagination"></a>Archive Page with Pagination</h3><p>ผู้ใช้สามารถใช้เครื่องมือทางการ <a href="https://github.com/hexojs/hexo-pagination">hexo-pagination</a> อย่างสะดวกไปสร้างเพจ archive ท่ีมีหมายเลขหน้า</p>
+<pre><code class="js">var pagination = require(&#39;hexo-pagination&#39;);
+
+hexo.extend.generator.register(&#39;archive&#39;, function(locals){
+  // hexo-pagination makes an index.html for the /archives route
+  return pagination(&#39;archives&#39;, locals.posts, {
+    perPage: 10,
+    layout: [&#39;archive&#39;, &#39;index&#39;],
+    data: {}
+  });
+});
+</code></pre>
+<h3 id="Generate-All-Posts"><a href="#Generate-All-Posts" class="headerlink" title="Generate All Posts"></a>Generate All Posts</h3><p>โพสต์ทั้งหมดจะมีอยู่ใน <code>locals.posts</code> ด้วยแล้วจะสร้าง route ให้โพสต์ทั้งหมด</p>
+<pre><code class="js">hexo.extend.generator.register(&#39;post&#39;, function(locals){
+  return locals.posts.map(function(post){
+    return {
+      path: post.path,
+      data: post,
+      layout: &#39;post&#39;
+    };
+  });
+});
+</code></pre>
+<h3 id="Copy-Files"><a href="#Copy-Files" class="headerlink" title="Copy Files"></a>Copy Files</h3><p>คราวนี้  <code>data</code> จะเป็น function และ route <code>fs.ReadStream</code> ของ <code>data</code> จะสร้างขึ้นมาในเวลาที่ต้องการ</p>
+<pre><code class="js">var fs = require(&#39;hexo-fs&#39;);
+
+hexo.extend.generator.register(&#39;asset&#39;, function(locals){
+  return {
+    path: &#39;file.txt&#39;,
+    data: function(){
+      return fs.createReadStream(&#39;path/to/file.txt&#39;)
+    }
+  };
+});
+</code></pre>

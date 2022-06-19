@@ -1,0 +1,87 @@
+<hr>
+<h2 id="title-模版"><a href="#title-模版" class="headerlink" title="title: 模版"></a>title: 模版</h2><p>模板决定了网站内容的呈现方式，每个主题至少都应包含一个 <code>index</code> 模板，以下是各页面相对应的模板名称：</p>
+<table>
+<thead>
+<tr>
+<th>模板</th>
+<th>用途</th>
+<th>回退</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>index</code></td>
+<td>首页</td>
+<td></td>
+</tr>
+<tr>
+<td><code>post</code></td>
+<td>文章</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td>分页</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>archive</code></td>
+<td>归档</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td>分类归档</td>
+<td><code>archive</code></td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td>标签归档</td>
+<td><code>archive</code></td>
+</tr>
+</tbody></table>
+<h2 id="布局（Layout）"><a href="#布局（Layout）" class="headerlink" title="布局（Layout）"></a>布局（Layout）</h2><p>如果页面结构类似，例如两个模板都有页首（Header）和页脚（Footer），您可考虑通过「布局」让两个模板共享相同的结构。一个布局文件必须要能显示 <code>body</code> 变量的内容，如此一来模板的内容才会被显示，举例来说：</p>
+<pre><code class="html">index
+</code></pre>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;&lt;%- body %&gt;&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>生成：</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;index&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>每个模板都默认使用 <code>layout</code> 布局，您可在 front-matter 指定其他布局，或是设为 <code>false</code> 来关闭布局功能，您甚至可在布局中再使用其他布局来建立嵌套布局。</p>
+<h2 id="局部模版（Partial）"><a href="#局部模版（Partial）" class="headerlink" title="局部模版（Partial）"></a>局部模版（Partial）</h2><p>局部模板让您在不同模板之间共享相同的组件，例如页首（Header）、页脚（Footer）或侧边栏（Sidebar）等，可利用局部模板功能分割为个别文件，让维护更加便利。举例来说：</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= config.title %&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>生成：</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;My Site&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h3 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h3><p>您可以在局部模板中指定局部变量并使用。</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= title %&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;, {title: &#39;Hello World&#39;}) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>生成：</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;Hello World&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>如果您的主题太过于复杂，或是需要生成的文件量太过于庞大，可能会大幅降低性能，除了简化主题外，您可以考虑 Hexo 2.7 新增的局部缓存（Fragment Caching） 功能。</p>
+<p>本功能借鉴于 <a href="http://guides.rubyonrails.org/caching_with_rails.html#fragment-caching">Ruby on Rails</a>，它储存局部内容，下次便能直接使用缓存内容，可以减少文件夹查询并使生成速度更快。</p>
+<p>它可用于页首、页脚、侧边栏等文件不常变动的位置，举例来说：</p>
+<pre><code class="js">&lt;%- fragment_cache(&#39;header&#39;, function(){
+  return &#39;&lt;header&gt;&lt;/header&gt;&#39;;
+});
+</code></pre>
+<p>如果您使用局部模板的话，可以更简单：</p>
+<pre><code class="js">&lt;%- partial(&#39;header&#39;, {}, {cache: true});
+</code></pre>
+<p>{% note warn %}<br><code>fragment_cache()</code> 将会缓存第一次的渲染结果，并在之后直接输出缓存的结果。因此只有在不同页面的渲染结果都相同时才应使用局部缓存。<br>比如，在配置中启用了 <code>relative_link</code> 后不应该使用局部缓存，因为相对链接在每个页面可能不同。<br>{% endnote %}</p>

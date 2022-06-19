@@ -1,0 +1,98 @@
+<hr>
+<h2 id="title-Front-matter"><a href="#title-Front-matter" class="headerlink" title="title: Front-matter"></a>title: Front-matter</h2><p>{% youtube pfD6FCZdW4Q %}</p>
+<p>front-matter เป็น block ของ YAML หรือ JSON ท่ีอยู่ข้างต้นของไฟล์<br>และใช้มาตั้งค่าโพสต์ของคุณ</p>
+<p><strong>YAML</strong></p>
+<pre><code class="yaml">---
+title: Hello World
+date: 2013/7/13 20:46:25
+---
+</code></pre>
+<p><strong>JSON</strong></p>
+<pre><code class="json">&quot;title&quot;: &quot;Hello World&quot;,
+&quot;date&quot;: &quot;2013/7/13 20:46:25&quot;
+;;;
+</code></pre>
+<h3 id="Settings-amp-Their-Default-Values"><a href="#Settings-amp-Their-Default-Values" class="headerlink" title="Settings &amp; Their Default Values"></a>Settings &amp; Their Default Values</h3><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>layout</code></td>
+<td>Layout</td>
+<td><a href="/th/docs/configuration#Writing"><code>config.default_layout</code></a></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Title</td>
+<td></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Published date</td>
+<td>File created date</td>
+</tr>
+<tr>
+<td><code>updated</code></td>
+<td>Updated date</td>
+<td>File updated date</td>
+</tr>
+<tr>
+<td><code>comments</code></td>
+<td>Enables comment feature for the post</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>Tags (Not available for pages)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>Categories (Not available for pages)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>Overrides the default permalink of the post</td>
+<td></td>
+</tr>
+<tr>
+<td><code>excerpt</code></td>
+<td>Page excerpt in plain text. Use <a href="/docs/tag-plugins#Post-Excerpt">this plugin</a> to format the text</td>
+<td></td>
+</tr>
+<tr>
+<td><code>disableNunjucks</code></td>
+<td>Disable rendering of Nunjucks tag <code>{{ }}</code>&#x2F;<code>{% %}</code> and <a href="/docs/tag-plugins">tag plugins</a> when enabled</td>
+<td></td>
+</tr>
+<tr>
+<td><code>lang</code></td>
+<td>Set the language to override <a href="/docs/internationalization#Path">auto-detection</a></td>
+<td>Inherited from <code>_config.yml</code></td>
+</tr>
+</tbody></table>
+<h4 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h4><p>The default layout is <code>post</code>, in accordance to the value of <a href="(/docs/configuration#Writing)"><code>default_layout</code></a> setting in <code>_config.yml</code>. When the layout is disabled (<code>layout: false</code>) in an article, it will not be processed with a theme. However, it will still be rendered by any available renderer: if an article is written in Markdown and a Markdown renderer (like the default <a href="https://github.com/hexojs/hexo-renderer-marked">hexo-renderer-marked</a>) is installed, it will be rendered to HTML.</p>
+<p><a href="/docs/tag-plugins">Tag plugins</a> are always processed regardless of layout, unless disabled by the <code>disableNunjucks</code> setting or <a href="/api/renderer#Disable-Nunjucks-tags">renderer</a>.</p>
+<h4 id="Categories-amp-Tags"><a href="#Categories-amp-Tags" class="headerlink" title="Categories &amp; Tags"></a>Categories &amp; Tags</h4><p>มีแต่โพสต์เท่านั้นท่ีสนับสนุนการตั้งค่าแท็กและประเภท(category)<br>ประเภทนั้นจะจัดระบบตามลำดับขั้นให้กับโพสต์<br>ส่วนแท็กนั้นจะไม่เกี่ยวกับเรื่องลำดับขั้นนั้น</p>
+<p><strong>ยกตัวอย่างเช่น:</strong></p>
+<pre><code class="yaml">categories:
+- Sports
+- Baseball
+tags:
+- Injury
+- Fight
+- Shocking
+</code></pre>
+<p>ถ้าคุณอยากจัดหลายลำดับขั้นให้กับโพสต์ กรุณาเขียนรายชื่อของทุกลำดับขั้นให้<br>ด้วยการกระทำอย่างนี้  hexo จะทำให้โพสต์อยู่ในทุกลำดับขั้นท่ีคัดเลือกมา</p>
+<p><strong>ยกตัวอย่างเช่น:</strong></p>
+<pre><code class="yaml">categories:
+- [Sports, Baseball]
+- [MLB, American League, Boston Red Sox]
+- [MLB, American League, New York Yankees]
+- Rivalries
+</code></pre>

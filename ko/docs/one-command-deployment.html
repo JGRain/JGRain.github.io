@@ -1,0 +1,336 @@
+<hr>
+<h2 id="title-Deployment"><a href="#title-Deployment" class="headerlink" title="title: Deployment"></a>title: Deployment</h2><p>Hexo는 빠르고 쉬운 deployment전략을 제공합니다. 웹 사이트를 서버에 deploy하기 위해 하나의 명령어만 수행하면 됩니다.</p>
+<pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>처음 개발을 진행하기 전에, <code>_config.yml</code> 파일의 설정을 수정할 필요가 있습니다. Deployment를 원하는 곳을 아래 예시처럼 <code>type</code> 필드에 넣습니다.</p>
+<pre><code class="yaml">deploy:
+  type: git
+</code></pre>
+<p>여러 곳에 동시에 deploy할 수도 있습니다. Hexo는 순차적으로 deploy를 수행합니다.</p>
+<pre><code class="yaml">deploy:
+- type: git
+  repo:
+- type: heroku
+  repo:
+</code></pre>
+<p>Refer to the <a href="https://hexo.io/plugins/">Plugins</a> list for more deployment plugins.</p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><ol>
+<li>Install <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>.</li>
+</ol>
+<pre><code class="bash">$ npm install hexo-deployer-git --save
+</code></pre>
+<ol start="2">
+<li>Edit <strong>_config.yml</strong> (with example values shown below as comments):</li>
+</ol>
+<pre><code class="yaml">deploy:
+  type: git
+  repo: &lt;repository url&gt; #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
+  branch: [branch]
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>URL of the target repository</td>
+<td></td>
+</tr>
+<tr>
+<td><code>branch</code></td>
+<td>Branch name.</td>
+<td><code>gh-pages</code> (GitHub)<br><code>coding-pages</code> (Coding.net)<br><code>master</code> (others)</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Customize commit message.</td>
+<td><code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code></td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td>Optional token value to authenticate with the repo. Prefix with <code>$</code> to read token from environment variable</td>
+<td></td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>Deploy your site <code>hexo clean &amp;&amp; hexo deploy</code>.</li>
+</ol>
+<ul>
+<li>You will be prompted with username and password of the target repository, unless you authenticate with a token or ssh key.</li>
+<li>hexo-deployer-git does not store your username and password. Use <a href="https://git-scm.com/docs/git-credential-cache">git-credential-cache</a> to store them temporarily.</li>
+</ul>
+<ol start="4">
+<li>Navigate to your repository settings and change the “Pages” branch to <code>gh-pages</code> (or the branch specified in your config). The deployed site should be live on the link shown on the “Pages” setting.</li>
+</ol>
+<h2 id="Heroku"><a href="#Heroku" class="headerlink" title="Heroku"></a>Heroku</h2><p><a href="https://github.com/hexojs/hexo-deployer-heroku">hexo-deployer-heroku</a>을 설치합니다.</p>
+<pre><code class="bash">$ npm install hexo-deployer-heroku --save
+</code></pre>
+<p>설정을 수정합니다.</p>
+<pre><code class="yaml">deploy:
+  type: heroku
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>옵션</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code>, <code>repository</code></td>
+<td>Heroku 저장소 URL</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Commit message를 수정합니다. (기본값 - <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="Rsync"><a href="#Rsync" class="headerlink" title="Rsync"></a>Rsync</h2><p><a href="https://github.com/hexojs/hexo-deployer-rsync">hexo-deployer-rsync</a>를 설치합니다.</p>
+<pre><code class="bash">$ npm install hexo-deployer-rsync --save
+</code></pre>
+<p>설정을 수정합니다.</p>
+<pre><code class="yaml">deploy:
+  type: rsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  root: &lt;root&gt;
+  port: [port]
+  delete: [true|false]
+  verbose: [true|false]
+  ignore_errors: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>옵션</th>
+<th>설명</th>
+<th>기본값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>원격 호스트의 주소</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>사용자명</td>
+<td></td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>원격 호스트의 루트 디렉토리</td>
+<td></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>포트</td>
+<td>22</td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td>원격 호스트의 오래된 파일을 삭제합니다.</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>Verbose 메시지를 표시합니다.</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>ignore_errors</code></td>
+<td>에러를 무시합니다.</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h2 id="OpenShift"><a href="#OpenShift" class="headerlink" title="OpenShift"></a>OpenShift</h2><p><a href="https://github.com/hexojs/hexo-deployer-openshift">hexo-deployer-openshift</a>를 설치합니다.</p>
+<pre><code class="bash">$ npm install hexo-deployer-openshift --save
+</code></pre>
+<p>설정을 수정합니다.</p>
+<pre><code class="yaml">deploy:
+  type: openshift
+  repo: &lt;repository url&gt;
+  message: [message]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>옵션</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>repo</code></td>
+<td>OpenShift 저장소 URL</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Commit message를 수정합니다. (기본값 - <code>Site updated: {% raw %}{{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}{% endraw %}</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="FTPSync"><a href="#FTPSync" class="headerlink" title="FTPSync"></a>FTPSync</h2><p><a href="https://github.com/hexojs/hexo-deployer-ftpsync">hexo-deployer-ftpsync</a>를 설치합니다.</p>
+<pre><code class="bash">$ npm install hexo-deployer-ftpsync --save
+</code></pre>
+<p>설정을 수정합니다.</p>
+<pre><code class="yaml">deploy:
+  type: ftpsync
+  host: &lt;host&gt;
+  user: &lt;user&gt;
+  pass: &lt;password&gt;
+  remote: [remote]
+  port: [port]
+  ignore: [ignore]
+  connections: [connections]
+  verbose: [true|false]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>옵션</th>
+<th>설명</th>
+<th>기본값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>원격 호스트의 주소</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>사용자명</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>비밀번호</td>
+<td></td>
+</tr>
+<tr>
+<td><code>remote</code></td>
+<td>원격 호스트의 루트 디렉토리</td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>포트</td>
+<td>21</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>호스트 파일들과 원격 파일들을 무시합니다.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>connections</code></td>
+<td>연결 번호</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td>Verbose 메시지를 표시합니다.</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h2 id="Vercel"><a href="#Vercel" class="headerlink" title="Vercel"></a>Vercel</h2><p><a href="https://vercel.com/">Vercel</a> is a cloud platform that enables developers to host Jamstack websites and web services that deploy instantly, scale automatically, and requires no supervision, all with zero configuration. They provide a global edge network, SSL encryption, asset compression, cache invalidation, and more.</p>
+<p>Step 1: Add a build script to your <code>package.json</code> file:</p>
+<pre><code class="json">{
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;hexo generate&quot;
+  }
+}
+</code></pre>
+<p>Step 2: Deploy your Hexo Website to Vercel</p>
+<p>To deploy your Hexo app with a <a href="https://vercel.com/docs/git-integrations">Vercel for Git Integration</a>, make sure it has been pushed to a Git repository.</p>
+<p>Import the project into Vercel using the <a href="https://vercel.com/import/git">Import Flow</a>. During the import, you will find all relevant options preconfigured for you; however, you can choose to change any of these options, a list of which can be found <a href="https://vercel.com/docs/build-step#build-&-development-settings">here</a>.</p>
+<p>After your project has been imported, all subsequent pushes to branches will generate <a href="https://vercel.com/docs/platform/deployments#preview">Preview Deployments</a>, and all changes made to the <a href="https://vercel.com/docs/git-integrations#production-branch">Production Branch</a> (commonly “main”) will result in a <a href="https://vercel.com/docs/platform/deployments#production">Production Deployment</a>.</p>
+<p>Alternatively, you can click the deploy button below to create a new project:</p>
+<p><a href="https://vercel.com/new/hexo"><img src="https://vercel.com/button" alt="Deploy Vercel"></a></p>
+<h2 id="21YunBox"><a href="#21YunBox" class="headerlink" title="21YunBox"></a>21YunBox</h2><ol>
+<li><a href="https://www.21yunbox.com/">21YunBox</a>에서 GitHub에서 다음 설정을 통해 새로운 ‘정적 사이트’ 프로젝트를 설정합니다.</li>
+</ol>
+<ul>
+<li><strong>Build command:</strong> <code>yarn &amp;&amp; hexo deploy</code></li>
+<li><strong>Publish directory:</strong> <code>public</code></li>
+</ul>
+<ol start="2">
+<li>부튼 을 눌러!</li>
+</ol>
+<p>그거에요! 앱은 빌드가 완료되는 즉시 21YunBox URL에 표시됩니다.</p>
+<p>‘hexo’에 대한 샘플 앱은 <a href="https://hexo.21yunbox.com/">https://hexo.21yunbox.com/</a>에서 배포됩니다.</p>
+<p>자세한 내용은 이 가이드를 참조하십시오.<a href="https://www.21yunbox.com/docs/#/deploy-hexo">https://www.21yunbox.com/docs/deploy-hexo</a>에서 확인할 수 있습니다.</p>
+<h2 id="Bip"><a href="#Bip" class="headerlink" title="Bip"></a>Bip</h2><p><a href="https://bip.sh/">Bip</a> is a commercial hosting service which provides zero downtime deployment, a global CDN, SSL, unlimited bandwidth and more for static websites. Plans are available on a pay as you go, per domain basis.</p>
+<p>Getting started is quick and easy, as Bip provides out the box support for Hexo. This guide assumes you already have <a href="https://bip.sh/getstarted">a Bip domain and Bip CLI installed</a>.</p>
+<p>1: Initialise your project directory</p>
+<pre><code class="bash">$ bip init
+</code></pre>
+<p>Follow the prompts, where you’ll be asked which domain you’d like to deploy to. Bip will detect that you’re using Hexo, and set project settings like the source file directory automatically.</p>
+<p>2: Deploy your website</p>
+<pre><code class="bash">$ hexo generate —deploy &amp;&amp; bip deploy
+</code></pre>
+<p>After a few moments, your website will be deployed.</p>
+<h2 id="RSS3"><a href="#RSS3" class="headerlink" title="RSS3"></a>RSS3</h2><p><a href="https://rss3.io/">RSS3</a>는 Web 3.0 시대의 콘텐츠 및 소셜 네트워크를 위해 설계된 개방형 프로토콜입니다.</p>
+<ol>
+<li><p><a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3">hexo-deployer-rss3</a> 설치</p>
+</li>
+<li><p>구성을 수정합니다.</p>
+</li>
+</ol>
+<pre><code class="yaml">deploy:
+- type: rss3
+  endpoint: https://hub.rss3.io
+  privateKey: 47e18d6c386898b424025cd9db446f779ef24ad33a26c499c87bb3d9372540ba
+  ipfs:
+    deploy: true
+    gateway: pinata
+    api:
+      key: d693df715d3631e489d6
+      secret: ee8b74626f12b61c1a4bde3b8c331ad390567c86ba779c9b18561ee92c1cbff0
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>매개변수</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>endpoint</code></td>
+<td>RSS3 Hub에 대한 링크</td>
+</tr>
+<tr>
+<td><code>privateKey</code></td>
+<td>개인 키, 64바이트</td>
+</tr>
+<tr>
+<td><code>ipfs/deploy</code></td>
+<td>IPFS에 배포할지 여부</td>
+</tr>
+<tr>
+<td><code>ipfs/gateway</code></td>
+<td>IPFS API 게이트웨이</td>
+</tr>
+<tr>
+<td><code>ipfs/api/key</code></td>
+<td>IPFS 게이트웨이 관련 검증 내용</td>
+</tr>
+<tr>
+<td><code>ipfs/api/secret</code></td>
+<td>IPFS 게이트웨이 관련 검증 내용</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li><p>정적 파일 생성</p>
+</li>
+<li><p>배포</p>
+</li>
+</ol>
+<p>특정 배포와 관련된 주의 사항은 <a href="https://github.com/NaturalSelectionLabs/hexo-deployer-rss3/blob/develop/README.md">당사 문서</a>를 참조하세요.</p>
+<h2 id="다른-메소드들"><a href="#다른-메소드들" class="headerlink" title="다른 메소드들"></a>다른 메소드들</h2><p>생성되는 모든 파일들은 <code>public</code> 폴더에 저장됩니다. 이 파일들을 당신이 원하는 곳 아무데나 복사하여 사용할 수 있습니다.</p>

@@ -1,0 +1,47 @@
+<hr>
+<h2 id="title-Плагины"><a href="#title-Плагины" class="headerlink" title="title: Плагины"></a>title: Плагины</h2><p>Hexo имеет мощную систему плагинов, это делает его функции легко расширяемыми, не изменяя код основного модуля. Существует два вида плагинов в Hexo:</p>
+<h3 id="Скрипты"><a href="#Скрипты" class="headerlink" title="Скрипты"></a>Скрипты</h3><p>Если плагин является довольно простым, рекомендуется использовать скрипт. Все, что нужно сделать, это положить ваши JavaScript файлы в папку <code>scripts</code>, и Hexo загрузит их при инициализации.</p>
+<h3 id="Плагины"><a href="#Плагины" class="headerlink" title="Плагины"></a>Плагины</h3><p>Если код довольно сложен, или если вы хотите опубликовать его через NPM, рекомендуется использовать плагин. Сначала создайте папку в папке <code>node_modules</code>. Название должно начинаться с <code>hexo-</code>, иначе Hexo проигнорирует её.</p>
+<p>Папка должна содержать минимум два файла: один содержит фактический код JavaScript и <code>package.json</code>, который описывает назначение плагина и устанавливает его зависимости.</p>
+<pre><code class="plain">.
+├── index.js
+└── package.json
+</code></pre>
+<p>По крайней мере, нужно указать название <code>name</code>, версию <code>version</code> и параметр <code>main</code> в  <code>package.json</code>. Например:</p>
+<pre><code class="json">{
+  &quot;name&quot;: &quot;hexo-my-plugin&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;main&quot;: &quot;index&quot;
+}
+</code></pre>
+<p>Также понадобится перечислить зависимости плагина в корне <code>package.json</code> для вашего экземпляра <code>hexo</code>, чтобы Hexo обнаружил и загрузил его.</p>
+<h3 id="Инструментарий"><a href="#Инструментарий" class="headerlink" title="Инструментарий"></a>Инструментарий</h3><p>Возможно использовать официальные инструменты Hexo для ускорения разработки:</p>
+<ul>
+<li><a href="https://github.com/hexojs/hexo-fs">hexo-fs</a>：Чтение&#x2F;запись файлов</li>
+<li><a href="https://github.com/hexojs/hexo-util">hexo-util</a>：Утилиты Hexo</li>
+<li><a href="https://github.com/hexojs/hexo-i18n">hexo-i18n</a>：Локализация (i18n)</li>
+<li><a href="https://github.com/hexojs/hexo-pagination">hexo-pagination</a>：Постраничная разбивка</li>
+</ul>
+<h3 id="Публикация"><a href="#Публикация" class="headerlink" title="Публикация"></a>Публикация</h3><p>Когда плагин будет готов, можно рассмотреть возможность его публикации в список <a href="/plugins">плагинов</a>, чтобы пригласить других людей воспользоваться им. Публикация плагинов очень похожа на <a href="contributing.html#%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D0%B8">обновление документации</a>.</p>
+<ol>
+<li><p>Создайте форк <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a></p>
+</li>
+<li><p>Клонируйте репозиторий на компьютер и установите все зависимости.</p>
+<p> {% code %}<br> $ git clone <a href="https://github.com/">https://github.com/</a><username>&#x2F;site.git<br> $ cd site<br> $ npm install<br> {% endcode %}</p>
+</li>
+<li><p>Отредактируйте <code>source/_data/plugins.yml</code> добавив свой плагин. Например:</p>
+<p> {% code %}</p>
+<ul>
+<li>name: hexo-server<br>description: Server module for Hexo.<br>link: <a href="https://github.com/hexojs/hexo-server">https://github.com/hexojs/hexo-server</a><br>tags:<ul>
+<li>official</li>
+<li>server</li>
+<li>console<br> {% endcode %}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Загрузите ветку.</p>
+</li>
+<li><p>Создайте запрос на слияние с описанием изменений.</p>
+</li>
+</ol>

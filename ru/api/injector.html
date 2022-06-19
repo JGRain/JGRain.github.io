@@ -1,0 +1,96 @@
+<hr>
+<h2 id="title-Инъектор"><a href="#title-Инъектор" class="headerlink" title="title: Инъектор"></a>title: Инъектор</h2><p>Инъектор используется для добавления статического фрагмента кода в <code>&lt;head&gt;</code> и&#x2F;или <code>&lt;body&gt;</code> генерируемых HTML-файлов. Hexo производит вставку <strong>до того, как</strong> будет выполнен фильтр <code>after_render:html</code>.</p>
+<h2 id="Краткий-обзор"><a href="#Краткий-обзор" class="headerlink" title="Краткий обзор"></a>Краткий обзор</h2><pre><code class="js">hexo.extend.injector.register(entry, value, to)
+</code></pre>
+<h3 id="ввод-lt-string-gt"><a href="#ввод-lt-string-gt" class="headerlink" title="ввод &lt;string&gt;"></a>ввод <code>&lt;string&gt;</code></h3><p>Используется там, где необходимо ввести код внутрь HTML напрямую.</p>
+<p>Поддерживаются такие варианты:</p>
+<ul>
+<li><code>head_begin</code>: ввод фрагмента кода сразу после <code>&lt;head&gt;</code> (по умолчанию).</li>
+<li><code>head_end</code>: введите фрагмент кода прямо перед &#96;</head>‘.</li>
+<li><code>body_begin</code>: введите фрагмент кода сразу после <code>&lt;body&gt;</code>.</li>
+<li><code>body_end</code>: введите фрагмент кода прямо перед &#96;</body>‘.</li>
+</ul>
+<h3 id="значение-lt-string-gt-lt-Function-gt"><a href="#значение-lt-string-gt-lt-Function-gt" class="headerlink" title="значение &lt;string&gt; | &lt;Function&gt;"></a>значение <code>&lt;string&gt; | &lt;Function&gt;</code></h3><blockquote>
+<p>Поддерживаются функции, возвращающие строку.</p>
+</blockquote>
+<p>Фрагмент кода, который нужно ввести.</p>
+<h3 id="to-lt-string-gt"><a href="#to-lt-string-gt" class="headerlink" title="to &lt;string&gt;"></a>to <code>&lt;string&gt;</code></h3><p>На какой странице будут добавлены фрагменты кода.</p>
+<ul>
+<li><code>default</code>: Ввод на каждой странице (по умолчанию).</li>
+<li><code>home</code>: Вставка произведётся только на домашнюю страницу (у которой переменная <code>is_home()</code> имеет значение <code>true</code>)</li>
+<li><code>post</code>: Вставка произведётся только на страницы публикаций (у которых переменная <code>is_post()</code> имеет значение <code>true</code>)</li>
+<li><code>page</code>: Вставка произведётся только на страницы (у которых переменная <code>is_page()</code> имеет значение <code>true</code>)</li>
+<li><code>archive</code>: Вставка произведётся только на страницы архива (у которых переменная<code>is_archive()</code> имеет значение <code>true</code>)</li>
+<li><code>category</code>: Вставка произведётся только на страницы категорий (у которых переменная <code>is_category()</code> имеет значение <code>true</code>)</li>
+<li><code>tag</code>: Вставка произведётся только на страницы тегов (у которых переменная <code>is_tag()</code> является <code>true</code>)</li>
+<li>Также можно использовать пользовательское имя макета, см. <a href="writing#Layout">Запись - Макет</a>.</li>
+</ul>
+<hr>
+<p>Существуют и другие внутренние функции, см. <a href="https://github.com/hexojs/hexo/pull/4049">hexojs&#x2F;hexo#4049</a> для получения более подробной информации.</p>
+<h2 id="Пример"><a href="#Пример" class="headerlink" title="Пример"></a>Пример</h2><pre><code class="js">const css = hexo.extend.helper.get(&#39;css&#39;).bind(hexo);
+const js = hexo.extend.helper.get(&#39;js&#39;).bind(hexo);
+
+hexo.extend.injector.register(&#39;head_end&#39;, () =&gt; {
+  return css(&#39;https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css&#39;);
+}, &#39;music&#39;);
+
+hexo.extend.injector.register(&#39;body_end&#39;, &#39;&lt;script src=&quot;https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js&quot;&gt;&#39;, &#39;music&#39;);
+
+hexo.extend.injector.register(&#39;body_end&#39;, () =&gt; {
+  return js(&#39;/js/jquery.js&#39;);
+});
+</code></pre>
+<p>Вышеуказанная настройка добавит <code>APlayer.min.css</code> (с тегом <code>&lt;link&gt;</code>) в <code>&lt;/head&gt;</code> любой страницы, макет которой установлен как <code>music</code>, и <code>APlayer.min.js</code> (тег <code>&lt;script&gt;</code>) в <code>&lt;/body&gt;</code> этих страниц. Кроме того, <code>jquery.js</code> (с тегом <code>&lt;script&gt;</code>) будет вставлен в <code>&lt;/body&gt;</code> каждой сгенерированной страницы.</p>
+<h2 id="Доступ-к-пользовательской-конфигурации"><a href="#Доступ-к-пользовательской-конфигурации" class="headerlink" title="Доступ к пользовательской конфигурации"></a>Доступ к пользовательской конфигурации</h2><p>Используйте любой из следующих вариантов:</p>
+<ol>
+<li></li>
+</ol>
+<pre><code class="js">const css = hexo.extend.helper.get(&#39;css&#39;).bind(hexo);
+
+hexo.extend.injector.register(&#39;head_end&#39;, () =&gt; {
+  const { cssPath } = hexo.config.fooPlugin;
+  return css(cssPath);
+});
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code class="js">/* global hexo */
+
+hexo.extend.injector.register(&#39;head_end&#39;, require(&#39;./lib/inject&#39;).bind(hexo))
+</code></pre>
+<pre><code class="js">module.exports = function () {
+  const css = this.extend.helper.get(&#39;css&#39;);
+  const { cssPath } = this.config.fooPlugin;
+  return css(cssPath);
+}
+</code></pre>
+<pre><code class="js">function injectFn() {
+  const css = this.extend.helper.get(&#39;css&#39;);
+  const { cssPath } = this.config.fooPlugin;
+  return css(cssPath);
+}
+
+module.exports = injectFn;
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+<pre><code class="js">/* global hexo */
+
+hexo.extend.injector.register(&#39;head_end&#39;, require(&#39;./lib/inject&#39;)(hexo))
+</code></pre>
+<pre><code class="js">module.exports = (hexo) =&gt; () =&gt; {
+  const css = hexo.extend.helper.get(&#39;css&#39;).bind(hexo);
+  const { cssPath } = hexo.config.fooPlugin;
+  return css(cssPath);
+};
+</code></pre>
+<pre><code class="js">const injectFn = (hexo) =&gt; {
+  const css = hexo.extend.helper.get(&#39;css&#39;).bind(hexo);
+  const { cssPath } = hexo.config.fooPlugin;
+  return css(cssPath);
+};
+
+module.exports = (hexo) =&gt; injectFn(hexo);
+</code></pre>

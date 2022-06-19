@@ -1,0 +1,58 @@
+<hr>
+<h2 id="title-将-Hexo-部署到-GitHub-Pages"><a href="#title-将-Hexo-部署到-GitHub-Pages" class="headerlink" title="title: 将 Hexo 部署到 GitHub Pages"></a>title: 将 Hexo 部署到 GitHub Pages</h2><p>在本教程中，我们将会使用 <a href="https://travis-ci.com/">Travis CI</a> 将 Hexo 博客部署到 GitHub Pages 上。Travis CI 对于开源 repository 是免费的，但是这意味着你的站点文件将会是公开的。如果你希望你的站点文件不被公开，请直接前往本文 [私有 Repository](#私有 Repository) 部分。</p>
+<ol>
+<li>新建一个 repository。如果你希望你的站点能通过域名 <code>&lt;你的 GitHub 用户名&gt;.github.io</code> 访问，你的 repository 应该直接命名为 <code>&lt;你的 GitHub 用户名&gt;.github.io</code>。</li>
+<li>将你的 Hexo 站点文件夹推送到 repository 中。默认情况下 <code>public</code> 目录将不会（也不应该）被推送到 repository 中，你应该检查 <code>.gitignore</code> 文件中是否包含 <code>public</code> 一行，如果没有请加上。</li>
+<li>将 <a href="https://github.com/marketplace/travis-ci">Travis CI</a> 添加到你的 GitHub 账户中。</li>
+<li>前往 GitHub 的 <a href="https://github.com/settings/installations">Applications settings</a>，配置 Travis CI 权限，使其能够访问你的 repository。</li>
+<li>你应该会被重定向到 Travis CI 的页面。如果没有，请 <a href="https://travis-ci.com/">手动前往</a>。</li>
+<li>在浏览器内新建一个标签页，前往 GitHub <a href="https://github.com/settings/tokens">新建 Personal Access Token</a>，只勾选 <code>repo</code> 的权限并生成一个新的 Token。Token 生成后请复制并保存好。</li>
+<li>回到 Travis CI，前往你的 repository 的设置页面，在 <strong>Environment Variables</strong> 下新建一个环境变量，<strong>Name</strong> 为 <code>GH_TOKEN</code>，<strong>Value</strong> 为刚才你在 GitHub 生成的 Token。确保 <strong>DISPLAY VALUE IN BUILD LOG</strong> 保持 <strong>不被勾选</strong> 避免你的 Token 泄漏。点击 <strong>Add</strong> 保存。</li>
+<li>在你的 Hexo 站点文件夹中新建一个 <code>.travis.yml</code> 文件：</li>
+</ol>
+<pre><code class="yml">sudo: false
+language: node_js
+node_js:
+  - 10 # use nodejs v10 LTS
+cache: npm
+branches:
+  only:
+    - master # build master branch only
+script:
+  - hexo generate # generate static files
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_TOKEN
+  keep-history: true
+  on:
+    branch: master
+  local-dir: public
+</code></pre>
+<ol start="9">
+<li>将 <code>.travis.yml</code> 推送到 repository 中。Travis CI 应该会自动开始运行，并将生成的文件推送到同一 repository 下的 <code>gh-pages</code> 分支下</li>
+<li>在 GitHub 中前往你的 repository 的设置页面，修改 <code>GitHub Pages</code> 的部署分支为 <code>gh-pages</code>。</li>
+<li>前往 <code>https://&lt;你的 GitHub 用户名&gt;.github.io</code> 查看你的站点是否可以访问。这可能需要一些时间。</li>
+</ol>
+<h2 id="Project-page"><a href="#Project-page" class="headerlink" title="Project page"></a>Project page</h2><p>如果你更希望你的站点部署在 <code>&lt;你的 GitHub 用户名&gt;.github.io</code> 的子目录中，你的 repository 需要直接命名为子目录的名字，这样你的站点可以通过 <code>https://&lt;你的 GitHub 用户名&gt;.github.io/&lt;repository 的名字&gt;</code> 访问。你需要检查你的 Hexo 配置文件，将 <code>url</code> 修改为 <code>https://&lt;你的 GitHub 用户名&gt;.github.io/&lt;repository 的名字&gt;</code>、将 <code>root</code> 的值修改为 <code>/&lt;repository 的名字&gt;/</code></p>
+<h2 id="私有-Repository"><a href="#私有-Repository" class="headerlink" title="私有 Repository"></a>私有 Repository</h2><p>下面的指示基于 <a href="/docs/one-command-deployment">一键部署</a> 编写。</p>
+<ol>
+<li>安装 <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>.</li>
+<li>在 <strong>_config.yml</strong>（如果有已存在的请删除）添加如下配置：</li>
+</ol>
+<pre><code class="yml">deploy:
+  type: git
+  repo: https://github.com/&lt;username&gt;/&lt;project&gt;
+  # example, https://github.com/hexojs/hexojs.github.io
+  branch: gh-pages
+</code></pre>
+<ol start="3">
+<li>运行 <code>hexo clean &amp;&amp; hexo deploy</code> 。</li>
+<li>查看 <em>username</em>.github.io 上的网页是否部署成功。</li>
+</ol>
+<h2 id="有用的参考链接"><a href="#有用的参考链接" class="headerlink" title="有用的参考链接"></a>有用的参考链接</h2><ul>
+<li><a href="https://help.github.com/categories/github-pages-basics/">GitHub Pages 使用文档</a></li>
+<li><a href="https://docs.travis-ci.com/user/tutorial/">Travis CI 使用文档</a></li>
+<li><a href="https://github.com/hexojs/awesome-hexo">Awesome Hexo</a></li>
+<li><a href="https://www.baidu.com/s?wd=Hexo%20GitHub">在百度上搜索 “Hexo GitHub”</a></li>
+</ul>

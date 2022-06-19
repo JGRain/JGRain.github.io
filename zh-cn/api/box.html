@@ -1,0 +1,79 @@
+<hr>
+<h2 id="title-Box"><a href="#title-Box" class="headerlink" title="title:  Box"></a>title:  Box</h2><p>「Box」是 Hexo 用来处理特定文件夹中的文件的容器，在 Hexo 中有两个 Box，分别是 <code>hexo.source</code> 和 <code>hexo.theme</code>，前者用于处理 <code>source</code> 文件夹，而后者用于处理主题文件夹。</p>
+<h2 id="载入文件"><a href="#载入文件" class="headerlink" title="载入文件"></a>载入文件</h2><p>Box 提供了两种方法来载入文件：<code>process</code>, <code>watch</code>，前者用于载入文件夹内的所有文件；而后者除了执行 <code>process</code> 以外，还会继续监视文件变动。</p>
+<pre><code class="js">box.process().then(function(){
+  // ...
+});
+
+box.watch().then(function(){
+  // 之后可调用 box.unwatch()，停止监视文件
+});
+</code></pre>
+<h2 id="比对路径"><a href="#比对路径" class="headerlink" title="比对路径"></a>比对路径</h2><p>Box 提供了多种比对路径的模式，您可以以使用正则表达式（regular expression）、函数、或是一种类似于 Express 的路径字符串，例如：</p>
+<pre><code class="plain">posts/:id =&gt; posts/89
+posts/*path =&gt; posts/2015/title
+</code></pre>
+<p>您可以以参考 <a href="https://github.com/hexojs/hexo-util#patternrule">util.Pattern</a> 以获得更多信息。</p>
+<h2 id="处理器（Processor）"><a href="#处理器（Processor）" class="headerlink" title="处理器（Processor）"></a>处理器（Processor）</h2><p>处理器（Processor）是 Box 中非常重要的元素，它用于处理文件，您可以使用上述的路径对比来限制该处理器所要处理的文件类型。使用 <code>addProcessor</code> 来添加处理器。</p>
+<pre><code class="js">box.addProcessor(&#39;posts/:id&#39;, function(file){
+  //
+});
+</code></pre>
+<p>Box 在处理时会把目前处理的文件内容（<code>file</code>）传给处理器，您可以通过此参数获得该文件的数据。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source</code></td>
+<td>文件完整路径</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>文件相对于 Box 的路径</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>文件类型。有 <code>create</code>, <code>update</code>, <code>skip</code>, <code>delete</code>。</td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td>从路径对比中取得的信息</td>
+</tr>
+</tbody></table>
+<p>Box 还提供了一些方法，让您无须手动处理文件 I&#x2F;O。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>read</code></td>
+<td>读取文件</td>
+</tr>
+<tr>
+<td><code>readSync</code></td>
+<td>同步读取文件</td>
+</tr>
+<tr>
+<td><code>stat</code></td>
+<td>读取文件状态</td>
+</tr>
+<tr>
+<td><code>statSync</code></td>
+<td>同步读取文件状态</td>
+</tr>
+<tr>
+<td><code>render</code></td>
+<td>渲染文件</td>
+</tr>
+<tr>
+<td><code>renderSync</code></td>
+<td>同步渲染文件</td>
+</tr>
+</tbody></table>

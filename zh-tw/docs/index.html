@@ -1,0 +1,79 @@
+<hr>
+<h2 id="title-文件"><a href="#title-文件" class="headerlink" title="title: 文件"></a>title: 文件</h2><p>歡迎使用 Hexo，此文件將幫助您快速開始使用。如果您在使用途中遇到任何問題，您可以在 <a href="troubleshooting.html">解決問題</a> 中找到解答，或者也可以在 <a href="https://github.com/hexojs/hexo/issues">GitHub</a> 或 <a href="https://groups.google.com/group/hexo">Google Group</a> 上詢問。</p>
+<p>{% youtube PsXWbI2Mqu0 %}</p>
+<h2 id="什麼是-Hexo？"><a href="#什麼是-Hexo？" class="headerlink" title="什麼是 Hexo？"></a>什麼是 Hexo？</h2><p>Hexo 是一個快速、簡單且強大的網誌框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/">Markdown</a>（或其他標記語言）解析您的文章，並在幾秒鐘內，透過漂亮的主題產生靜態檔案。</p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>讓 Hexo 準備就緒僅需幾分鐘，若您在安裝時遭遇問題而且找不到任何解決方式，請 <a href="https://github.com/hexojs/hexo/issues">回報問題</a>，我會試著解決您的問題。</p>
+<h3 id="安裝需求"><a href="#安裝需求" class="headerlink" title="安裝需求"></a>安裝需求</h3><p>安裝 Hexo 相當簡單；然而，在安裝前您必須先檢查下列您的電腦是否已經安裝下列軟體：</p>
+<ul>
+<li><a href="http://nodejs.org/">Node.js</a> (Node.js 版本需不低於8.10，建議使用 Node.js 10.0 及以上版本)</li>
+<li><a href="http://git-scm.com/">Git</a></li>
+</ul>
+<p>若您的電腦已經安裝上述的必備軟體，那麼恭喜您！只需要透過 npm 即可完成 Hexo 的安裝。</p>
+<pre><code class="bash">$ npm install -g hexo-cli
+</code></pre>
+<p>如果您的電腦尚未安裝必備軟體的話，請根據下列的安裝指示來完成安裝。</p>
+<p>{% note warn Mac 使用者 %}<br>您在編譯時可能會碰到問題，請先至 App Store 安裝 Xcode，一旦 Xcode 安裝完成後，開啟它並前往 <strong>Preferences -&gt; Download -&gt; Command Line Tools -&gt; Install</strong> 安裝命令列工具。<br>{% endnote %}</p>
+<h3 id="安裝-Git"><a href="#安裝-Git" class="headerlink" title="安裝 Git"></a>安裝 Git</h3><ul>
+<li>Windows：下載並安裝 <a href="https://git-scm.com/download/win">git</a>.</li>
+<li>Mac：使用 <a href="http://mxcl.github.com/homebrew/">Homebrew</a>, <a href="http://www.macports.org/">MacPorts</a> 或 <a href="http://sourceforge.net/projects/git-osx-installer/">安裝程式</a> 安裝。</li>
+<li>Linux (Ubuntu, Debian)：<code>sudo apt-get install git-core</code></li>
+<li>Linux (Fedora, Red Hat, CentOS)：<code>sudo yum install git-core</code></li>
+</ul>
+<h3 id="安裝-Node-js"><a href="#安裝-Node-js" class="headerlink" title="安裝 Node.js"></a>安裝 Node.js</h3><p>Node.js 為大多數平台提供了官方的 <a href="https://nodejs.org/en/download/">安裝程序</a>。對於中國大陸地區用戶，可以前往 <a href="https://npm.taobao.org/mirrors/node">淘寶 Node.js 鏡像</a> 下載。</p>
+<p>其它的安裝方法：</p>
+<ul>
+<li>Windows：通過 <a href="https://github.com/jasongin/nvs/">nvs</a>（推薦）或者<a href="https://github.com/nvm-sh/nvm">nvm</a> 安裝。</li>
+<li>Mac：使用 <a href="https://brew.sh/">Homebrew</a> 或 <a href="http://www.macports.org/">MacPorts</a> 安裝。</li>
+<li>Linux（DEB&#x2F;RPM-based）：從 <a href="https://github.com/nodesource/distributions">NodeSource</a> 安裝。</li>
+<li>其它：使用相應的軟件包管理器進行安裝，可以參考由 Node.js 提供的 <a href="https://nodejs.org/en/download/package-manager/">指導</a></li>
+</ul>
+<p>對於 Mac 和 Linux 同樣建議使用 nvs 或者 nvm，以避免可能會出現的權限問題。</p>
+<p>{% note info Windows 用戶 %}<br>使用 Node.js 官方安裝程序時，請確保勾選 <strong>Add to PATH</strong> 選項（默認已勾選）<br>{% endnote %}</p>
+<p>{% note warn For Mac &#x2F; Linux 用戶 %}<br>如果在嘗試安裝Hexo 的過程中出現<code>EACCES</code> 權限錯誤，請遵循<a href="https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally">由npmjs 發布的指導</a> 修復該問題。強烈建議 <strong>不要</strong> 使用 root、sudo 等方法覆蓋權限<br>{% endnote %}</p>
+<p>{% note info Linux %}<br>If you installed Node.js using Snap, you may need to manually run <code>npm install</code> in the target folder when <a href="/docs/commands#init">initializing</a> a blog.<br>{% endnote %}</p>
+<h3 id="安裝-Hexo"><a href="#安裝-Hexo" class="headerlink" title="安裝 Hexo"></a>安裝 Hexo</h3><p>一旦所有的必備軟體都安裝完畢後，即可透過 npm 安裝 Hexo：</p>
+<pre><code class="bash">$ npm install -g hexo-cli
+</code></pre>
+<h3 id="Minimum-required-Node-js-version"><a href="#Minimum-required-Node-js-version" class="headerlink" title="Minimum required Node.js version"></a>Minimum required Node.js version</h3><p>If you are stuck with older Node.js, you can consider installing a past version of Hexo.</p>
+<p>Please note we do not provide bugfixes to past versions of Hexo.</p>
+<p>We highly recommend to always install the <a href="https://www.npmjs.com/package/hexo?activeTab=versions">latest version</a> of Hexo and the <a href="#%E5%AE%89%E8%A3%9D%E9%9C%80%E6%B1%82">recommended version</a> of Node.js, whenever possible.</p>
+<table>
+<thead>
+<tr>
+<th>Hexo version</th>
+<th>Minimum Node.js version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>6.0+</td>
+<td>12.13.0</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>10.13.0</td>
+</tr>
+<tr>
+<td>4.1 - 4.2</td>
+<td>8.10</td>
+</tr>
+<tr>
+<td>4.0</td>
+<td>8.6</td>
+</tr>
+<tr>
+<td>3.3 - 3.9</td>
+<td>6.9</td>
+</tr>
+<tr>
+<td>3.2 - 3.3</td>
+<td>0.12</td>
+</tr>
+<tr>
+<td>3.0 - 3.1</td>
+<td>0.10 or iojs</td>
+</tr>
+<tr>
+<td>0.0.1 - 2.8</td>
+<td>0.10</td>
+</tr>
+</tbody></table>

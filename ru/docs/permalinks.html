@@ -1,0 +1,134 @@
+<hr>
+<h2 id="title-Постоянные-ссылки"><a href="#title-Постоянные-ссылки" class="headerlink" title="title: Постоянные ссылки"></a>title: Постоянные ссылки</h2><p>Вы можете указать формат постоянных ссылок на вашем сайте в файле <code>_config.yml</code>. Или в шапке каждого поста.</p>
+<h3 id="Переменные"><a href="#Переменные" class="headerlink" title="Переменные"></a>Переменные</h3><p>Помимо переменных можно использовать любые атрибуты постоянной ссылки.</p>
+<table>
+<thead>
+<tr>
+<th>Переменная</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year</code></td>
+<td>Год публикации поста (4-х значный)</td>
+</tr>
+<tr>
+<td><code>:month</code></td>
+<td>Месяц публикации поста (2-х значный)</td>
+</tr>
+<tr>
+<td><code>:i_month</code></td>
+<td>Месяц публикации поста (Без ведущего нуля)</td>
+</tr>
+<tr>
+<td><code>:day</code></td>
+<td>День публикации поста (2-х значный)</td>
+</tr>
+<tr>
+<td><code>:i_day</code></td>
+<td>День публикации поста (Без ведущего нуля)</td>
+</tr>
+<tr>
+<td><code>:hour</code></td>
+<td>Published hour of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:minute</code></td>
+<td>Published minute of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:second</code></td>
+<td>Published second of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:title</code></td>
+<td>Имя файла (relative to “source&#x2F;_posts&#x2F;“ folder)</td>
+</tr>
+<tr>
+<td><code>:name</code></td>
+<td>Имя файла</td>
+</tr>
+<tr>
+<td><code>:post_title</code></td>
+<td>Post title</td>
+</tr>
+<tr>
+<td><code>:id</code></td>
+<td>ID поста (<em>not persistent across <a href="/ru/docs/commands#clean">cache reset</a></em>)</td>
+</tr>
+<tr>
+<td><code>:category</code></td>
+<td>Категории. Если категория поста не указана, возьмётся значение по умолчанию из <code>default_category</code>.</td>
+</tr>
+<tr>
+<td><code>:hash</code></td>
+<td>SHA1 hash of filename (same as <code>:title</code>) and date (12-hexadecimal)</td>
+</tr>
+</tbody></table>
+<p>Можно определить значение по умолчанию для переменной постоянной ссылки, задав значение <code>permalink_defaults</code> в конфигурации:</p>
+<pre><code class="yaml">permalink_defaults:
+  lang: en
+</code></pre>
+<h3 id="Примеры"><a href="#Примеры" class="headerlink" title="Примеры"></a>Примеры</h3><pre><code class="yaml">title: Hello World
+date: 2013-07-14 17:01:34
+categories:
+- foo
+- bar
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Настройка</th>
+<th>Результат</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year/:month/:day/:title/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:year-:month-:day-:title.html</code></td>
+<td>2013-07-14-hello-world.html</td>
+</tr>
+<tr>
+<td><code>:category/:title/</code></td>
+<td>foo&#x2F;bar&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:title-:hash/</code></td>
+<td>hello-world-a2c8ac003b43&#x2F;</td>
+</tr>
+</tbody></table>
+<pre><code class="yaml">title: Hello World
+date: 2013-07-14 17:01:34
+categories:
+- foo
+- bar
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Настройка</th>
+<th>Результат</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year/:month/:day/:title/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;lorem&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:year/:month/:day/:name/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;hello-world&#x2F;</td>
+</tr>
+</tbody></table>
+<h3 id="Многоязычность"><a href="#Многоязычность" class="headerlink" title="Многоязычность"></a>Многоязычность</h3><p>Для создания многоязыкового сайта можно изменить <code>new_post_name</code> и <code>permalink</code>. Например:</p>
+<pre><code class="yaml">new_post_name: :lang/:title.md
+permalink: :lang/:title/
+</code></pre>
+<p>При создании нового поста, он будет сохранен в папке указанного языка:</p>
+<pre><code class="bash">$ hexo new &quot;Hello World&quot; --lang tw
+# =&gt; source/_posts/tw/Hello-World.md
+</code></pre>
+<p>ссылка на пост будет:</p>
+<pre><code class="plain">http://localhost:4000/tw/hello-world/
+</code></pre>

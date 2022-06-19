@@ -1,0 +1,96 @@
+<hr>
+<h2 id="title-Injector"><a href="#title-Injector" class="headerlink" title="title: Injector"></a>title: Injector</h2><p>An injector is used to add static code snippet to the <code>&lt;head&gt;</code> or&#x2F;and <code>&lt;body&gt;</code> of generated HTML files. Hexo run injector <strong>before</strong> <code>after_render:html</code> filter is executed.</p>
+<h2 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h2><pre><code class="js">hexo.extend.injector.register(entry, value, to)
+</code></pre>
+<h3 id="entry-lt-string-gt"><a href="#entry-lt-string-gt" class="headerlink" title="entry &lt;string&gt;"></a>entry <code>&lt;string&gt;</code></h3><p>Where the code will be injected inside the HTML.</p>
+<p>Support those values:</p>
+<ul>
+<li><code>head_begin</code>: Inject code snippet right after <code>&lt;head&gt;</code> (Default).</li>
+<li><code>head_end</code>: Inject code snippet right before <code>&lt;/head&gt;</code>.</li>
+<li><code>body_begin</code>: Inject code snippet right after <code>&lt;body&gt;</code>.</li>
+<li><code>body_end</code>: Inject code snippet right before <code>&lt;/body&gt;</code>.</li>
+</ul>
+<h3 id="value-lt-string-gt-lt-Function-gt"><a href="#value-lt-string-gt-lt-Function-gt" class="headerlink" title="value &lt;string&gt; | &lt;Function&gt;"></a>value <code>&lt;string&gt; | &lt;Function&gt;</code></h3><blockquote>
+<p>A function that returns string is supported.</p>
+</blockquote>
+<p>The code snippet to be injected.</p>
+<h3 id="to-lt-string-gt"><a href="#to-lt-string-gt" class="headerlink" title="to &lt;string&gt;"></a>to <code>&lt;string&gt;</code></h3><p>Which page will code snippets being injected.</p>
+<ul>
+<li><code>default</code>: Inject to every page (Default).</li>
+<li><code>home</code>: Only inject to home page (which has <code>is_home()</code> helper being <code>true</code>)</li>
+<li><code>post</code>: Only inject to post pages (which has <code>is_post()</code> helper being <code>true</code>)</li>
+<li><code>page</code>: Only inject to pages (which has <code>is_page()</code> helper being <code>true</code>)</li>
+<li><code>archive</code>: Only inject to archive pages (which has <code>is_archive()</code> helper being <code>true</code>)</li>
+<li><code>category</code>: Only inject to category pages (which has <code>is_category()</code> helper being <code>true</code>)</li>
+<li><code>tag</code>: Only inject to tag pages (which has <code>is_tag()</code> helper being <code>true</code>)</li>
+<li>Custom layout name could be used as well, see <a href="writing#Layout">Writing - Layout</a>.</li>
+</ul>
+<hr>
+<p>There are other internal functions, see <a href="https://github.com/hexojs/hexo/pull/4049">hexojs&#x2F;hexo#4049</a> for more details.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><pre><code class="js">const css = hexo.extend.helper.get(&#39;css&#39;).bind(hexo);
+const js = hexo.extend.helper.get(&#39;js&#39;).bind(hexo);
+
+hexo.extend.injector.register(&#39;head_end&#39;, () =&gt; {
+  return css(&#39;https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css&#39;);
+}, &#39;music&#39;);
+
+hexo.extend.injector.register(&#39;body_end&#39;, &#39;&lt;script src=&quot;https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js&quot;&gt;&#39;, &#39;music&#39;);
+
+hexo.extend.injector.register(&#39;body_end&#39;, () =&gt; {
+  return js(&#39;/js/jquery.js&#39;);
+});
+</code></pre>
+<p>Above setup will inject <code>APlayer.min.css</code> (<code>&lt;link&gt;</code> tag) to the <code>&lt;/head&gt;</code> of any page which layout is <code>music</code>, and <code>APlayer.min.js</code> (<code>&lt;script&gt;</code> tag) to the <code>&lt;/body&gt;</code> of those pages. Also, <code>jquery.js</code> (<code>&lt;script&gt;</code> tag) will be injected to <code>&lt;/body&gt;</code> of every page generated.</p>
+<h2 id="Accessing-user-configuration"><a href="#Accessing-user-configuration" class="headerlink" title="Accessing user configuration"></a>Accessing user configuration</h2><p>Use any of the following options:</p>
+<ol>
+<li></li>
+</ol>
+<pre><code class="js">const css = hexo.extend.helper.get(&#39;css&#39;).bind(hexo);
+
+hexo.extend.injector.register(&#39;head_end&#39;, () =&gt; {
+  const { cssPath } = hexo.config.fooPlugin;
+  return css(cssPath);
+});
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code class="js">/* global hexo */
+
+hexo.extend.injector.register(&#39;head_end&#39;, require(&#39;./lib/inject&#39;).bind(hexo))
+</code></pre>
+<pre><code class="js">module.exports = function () {
+  const css = this.extend.helper.get(&#39;css&#39;);
+  const { cssPath } = this.config.fooPlugin;
+  return css(cssPath);
+}
+</code></pre>
+<pre><code class="js">function injectFn() {
+  const css = this.extend.helper.get(&#39;css&#39;);
+  const { cssPath } = this.config.fooPlugin;
+  return css(cssPath);
+}
+
+module.exports = injectFn;
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+<pre><code class="js">/* global hexo */
+
+hexo.extend.injector.register(&#39;head_end&#39;, require(&#39;./lib/inject&#39;)(hexo))
+</code></pre>
+<pre><code class="js">module.exports = (hexo) =&gt; () =&gt; {
+  const css = hexo.extend.helper.get(&#39;css&#39;).bind(hexo);
+  const { cssPath } = hexo.config.fooPlugin;
+  return css(cssPath);
+};
+</code></pre>
+<pre><code class="js">const injectFn = (hexo) =&gt; {
+  const css = hexo.extend.helper.get(&#39;css&#39;).bind(hexo);
+  const { cssPath } = hexo.config.fooPlugin;
+  return css(cssPath);
+};
+
+module.exports = (hexo) =&gt; injectFn(hexo);
+</code></pre>

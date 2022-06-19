@@ -1,0 +1,40 @@
+<hr>
+<h2 id="title-GitLab-Pages"><a href="#title-GitLab-Pages" class="headerlink" title="title: GitLab Pages"></a>title: GitLab Pages</h2><ol>
+<li>Create a new repository named <b><em>username</em>.gitlab.io</b>, where username is your username on GitLab. If you have already uploaded to other repo, rename the repo instead.</li>
+<li>Enable Shared Runners via <strong>Settings</strong> &gt; <strong>CI&#x2F;CD</strong> &gt; <strong>Runners</strong> &gt; <strong>Enable shared runners for this project</strong>.</li>
+<li>Push the files of your Hexo folder to the repository. The <code>public/</code> folder is not (and should not be) uploaded by default, make sure the <code>.gitignore</code> file contains <code>public/</code> line. The folder structure should be roughly similar to <a href="https://gitlab.com/pages/hexo">this repo</a>.</li>
+<li>Check what version of Node.js you are using on your local machine with <code>node --version</code>. Make a note of the major version (e.g., <code>v16.y.z</code>)</li>
+<li>Add <code>.gitlab-ci.yml</code> file to the root folder of your repo (alongside _config.yml &amp; package.json) with the following content (replacing <code>16</code> with the major version of Node.js you noted in previous step):</li>
+</ol>
+<pre><code class="yml">image: node:16-alpine
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm install hexo-cli -g
+  - npm install
+
+pages:
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+</code></pre>
+<ol start="6">
+<li><em>username</em>.gitlab.io should be up and running, once GitLab CI finishes the deployment job,</li>
+<li>(Optional) If you wish to inspect the generated site assets (html, css, js, etc), they can be found in the <a href="https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html">job artifact</a>.</li>
+</ol>
+<h2 id="Project-page"><a href="#Project-page" class="headerlink" title="Project page"></a>Project page</h2><p>If you prefer to have a project page on GitLab:</p>
+<ol>
+<li>Go to <strong>Settings</strong> &gt; <strong>General</strong> &gt; <strong>Advanced</strong> &gt; <strong>Change path</strong>. Change the value to a name, so the website is available at <b>username.gitlab.io&#x2F;<em>repository</em></b>. It can be any name, like <em>blog</em> or <em>hexo</em>.</li>
+<li>Edit <strong>_config.yml</strong>, change the <code>url:</code> value to <code>https://username.gitlab.io/repository</code>.</li>
+<li>Commit and push.</li>
+</ol>
+<h2 id="Useful-links"><a href="#Useful-links" class="headerlink" title="Useful links"></a>Useful links</h2><ul>
+<li><a href="https://docs.gitlab.com/ee/user/project/pages/">GitLab Pages</a></li>
+<li><a href="https://docs.gitlab.com/ee/ci/yaml/">GitLab CI Docs</a></li>
+</ul>

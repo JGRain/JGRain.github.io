@@ -1,0 +1,134 @@
+<hr>
+<h2 id="title-Links-Permanentes-Permalinks"><a href="#title-Links-Permanentes-Permalinks" class="headerlink" title="title: Links Permanentes (Permalinks)"></a>title: Links Permanentes (Permalinks)</h2><p>Você pode especificar os links permanentes (permalinks) para o seu site em <code>_config.yml</code> ou no <a href="front-matter.html">front-matter</a> de cada postagem.</p>
+<h3 id="Variaveis"><a href="#Variaveis" class="headerlink" title="Variáveis"></a>Variáveis</h3><p>Além das seguintes variáveis, você pode usar quaisquer atributos no permalink.</p>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year</code></td>
+<td>Ano da publicação da postagem (4 dígitos)</td>
+</tr>
+<tr>
+<td><code>:month</code></td>
+<td>Mês da publicação da postagem (2 dígitos)</td>
+</tr>
+<tr>
+<td><code>:i_month</code></td>
+<td>Mês da publicação da postagem (sem zero à esquerda)</td>
+</tr>
+<tr>
+<td><code>:day</code></td>
+<td>Dia da publicação da postagem (2 dígitos)</td>
+</tr>
+<tr>
+<td><code>:i_day</code></td>
+<td>Dia da publicação da postagem (sem zero à esquerda)</td>
+</tr>
+<tr>
+<td><code>:hour</code></td>
+<td>Published hour of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:minute</code></td>
+<td>Published minute of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:second</code></td>
+<td>Published second of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:title</code></td>
+<td>Filename (relative to “source&#x2F;_posts&#x2F;“ folder)</td>
+</tr>
+<tr>
+<td><code>:name</code></td>
+<td>Filename</td>
+</tr>
+<tr>
+<td><code>:post_title</code></td>
+<td>Título da postagem</td>
+</tr>
+<tr>
+<td><code>:id</code></td>
+<td>ID da postagem (<em>not persistent across <a href="/pt-br/docs/commands#clean">cache reset</a></em>)</td>
+</tr>
+<tr>
+<td><code>:category</code></td>
+<td>Categorias. Se a postagem não possuir uma categoria, será usado o valor de <code>default_category</code>.</td>
+</tr>
+<tr>
+<td><code>:hash</code></td>
+<td>SHA1 hash of filename (same as <code>:title</code>) and date (12-hexadecimal)</td>
+</tr>
+</tbody></table>
+<p>Você pode definir o valor padrão de cada variável do permalink através da definição <code>permalink_defaults</code>:</p>
+<pre><code class="yaml">permalink_defaults:
+  lang: en
+</code></pre>
+<h3 id="Exemplos"><a href="#Exemplos" class="headerlink" title="Exemplos"></a>Exemplos</h3><pre><code class="yaml">title: Hello World
+date: 2013-07-14 17:01:34
+categories:
+- foo
+- bar
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Definição</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year/:month/:day/:title/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:year-:month-:day-:title.html</code></td>
+<td>2013-07-14-hello-world.html</td>
+</tr>
+<tr>
+<td><code>:category/:title/</code></td>
+<td>foo&#x2F;bar&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:title-:hash/</code></td>
+<td>hello-world-a2c8ac003b43&#x2F;</td>
+</tr>
+</tbody></table>
+<pre><code class="yaml">title: Hello World
+date: 2013-07-14 17:01:34
+categories:
+- foo
+- bar
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Definição</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year/:month/:day/:title/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;lorem&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:year/:month/:day/:name/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;hello-world&#x2F;</td>
+</tr>
+</tbody></table>
+<h3 id="Suporte-Multi-idioma"><a href="#Suporte-Multi-idioma" class="headerlink" title="Suporte Multi-idioma"></a>Suporte Multi-idioma</h3><p>Para criar um site multi-idioma, você pode modificar as definições de <code>new_post_name</code> e <code>permalink</code> da seguinte forma:</p>
+<pre><code class="yaml">new_post_name: :lang/:title.md
+permalink: :lang/:title/
+</code></pre>
+<p>Quando você criar uma nova postagem, esta será salva em:</p>
+<pre><code class="bash">$ hexo new &quot;Hello World&quot; --lang tw
+# =&gt; source/_posts/tw/Hello-World.md
+</code></pre>
+<p>e a URL será:</p>
+<pre><code class="plain">http://localhost:4000/tw/hello-world/
+</code></pre>

@@ -1,0 +1,29 @@
+<hr>
+<h2 id="title-Migration"><a href="#title-Migration" class="headerlink" title="title: Migration"></a>title: Migration</h2><h2 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h2><p>ขั้นแรก ติดตั้งปลั๊กอิน <code>hexo-migrator-rss</code></p>
+<pre><code class="bash">$ npm install hexo-migrator-rss --save
+</code></pre>
+<p>เมื่อเสร็จการติดตั้งปลั๊กอินแล้วรันคำสั่งต่อไปเพื่อย้ายโพสต์ทั้งหมดจาก RSS<br> <code>source</code> นั้นเป็น path ของไฟล์หรือ URL ได้</p>
+<pre><code class="bash">$ hexo migrate rss &lt;source&gt;
+</code></pre>
+<h2 id="Jekyll"><a href="#Jekyll" class="headerlink" title="Jekyll"></a>Jekyll</h2><p>ย้ายไฟล์ทั้งหมดใน folder Jekyll  <code>_posts</code> ไป folder  <code>source/_posts</code><br>แก้ไขการตั้งค่า <code>new_post_name</code> ใน <code>_config.yml</code>:</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="Octopress"><a href="#Octopress" class="headerlink" title="Octopress"></a>Octopress</h2><p>ย้ายไฟล์ทั้งหมดใน folder <code>source/_posts</code> ของ Octopress ไปถึง  <code>source/_posts</code><br>แก้ไขการตั้งค่า <code>new_post_name</code> ใน <code>_config.yml</code>:</p>
+<pre><code class="yaml">new_post_name: :year-:month-:day-:title.md
+</code></pre>
+<h2 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h2><p>ขั้นแรก ติดตั้งปลั๊กอิน <code>hexo-migrator-wordpress</code></p>
+<pre><code class="bash">$ npm install hexo-migrator-wordpress --save
+</code></pre>
+<p>นำไซตื WordPress ของคุณออกไปได้ด้วยการตั้งค่า “Tools” → “Export” →<br>“WordPress”  ใน dashboard ของ WordPress (สำหรับข้อมูลเพิ่มเติมไปดูที่ <a href="http://en.support.wordpress.com/export/">WordPress support page</a>)</p>
+<p>แล้วรัน:</p>
+<pre><code class="bash">$ hexo migrate wordpress &lt;source&gt;
+</code></pre>
+<p><code>source</code>  เป็น  path ของไฟล์หรือ URL ของไฟล์ท่ี  WordPress ท่ีส่งออกมา</p>
+<h2 id="Joomla"><a href="#Joomla" class="headerlink" title="Joomla"></a>Joomla</h2><p>ขั้นแรก ติดตั้งปลั๊กอิน <code>hexo-migrator-joomla</code></p>
+<pre><code class="bash">$ npm install hexo-migrator-joomla --save
+</code></pre>
+<p>นำออกบทความ Joomla ของคุณได้โดยใช้ component  <a href="http://extensions.joomla.org/extensions/migration-a-conversion/data-import-a-export/12816?qh=YToxOntpOjA7czo1OiJqMnhtbCI7fQ==">J2XML</a></p>
+<p>แล้วรัน:</p>
+<pre><code class="bash">$ hexo migrate joomla &lt;source&gt;
+</code></pre>
+<p><code>source</code>  เป็น  path ของไฟล์หรือ URL ของไฟล์ท่ี  Joomla ท่ีส่งออกมา</p>

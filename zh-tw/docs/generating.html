@@ -1,0 +1,11 @@
+<hr>
+<h2 id="title-產生檔案"><a href="#title-產生檔案" class="headerlink" title="title: 產生檔案"></a>title: 產生檔案</h2><p>使用 Hexo 產生靜態檔案非常快速而且簡單。</p>
+<pre><code class="bash">$ hexo generate
+</code></pre>
+<h3 id="監看檔案變更"><a href="#監看檔案變更" class="headerlink" title="監看檔案變更"></a>監看檔案變更</h3><p>Hexo 能夠監看檔案變更並立即重新產生靜態檔案，在建立時會比對檔案的 SHA1 checksum，只有變動的檔案才會寫入。</p>
+<pre><code class="bash">$ hexo generate --watch
+</code></pre>
+<h3 id="完成後佈署"><a href="#完成後佈署" class="headerlink" title="完成後佈署"></a>完成後佈署</h3><p>您可執行下列的其中一個指令，讓 Hexo 在建立完畢後自動佈署網站，兩個指令的作用是相同的。</p>
+<pre><code class="bash">$ hexo generate --deploy
+$ hexo deploy --generate
+</code></pre>

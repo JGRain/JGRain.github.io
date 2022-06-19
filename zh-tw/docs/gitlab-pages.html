@@ -1,0 +1,39 @@
+<hr>
+<h2 id="title-在-GitLab-Pages-上部署-Hexo"><a href="#title-在-GitLab-Pages-上部署-Hexo" class="headerlink" title="title: 在 GitLab Pages 上部署 Hexo"></a>title: 在 GitLab Pages 上部署 Hexo</h2><ol>
+<li>新增名為 <code>&lt;GitLab 用戶名&gt;.gitlab.io</code> 的儲存庫。 如果你之前上載了 Hexo 到其他資料庫，那麼只需將該資料庫重新命名為 <code>&lt;GitLab 用戶名&gt;.gitlab.io</code> 。</li>
+<li>在 GitLab 中的 <code>Settings -&gt; CI / CD</code> 啟用 <code>Shared Runners</code> 。</li>
+<li>將 Hexo 檔案資料夾推播到資料庫中。預設情況下 <code>public/</code> 是不會被上載到資料庫，請確保 <code>.gitignore</code> 已經包含 <code>public/</code> 一行。你的 Hexo 資料庫大致上應該與<a href="https://gitlab.com/pages/hexo">這裡</a>相同。</li>
+<li>於儲存庫目錄中新增 <code>.gitlab-ci.yml</code>:</li>
+</ol>
+<pre><code class="yml">image: node:10-alpine # use nodejs v10 LTS
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm install hexo-cli -g
+  - npm install
+
+pages:
+  script:
+    - hexo generate
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+</code></pre>
+<ol start="5">
+<li>GitLab CI 完成部署後，你應該能瀏覽 <code>&lt;GitLab 用戶名&gt;.gitlab.io</code> 頁面。</li>
+<li>(可選部分) 若要檢驗你的 site assets (html、 css、 js 等)，你可<a href="https://docs.gitlab.com/ee/user/project/pipelines/job_artifacts.html">點選這裡</a> 了解。</li>
+</ol>
+<h2 id="專案頁面"><a href="#專案頁面" class="headerlink" title="專案頁面"></a>專案頁面</h2><p>下文將講解如何在 GitLab 上設立專案頁面:</p>
+<ol>
+<li>前往 Hexo資料庫的 <code>Settings -&gt; General -&gt; Advanced -&gt; Change path</code>。 更改成 <code>&lt;GitLab 用戶名&gt;.gitlab.io/&lt;任何名稱&gt;</code> （請將<code>&lt;任何名稱&gt;</code>替換成你會用到的名字）</li>
+<li>修改 <strong>_config.yml</strong>, 把 <code>root:</code> 的 <code>&quot;&quot;</code> 改成 <code>&quot;name&quot;</code>.</li>
+<li>確定並推播。</li>
+</ol>
+<h2 id="參考鏈接"><a href="#參考鏈接" class="headerlink" title="參考鏈接"></a>參考鏈接</h2><ul>
+<li><a href="https://docs.gitlab.com/ee/user/project/pages/index.html">GitLab Pages</a></li>
+<li><a href="https://docs.gitlab.com/ee/ci/README.html">GitLab CI Docs</a></li>
+</ul>

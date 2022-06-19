@@ -1,0 +1,43 @@
+<hr>
+<h2 id="title-Router"><a href="#title-Router" class="headerlink" title="title: Router"></a>title: Router</h2><p>O <code>router</code> salva todos os caminhos usados no site.</p>
+<h2 id="Obter-um-Caminho"><a href="#Obter-um-Caminho" class="headerlink" title="Obter um Caminho"></a>Obter um Caminho</h2><p>O método <code>get</code> retorna uma <a href="http://nodejs.org/api/stream.html">Stream</a>. Por exemplo, para salvar os dados do caminho para um destino especificado:</p>
+<pre><code class="js">var data = hexo.route.get(&#39;index.html&#39;);
+var dest = fs.createWriteStream(&#39;somewhere&#39;);
+
+data.pipe(dest);
+</code></pre>
+<h2 id="Definir-um-Caminho"><a href="#Definir-um-Caminho" class="headerlink" title="Definir um Caminho"></a>Definir um Caminho</h2><p>O método <code>set</code> recebe uma string, um <a href="http://nodejs.org/api/buffer.html">Buffer</a> ou uma função.</p>
+<pre><code class="js">// String
+hexo.route.set(&#39;index.html&#39;, &#39;index&#39;)
+
+// Buffer
+hexo.route.set(&#39;index.html&#39;, new Buffer(&#39;index&#39;));
+
+// Function (Promise)
+hexo.route.set(&#39;index.html&#39;, function(){
+  return new Promise(function(resolve, reject){
+    resolve(&#39;index&#39;);
+  });
+});
+
+// Function (Callback)
+hexo.route.set(&#39;index.html&#39;, function(callback){
+  callback(null, &#39;index&#39;);
+});
+</code></pre>
+<p>Você também pode definir um booleano para indicar se um caminho foi modificado ou não. Isso pode acelerar a geração de arquivos, pois permite ignorar os arquivos não modificados.</p>
+<pre><code class="js">hexo.route.set(&#39;index.html&#39;, {
+    data: &#39;index&#39;,
+    modified: false
+});
+
+// hexo.route.isModified(&#39;index.html&#39;) =&gt; false
+</code></pre>
+<h2 id="Remover-um-Caminho"><a href="#Remover-um-Caminho" class="headerlink" title="Remover um Caminho"></a>Remover um Caminho</h2><pre><code class="js">hexo.route.remove(&#39;index.html&#39;);
+</code></pre>
+<h2 id="Obter-a-Lista-de-Rotas"><a href="#Obter-a-Lista-de-Rotas" class="headerlink" title="Obter a Lista de Rotas"></a>Obter a Lista de Rotas</h2><pre><code class="js">hexo.route.list();
+</code></pre>
+<h2 id="Formatar-o-Caminho"><a href="#Formatar-o-Caminho" class="headerlink" title="Formatar o Caminho"></a>Formatar o Caminho</h2><p>O método <code>format</code> transforma uma string em um caminho válido.</p>
+<pre><code class="js">hexo.route.format(&#39;archives/&#39;);
+// archives/index.html
+</code></pre>

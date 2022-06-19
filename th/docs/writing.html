@@ -1,0 +1,92 @@
+<hr>
+<h2 id="title-Writing"><a href="#title-Writing" class="headerlink" title="title: Writing"></a>title: Writing</h2><p>{% youtube AIqBubK6ZLc %}</p>
+<p>คุณสามรถรันคำสั่งต่อไปเพื่อสร้างโพสต์ใหม่หรือเพจใหม่:</p>
+<pre><code class="bash">$ hexo new [layout] &lt;title&gt;
+</code></pre>
+<p><code>post</code> เป็น <code>layout</code> default แต่คุณตั้งค่า layout ของตนได้โดยเปลี่ยนการตั้งค่าของ <code>default_layout</code> ใน  <code>_config.yml</code> ได้</p>
+<h3 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h3><p>ใน hexo มี layout ทั้งหมดสามอย่าง: <code>post</code> <code>page</code>  และ <code>draft</code> ไฟล์ที่สร้างมาในต่าง layout จะอยู่ใน path ท่ีแตกต่างกัน<br>โพสต์ท่ีสร้างมาใหม่จะบันทึกอยู่ใน folder  <code>source/_posts</code></p>
+<table>
+<thead>
+<tr>
+<th>Layout</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>post</code></td>
+<td><code>source/_posts</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td><code>source</code></td>
+</tr>
+<tr>
+<td><code>draft</code></td>
+<td><code>source/_drafts</code></td>
+</tr>
+</tbody></table>
+<p>{% note tip Disabling layout %}<br>If you don’t want an article (post&#x2F;page) to be processed with a theme, set <code>layout: false</code> in its front-matter. Refer to <a href="/docs/front-matter#Layout">this section</a> for more details.<br>{% endnote %}</p>
+<h3 id="Filename"><a href="#Filename" class="headerlink" title="Filename"></a>Filename</h3><p>hexo ใช้หัวข้อของโพสต์เป็นชื่อไฟล์ คุณสามารถตั้งค่า <code>new_post_name</code> ในไฟล์<br><code>_config.yml</code> เพื่อเปลี่ยนชื่อไฟล์ default ยกตัวอย่างเช่น<br><code>:year-:month-:day-:title.md</code><br>จะทำให้ชื่อไฟล์มีกาลเวลาของการสร้างไฟล์รวมอยู่ด้วย คุณใช้ placeholder ต่อไปได้:</p>
+<table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:title</code></td>
+<td>Post title (lower case, with spaces replaced by hyphens)</td>
+</tr>
+<tr>
+<td><code>:year</code></td>
+<td>Created year, e.g. <code>2015</code></td>
+</tr>
+<tr>
+<td><code>:month</code></td>
+<td>Created month (leading zeros), e.g. <code>04</code></td>
+</tr>
+<tr>
+<td><code>:i_month</code></td>
+<td>Created month (no leading zeros), e.g. <code>4</code></td>
+</tr>
+<tr>
+<td><code>:day</code></td>
+<td>Created day (leading zeros), e.g. <code>07</code></td>
+</tr>
+<tr>
+<td><code>:i_day</code></td>
+<td>Created day (no leading zeros), e.g. <code>7</code></td>
+</tr>
+</tbody></table>
+<h3 id="Drafts"><a href="#Drafts" class="headerlink" title="Drafts"></a>Drafts</h3><p><code>draft</code> เป็น layout อย่างหนึ่งของ hexo โพสต์ท่ีตั้งค่า layout เป็น draft<br>นั้นจะถูกบันทึกอยู่ใน folder <code>source/_drafts</code>  คุณสามารถใช้คำสั่ง <code>publish</code> ไปย้ายไฟล์ไปถึง folder <code>source/_posts</code>  ในท่ีนี้คำสั่ง <code>publish</code> คล้ายกับคำสั่ง <code>new</code></p>
+<pre><code class="bash">$ hexo publish [layout] &lt;title&gt;
+</code></pre>
+<p>draft จะไม่ render ให้เห็นในเว็บ by default คุณสามารถเพิ่มตัวเลือก <code>--draft</code><br>ให้เมื่อรัน hexo หรือ enable <code>render_drafts</code> ในไฟล์ <code>_config.yml</code> เพื่อ render draft</p>
+<h3 id="Scaffolds"><a href="#Scaffolds" class="headerlink" title="Scaffolds"></a>Scaffolds</h3><p>เมื่อสร้างโพสต์ขึ้นมา hexo จะสร้างไฟล์ตามไฟล์ท่ีมีอยู่ใน folder <code>scaffolds</code>  ยกตัวอย่างเช่น：</p>
+<pre><code class="bash">$ hexo new photo &quot;My Gallery&quot;
+</code></pre>
+<p>เมื่อรันคำสั่งนี้ hexo จะลองหา <code>photo.md</code> ใน folder  <code>scaffolds</code>  และตามด้วยการสร้างโพสต์ขึ้นมา placeholder ต่อไปเป็น placeholder<br>ท่ีตั้งค่าได้ใน scaffold：</p>
+<table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>layout</code></td>
+<td>Layout</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Title</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>File created date</td>
+</tr>
+</tbody></table>
+<h3 id="Supported-Formats"><a href="#Supported-Formats" class="headerlink" title="Supported Formats"></a>Supported Formats</h3><p>Hexo support posts written in any format, as long as the corresponding renderer plugin is installed.</p>
+<p>For example, Hexo has <code>hexo-renderer-marked</code> and <code>hexo-renderer-ejs</code> installed by default, so you can write your posts in <code>markdown</code> or in <code>ejs</code>. If you have <code>hexo-renderer-pug</code> installed, then you can even write your post in pug template language.</p>
+<p>You can rename your posts and change to file extension from <code>.md</code> to <code>.ejs</code>, then Hexo will use <code>hexo-renderer-ejs</code> to render that file, so do the other formats.</p>

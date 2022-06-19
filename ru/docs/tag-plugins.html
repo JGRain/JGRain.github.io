@@ -1,0 +1,205 @@
+<hr>
+<h2 id="title-Плагины-тегов"><a href="#title-Плагины-тегов" class="headerlink" title="title: Плагины тегов"></a>title: Плагины тегов</h2><p>Плагины тегов отличаются от тегов в посте. Они портированы с Octopress и обеспечивают удобный способ, чтобы быстро добавить контент для ваших постов.</p>
+<p>Although you can write your posts in any formats, but the tag plugins will always be available and syntax remains the same.</p>
+<p><em>Tag plugins should not be wrapped inside Markdown syntax, e.g. <code>[]({% post_path lorem-ipsum %})</code> is not supported.</em></p>
+<h2 id="Блок-цитаты"><a href="#Блок-цитаты" class="headerlink" title="Блок цитаты"></a>Блок цитаты</h2><p>Подходит для добавления цитаты в свой пост с указанием автора, источника и информационным заголовком.</p>
+<p><strong>Блок данных:</strong> цитата</p>
+<pre><code>{% blockquote [author[, source]] [link] [source_link_title] %}
+content
+{% endblockquote %}
+</code></pre>
+<h3 id="Примеры"><a href="#Примеры" class="headerlink" title="Примеры"></a>Примеры</h3><p><strong>Без аргументов. Обычная цитата.</strong></p>
+<pre><code>{% blockquote %}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote %}<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.<br>{% endblockquote %}</p>
+<p><strong>Цитата из книги</strong></p>
+<pre><code>{% blockquote David Levithan, Wide Awake %}
+Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote David Levithan, Wide Awake %}<br>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.<br>{% endblockquote %}</p>
+<p><strong>Цитата из Twitter</strong></p>
+<pre><code>{% blockquote @DevDocs https://twitter.com/devdocs/status/356095192085962752 %}
+NEW: DevDocs now comes with syntax highlighting. http://devdocs.io
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote @DevDocs <a href="https://twitter.com/devdocs/status/356095192085962752">https://twitter.com/devdocs/status/356095192085962752</a> %}<br>NEW: DevDocs now comes with syntax highlighting. <a href="http://devdocs.io/">http://devdocs.io</a><br>{% endblockquote %}</p>
+<p><strong>Цитата из статьи в интернете</strong></p>
+<pre><code>{% blockquote Seth Godin http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html Welcome to Island Marketing %}
+Every interaction is both precious and an opportunity to delight.
+{% endblockquote %}
+</code></pre>
+<p>{% blockquote Seth Godin <a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html</a> Welcome to Island Marketing %}<br>Every interaction is both precious and an opportunity to delight.<br>{% endblockquote %}</p>
+<h2 id="Блок-с-кодом"><a href="#Блок-с-кодом" class="headerlink" title="Блок с кодом"></a>Блок с кодом</h2><p>Полезная функция для добавления фрагментов кода в пост.</p>
+<p><strong>Блок данных:</strong> code (код)</p>
+<pre><code>{% codeblock [title] [lang:language] [url] [link text] [additional options] %}
+code snippet
+{% endcodeblock %}
+</code></pre>
+<p>Specify additional options in <code>option:value</code> format, e.g. <code>line_number:false first_line:5</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Extra Options</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>line_number</code></td>
+<td>Show line number</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>line_threshold</code></td>
+<td>Only show line numbers as long as the numbers of lines of the code block exceed such threshold.</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>Enable code highlighting</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>first_line</code></td>
+<td>Specify the first line number</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>mark</code></td>
+<td>Line highlight specific line(s), each value separated by a comma. Specify number range using a dash<br>Example: <code>mark:1,4-7,10</code> will mark line 1, 4 to 7 and 10.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>wrap</code></td>
+<td>Wrap the code block in <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table"><code>&lt;table&gt;</code></a></td>
+<td><code>true</code></td>
+</tr>
+</tbody></table>
+<h3 id="Примеры-1"><a href="#Примеры-1" class="headerlink" title="Примеры"></a>Примеры</h3><p><strong>Простой блок кода</strong></p>
+<pre><code>{% codeblock %}
+alert(&#39;Hello World!&#39;);
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock %}<br>alert(‘Hello World!’);<br>{% endcodeblock %}</p>
+<p><strong>С указанием языка</strong></p>
+<pre><code>{% codeblock lang:objc %}
+[rectangle setX: 10 y: 10 width: 20 height: 20];
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock lang:objc %}<br>[rectangle setX: 10 y: 10 width: 20 height: 20];<br>{% endcodeblock %}</p>
+<p><strong>С добавление заголовка</strong></p>
+<pre><code>{% codeblock Array.map %}
+array.map(callback[, thisArg])
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock Array.map %}<br>array.map(callback[, thisArg])<br>{% endcodeblock %}</p>
+<p><strong>С добавлением заголовка и ссылки</strong></p>
+<pre><code>{% codeblock _.compact http://underscorejs.org/#compact Underscore.js %}
+_.compact([0, 1, false, 2, &#39;&#39;, 3]);
+=&gt; [1, 2, 3]
+{% endcodeblock %}
+</code></pre>
+<p>{% codeblock _.compact <a href="http://underscorejs.org/#compact">http://underscorejs.org/#compact</a> Underscore.js %}<br>_.compact([0, 1, false, 2, ‘’, 3]);<br>&#x3D;&gt; [1, 2, 3]<br>{% endcodeblock %}</p>
+<h2 id="Блок-кода-в-кавычках"><a href="#Блок-кода-в-кавычках" class="headerlink" title="Блок кода в кавычках"></a>Блок кода в кавычках</h2><p>Тот же блок кода, но использует три обратные кавычки для отделения блока.</p>
+<p>{% raw %}<br>&amp;#96<code> [language] [title] [url] [link text] code snippet &amp;#96;</code><br>{% endraw %}</p>
+<h2 id="Цитата"><a href="#Цитата" class="headerlink" title="Цитата"></a>Цитата</h2><p>Добавляет цитату в пост:</p>
+<pre><code>{% pullquote [class] %}
+content
+{% endpullquote %}
+</code></pre>
+<h2 id="jsFiddle"><a href="#jsFiddle" class="headerlink" title="jsFiddle"></a>jsFiddle</h2><p>Размещает фрагмент с jsFiddle:</p>
+<pre><code>{% jsfiddle shorttag [tabs] [skin] [width] [height] %}
+</code></pre>
+<h2 id="Gist"><a href="#Gist" class="headerlink" title="Gist"></a>Gist</h2><p>Размещает фрагмент с Gist:</p>
+<pre><code>{% gist gist_id [filename] %}
+</code></pre>
+<h2 id="iframe"><a href="#iframe" class="headerlink" title="iframe"></a>iframe</h2><p>Размещает iframe:</p>
+<pre><code>{% iframe url [width] [height] %}
+</code></pre>
+<h2 id="Картинка"><a href="#Картинка" class="headerlink" title="Картинка"></a>Картинка</h2><p>Вставляет картинку с заданными размерами.</p>
+<pre><code>{% img [class names] /path/to/image [width] [height] &#39;&quot;title text&quot; &quot;alt text&quot;&#39; %}
+</code></pre>
+<h2 id="Ссылка"><a href="#Ссылка" class="headerlink" title="Ссылка"></a>Ссылка</h2><p>Вставляет ссылку с атрибутом <code>target=&quot;_blank&quot;</code>.</p>
+<pre><code>{% link text url [external] [title] %}
+</code></pre>
+<h2 id="Include-Code"><a href="#Include-Code" class="headerlink" title="Include Code"></a>Include Code</h2><p>Вставляет фрагменты кода из папки <code>source/downloads/code</code>.</p>
+<pre><code>{% include_code [title] [lang:language] path/to/file %}
+</code></pre>
+<h2 id="YouTube"><a href="#YouTube" class="headerlink" title="YouTube"></a>YouTube</h2><p>Вставка видео с YouTube.</p>
+<pre><code>{% youtube video_id [type] [cookie] %}
+</code></pre>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><p><strong>Embed a video</strong></p>
+<pre><code>{% youtube lJIrF4YjHfQ %}
+</code></pre>
+<p><strong>Embed a playlist</strong></p>
+<pre><code>{% youtube PL9hW1uS6HUfscJ9DHkOSoOX45MjXduUxo &#39;playlist&#39; %}
+</code></pre>
+<p><strong>Enable privacy-enhanced mode</strong></p>
+<p>YouTube’s cookie is not used in this mode.</p>
+<pre><code>{% youtube lJIrF4YjHfQ false %}
+{% youtube PL9hW1uS6HUfscJ9DHkOSoOX45MjXduUxo &#39;playlist&#39; false %}
+</code></pre>
+<h2 id="Vimeo"><a href="#Vimeo" class="headerlink" title="Vimeo"></a>Vimeo</h2><p>Вставка видео с Vimeo.</p>
+<pre><code>{% vimeo video_id %}
+</code></pre>
+<h2 id="Включения-из-постов"><a href="#Включения-из-постов" class="headerlink" title="Включения из постов"></a>Включения из постов</h2><p>Содержит ссылку на другой пост.</p>
+<pre><code>{% post_path filename %}
+{% post_link filename [title] [escape] %}
+</code></pre>
+<p>You can ignore permalink and folder information, like languages and dates, when using this tag.</p>
+<p>For instance: <code>{% raw %}{% post_link how-to-bake-a-cake %}{% endraw %}</code>.</p>
+<p>This will work as long as the filename of the post is <code>how-to-bake-a-cake.md</code>, even if the post is located at <code>source/posts/2015-02-my-family-holiday</code> and has permalink <code>2018/en/how-to-bake-a-cake</code>.</p>
+<p>You can customize the text to display, instead of displaying the post’s title.</p>
+<p>Post’s title and custom text are escaped by default. You can use the <code>escape</code> option to disable escaping.</p>
+<p>For instance:</p>
+<p><strong>Display title of the post.</strong></p>
+<p><code>{% raw %}{% post_link hexo-3-8-released %}{% endraw %}</code></p>
+<p>{% post_link hexo-3-8-released %}</p>
+<p><strong>Display custom text.</strong></p>
+<p><code>{% raw %}{% post_link hexo-3-8-released &#39;Link to a post&#39; %}{% endraw %}</code></p>
+<p>{% post_link hexo-3-8-released ‘Link to a post’ %}</p>
+<p><strong>Escape title.</strong></p>
+<pre><code>{% post_link hexo-4-released &#39;How to use &lt;b&gt; tag in title&#39; %}
+</code></pre>
+<p>{% post_link hexo-4-released ‘How to use <b> tag in title’ %}</p>
+<p><strong>Do not escape title.</strong></p>
+<pre><code>{% post_link hexo-4-released &#39;&lt;b&gt;bold&lt;/b&gt; custom title&#39; false %}
+</code></pre>
+<p>{% post_link hexo-4-released ‘<b>bold</b> custom title’ false %}</p>
+<h2 id="Вставка-материала"><a href="#Вставка-материала" class="headerlink" title="Вставка материала"></a>Вставка материала</h2><p>Содержит содержимое материала.</p>
+<pre><code>{% asset_path filename %}
+{% asset_img [class names] slug [width] [height] [title text [alt text]] %}
+{% asset_link filename [title] [escape] %}
+</code></pre>
+<h3 id="Embed-image"><a href="#Embed-image" class="headerlink" title="Embed image"></a>Embed image</h3><p><em>hexo-renderer-marked 3.1.0+ can (optionally) resolves the post’s path of an image automatically, refer to <a href="/docs/asset-folders#Embedding-an-image-using-markdown">this section</a> on how to enable it.</em></p>
+<p>“foo.jpg” is located at <code>http://example.com/2020/01/02/hello/foo.jpg</code>.</p>
+<p><strong>Default (no option)</strong></p>
+<p><code>{% asset_img foo.jpg %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot;&gt;
+</code></pre>
+<p><strong>Custom class</strong></p>
+<p><code>{% asset_img post-image foo.jpg %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; class=&quot;post-image&quot;&gt;
+</code></pre>
+<p><strong>Display size</strong></p>
+<p><code>{% asset_img foo.jpg 500 400 %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; width=&quot;500&quot; height=&quot;400&quot;&gt;
+</code></pre>
+<p><strong>Title &amp; Alt</strong></p>
+<p><code>{% asset_img logo.svg &quot;lorem ipsum&#39;dolor&#39;&quot; %}</code></p>
+<pre><code class="html">&lt;img src=&quot;/2020/01/02/hello/foo.jpg&quot; title=&quot;lorem ipsum&quot; alt=&quot;dolor&quot;&gt;
+</code></pre>
+<h2 id="Сырцы"><a href="#Сырцы" class="headerlink" title="Сырцы"></a>Сырцы</h2><p>Если определённый контент вызывает ошибки обработки в ваших постах, оберните его тегом <code>raw</code>, чтобы избежать ошибок обработки.</p>
+<pre><code>{% raw %}
+content
+{% endraw %}
+</code></pre>
+<h2 id="Отрывок-поста"><a href="#Отрывок-поста" class="headerlink" title="Отрывок поста"></a>Отрывок поста</h2><p>Используйте текст до тега <code>&lt;!-- more --&gt;</code> в качестве отрывка поста.</p>
+<p><strong>Примеры:</strong></p>
+<pre><code>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+&lt;!-- more --&gt;
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</code></pre>

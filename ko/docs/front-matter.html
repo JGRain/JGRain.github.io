@@ -1,0 +1,89 @@
+<hr>
+<h2 id="title-Front-matter"><a href="#title-Front-matter" class="headerlink" title="title: Front-matter"></a>title: Front-matter</h2><p>Front-matter는 파일 시작 시 작성하는 YAML 또는 JSON 구역입니다. 게시물에 대한 환경 설정을 이 곳에서 합니다. Front-matter가 끝나는 부분은 YAML의 경우 세 개의 대시(-) 로, JSON의 경우 세 개의 세미콜론(;)을 넣어서 구분합니다.</p>
+<p><strong>YAML</strong></p>
+<pre><code class="yaml">---
+title: Hello World
+date: 2013/7/13 20:46:25
+---
+</code></pre>
+<p><strong>JSON</strong></p>
+<pre><code class="json">&quot;title&quot;: &quot;Hello World&quot;,
+&quot;date&quot;: &quot;2013/7/13 20:46:25&quot;
+;;;
+</code></pre>
+<h3 id="환경설정-및-기본-값"><a href="#환경설정-및-기본-값" class="headerlink" title="환경설정 및 기본 값"></a>환경설정 및 기본 값</h3><table>
+<thead>
+<tr>
+<th>설정</th>
+<th>설명</th>
+<th>기본 값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>layout</code></td>
+<td>레이아웃</td>
+<td><a href="/ko/docs/configuration#Writing"><code>config.default_layout</code></a></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>타이틀</td>
+<td>Filename (posts only)</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>발행일</td>
+<td>파일이 생성된 날짜</td>
+</tr>
+<tr>
+<td><code>updated</code></td>
+<td>갱신일</td>
+<td>파일이 업로드된 날짜</td>
+</tr>
+<tr>
+<td><code>comments</code></td>
+<td>포스트에서 comment 기능을 사용할지 여부</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>태그 (page에서는 사용 불가능)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>카테고리 (page에서는 사용 불가능)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>포스트의 기본 permalink를 override합니다.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>excerpt</code></td>
+<td>Page excerpt in plain text. Use <a href="/docs/tag-plugins#Post-Excerpt">this plugin</a> to format the text</td>
+<td></td>
+</tr>
+<tr>
+<td><code>disableNunjucks</code></td>
+<td>Disable rendering of Nunjucks tag <code>{{ }}</code>&#x2F;<code>{% %}</code> and <a href="/docs/tag-plugins">tag plugins</a> when enabled</td>
+<td></td>
+</tr>
+<tr>
+<td><code>lang</code></td>
+<td>Set the language to override <a href="/docs/internationalization#Path">auto-detection</a></td>
+<td>Inherited from <code>_config.yml</code></td>
+</tr>
+</tbody></table>
+<h4 id="레이아웃"><a href="#레이아웃" class="headerlink" title="레이아웃"></a>레이아웃</h4><p>The default layout is <code>post</code>, in accordance to the value of <a href="(/docs/configuration#Writing)"><code>default_layout</code></a> setting in <code>_config.yml</code>. When the layout is disabled (<code>layout: false</code>) in an article, it will not be processed with a theme. However, it will still be rendered by any available renderer: if an article is written in Markdown and a Markdown renderer (like the default <a href="https://github.com/hexojs/hexo-renderer-marked">hexo-renderer-marked</a>) is installed, it will be rendered to HTML.</p>
+<p><a href="/docs/tag-plugins">Tag plugins</a> are always processed regardless of layout, unless disabled by the <code>disableNunjucks</code> setting or <a href="/api/renderer#Disable-Nunjucks-tags">renderer</a>.</p>
+<h4 id="카테고리와-태그"><a href="#카테고리와-태그" class="headerlink" title="카테고리와 태그"></a>카테고리와 태그</h4><p>카테고리와 태그는 포스트에서만 사용이 가능합니다. 카테고리는 분류와 하위 분류의 계층적인 관계를 가지고 포스트에 적용됩니다. 태그는 모두 같은 계층 단계에 정의되어 있으므로 순서와 상관 없이 작성해도 됩니다.</p>
+<p><strong>Example</strong></p>
+<pre><code class="yaml">categories:
+- Sports
+- Baseball
+tags:
+- Injury
+- Fight
+- Shocking
+</code></pre>

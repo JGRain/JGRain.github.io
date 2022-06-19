@@ -1,0 +1,88 @@
+<hr>
+<h2 id="title-Templates"><a href="#title-Templates" class="headerlink" title="title: Templates"></a>title: Templates</h2><p>template ให้คำนิยามของรูปแบบการโชว์เนื้อหาของแว็บไซต์คุณโดยตั้งค่าว่าทุกเพจของคุณต้องดูเป็นยังไง ตารางต่อไปเป็น template ท่ีเกี่ยวข้องของทุกเพจท่ีมีอยู่ในไซต์ของคุณ ธีมอันหนึ่งนั้นอย่างน้อยต้องมี template <code>index</code> รวมอยู่ด้วย</p>
+<p>{% youtube mb65bQ4iUc4 %}</p>
+<table>
+<thead>
+<tr>
+<th>Template</th>
+<th>Page</th>
+<th>Fallback</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>index</code></td>
+<td>Home page</td>
+<td></td>
+</tr>
+<tr>
+<td><code>post</code></td>
+<td>Posts</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td>Pages</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>archive</code></td>
+<td>Archives</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td>Category archives</td>
+<td><code>archive</code></td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td>Tag archives</td>
+<td><code>archive</code></td>
+</tr>
+</tbody></table>
+<h2 id="Layouts"><a href="#Layouts" class="headerlink" title="Layouts"></a>Layouts</h2><p>เมื่อเพจต่างๆนั้นแชร์โครงสร้างท่ีคล้ายกัน - เช่น ถ้าสอง template นั้นล้วนมีทั้ง<br> header และ footer - คุณสามารถใช้ <code>layout</code><br> ไปตั้งค่าให้เพจต่างๆในครั้งเดียวได้ ทุกไฟล์ layout ต้องมี variable <code>body</code><br> รวมอยู่ด้วย ยกตัวอย่างเช่น:</p>
+<pre><code class="html">index
+</code></pre>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;&lt;%- body %&gt;&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>yields:</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;index&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>template <code>layout</code> จะถูกใช้โดย template อื่นๆ ทั้งหมด<br>คุณสามารถตั้งค่าเพิ่มขึ้นใน front-matter หรือตั้งค่าเป็น <code>false</code> เพื่อ<br>disable template <code>layout</code><br>นอกจากนี้แล้วคุณยังสามารถสร้างโครงสร้างท่ีซับซ้อนขึ้นและรังอยู่ใต้ template<br>ด้านบนสุด</p>
+<h2 id="Partials"><a href="#Partials" class="headerlink" title="Partials"></a>Partials</h2><p>partial ใช้มาเป็น  component ท่ีแชว์ได้ระหว่าง template ต่างๆของคุณ<br>ตัวอย่างทั่วไปคือ header footer และ sidebar คุณอาจจะอยากวาง partial<br>ใรไฟล์ท่ีแตกต่างกันเพื่อทำให้การรักษาแว็บไซต์ของคุณสะดวกขึ้น ยกตัวอย่างเช่น:</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= config.title %&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>yields:</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;My Site&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h2 id="Local-Variables"><a href="#Local-Variables" class="headerlink" title="Local Variables"></a>Local Variables</h2><p>คุณสามารถให้คำนิยามแต่ local variable ใน template และใช้ local variable<br>เหล่านี้ใน template  อื่นๆ</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= title %&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;, {title: &#39;Hello World&#39;}) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>yields:</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;Hello World&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h2 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h2><p>ถ้าธีมของคุณซับซ้อนเกินไปหรือจำนวนไฟล์ท่ีต้อง generate มากเกินไป<br>ประสิทธิภาพของการ generate ไฟล์ ของ hexo จะลดให้ต่ำกว่าปกติเป็นอย่างมาก<br>เพื่อแก้ไขปัญหานี้ คุณต้องลดความซับซ้อนของ code หรือลองใช้ Fragment Caching<br>ซึ่งได้แนะนำแล้วใน hexo 2.7</p>
+<p>คุณลักษณะนี้ยืมมาจาก <a href="http://guides.rubyonrails.org/caching_with_rails.html#fragment-caching">Ruby on Rails</a><br>code น้ั้นจะบันทึกไว้เป็น fragment และ fragment นั้นจะถูก cach ให้เมื่อ<br>request ท่ีเพิ่มเติมขึ้นถูกเรียก ดั้งนั้นจะได้ลดจำนวน query ของ database<br>และเพิ่มความเร็วของ generation ไฟล์</p>
+<p>caching ของ fragment จะเหมาะสมท่ีสุดกับ header footer sidebar<br>หรือเนื้อหาคงท่ีอื่นๆ ยกตัวอย่างเช่น:</p>
+<pre><code class="js">&lt;%- fragment_cache(&#39;header&#39;, function(){
+  return &#39;&lt;header&gt;&lt;/header&gt;&#39;;
+});
+</code></pre>
+<p>แม้ว่่าการใช้ partial จะง่ายกว่า:</p>
+<pre><code class="js">&lt;%- partial(&#39;header&#39;, {}, {cache: true});
+</code></pre>
+<p>{% note warn %}<br><code>fragment_cache()</code> will cache the rendered result and output the cached result to other pages. This should only be used on partials that are expected <strong>not</strong> to change across different pages. Otherwise, it should <strong>not</strong> be enabled.<br>For example, it should be disabled when <code>relative_link</code> is enabled in the config. This is because relative links may appear differently across pages.<br>{% endnote %}</p>

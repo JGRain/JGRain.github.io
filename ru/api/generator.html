@@ -1,0 +1,86 @@
+<hr>
+<h2 id="title-Генератор"><a href="#title-Генератор" class="headerlink" title="title: Генератор"></a>title: Генератор</h2><p>Генератор создаёт ссылки на основе обработанных файлов.</p>
+<h2 id="Краткий-обзор"><a href="#Краткий-обзор" class="headerlink" title="Краткий обзор"></a>Краткий обзор</h2><pre><code class="js">hexo.extend.generator.register(name, function(locals){
+  // ...
+});
+</code></pre>
+<p>Аргумент <code>locals</code> передается в функцию, содержащую переменные сайта. Нужно использовать этот аргумент, чтобы получить <a href="../docs/variables.html#%D0%9F%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5-%D1%81%D0%B0%D0%B9%D1%82%D0%B0">переменные сайта</a>, тем самым убирается необходимость обращаться к базе данных напрямую.</p>
+<h2 id="Обновление-путей"><a href="#Обновление-путей" class="headerlink" title="Обновление путей"></a>Обновление путей</h2><pre><code class="js">hexo.extend.generator.register(&#39;test&#39;, function(locals){
+  // Object
+  return {
+    path: &#39;foo&#39;,
+    data: &#39;foo&#39;
+  };
+
+  // Array
+  return [
+    {path: &#39;foo&#39;, data: &#39;foo&#39;},
+    {path: &#39;bar&#39;, data: &#39;bar&#39;}
+  ];
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Атрибут</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>path</code></td>
+<td>Путь не включает префикс <code>/</code>.</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Данные</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>Макет. Укажите макеты для рендеринга. Значение может быть строкой или массивом. Если это проигнорировать, то путь будет возвращать данные <code>data</code> напрямую.</td>
+</tr>
+</tbody></table>
+<p>Когда исходные файлы обновляются, Hexo выполняет генерацию и пересоздаёт ссылки. <strong>Пожалуйста, генерируйте данные, а не создавайте ссылки напрямую.</strong></p>
+<h2 id="Примеры"><a href="#Примеры" class="headerlink" title="Примеры"></a>Примеры</h2><h3 id="Страница-архива"><a href="#Страница-архива" class="headerlink" title="Страница архива"></a>Страница архива</h3><p>Создаёт страницу архива в <code>archives/index.html</code>. Проходит по данным всех постов, указанных в шаблонах. Эти данные соответствуют переменной <code>page</code> в шаблонах.</p>
+<p>Далее устанавливается атрибут <code>layout</code> для рендеринга шаблонов. В этом примере два варианта: если макета для <code>archive</code> нет, будет использоваться макет <code>index</code>.</p>
+<pre><code class="js">hexo.extend.generator.register(&#39;archive&#39;, function(locals){
+  return {
+    path: &#39;archives/index.html&#39;,
+    data: locals.posts,
+    layout: [&#39;archive&#39;, &#39;index&#39;]
+  }
+});
+</code></pre>
+<h3 id="Страница-архива-с-постраничным-разбиением"><a href="#Страница-архива-с-постраничным-разбиением" class="headerlink" title="Страница архива с постраничным разбиением"></a>Страница архива с постраничным разбиением</h3><p>Можно использовать удобный официальный инструмент <a href="https://github.com/hexojs/hexo-pagination">hexo-pagination</a> для легкого создания страниц с постраничной нумерацией.</p>
+<pre><code class="js">var pagination = require(&#39;hexo-pagination&#39;);
+
+hexo.extend.generator.register(&#39;archive&#39;, function(locals){
+  return pagination(&#39;archives/index.html&#39;, locals.posts, {
+    perPage: 10,
+    layout: [&#39;archive&#39;, &#39;index&#39;],
+    data: {}
+  });
+});
+</code></pre>
+<h3 id="Генерация-всех-постов"><a href="#Генерация-всех-постов" class="headerlink" title="Генерация всех постов"></a>Генерация всех постов</h3><p>Перебирает все посты из переменной <code>locals.posts</code> и создаёт пути для всех найденных.</p>
+<pre><code class="js">hexo.extend.generator.register(&#39;post&#39;, function(locals){
+  return locals.posts.map(function(post){
+    return {
+      path: post.path,
+      data: post,
+      layout: &#39;post&#39;
+    };
+  });
+});
+</code></pre>
+<h3 id="Копирование-файлов"><a href="#Копирование-файлов" class="headerlink" title="Копирование файлов"></a>Копирование файлов</h3><p>На этот раз данные не возвращаются явно, вместо этого данные <code>data</code> отправляются в функцию, чтобы <code>fs.ReadStream</code> вызывался только при необходимости.</p>
+<pre><code class="js">var fs = require(&#39;hexo-fs&#39;);
+
+hexo.extend.generator.register(&#39;asset&#39;, function(locals){
+  return {
+    path: &#39;file.txt&#39;,
+    data: function(){
+      return fs.createReadStream(&#39;path/to/file.txt&#39;)
+    }
+  };
+});
+</code></pre>

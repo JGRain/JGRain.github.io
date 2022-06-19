@@ -1,0 +1,87 @@
+<hr>
+<h2 id="title-Generator"><a href="#title-Generator" class="headerlink" title="title: Generator"></a>title: Generator</h2><p>Um <code>generator</code> constrói rotas a partir de arquivos processados.</p>
+<h2 id="Resumo"><a href="#Resumo" class="headerlink" title="Resumo"></a>Resumo</h2><pre><code class="js">hexo.extend.generator.register(name, function(locals){
+  // ...
+});
+</code></pre>
+<p>Um argumento <code>locals</code> será passado para dentro da função, contendo as <a href="../docs/variables.html#Variaveis-do-Site">variáveis do site</a>. Você deve utilizar esse argumento para obter os dados do site, evitando assim, acessar a base de dados diretamente.</p>
+<h2 id="Atualizar-Rotas"><a href="#Atualizar-Rotas" class="headerlink" title="Atualizar Rotas"></a>Atualizar Rotas</h2><pre><code class="js">hexo.extend.generator.register(&#39;test&#39;, function(locals){
+  // Object
+  return {
+    path: &#39;foo&#39;,
+    data: &#39;foo&#39;
+  };
+
+  // Array
+  return [
+    {path: &#39;foo&#39;, data: &#39;foo&#39;},
+    {path: &#39;bar&#39;, data: &#39;bar&#39;}
+  ];
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>path</code></td>
+<td>Caminho, sem incluir o prefixo <code>/</code>.</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Dados</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>Layout. Especifica os layouts para renderização. O valor pode ser uma string ou um array. Se ignorado, a rota retornará <code>data</code> diretamente.</td>
+</tr>
+</tbody></table>
+<p>Quando os arquivos fonte são atualizados, o Hexo executará todos os geradores e recriará as rotas. <strong>Atenção: Retornar os dados em vez de acessar o roteador diretamente!</strong></p>
+<h2 id="Exemplo"><a href="#Exemplo" class="headerlink" title="Exemplo"></a>Exemplo</h2><h3 id="Paginas-de-Arquivo"><a href="#Paginas-de-Arquivo" class="headerlink" title="Páginas de Arquivo"></a>Páginas de Arquivo</h3><p>Crie uma página de arquivo em <code>archives/index.html</code>. Iremos passar uma lista com todos as postagens como <code>data</code> para os templates. Assim, <code>data</code> é equivalente à variável <code>page</code> nos templates.</p>
+<p>Após isso, defina o atributo <code>layout</code> para renderizar a página com os templates do tema. Nesse exemplo são definidos dois layouts: se o layout de <code>archive</code> não existir, o layout de <code>index</code> será utilizado em seu lugar.</p>
+<pre><code class="js">hexo.extend.generator.register(&#39;archive&#39;, function(locals){
+  return {
+    path: &#39;archives/index.html&#39;,
+    data: locals,
+    layout: [&#39;archive&#39;, &#39;index&#39;]
+  }
+});
+</code></pre>
+<h3 id="Paginas-de-Arquivo-com-Paginacao"><a href="#Paginas-de-Arquivo-com-Paginacao" class="headerlink" title="Páginas de Arquivo com Paginação"></a>Páginas de Arquivo com Paginação</h3><p>Você pode utilizar uma ótima ferramenta oficial chamada <a href="https://github.com/hexojs/hexo-pagination">hexo-pagination</a> para criar facilmente uma página de arquivos com paginação.</p>
+<pre><code class="js">var pagination = require(&#39;hexo-pagination&#39;);
+
+hexo.extend.generator.register(&#39;archive&#39;, function(locals){
+  // hexo-pagination makes an index.html for the /archives route
+  return pagination(&#39;archives&#39;, locals.posts, {
+    perPage: 10,
+    layout: [&#39;archive&#39;, &#39;index&#39;],
+    data: {}
+  });
+});
+</code></pre>
+<h3 id="Gerar-Todas-as-Postagens"><a href="#Gerar-Todas-as-Postagens" class="headerlink" title="Gerar Todas as Postagens"></a>Gerar Todas as Postagens</h3><p>Percorra a lista de postagens em <code>locals.posts</code> e crie rotas para cada um.</p>
+<pre><code class="js">hexo.extend.generator.register(&#39;post&#39;, function(locals){
+  return locals.posts.map(function(post){
+    return {
+      path: post.path,
+      data: post,
+      layout: &#39;post&#39;
+    };
+  });
+});
+</code></pre>
+<h3 id="Copiar-Arquivos"><a href="#Copiar-Arquivos" class="headerlink" title="Copiar Arquivos"></a>Copiar Arquivos</h3><p>Dessa vez não iremos retornar <code>data</code> explicitamente, mas atribuir uma função para que a rota construa <code>fs.ReadStream</code> apenas quando necessário.</p>
+<pre><code class="js">var fs = require(&#39;hexo-fs&#39;);
+
+hexo.extend.generator.register  (&#39;asset&#39;, function(locals){
+  return {
+    path: &#39;file.txt&#39;,
+    data: function(){
+      return fs.createReadStream(&#39;path/to/file.txt&#39;)
+    }
+  };
+});
+</code></pre>

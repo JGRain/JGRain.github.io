@@ -1,0 +1,24 @@
+<hr>
+<h2 id="title-Servidor"><a href="#title-Servidor" class="headerlink" title="title: Servidor"></a>title: Servidor</h2><h2 id="hexo-server"><a href="#hexo-server" class="headerlink" title="hexo-server"></a><a href="https://github.com/hexojs/hexo-server">hexo-server</a></h2><p>Com o lançamento do Hexo 3, o servidor foi separado do módulo principal. Para começar a usar o servidor, primeiro você deve instalar o pacote <a href="https://github.com/hexojs/hexo-server">hexo-server</a>.</p>
+<pre><code class="bash">$ npm install hexo-server --save
+</code></pre>
+<p>Uma vez instalado o servidor, execute o comando a seguir para iniciar o servidor. Seu site será acessível em <code>http://localhost:4000</code> por padrão. Quando o servidor estiver sendo executado, o Hexo assistirá por alterações nos arquivos do projeto e atualizará automaticamente a página, por isso não é necessário reiniciar manualmente o servidor.</p>
+<pre><code class="bash">$ hexo server
+</code></pre>
+<p>Se você quiser mudar a porta ou se estiver encontrando erros <code>EADDRINUSE</code>, use a opção <code>-p</code> para configurar uma porta diferente.</p>
+<pre><code class="bash">$ hexo server -p 5000
+</code></pre>
+<h3 id="Modo-Estatico"><a href="#Modo-Estatico" class="headerlink" title="Modo Estático"></a>Modo Estático</h3><p>No modo estático, somente arquivos do diretório <code>public</code> serão servidos e nenhum arquivo será assistido por mudanças. Você deve executar <code>hexo generate</code> antes de iniciar o servidor. Em geral, é desta forma que o site é servido em produção.</p>
+<pre><code class="bash">$ hexo server -s
+</code></pre>
+<h3 id="Ip-Customizado"><a href="#Ip-Customizado" class="headerlink" title="Ip Customizado"></a>Ip Customizado</h3><p>O Hexo executa o servidor em <code>0.0.0.0</code> por padrão. Você pode substituir a configuração de IP padrão.</p>
+<pre><code class="bash">$ hexo server -i 192.168.1.1
+</code></pre>
+<h2 id="Pow"><a href="#Pow" class="headerlink" title="Pow"></a>Pow</h2><p><a href="http://pow.cx/">Pow</a> é um servidor Rack sem configuração para Mac.</p>
+<h3 id="Instalacaos"><a href="#Instalacaos" class="headerlink" title="Instalaçãos"></a>Instalaçãos</h3><pre><code class="bash">$ curl get.pow.cx | sh
+</code></pre>
+<h3 id="Configuracao"><a href="#Configuracao" class="headerlink" title="Configuração"></a>Configuração</h3><p>Link simbólico no diretório <code>~/.pow</code></p>
+<pre><code class="bash">$ cd ~/.pow
+$ ln -s /path/to/myapp
+</code></pre>
+<p>Seu site estará funcionando em <code>http://myapp.dev</code>. A URL é baseada no nome do link simbólico.</p>

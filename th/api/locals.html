@@ -1,0 +1,38 @@
+<hr>
+<h2 id="title-Local-Variables"><a href="#title-Local-Variables" class="headerlink" title="title: Local Variables"></a>title: Local Variables</h2><p>local variable จะใช้มาเป็น template rendering ซึ่งจะเป็น variable <code>site</code> ที่อยู่ใน template</p>
+<h2 id="Default-Variables"><a href="#Default-Variables" class="headerlink" title="Default Variables"></a>Default Variables</h2><table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>posts</code></td>
+<td>All posts</td>
+</tr>
+<tr>
+<td><code>pages</code></td>
+<td>All pages</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>All categories</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>All tags</td>
+</tr>
+</tbody></table>
+<h2 id="Get-a-Variable"><a href="#Get-a-Variable" class="headerlink" title="Get a Variable"></a>Get a Variable</h2><pre><code class="js">hexo.locals.get(&#39;posts&#39;)
+</code></pre>
+<h2 id="Set-a-Variable"><a href="#Set-a-Variable" class="headerlink" title="Set a Variable"></a>Set a Variable</h2><pre><code class="js">hexo.locals.set(&#39;posts&#39;, function(){
+  return ...
+});
+</code></pre>
+<h2 id="Remove-a-Variable"><a href="#Remove-a-Variable" class="headerlink" title="Remove a Variable"></a>Remove a Variable</h2><pre><code class="js">hexo.locals.remove(&#39;posts&#39;);
+</code></pre>
+<h2 id="Get-All-Variable"><a href="#Get-All-Variable" class="headerlink" title="Get All Variable"></a>Get All Variable</h2><pre><code class="js">hexo.locals.toObject();
+</code></pre>
+<h2 id="Invalidate-the-cache"><a href="#Invalidate-the-cache" class="headerlink" title="Invalidate the cache"></a>Invalidate the cache</h2><pre><code class="js">hexo.locals.invalidate();
+</code></pre>

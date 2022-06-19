@@ -1,0 +1,134 @@
+<hr>
+<h2 id="title-Permalinks"><a href="#title-Permalinks" class="headerlink" title="title: Permalinks"></a>title: Permalinks</h2><p><code>_config.yml</code> 파일 또는 각 포스트의 front-matter에 permalink의 형식을 지정할 수 있습니다.</p>
+<h3 id="변수"><a href="#변수" class="headerlink" title="변수"></a>변수</h3><p>당신은 아래의 변수들은 물론 permalink의 모든 속성을 다 사용할 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>변수</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year</code></td>
+<td>포스트를 배포한 연도 (4-digit)</td>
+</tr>
+<tr>
+<td><code>:month</code></td>
+<td>포스트를 배포한 월 (2-digit)</td>
+</tr>
+<tr>
+<td><code>:i_month</code></td>
+<td>포스트를 배포한 월 (앞에 붙는 0은 생략)</td>
+</tr>
+<tr>
+<td><code>:day</code></td>
+<td>포스트를 배포한 날 (2-digit)</td>
+</tr>
+<tr>
+<td><code>:i_day</code></td>
+<td>포스트를 배포한 날 (앞에 붙는 0은 생략)</td>
+</tr>
+<tr>
+<td><code>:hour</code></td>
+<td>Published hour of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:minute</code></td>
+<td>Published minute of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:second</code></td>
+<td>Published second of posts (2-digit)</td>
+</tr>
+<tr>
+<td><code>:title</code></td>
+<td>파일명 (relative to “source&#x2F;_posts&#x2F;“ folder)</td>
+</tr>
+<tr>
+<td><code>:name</code></td>
+<td>파일명</td>
+</tr>
+<tr>
+<td><code>:post_title</code></td>
+<td>Post title</td>
+</tr>
+<tr>
+<td><code>:id</code></td>
+<td>포스트 ID (<em>not persistent across <a href="/ko/docs/commands#clean">cache reset</a></em>)</td>
+</tr>
+<tr>
+<td><code>:category</code></td>
+<td>포스트가 속한 카테고리. 지정하지 않으면 <code>default_category</code> 값을 사용합니다.</td>
+</tr>
+<tr>
+<td><code>:hash</code></td>
+<td>SHA1 hash of filename (same as <code>:title</code>) and date (12-hexadecimal)</td>
+</tr>
+</tbody></table>
+<p>Permalink 내의 각 변수의 기본 값을 <code>permalink_defaults</code> 설정을 통해 정의할 수 있습니다.</p>
+<pre><code class="yaml">permalink_defaults:
+  lang: en
+</code></pre>
+<h3 id="예시"><a href="#예시" class="headerlink" title="예시"></a>예시</h3><pre><code class="yaml">title: Hello World
+date: 2013-07-14 17:01:34
+categories:
+- foo
+- bar
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>설정</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year/:month/:day/:title/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:year-:month-:day-:title.html</code></td>
+<td>2013-07-14-hello-world.html</td>
+</tr>
+<tr>
+<td><code>:category/:title/</code></td>
+<td>foo&#x2F;bar&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:title-:hash/</code></td>
+<td>hello-world-a2c8ac003b43&#x2F;</td>
+</tr>
+</tbody></table>
+<pre><code class="yaml">title: Hello World
+date: 2013-07-14 17:01:34
+categories:
+- foo
+- bar
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>설정</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:year/:month/:day/:title/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;lorem&#x2F;hello-world&#x2F;</td>
+</tr>
+<tr>
+<td><code>:year/:month/:day/:name/</code></td>
+<td>2013&#x2F;07&#x2F;14&#x2F;hello-world&#x2F;</td>
+</tr>
+</tbody></table>
+<h3 id="다국어-지원"><a href="#다국어-지원" class="headerlink" title="다국어 지원"></a>다국어 지원</h3><p>다국어 지원 사이트를 생성하기 위해, <code>new_post_name</code>과 <code>permalink</code>를 다음과 같이 수정해야 합니다.</p>
+<pre><code class="yaml">new_post_name: :lang/:title.md
+permalink: :lang/:title/
+</code></pre>
+<p>새 post를 생성할 때, 다음과 같이 저장해야 합니다.</p>
+<pre><code class="bash">$ hexo new &quot;Hello World&quot; --lang tw
+# =&gt; source/_posts/tw/Hello-World.md
+</code></pre>
+<p>그리고 URL은 다음과 같아야 합니다.</p>
+<pre><code class="plain">http://localhost:4000/tw/hello-world/
+</code></pre>

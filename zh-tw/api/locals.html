@@ -1,0 +1,38 @@
+<hr>
+<h2 id="title-區域變數"><a href="#title-區域變數" class="headerlink" title="title: 區域變數"></a>title: 區域變數</h2><p>區域變數用於模版渲染，也就是模版中的 <code>site</code> 變數。</p>
+<h2 id="預設變數"><a href="#預設變數" class="headerlink" title="預設變數"></a>預設變數</h2><table>
+<thead>
+<tr>
+<th>變數</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>posts</code></td>
+<td>所有文章</td>
+</tr>
+<tr>
+<td><code>pages</code></td>
+<td>所有分頁</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>所有分類</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>所有標籤</td>
+</tr>
+</tbody></table>
+<h2 id="取得變數"><a href="#取得變數" class="headerlink" title="取得變數"></a>取得變數</h2><pre><code class="js">hexo.locals.get(&#39;posts&#39;)
+</code></pre>
+<h2 id="設定變數"><a href="#設定變數" class="headerlink" title="設定變數"></a>設定變數</h2><pre><code class="js">hexo.locals.set(&#39;posts&#39;, function(){
+  return ...
+});
+</code></pre>
+<h2 id="移除變數"><a href="#移除變數" class="headerlink" title="移除變數"></a>移除變數</h2><pre><code class="js">hexo.locals.remove(&#39;posts&#39;);
+</code></pre>
+<h2 id="取得所有變數"><a href="#取得所有變數" class="headerlink" title="取得所有變數"></a>取得所有變數</h2><pre><code class="js">hexo.locals.toObject();
+</code></pre>
+<h2 id="清除快取"><a href="#清除快取" class="headerlink" title="清除快取"></a>清除快取</h2><pre><code class="js">hexo.locals.invalidate();
+</code></pre>

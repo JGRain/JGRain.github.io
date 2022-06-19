@@ -1,0 +1,79 @@
+<hr>
+<h2 id="title-Box"><a href="#title-Box" class="headerlink" title="title: Box"></a>title: Box</h2><p>Box는 특정 폴더 안의 파일들을 처리하기 위해 사용되는 컨테이너 입니다. Hexo는 <code>hexo.source</code>와 <code>hexo.theme</code> 두 가지 종류의 Box를 사용합니다: <code>hexo.source</code>는 <code>source</code> 폴더를 처리할 때 사용되고 <code>hexo.theme</code>는 <code>theme</code> 폴더를 처리할 때 사용됩니다.</p>
+<h2 id="파일-불러오기"><a href="#파일-불러오기" class="headerlink" title="파일 불러오기"></a>파일 불러오기</h2><p>Box는 <code>process</code>와 <code>watch</code> 두 가지 종류의 메소드를 지원합니다. <code>process</code>는 폴더 안의 모든 파일을 불러옵니다. <code>watch</code>도 동일한 동작을 수행하지만 파일이 변경되는 것을 감지(watching)합니다.</p>
+<pre><code class="js">box.process().then(function(){
+  // ...
+});
+
+box.watch().then(function(){
+  // You can call box.unwatch() later to stop watching.
+});
+</code></pre>
+<h2 id="경로-매칭"><a href="#경로-매칭" class="headerlink" title="경로 매칭"></a>경로 매칭</h2><p>Box는 다양한 방법을 통해 경로를 매칭시킵니다. 당신은 함수 또는 Express-style pattern string을 통해 정규 표현식을 사용할 수 있습니다. 아래는 예시입니다:</p>
+<pre><code class="plain">posts/:id =&gt; posts/89
+posts/*path =&gt; posts/2015/title
+</code></pre>
+<p><a href="https://github.com/hexojs/hexo-util#patternrule">util.Pattern</a>에서 더 많은 정보를 확인하실 수 있습니다.</p>
+<h2 id="프로세서"><a href="#프로세서" class="headerlink" title="프로세서"></a>프로세서</h2><p>프로세서는 Box의 핵심이 되는 요소이며, 파일을 처리할 때 사용됩니다. 경로 매칭을 사용하여 프로세서가 어떤 프로세스를 처리해야 하는지 제한할 수 있습니다. 새로운 프로세서는 <code>addProcessor</code> 메소드를 통해 등록할 수 있습니다.</p>
+<pre><code class="js">box.addProcessor(&#39;posts/:id&#39;, function(file){
+  //
+});
+</code></pre>
+<p>Box는 매칭된 파일의 콘텐츠를 프로세서로 넘겨줍니다. 이 정보는 callback의 <code>file</code> 인자로부터 직접 읽을 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>속성</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source</code></td>
+<td>파일의 전체 경로</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>파일의 box에 대한 상대 경로</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>파일의 형식. <code>create</code>, <code>update</code>, <code>skip</code>, <code>delete</code> 네 가지 값을 가질 수 있습니다.</td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td>경로 매칭으로부터 얻은 정보.</td>
+</tr>
+</tbody></table>
+<p>Box는 개발자의 부담을 덜어주기 위해 file IO에 대한 몇 가지 메소드를 제공합니다.</p>
+<table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>read</code></td>
+<td>파일을 읽습니다</td>
+</tr>
+<tr>
+<td><code>readSync</code></td>
+<td>파일을 동기적으로 읽습니다</td>
+</tr>
+<tr>
+<td><code>stat</code></td>
+<td>파일의 상태를 읽습니다</td>
+</tr>
+<tr>
+<td><code>statSync</code></td>
+<td>파일의 상태를 동기적으로 읽습니다</td>
+</tr>
+<tr>
+<td><code>render</code></td>
+<td>파일을 생성합니다</td>
+</tr>
+<tr>
+<td><code>renderSync</code></td>
+<td>파일을 동기적으로 생성합니다</td>
+</tr>
+</tbody></table>

@@ -1,0 +1,989 @@
+<hr>
+<h2 id="title-Helpers"><a href="#title-Helpers" class="headerlink" title="title: Helpers"></a>title: Helpers</h2><p>Os Helpers são usados em templates para ajudá-lo a inserir snippets (trechos de código) rapidamente. Os helpers não podem ser usados em arquivos de source (arquivos de postagem em Markdown por exemplo).</p>
+<p>Você pode usar os helpers padrões do Hexo ou <a href="../api/helper.html">criar seus próprios helpers personalizados</a>.</p>
+<p>{% youtube Uc53pW0GJHU %}</p>
+<h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><h3 id="url-for"><a href="#url-for" class="headerlink" title="url_for"></a>url_for</h3><p>Retorna uma url com o caminho raiz prefixado. Você deve usar esse helper em vez de <code>config.root + path</code> desde a versão 2.7 do Hexo.</p>
+<pre><code class="js">&lt;%- url_for(path) %&gt;
+</code></pre>
+<h3 id="relative-url"><a href="#relative-url" class="headerlink" title="relative_url"></a>relative_url</h3><p>Retorna a URL relativa de <code>from</code> para <code>to</code>.</p>
+<pre><code class="js">&lt;%- relative_url(from, to) %&gt;
+</code></pre>
+<h3 id="gravatar"><a href="#gravatar" class="headerlink" title="gravatar"></a>gravatar</h3><p>Insere uma imagem do Gravatar.<br>Se você não especificar o parâmetro [options], as opções padrão serão aplicadas. Caso contrário, você pode configurá-lo para um número que será passado como parâmetro de tamanho para o Gravatar. Finalmente, se você configurá-lo para um objeto, ele será convertido em uma string de consulta de parâmetros para o Gravatar.</p>
+<pre><code class="js">&lt;%- gravatar(email, [options]) %&gt;
+</code></pre>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- gravatar(&#39;a@abc.com&#39;) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787
+
+&lt;%- gravatar(&#39;a@abc.com&#39;, 40) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787?s=40
+
+&lt;%- gravatar(&#39;a@abc.com&#39; {s: 40, d: &#39;https://via.placeholder.com/150&#39;}) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787?s=40&amp;d=https%3A%2F%2Fvia.placeholder.com%2F150
+</code></pre>
+<h2 id="HTML-Tags"><a href="#HTML-Tags" class="headerlink" title="HTML Tags"></a>HTML Tags</h2><h3 id="css"><a href="#css" class="headerlink" title="css"></a>css</h3><p>Carrega arquivos CSS. Onde <code>path</code> pode ser um array ou uma string. Se <code>path</code> não for prefixado com <code>/</code> ou com qualquer protocolo, ele será prefixado com a URL raiz. Se você não adicionar a extensão <code>.css</code> após <code>path</code>, ela será adicionada automaticamente. Use object type for custom attributes.</p>
+<pre><code class="js">&lt;%- css(path, ...) %&gt;
+</code></pre>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- css(&#39;style.css&#39;) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot;&gt;
+
+&lt;%- css([&#39;style.css&#39;, &#39;screen.css&#39;]) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot;&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/screen.css&quot;&gt;
+
+&lt;%- css({ href: &#39;style.css&#39;, integrity: &#39;foo&#39; }) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot; integrity=&quot;foo&quot;&gt;
+
+&lt;%- css([{ href: &#39;style.css&#39;, integrity: &#39;foo&#39; }, { href: &#39;screen.css&#39;, integrity: &#39;bar&#39; }]) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot; integrity=&quot;foo&quot;&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/screen.css&quot; integrity=&quot;bar&quot;&gt;
+</code></pre>
+<h3 id="js"><a href="#js" class="headerlink" title="js"></a>js</h3><p>Carrega arquivos JavaScript. O <code>path</code> pode ser uma array ou uma string. Se <code>path</code> não for prefixado com <code>/</code> ou com qualquer protocolo, ele será prefixado com a URL raiz. Se você não adicionar a extensão <code>.js</code> após <code>path</code>, ela será adicionada automaticamente. Use object type for custom attributes.</p>
+<pre><code class="js">&lt;%- js(path, ...) %&gt;
+</code></pre>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- js(&#39;script.js&#39;) %&gt;
+// &lt;script src=&quot;/script.js&quot;&gt;&lt;/script&gt;
+
+&lt;%- js([&#39;script.js&#39;, &#39;gallery.js&#39;]) %&gt;
+// &lt;script src=&quot;/script.js&quot;&gt;&lt;/script&gt;
+// &lt;script src=&quot;/gallery.js&quot;&gt;&lt;/script&gt;
+
+&lt;%- js({ src: &#39;script.js&#39;, integrity: &#39;foo&#39;, async: true }) %&gt;
+// &lt;script src=&quot;/script.js&quot; integrity=&quot;foo&quot; async&gt;&lt;/script&gt;
+
+&lt;%- js([{ src: &#39;script.js&#39;, integrity: &#39;foo&#39; }, { src: &#39;gallery.js&#39;, integrity: &#39;bar&#39; }]) %&gt;
+// &lt;script src=&quot;/script.js&quot; integrity=&quot;foo&quot;&gt;&lt;/script&gt;
+// &lt;script src=&quot;/gallery.js&quot; integrity=&quot;bar&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h3 id="link-to"><a href="#link-to" class="headerlink" title="link_to"></a>link_to</h3><p>Insere um link.</p>
+<pre><code class="js">&lt;%- link_to(path, [text], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>external</code></td>
+<td>Abre o link em uma nova aba</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Nome da classe</td>
+<td></td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- link_to(&#39;http://www.google.com&#39;) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;http://www.google.com&quot;&gt;http://www.google.com&lt;/a&gt;
+
+&lt;%- link_to(&#39;http://www.google.com&#39;, &#39;Google&#39;) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;Google&quot;&gt;Google&lt;/a&gt;
+
+&lt;%- link_to(&#39;http://www.google.com&#39;, &#39;Google&#39;, {external: true}) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;Google&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google&lt;/a&gt;
+</code></pre>
+<h3 id="mail-to"><a href="#mail-to" class="headerlink" title="mail_to"></a>mail_to</h3><p>Insere um link de e-mail.</p>
+<pre><code class="js">&lt;%- mail_to(path, [text], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>Nome da classe</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+</tr>
+<tr>
+<td><code>subject</code></td>
+<td>Assunto do e-mail</td>
+</tr>
+<tr>
+<td><code>cc</code></td>
+<td>CC</td>
+</tr>
+<tr>
+<td><code>bcc</code></td>
+<td>BCC</td>
+</tr>
+<tr>
+<td><code>body</code></td>
+<td>Conteúdo do e-mail</td>
+</tr>
+</tbody></table>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- mail_to(&#39;a@abc.com&#39;) %&gt;
+// &lt;a href=&quot;mailto:a@abc.com&quot; title=&quot;a@abc.com&quot;&gt;a@abc.com&lt;/a&gt;
+
+&lt;%- mail_to(&#39;a@abc.com&#39;, &#39;Email&#39;) %&gt;
+// &lt;a href=&quot;mailto:a@abc.com&quot; title=&quot;Email&quot;&gt;Email&lt;/a&gt;
+</code></pre>
+<h3 id="image-tag"><a href="#image-tag" class="headerlink" title="image_tag"></a>image_tag</h3><p>Insere uma imagem.</p>
+<pre><code class="js">&lt;%- image_tag(path, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>alt</code></td>
+<td>Texto alternativo da imagem</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Nome da classe</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td>Largura da imagem</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>Altura da imagem</td>
+</tr>
+</tbody></table>
+<h3 id="favicon-tag"><a href="#favicon-tag" class="headerlink" title="favicon_tag"></a>favicon_tag</h3><p>Insere um favicon.</p>
+<pre><code class="js">&lt;%- favicon_tag(path) %&gt;
+</code></pre>
+<h3 id="feed-tag"><a href="#feed-tag" class="headerlink" title="feed_tag"></a>feed_tag</h3><p>Insere um link de feed.</p>
+<pre><code class="js">&lt;%- feed_tag(path, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>Título do feed</td>
+<td><code>config.title</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Tipo do feed</td>
+<td>atom</td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- feed_tag(&#39;atom.xml&#39;) %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;Hexo&quot; type=&quot;application/atom+xml&quot;&gt;
+
+&lt;%- feed_tag(&#39;rss.xml&#39;, { title: &#39;RSS Feed&#39;, type: &#39;rss&#39; }) %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;RSS Feed&quot; type=&quot;application/rss+xml&quot;&gt;
+
+/* Defaults to hexo-generator-feed&#39;s config if no argument */
+&lt;%- feed_tag() %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;Hexo&quot; type=&quot;application/atom+xml&quot;&gt;
+</code></pre>
+<h2 id="Tags-condicionais"><a href="#Tags-condicionais" class="headerlink" title="Tags condicionais"></a>Tags condicionais</h2><h3 id="is-current"><a href="#is-current" class="headerlink" title="is_current"></a>is_current</h3><p>Verifica se <code>path</code> corresponde à URL da página atual. Use opções <code>strict</code> para habilitar um modo estrito de correspondência.</p>
+<pre><code class="js">&lt;%- is_current(path, [strict]) %&gt;
+</code></pre>
+<h3 id="is-home"><a href="#is-home" class="headerlink" title="is_home"></a>is_home</h3><p>Verifica se a página atual é a pagina home.</p>
+<pre><code class="js">&lt;%- is_home() %&gt;
+</code></pre>
+<h3 id="is-post"><a href="#is-post" class="headerlink" title="is_post"></a>is_post</h3><p>Verifica se a página atual é uma postagem.</p>
+<pre><code class="js">&lt;%- is_post() %&gt;
+</code></pre>
+<h3 id="is-archive"><a href="#is-archive" class="headerlink" title="is_archive"></a>is_archive</h3><p>Verifica se a página atual é uma página de arquivo.</p>
+<pre><code class="js">&lt;%- is_archive() %&gt;
+</code></pre>
+<h3 id="is-year"><a href="#is-year" class="headerlink" title="is_year"></a>is_year</h3><p>Verifica se a página atual é uma página de arquivo anual.</p>
+<pre><code class="js">&lt;%- is_year() %&gt;
+</code></pre>
+<h3 id="is-month"><a href="#is-month" class="headerlink" title="is_month"></a>is_month</h3><p>Verifica se a página atual é uma página de arquivo mensal.</p>
+<pre><code class="js">&lt;%- is_month() %&gt;
+</code></pre>
+<h3 id="is-category"><a href="#is-category" class="headerlink" title="is_category"></a>is_category</h3><p>Verifica se a página atual é uma página de categoria.<br>Se uma string for dada como parâmetro, também é verificado se a página atual corresponde à categoria dada.</p>
+<pre><code class="js">&lt;%- is_category() %&gt;
+&lt;%- is_category(&#39;hobby&#39;) %&gt;
+</code></pre>
+<h3 id="is-tag"><a href="#is-tag" class="headerlink" title="is_tag"></a>is_tag</h3><p>Verifica se a página atual é uma página de tag.<br>Se uma string for dada como parâmetro, também é verificado se a página atual corresponde à tag fornecida.</p>
+<pre><code class="js">&lt;%- is_tag() %&gt;
+&lt;%- is_tag(&#39;hobby&#39;) %&gt;
+</code></pre>
+<h2 id="Manipulacao-de-String"><a href="#Manipulacao-de-String" class="headerlink" title="Manipulação de String"></a>Manipulação de String</h2><h3 id="trim"><a href="#trim" class="headerlink" title="trim"></a>trim</h3><p>Remove espaços em branco no inicio e fim de uma string.</p>
+<pre><code class="js">&lt;%- trim(string) %&gt;
+</code></pre>
+<h3 id="strip-html"><a href="#strip-html" class="headerlink" title="strip_html"></a>strip_html</h3><p>Remove as tags HTML de uma string.</p>
+<pre><code class="js">&lt;%- strip_html(string) %&gt;
+</code></pre>
+<p><strong>Exemplo:</strong></p>
+<pre><code class="js">&lt;%- strip_html(&#39;It\&#39;s not &lt;b&gt;important&lt;/b&gt; anymore!&#39;) %&gt;
+// It&#39;s not important anymore!
+</code></pre>
+<h3 id="titlecase"><a href="#titlecase" class="headerlink" title="titlecase"></a>titlecase</h3><p>Formata um título com as primeiras letras de palavras importantes em maiúsculo.</p>
+<pre><code class="js">&lt;%- titlecase(string) %&gt;
+</code></pre>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- titlecase(&#39;this is an apple&#39;) %&gt;
+# This is an Apple
+</code></pre>
+<h3 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h3><p>Renderiza um conteúdo em Markdown.</p>
+<pre><code class="js">&lt;%- markdown(str) %&gt;
+</code></pre>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- markdown(&#39;make me **strong**&#39;) %&gt;
+// make me &lt;strong&gt;strong&lt;/strong&gt;
+</code></pre>
+<h3 id="render"><a href="#render" class="headerlink" title="render"></a>render</h3><p>Renderiza uma string.</p>
+<pre><code class="js">&lt;%- render(str, engine, [options]) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- render(&#39;p(class=&quot;example&quot;) Test&#39;, &#39;pug&#39;); %&gt;
+// &lt;p class=&quot;example&quot;&gt;Test&lt;/p&gt;
+</code></pre>
+<p>See <a href="https://hexo.io/pt-br/api/rendering">Rendering</a> for more details.</p>
+<h3 id="word-wrap"><a href="#word-wrap" class="headerlink" title="word_wrap"></a>word_wrap</h3><p>Coloca uma quebra de linha no texto a partir de um limite de caracteres, o limite é <code>length</code>. Por padrão, o valor de <code>length</code> é 80.</p>
+<pre><code class="js">&lt;%- word_wrap(str, [length]) %&gt;
+</code></pre>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- word_wrap(&#39;Once upon a time&#39;, 8) %&gt;
+// Once upon\n a time
+</code></pre>
+<h3 id="truncate"><a href="#truncate" class="headerlink" title="truncate"></a>truncate</h3><p>Omite o texto após um certo valor de <code>length</code>. O valor padrão de <code>length</code> é 30 caracteres.</p>
+<pre><code class="js">&lt;%- truncate(text, [options]) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- truncate(&#39;Once upon a time in a world far far away&#39;, {length: 17}) %&gt;
+// Once upon a ti...
+
+&lt;%- truncate(&#39;Once upon a time in a world far far away&#39;, {length: 17, separator: &#39; &#39;}) %&gt;
+// Once upon a...
+
+&lt;%- truncate(&#39;And they found that many people were sleeping better.&#39;, {length: 25, omission: &#39;... (continued)&#39;}) %&gt;
+// And they f... (continued)
+</code></pre>
+<h3 id="escape-html"><a href="#escape-html" class="headerlink" title="escape_html"></a>escape_html</h3><p>Escapes HTML entities in a string.</p>
+<pre><code class="js">&lt;%- escape_html(str) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- escape_html(&#39;&lt;p&gt;Hello &quot;world&quot;.&lt;/p&gt;&#39;) %&gt;
+// &amp;lt;p&amp;gt;Hello &amp;quot;world&amp;quot;.&amp;lt;&amp;#x2F;p&amp;gt;
+</code></pre>
+<h2 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h2><h3 id="partial"><a href="#partial" class="headerlink" title="partial"></a>partial</h3><p>Carrega outros arquivos de template. Você pode definir variáveis locais em <code>locals</code>.</p>
+<pre><code class="js">&lt;%- partial(layout, [locals], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cache</code></td>
+<td>Conteúdo da cache (usa fragmento de cache)</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>only</code></td>
+<td>Variáveis locais estritas. Só usa variáveis definidas em <code>locals</code> dentro de templates.</td>
+<td><code>false</code></td>
+</tr>
+</tbody></table>
+<h3 id="fragment-cache"><a href="#fragment-cache" class="headerlink" title="fragment_cache"></a>fragment_cache</h3><p>Cache do conteúdo em um fragmento. Salva o conteúdo dentro de um fragmento e serve o cache quando a próxima requisição chegar.</p>
+<pre><code class="js">&lt;%- fragment_cache(id, fn);
+</code></pre>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- fragment_cache(&#39;header&#39;, function(){
+  return &#39;&lt;header&gt;&lt;/header&gt;&#39;;
+}) %&gt;
+</code></pre>
+<h2 id="Date-amp-Time"><a href="#Date-amp-Time" class="headerlink" title="Date &amp; Time"></a>Date &amp; Time</h2><h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>Insere a data formatada. <code>date</code> pode ser data no padrão Unix, string ISO, objeto de data ou objeto <a href="http://momentjs.com/">Moment.js</a>. A Opção <code>format</code> usa a definição <code>date_format</code> por padrão.</p>
+<pre><code class="js">&lt;%- date(date, [format]) %&gt;
+</code></pre>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- date(Date.now()) %&gt;
+// 2013-01-01
+
+&lt;%- date(Date.now(), &#39;YYYY/M/D&#39;) %&gt;
+// Jan 1 2013
+</code></pre>
+<h3 id="date-xml"><a href="#date-xml" class="headerlink" title="date_xml"></a>date_xml</h3><p>Insere a data no formato XML. <code>date</code> pode ser data no padrão Unix, string ISO, objeto de data ou objeto <a href="http://momentjs.com/">Moment.js</a>.</p>
+<pre><code class="js">&lt;%- date_xml(date) %&gt;
+</code></pre>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- date_xml(Date.now()) %&gt;
+// 2013-01-01T00:00:00.000Z
+</code></pre>
+<h3 id="time"><a href="#time" class="headerlink" title="time"></a>time</h3><p>Insere a hora formatada. <code>date</code> pode ser data no padrão Unix, string ISO, objeto de data ou objeto <a href="http://momentjs.com/">Moment.js</a>. A Opção <code>format</code> usa a definição <code>time_format</code> por padrão.</p>
+<pre><code class="js">&lt;%- time(date, [format]) %&gt;
+</code></pre>
+<p><strong>Exemplo:</strong></p>
+<pre><code class="js">&lt;%- time(Date.now()) %&gt;
+// 13:05:12
+
+&lt;%- time(Date.now(), &#39;h:mm:ss a&#39;) %&gt;
+// 1:05:12 pm
+</code></pre>
+<h3 id="full-date"><a href="#full-date" class="headerlink" title="full_date"></a>full_date</h3><p>Insere a data e a hora formatadas. <code>date</code> pode ser data no padrão Unix, string ISO, objeto de data ou objeto <a href="http://momentjs.com/">Moment.js</a>. A Opção <code>format</code> usa a definição <code>date_format + time_format</code> por padrão.</p>
+<pre><code class="js">&lt;%- full_date(date, [format]) %&gt;
+</code></pre>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- full_date(new Date()) %&gt;
+// Jan 1, 2013 0:00:00
+
+&lt;%- full_date(new Date(), &#39;dddd, MMMM Do YYYY, h:mm:ss a&#39;) %&gt;
+// Tuesday, January 1st 2013, 12:00:00 am
+</code></pre>
+<h3 id="moment"><a href="#moment" class="headerlink" title="moment"></a>moment</h3><p>Biblioteca <a href="http://momentjs.com/">Moment.js</a>.</p>
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><h3 id="list-categories"><a href="#list-categories" class="headerlink" title="list_categories"></a>list_categories</h3><p>Insere uma lista de todas as categorias.</p>
+<pre><code class="js">&lt;%- list_categories([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>Critério de ordenação das categorias</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Tipo de ordenação. <code>1</code>, <code>asc</code> para ascendente; <code>-1</code>, <code>desc</code> para descendente</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>Exibir o número de postagens para cada categoria</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Estilo para exibir a lista de categorias. <code>list</code> exibe as categorias em uma lista não ordenada.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Separador entre categorias. (Só funciona se <code>style</code> não for <code>list</code>).</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>depth</code></td>
+<td>Níveis de categorias a serem exibidos. <code>0</code> exibe todas as categorias e suas categorias filhas; <code>-1</code> é semelhante a <code>0</code>, mas exibe as categorias e suas filhas em um mesmo nível hierárquico; <code>1</code> exibe apenas as categorias de nível superior.</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Nome da classe da lista de categorias.</td>
+<td>category</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>A função que altera a exibição do nome da categoria.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td>Adiciona um sufixo para o link.</td>
+<td>None</td>
+</tr>
+</tbody></table>
+<h3 id="list-tags"><a href="#list-tags" class="headerlink" title="list_tags"></a>list_tags</h3><p>Insere uma lista de tags.</p>
+<pre><code class="js">&lt;%- list_tags([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>Critério de ordenação das tags</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Tipo de ordem. <code>1</code>, <code>asc</code> para ascendente; <code>-1</code>, <code>desc</code> para descendente</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>Exibir o número de postagens para cada tag</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Estilo para exibir a lista de tags. <code>list</code> exibe as tags em uma lista não ordenada.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Separador entre tags. (Só funciona se <code>style</code> não for <code>list</code>).</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class name of tag list (string) or customize each tag’s class (object, see below).</td>
+<td>tag</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>A função que altera a exibição do nome da tag.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>O número de tags a exibir (0 &#x3D; ilimitado)</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td>Adiciona um sufixo para o link.</td>
+<td>Nenhum</td>
+</tr>
+</tbody></table>
+<p>Class advanced customization:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class.ul</code></td>
+<td><code>&lt;ul&gt;</code> class name (only for style <code>list</code>)</td>
+<td><code>tag-list</code> (list style)</td>
+</tr>
+<tr>
+<td><code>class.li</code></td>
+<td><code>&lt;li&gt;</code> class name (only for style <code>list</code>)</td>
+<td><code>tag-list-item</code> (list style)</td>
+</tr>
+<tr>
+<td><code>class.a</code></td>
+<td><code>&lt;a&gt;</code> class name</td>
+<td><code>tag-list-link</code> (list style) <code>tag-link</code> (normal style)</td>
+</tr>
+<tr>
+<td><code>class.label</code></td>
+<td><code>&lt;span&gt;</code> class name where the tag label is stored (only for normal style, when <code>class.label</code> is set the label is put in a <code>&lt;span&gt;</code>)</td>
+<td><code>tag-label</code> (normal style)</td>
+</tr>
+<tr>
+<td><code>class.count</code></td>
+<td><code>&lt;span&gt;</code> class name where the tag counter is stored (only when <code>show_count</code> is <code>true</code>)</td>
+<td><code>tag-list-count</code> (list style) <code>tag-count</code> (normal style)</td>
+</tr>
+</tbody></table>
+<p>Examples:</p>
+<pre><code class="ejs">&lt;%- list_tags(site.tags, {class: &#39;classtest&#39;, style: false, separator: &#39; | &#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: &#39;classtest&#39;, style: &#39;list&#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: {ul: &#39;ululul&#39;, li: &#39;lilili&#39;, a: &#39;aaa&#39;, count: &#39;ccc&#39;}, style: false, separator: &#39; | &#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: {ul: &#39;ululul&#39;, li: &#39;lilili&#39;, a: &#39;aaa&#39;, count: &#39;ccc&#39;}, style: &#39;list&#39;}) %&gt;
+</code></pre>
+<h3 id="list-archives"><a href="#list-archives" class="headerlink" title="list_archives"></a>list_archives</h3><p>Insere uma lista de arquivos (archives).</p>
+<pre><code class="js">&lt;%- list_archives([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>type</code></td>
+<td>Tipo. Esse valor pode ser <code>yearly</code> ou <code>monthly</code>.</td>
+<td>monthly</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Tipo de ordem. <code>1</code>, <code>asc</code> para ascendente; <code>-1</code>, <code>desc</code> para descendente</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>Exibir o número de postagens para cada arquivo</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>Formato da data</td>
+<td>MMMM YYYY</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Estilo para exibir a lista de arquivos. <code>list</code> exibe arquivos em uma lista não ordenada.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Separador entre arquivos. (Só funciona se <code>style</code> não for <code>list</code>)</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Nome da classe da lista de arquivos.</td>
+<td>archive</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>A função que altera a exibição do nome do archive.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="list-posts"><a href="#list-posts" class="headerlink" title="list_posts"></a>list_posts</h3><p>Insere uma lista de posts.</p>
+<pre><code class="js">&lt;%- list_posts([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>Critério de ordenação de postagens</td>
+<td>date</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Tipo de ordem. <code>1</code>, <code>asc</code> para ascendente; <code>-1</code>, <code>desc</code> para descendente</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Estilo para exibir a lista de postagens. <code>list</code> exibe as postagens em uma lista não ordenada.</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Separador entre postagens. (Só funciona se <code>style</code> não for <code>list</code>)</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Nome da classe da lista de postagem.</td>
+<td>post</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>O número de postagens a serem exibidas (0 &#x3D; ilimitado)</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>A função que altera a exibição do nome do post.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="tagcloud"><a href="#tagcloud" class="headerlink" title="tagcloud"></a>tagcloud</h3><p>Insere uma nuvem de tags.</p>
+<pre><code class="js">&lt;%- tagcloud([tags], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>min_font</code></td>
+<td>Tamanho mínimo da fonte</td>
+<td>10</td>
+</tr>
+<tr>
+<td><code>max_font</code></td>
+<td>Tamanho máximo da fonte</td>
+<td>20</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>Unidade de tamanho de fonte</td>
+<td>px</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>Quantidade total de tags</td>
+<td>40</td>
+</tr>
+<tr>
+<td><code>orderby</code></td>
+<td>Critério de ordenação de tags</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Tipo de ordem. <code>1</code>, <code>asc</code> para ascendente; <code>-1</code>, <code>desc</code> para descendente</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td>Colorizar a nuvem de tags?</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>start_color</code></td>
+<td>Cor inicial. Você pode usar o padrão hexadecimal (<code>#b700ff</code>), rgba (<code>rgba(183, 0, 255, 1)</code>), hsla (<code>hsla(283, 100%, 50%, 1)</code>) ou <a href="http://www.w3.org/TR/css3-color/#svg-color">color keywords</a>. Esta opção só funciona quando <code>color</code> é <code>true</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>end_color</code></td>
+<td>Cor final. Você pode usar o padrão hexadecimal (<code>#b700ff</code>), rgba (<code>rgba(183, 0, 255, 1)</code>), hsla (<code>hsla(283, 100%, 50%, 1)</code>) ou <a href="http://www.w3.org/TR/css3-color/#svg-color">color keywords</a>. Esta opção só funciona quando <code>color</code> é <code>true</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class name prefix of tags</td>
+<td></td>
+</tr>
+<tr>
+<td><code>level</code></td>
+<td>The number of different class names. This option only works when <code>class</code> is set.</td>
+<td>10</td>
+</tr>
+</tbody></table>
+<h2 id="Miscelanea"><a href="#Miscelanea" class="headerlink" title="Miscelânea"></a>Miscelânea</h2><h3 id="paginator"><a href="#paginator" class="headerlink" title="paginator"></a>paginator</h3><p>Insere um paginador.</p>
+<pre><code class="js">&lt;%- paginator(options) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>base</code></td>
+<td>URL base</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>Formato da URL</td>
+<td>page&#x2F;%d&#x2F;</td>
+</tr>
+<tr>
+<td><code>total</code></td>
+<td>Número de páginas</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>current</code></td>
+<td>Número da página atual</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>prev_text</code></td>
+<td>O texto do link da página anterior. Funciona apenas se <code>prev_next</code> estiver definido como <code>true</code>.</td>
+<td>Prev</td>
+</tr>
+<tr>
+<td><code>next_text</code></td>
+<td>O texto do link da próxima página. Funciona apenas se <code>prev_next</code> estiver definido como <code>true</code>.</td>
+<td>Next</td>
+</tr>
+<tr>
+<td><code>space</code></td>
+<td>Espaço do texto</td>
+<td>&amp;hellp;</td>
+</tr>
+<tr>
+<td><code>prev_next</code></td>
+<td>Exibir os links anteriores e seguintes</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>end_size</code></td>
+<td>O número de páginas exibidas no início e no final</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>mid_size</code></td>
+<td>O número de páginas exibidas entre a página atual, mas não incluindo a página atual</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>show_all</code></td>
+<td>Exibir todas as páginas. Se isso for definido como <code>true</code>, <code>end_size</code> e <code>mid_size</code> não irão funcionar.</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>escape</code></td>
+<td>Escape HTML tags</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- paginator({
+  prev_text: &#39;&lt;&#39;,
+  next_text: &#39;&gt;&#39;
+}) %&gt;
+</code></pre>
+<pre><code class="html">&lt;!-- Rendered as --&gt;
+&lt;a href=&quot;/1/&quot;&gt;&amp;lt;&lt;/a&gt;
+&lt;a href=&quot;/1/&quot;&gt;1&lt;/a&gt;
+2
+&lt;a href=&quot;/3/&quot;&gt;3&lt;/a&gt;
+&lt;a href=&quot;/3/&quot;&gt;&amp;gt;&lt;/a&gt;
+</code></pre>
+<pre><code class="js">&lt;%- paginator({
+  prev_text: &#39;&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;/i&gt;&#39;,
+  next_text: &#39;&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;&#39;,
+  escape: false
+}) %&gt;
+</code></pre>
+<pre><code class="html">&lt;!-- Rendered as --&gt;
+&lt;a href=&quot;/1/&quot;&gt;&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;a href=&quot;/1/&quot;&gt;1&lt;/a&gt;
+2
+&lt;a href=&quot;/3/&quot;&gt;3&lt;/a&gt;
+&lt;a href=&quot;/3/&quot;&gt;&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+</code></pre>
+<h3 id="search-form"><a href="#search-form" class="headerlink" title="search_form"></a>search_form</h3><p>Insere o formulário de busca do Google.</p>
+<pre><code class="js">&lt;%- search_form(options) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>O nome da classe do formulário</td>
+<td>search-form</td>
+</tr>
+<tr>
+<td><code>text</code></td>
+<td>Palavra de sugestão de busca</td>
+<td>Search</td>
+</tr>
+<tr>
+<td><code>button</code></td>
+<td>Exibir o botão de busca. O valor pode ser um booleano ou uma string. Quando o valor é uma string, ele será o texto do botão.</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h3 id="number-format"><a href="#number-format" class="headerlink" title="number_format"></a>number_format</h3><p>Formata um número.</p>
+<pre><code class="js">&lt;%- number_format(number, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>precision</code></td>
+<td>A precisão do número. O valor pode ser <code>false</code> ou um número inteiro não negativo.</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>delimiter</code></td>
+<td>O delimitador de casa de milhares</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>O separador entre os dígitos fracionários e inteiros.</td>
+<td>.</td>
+</tr>
+</tbody></table>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- number_format(12345.67, {precision: 1}) %&gt;
+// 12,345.68
+
+&lt;%- number_format(12345.67, {precision: 4}) %&gt;
+// 12,345.6700
+
+&lt;%- number_format(12345.67, {precision: 0}) %&gt;
+// 12,345
+
+&lt;%- number_format(12345.67, {delimiter: &#39;&#39;}) %&gt;
+// 12345.67
+
+&lt;%- number_format(12345.67, {separator: &#39;/&#39;}) %&gt;
+// 12,345/67
+</code></pre>
+<h3 id="meta-generator"><a href="#meta-generator" class="headerlink" title="meta_generator"></a>meta_generator</h3><p>Inserts <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta">generator tag</a>.</p>
+<pre><code class="js">&lt;%- meta_generator() %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- meta_generator() %&gt;
+// &lt;meta name=&quot;generator&quot; content=&quot;Hexo 4.0.0&quot;&gt;
+</code></pre>
+<h3 id="open-graph"><a href="#open-graph" class="headerlink" title="open_graph"></a>open_graph</h3><p>Insere dados do <a href="http://ogp.me/">Open Graph</a>.</p>
+<pre><code class="js">&lt;%- open_graph([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>Título da página (<code>og:title</code>)</td>
+<td><code>page.title</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Tipo de página (<code>og:type</code>)</td>
+<td>blog</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>URL da página (<code>og:url</code>)</td>
+<td><code>url</code></td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>Capa da página (<code>og:image</code>)</td>
+<td>All images in the content</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>Article author (<code>og:article:author</code>)</td>
+<td><code>config.author</code></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Article published time (<code>og:article:published_time</code>)</td>
+<td>Page published time</td>
+</tr>
+<tr>
+<td><code>updated</code></td>
+<td>Article modified time (<code>og:article:modified_time</code>)</td>
+<td>Page modified time</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>Article language (<code>og:locale</code>)</td>
+<td>&#96;page.lang</td>
+</tr>
+<tr>
+<td><code>site_name</code></td>
+<td>Nome do site (<code>og:site_name</code>)</td>
+<td><code>config.title</code></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Descrição da página (<code>og:description</code>)</td>
+<td>Trecho da página ou os 200 primeiros caracteres do conteúdo</td>
+</tr>
+<tr>
+<td><code>twitter_card</code></td>
+<td>Tipo de Twitter card (<code>twitter:card</code>)</td>
+<td>summary</td>
+</tr>
+<tr>
+<td><code>twitter_id</code></td>
+<td>Twitter ID (<code>twitter:creator</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>twitter_site</code></td>
+<td>Site do Twitter (<code>twitter:site</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>google_plus</code></td>
+<td>Link de perfil do Google+</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fb_admins</code></td>
+<td>ID de administrador do Facebook</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fb_app_id</code></td>
+<td>ID da aplicação do Facebook</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="toc"><a href="#toc" class="headerlink" title="toc"></a>toc</h3><p>Analisa todas as tags de título (h1~h6) no conteúdo e insere um índice.</p>
+<pre><code class="js">&lt;%- toc(str, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Descrição</th>
+<th>Padrão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>Nome da classe</td>
+<td>toc</td>
+</tr>
+<tr>
+<td><code>list_number</code></td>
+<td>Exibe o número da lista</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>max_depth</code></td>
+<td>Profundidade máxima do cabeçalho gerado</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>min_depth</code></td>
+<td>Minimum heading depth of generated toc</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p><strong>Exemplos:</strong></p>
+<pre><code class="js">&lt;%- toc(page.content) %&gt;
+</code></pre>
+<h4 id="data-toc-unnumbered-6-1-0"><a href="#data-toc-unnumbered-6-1-0" class="headerlink" title="data-toc-unnumbered (+6.1.0)"></a>data-toc-unnumbered (+6.1.0)</h4><p>Headings with attribute <code>data-toc-unnumbered=&quot;true&quot;</code> will be marked as unnumbered (list number will not be display).</p>
+<p>{% note warn “Warning!” %}<br>For using <code>data-toc-unnumbered=&quot;true&quot;</code>, the renderer must have the option to add CSS classes.</p>
+<p>Please see below PRs.</p>
+<ul>
+<li><a href="https://github.com/hexojs/hexo/pull/4871">https://github.com/hexojs/hexo/pull/4871</a></li>
+<li><a href="https://github.com/hexojs/hexo-util/pull/269">https://github.com/hexojs/hexo-util/pull/269</a></li>
+<li><a href="https://github.com/hexojs/hexo-renderer-markdown-it/pull/174">https://github.com/hexojs/hexo-renderer-markdown-it/pull/174</a><br>{% endnote %}</li>
+</ul>

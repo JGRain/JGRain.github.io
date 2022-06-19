@@ -1,0 +1,108 @@
+<hr>
+<h2 id="title-文章"><a href="#title-文章" class="headerlink" title="title: 文章"></a>title: 文章</h2><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><pre><code class="js">hexo.post.create(data, replace);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>数据</td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>替换现有文件</td>
+</tr>
+</tbody></table>
+<p>您可以在资料中指定文章的属性，除了以下属性之外，其他属性也会被加到 front-matter 中。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>标题</td>
+</tr>
+<tr>
+<td><code>slug</code></td>
+<td>网址</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>布局。默认为 <code>default_layout</code> 参数。</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>路径。默认会根据 <code>new_post_path</code> 参数创建文章路径。</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>日期。默认为当前时间。</td>
+</tr>
+</tbody></table>
+<h2 id="发布草稿"><a href="#发布草稿" class="headerlink" title="发布草稿"></a>发布草稿</h2><pre><code class="js">hexo.post.publish(data, replace);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>资料</td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>替换现有文件</td>
+</tr>
+</tbody></table>
+<p>您可以在资料中指定文章的属性，除了以下的属性之外，其他属性也会被加到 front-matter 中。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>slug</code></td>
+<td>文件名称（必须）</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>布局。默认为 <code>default_layout</code> 参数。</td>
+</tr>
+</tbody></table>
+<h2 id="渲染"><a href="#渲染" class="headerlink" title="渲染"></a>渲染</h2><pre><code class="js">hexo.post.render(source, data);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source</code></td>
+<td>文件的完整路径（可忽略）</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>数据</td>
+</tr>
+</tbody></table>
+<p>资料中必须包含 <code>content</code> 属性，如果没有的话，会尝试读取原始文件。此函数的执行顺序为：</p>
+<ul>
+<li>执行 <code>before_post_render</code> 过滤器</li>
+<li>使用 Markdown 或其他渲染器渲染（根据扩展名而定）</li>
+<li>使用 <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> 渲染</li>
+<li>执行 <code>after_post_render</code> 过滤器</li>
+</ul>

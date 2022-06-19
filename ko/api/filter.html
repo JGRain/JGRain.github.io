@@ -1,0 +1,135 @@
+<hr>
+<h2 id="title-Filter"><a href="#title-Filter" class="headerlink" title="title: Filter"></a>title: Filter</h2><p>Filter는 특정한 데이터를 수정할 때 사용합니다. Hexo는 데이터를 filter로 순차적으로 전달하고 filter들은 교대로 데이터를 수정할 수 있습니다. 이 컨셉은 <a href="http://codex.wordpress.org/Plugin_API#Filters">WordPress</a>에서 차용하였습니다.</p>
+<h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><pre><code class="js">hexo.extend.filter.register(type, function() {
+  // User configuration
+  const { config } = this;
+  if (config.external_link.enable) // do something...
+
+  // Theme configuration
+  const { config: themeCfg } = this.theme;
+  if (themeCfg.fancybox) // do something...
+
+}, priority);
+</code></pre>
+<p>당신은 <code>priority</code>을 정의할 수 있습니다. 기본값은 10이며, 값이 낮을 수록 먼저 실행됩니다.</p>
+<h2 id="Filter의-실행"><a href="#Filter의-실행" class="headerlink" title="Filter의 실행"></a>Filter의 실행</h2><pre><code class="js">hexo.extend.filter.exec(type, data, options);
+hexo.extend.filter.execSync(type, data, options);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>옵션</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>context</code></td>
+<td>Context</td>
+</tr>
+<tr>
+<td><code>args</code></td>
+<td>인자. 이 값은 배열(array)입니다.</td>
+</tr>
+</tbody></table>
+<p>Filter의 첫 번째 인자는 <code>data</code> 입니다. 다음 filter로 전달 된 <code>data</code>는 새 값으로 변경되어 반환될 수 있습니다. 아무런 값도 반환되지 않았다면 data의 값이 변경되지 않았다는 의미입니다. Filter의 다른 인자를 지정하기 위해 <code>args</code>를 사용할 수도 있습니다. 아래 예시를 봐주세요.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;test&#39;, function(data, arg1, arg2){
+  // data === &#39;some data&#39;
+  // arg1 === &#39;foo&#39;
+  // arg2 === &#39;bar&#39;
+
+  return &#39;something&#39;;
+});
+
+hexo.extend.filter.register(&#39;test&#39;, function(data, arg1, arg2){
+  // data === &#39;something&#39;
+});
+
+hexo.extend.filter.exec(&#39;test&#39;, &#39;some data&#39;, {
+  args: [&#39;foo&#39;, &#39;bar&#39;]
+});
+</code></pre>
+<p>Filter를 실행하기 위해 아래 메소드들을 사용할 수도 있습니다.</p>
+<pre><code class="js">hexo.execFilter(type, data, options);
+hexo.execFilterSync(type, data, options);
+</code></pre>
+<h2 id="Filter의-등록-해제"><a href="#Filter의-등록-해제" class="headerlink" title="Filter의 등록 해제"></a>Filter의 등록 해제</h2><pre><code class="js">hexo.extend.filter.unregister(type, filter);
+</code></pre>
+<p><strong>Example</strong></p>
+<pre><code class="js">// Unregister a filter which is registered with named function
+
+const filterFn = (data) =&gt; {
+  data = &#39;something&#39;;
+  return data;
+};
+hexo.extend.filter.register(&#39;example&#39;, filterFn);
+
+hexo.extend.filter.unregister(&#39;example&#39;, filterFn);
+</code></pre>
+<pre><code class="js">// Unregister a filter which is registered with commonjs module
+
+hexo.extend.filter.register(&#39;example&#39;, require(&#39;path/to/filter&#39;));
+
+hexo.extend.filter.unregister(&#39;example&#39;, require(&#39;path/to/filter&#39;));
+</code></pre>
+<h2 id="Filter-목록"><a href="#Filter-목록" class="headerlink" title="Filter 목록"></a>Filter 목록</h2><p>Hexo에서 사용하는 filter의 목록은 아래와 같습니다.</p>
+<h3 id="before-post-render"><a href="#before-post-render" class="headerlink" title="before_post_render"></a>before_post_render</h3><p>Post가 생성되기 전에 실행됩니다. 실행 단계에 대해 더 알아보시길 원한다면 <a href="posts.html#Render">post rendering</a>를 참조해 주세요.</p>
+<p>아래 예시는 title을 소문자로 변경하는 것을 보여줍니다.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_post_render&#39;, function(data){
+  data.title = data.title.toLowerCase();
+  return data;
+});
+</code></pre>
+<h3 id="after-post-render"><a href="#after-post-render" class="headerlink" title="after_post_render"></a>after_post_render</h3><p>Post가 생성된 후 실행됩니다.<br>Executed after a post is rendered. 실행 단계에 대해 더 알아보시길 원한다면 <a href="posts.html#Render">post rendering</a>를 참조해 주세요.</p>
+<p>아래 예시는 <code>@username</code>을 Twitter link로 대체하는 것을 보여줍니다.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_post_render&#39;, function(data){
+  data.content = data.content.replace(/@(\d+)/, &#39;&lt;a href=&quot;http://twitter.com/$1&quot;&gt;#$1&lt;/a&gt;&#39;);
+  return data;
+});
+</code></pre>
+<h3 id="before-exit"><a href="#before-exit" class="headerlink" title="before_exit"></a>before_exit</h3><p>Hexo가 종료되기 전에 실행됩니다. – <code>hexo.exit</code>가 호출되는 즉시 실행됩니다.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_exit&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="before-generate"><a href="#before-generate" class="headerlink" title="before_generate"></a>before_generate</h3><p>생성(generation)이 시작되기 전에 실행됩니다.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;before_generate&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="after-generate"><a href="#after-generate" class="headerlink" title="after_generate"></a>after_generate</h3><p>생성(generation)이 끝난 후에 실행됩니다.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_generate&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="template-locals"><a href="#template-locals" class="headerlink" title="template_locals"></a>template_locals</h3><p>템플릿에서 <a href="../docs/variables.html">지역 변수(Local variables)</a>를 수정합니다.</p>
+<p>아래 예시는 템플릿의 지역 변수에 현재 시간을 추가합니다.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;template_locals&#39;, function(locals){
+  locals.now = Date.now();
+  return locals;
+});
+</code></pre>
+<h3 id="after-init"><a href="#after-init" class="headerlink" title="after_init"></a>after_init</h3><p>Hexo가 초기화 작업이 완료된 후 실행됩니다. – <code>hexo.init</code>이 완료되는 즉시 실행됩니다.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;after_init&#39;, function(){
+  // ...
+});
+</code></pre>
+<h3 id="new-post-path"><a href="#new-post-path" class="headerlink" title="new_post_path"></a>new_post_path</h3><p>새로운 포스트가 생성될 때 포스트의 경로를 결정하기 위해 실행됩니다.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;new_post_path&#39;, function(data, replace){
+  // ...
+});
+</code></pre>
+<h3 id="post-permalink"><a href="#post-permalink" class="headerlink" title="post_permalink"></a>post_permalink</h3><p>Post의 permalink를 결정하기 위해 사용합니다.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;post_permalink&#39;, function(data){
+  // ...
+});
+</code></pre>
+<h3 id="after-render"><a href="#after-render" class="headerlink" title="after_render"></a>after_render</h3><p>렌더링이 완료된 후 실행됩니다. <a href="rendering.html#after_render_Filters">Rendering</a>에서 더 많은 정보를 확인하실 수 있습니다.</p>
+<h3 id="server-middleware"><a href="#server-middleware" class="headerlink" title="server_middleware"></a>server_middleware</h3><p>서버에 미들웨어를 추가합니다. <code>app</code>은 <a href="https://github.com/senchalabs/connect">Connect</a> 인스턴스입니다.</p>
+<p>아래 예시는 response header에 <code>X-Powered-By: Hexo</code>를 추가합니다.</p>
+<pre><code class="js">hexo.extend.filter.register(&#39;server_middleware&#39;, function(app){
+  app.use(function(req, res, next){
+    res.setHeader(&#39;X-Powered-By&#39;, &#39;Hexo&#39;);
+    next();
+  });
+});
+</code></pre>

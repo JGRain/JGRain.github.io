@@ -1,0 +1,46 @@
+<hr>
+<h2 id="title-主題"><a href="#title-主題" class="headerlink" title="title: 主題"></a>title: 主題</h2><p>打造 Hexo 主題非常容易，您只要在 <code>themes</code> 資料夾內，新增一個資料夾，並修改 <code>_config.yml</code> 內的 <code>theme</code> 設定，即可切換主題。一個主題可能會有以下的結構：</p>
+<pre><code class="plain">.
+├── _config.yml
+├── languages
+├── layout
+├── scripts
+└── source
+</code></pre>
+<h3 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h3><p>主題的配置檔案。Unlike the site’s primary configuration file, 主題的配置檔案修改時會自動更新，無需重啟 Hexo 伺服器。</p>
+<h3 id="languages"><a href="#languages" class="headerlink" title="languages"></a>languages</h3><p>語言資料夾。請參見 <a href="internationalization.html">國際化 (i18n)</a>。</p>
+<h3 id="layout"><a href="#layout" class="headerlink" title="layout"></a>layout</h3><p>佈局資料夾。用於放置主題的模板檔案，決定了網站內容的呈現方式，Hexo 內建 <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> 模板引擎，您可另外安裝外掛來獲得 <a href="https://github.com/hexojs/hexo-renderer-ejs">EJS</a>、<a href="https://github.com/hexojs/hexo-renderer-haml">Haml</a>、<a href="https://github.com/hexojs/hexo-renderer-jade">Jade</a> 或 <a href="https://github.com/maxknee/hexo-render-pug">Pug</a> 支援，Hexo 根據模板檔案的副檔名來決定所使用的模板引擎，例如：</p>
+<pre><code class="plain">EJS: layout.ejs
+Swig: layout.swig
+</code></pre>
+<p>您可參考 <a href="templates.html">模板</a> 以獲得更多資訊。</p>
+<h3 id="scripts"><a href="#scripts" class="headerlink" title="scripts"></a>scripts</h3><p>腳本資料夾。在啟動時，Hexo 會載入此資料夾內的 JavaScript 檔案，請參見 <a href="plugins.html">外掛</a> 以獲得更多資訊。</p>
+<h3 id="source"><a href="#source" class="headerlink" title="source"></a>source</h3><p>原始檔案資料夾，除了模板以外的 Asset，例如 CSS、JavaScript 檔案等，應該放在這個資料夾。檔案或資料夾開頭名稱為 <code>_</code>（底線）或隱藏檔案會被忽略。</p>
+<p>如果檔案可以被渲染的話，會經過處理再儲存到 <code>public</code> 資料夾，否則會直接拷貝到 <code>public</code> 資料夾。</p>
+<h3 id="發佈"><a href="#發佈" class="headerlink" title="發佈"></a>發佈</h3><p>當您完成主題後，可以考慮將它發佈到 <a href="/themes">主題列表</a>，讓更多人能夠使用您的主題，在發佈前建議先進行 <a href="https://github.com/hexojs/hexo-theme-unit-test">主題單元測試</a>，確保每一項功能都能正常運作。發佈主題的步驟和 <a href="contributing.html#%E6%9B%B4%E6%96%B0%E6%96%87%E4%BB%B6">更新文件</a> 非常類似。</p>
+<ol>
+<li><p>Fork <a href="https://github.com/hexojs/site">hexojs&#x2F;site</a></p>
+</li>
+<li><p>把檔案庫（repository）複製到電腦上，並安裝相依套件。</p>
+<p> {% code %}<br> $ git clone <a href="https://github.com/">https://github.com/</a><username>&#x2F;site.git<br> $ cd site<br> $ npm install<br> {% endcode %}</p>
+</li>
+<li><p>編輯 <code>source/_data/themes.yml</code>，在檔案中新增您的主題，例如：</p>
+<p> {% code %}</p>
+<ul>
+<li>name: landscape<br>description: A brand new default theme for Hexo.<br>link: <a href="https://github.com/hexojs/hexo-theme-landscape">https://github.com/hexojs/hexo-theme-landscape</a><br>preview: <a href="http://hexo.io/hexo-theme-landscape">http://hexo.io/hexo-theme-landscape</a><br>tags:<ul>
+<li>official</li>
+<li>responsive</li>
+<li>widget</li>
+<li>two_column</li>
+<li>one_column<br> {% endcode %}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>在 <code>source/themes/screenshots</code> 新增同名的截圖檔案，圖片必須為 800x500 的 PNG 檔案。</p>
+</li>
+<li><p>推送（push）分支。</p>
+</li>
+<li><p>建立一個新的合併申請（pull request）。</p>
+</li>
+</ol>

@@ -1,0 +1,974 @@
+<hr>
+<h2 id="title-輔助函數（Helpers）"><a href="#title-輔助函數（Helpers）" class="headerlink" title="title: 輔助函數（Helpers）"></a>title: 輔助函數（Helpers）</h2><p>輔助函數幫助您在模版中快速插入內容。</p>
+<h2 id="網址"><a href="#網址" class="headerlink" title="網址"></a>網址</h2><h3 id="url-for"><a href="#url-for" class="headerlink" title="url_for"></a>url_for</h3><p>在路徑前加上根路徑，從 Hexo 2.7 開始您應該使用此函數，避免使用 <code>config.root + path</code>。</p>
+<pre><code class="js">&lt;%- url_for(path) %&gt;
+</code></pre>
+<h3 id="relative-url"><a href="#relative-url" class="headerlink" title="relative_url"></a>relative_url</h3><p>取得與 <code>from</code> 相對的 <code>to</code> 路徑。</p>
+<pre><code class="js">&lt;%- relative_url(from, to) %&gt;
+</code></pre>
+<h3 id="gravatar"><a href="#gravatar" class="headerlink" title="gravatar"></a>gravatar</h3><p>插入 Gravatar 圖片。</p>
+<pre><code class="js">&lt;%- gravatar(email, [size]) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- gravatar(&#39;a@abc.com&#39;) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787
+
+&lt;%- gravatar(&#39;a@abc.com&#39;, 40) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787?s=40
+
+&lt;%- gravatar(&#39;a@abc.com&#39; {s: 40, d: &#39;https://via.placeholder.com/150&#39;}) %&gt;
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787?s=40&amp;d=https%3A%2F%2Fvia.placeholder.com%2F150
+</code></pre>
+<h2 id="HTML-標籤"><a href="#HTML-標籤" class="headerlink" title="HTML 標籤"></a>HTML 標籤</h2><h3 id="css"><a href="#css" class="headerlink" title="css"></a>css</h3><p>載入 CSS 檔案。<code>path</code> 可以是陣列或字串，如果 <code>path</code> 開頭不是 <code>/</code> 或任何協議，則會自動加上根路徑；如果後面沒有加上 <code>.css</code> 副檔名的話，也會自動加上。Use object type for custom attributes.</p>
+<pre><code class="js">&lt;%- css(path, ...) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- css(&#39;style.css&#39;) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot;&gt;
+
+&lt;%- css([&#39;style.css&#39;, &#39;screen.css&#39;]) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot;&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/screen.css&quot;&gt;
+
+&lt;%- css({ href: &#39;style.css&#39;, integrity: &#39;foo&#39; }) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot; integrity=&quot;foo&quot;&gt;
+
+&lt;%- css([{ href: &#39;style.css&#39;, integrity: &#39;foo&#39; }, { href: &#39;screen.css&#39;, integrity: &#39;bar&#39; }]) %&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot; integrity=&quot;foo&quot;&gt;
+// &lt;link rel=&quot;stylesheet&quot; href=&quot;/screen.css&quot; integrity=&quot;bar&quot;&gt;
+</code></pre>
+<h3 id="js"><a href="#js" class="headerlink" title="js"></a>js</h3><p>載入 JavaScript 檔案。<code>path</code> 可以是陣列或字串，如果 <code>path</code> 開頭不是 <code>/</code> 或任何協議，則會自動加上根路徑；如果後面沒有加上 <code>.js</code> 副檔名的話，也會自動加上。Use object type for custom attributes.</p>
+<pre><code class="js">&lt;%- js(path, ...) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- js(&#39;script.js&#39;) %&gt;
+// &lt;script src=&quot;/script.js&quot;&gt;&lt;/script&gt;
+
+&lt;%- js([&#39;script.js&#39;, &#39;gallery.js&#39;]) %&gt;
+// &lt;script src=&quot;/script.js&quot;&gt;&lt;/script&gt;
+// &lt;script src=&quot;/gallery.js&quot;&gt;&lt;/script&gt;
+
+&lt;%- js({ src: &#39;script.js&#39;, integrity: &#39;foo&#39;, async: true }) %&gt;
+// &lt;script src=&quot;/script.js&quot; integrity=&quot;foo&quot; async&gt;&lt;/script&gt;
+
+&lt;%- js([{ src: &#39;script.js&#39;, integrity: &#39;foo&#39; }, { src: &#39;gallery.js&#39;, integrity: &#39;bar&#39; }]) %&gt;
+// &lt;script src=&quot;/script.js&quot; integrity=&quot;foo&quot;&gt;&lt;/script&gt;
+// &lt;script src=&quot;/gallery.js&quot; integrity=&quot;bar&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h3 id="link-to"><a href="#link-to" class="headerlink" title="link_to"></a>link_to</h3><p>插入連結。</p>
+<pre><code class="js">&lt;%- link_to(path, [text], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>external</code></td>
+<td>在新視窗開啟連結</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class 名稱</td>
+<td></td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- link_to(&#39;http://www.google.com&#39;) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;http://www.google.com&quot;&gt;http://www.google.com&lt;/a&gt;
+
+&lt;%- link_to(&#39;http://www.google.com&#39;, &#39;Google&#39;) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;Google&quot;&gt;Google&lt;/a&gt;
+
+&lt;%- link_to(&#39;http://www.google.com&#39;, &#39;Google&#39;, {external: true}) %&gt;
+// &lt;a href=&quot;http://www.google.com&quot; title=&quot;Google&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google&lt;/a&gt;
+</code></pre>
+<h3 id="mail-to"><a href="#mail-to" class="headerlink" title="mail_to"></a>mail_to</h3><p>插入電子郵件連結。</p>
+<pre><code class="js">&lt;%- mail_to(path, [text], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>Class 名稱</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+</tr>
+<tr>
+<td><code>subject</code></td>
+<td>郵件主旨</td>
+</tr>
+<tr>
+<td><code>cc</code></td>
+<td>副本（CC）</td>
+</tr>
+<tr>
+<td><code>bcc</code></td>
+<td>密件副本（BCC）</td>
+</tr>
+<tr>
+<td><code>body</code></td>
+<td>郵件內容</td>
+</tr>
+</tbody></table>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- mail_to(&#39;a@abc.com&#39;) %&gt;
+// &lt;a href=&quot;mailto:a@abc.com&quot; title=&quot;a@abc.com&quot;&gt;a@abc.com&lt;/a&gt;
+
+&lt;%- mail_to(&#39;a@abc.com&#39;, &#39;Email&#39;) %&gt;
+// &lt;a href=&quot;mailto:a@abc.com&quot; title=&quot;Email&quot;&gt;Email&lt;/a&gt;
+</code></pre>
+<h3 id="image-tag"><a href="#image-tag" class="headerlink" title="image_tag"></a>image_tag</h3><p>插入圖片。</p>
+<pre><code class="js">&lt;%- image_tag(path, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>alt</code></td>
+<td>圖片的替代文字</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class 名稱</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td>圖片寬度</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>圖片高度</td>
+</tr>
+</tbody></table>
+<h3 id="favicon-tag"><a href="#favicon-tag" class="headerlink" title="favicon_tag"></a>favicon_tag</h3><p>插入 favicon。</p>
+<pre><code class="js">&lt;%- favicon_tag(path) %&gt;
+</code></pre>
+<h3 id="feed-tag"><a href="#feed-tag" class="headerlink" title="feed_tag"></a>feed_tag</h3><p>插入 feed 連結。</p>
+<pre><code class="js">&lt;%- feed_tag(path, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>Feed 標題</td>
+<td><code>config.title</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Feed 類型</td>
+<td>atom</td>
+</tr>
+</tbody></table>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- feed_tag(&#39;atom.xml&#39;) %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;Hexo&quot; type=&quot;application/atom+xml&quot;&gt;
+
+&lt;%- feed_tag(&#39;rss.xml&#39;, { title: &#39;RSS Feed&#39;, type: &#39;rss&#39; }) %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;RSS Feed&quot; type=&quot;application/rss+xml&quot;&gt;
+
+/* Defaults to hexo-generator-feed&#39;s config if no argument */
+&lt;%- feed_tag() %&gt;
+// &lt;link rel=&quot;alternate&quot; href=&quot;/atom.xml&quot; title=&quot;Hexo&quot; type=&quot;application/atom+xml&quot;&gt;
+</code></pre>
+<h2 id="判斷函數"><a href="#判斷函數" class="headerlink" title="判斷函數"></a>判斷函數</h2><h3 id="is-current"><a href="#is-current" class="headerlink" title="is_current"></a>is_current</h3><p>檢查 <code>path</code> 是否符合目前頁面的網址。開啟 <code>strict</code> 選項啟用嚴格比對。</p>
+<pre><code class="js">&lt;%- is_current(path, [strict]) %&gt;
+</code></pre>
+<h3 id="is-home"><a href="#is-home" class="headerlink" title="is_home"></a>is_home</h3><p>檢查目前是否為首頁。</p>
+<pre><code class="js">&lt;%- is_home() %&gt;
+</code></pre>
+<h3 id="is-post"><a href="#is-post" class="headerlink" title="is_post"></a>is_post</h3><p>檢查目前是否為文章。</p>
+<pre><code class="js">&lt;%- is_post() %&gt;
+</code></pre>
+<h3 id="is-archive"><a href="#is-archive" class="headerlink" title="is_archive"></a>is_archive</h3><p>檢查目前是否為彙整頁面。</p>
+<pre><code class="js">&lt;%- is_archive() %&gt;
+</code></pre>
+<h3 id="is-year"><a href="#is-year" class="headerlink" title="is_year"></a>is_year</h3><p>檢查目前是否為年度彙整頁面。</p>
+<pre><code class="js">&lt;%- is_year() %&gt;
+</code></pre>
+<h3 id="is-month"><a href="#is-month" class="headerlink" title="is_month"></a>is_month</h3><p>檢查目前是否為每月彙整頁面。</p>
+<pre><code class="js">&lt;%- is_month() %&gt;
+</code></pre>
+<h3 id="is-category"><a href="#is-category" class="headerlink" title="is_category"></a>is_category</h3><p>檢查目前是否為分類彙整頁面。</p>
+<pre><code class="js">&lt;%- is_category() %&gt;
+</code></pre>
+<h3 id="is-tag"><a href="#is-tag" class="headerlink" title="is_tag"></a>is_tag</h3><p>檢查目前是否為標籤彙整頁面。</p>
+<pre><code class="js">&lt;%- is_tag() %&gt;
+</code></pre>
+<h2 id="字串處理"><a href="#字串處理" class="headerlink" title="字串處理"></a>字串處理</h2><h3 id="trim"><a href="#trim" class="headerlink" title="trim"></a>trim</h3><p>清除字串的開頭和結尾空白。</p>
+<pre><code class="js">&lt;%- trim(string) %&gt;
+</code></pre>
+<h3 id="strip-html"><a href="#strip-html" class="headerlink" title="strip_html"></a>strip_html</h3><p>清除字串中的 HTML 標籤。</p>
+<pre><code class="js">&lt;%- strip_html(string) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- strip_html(&#39;It\&#39;s not &lt;b&gt;important&lt;/b&gt; anymore!&#39;) %&gt;
+// It&#39;s not important anymore!
+</code></pre>
+<h3 id="titlecase"><a href="#titlecase" class="headerlink" title="titlecase"></a>titlecase</h3><p>把字串轉換為正確的 Title case。</p>
+<pre><code class="js">&lt;%- titlecase(string) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- titlecase(&#39;this is an apple&#39;) %&gt;
+# This is an Apple
+</code></pre>
+<h3 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h3><p>使用 Markdown 渲染字串。</p>
+<pre><code class="js">&lt;%- markdown(str) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- markdown(&#39;make me **strong**&#39;) %&gt;
+// make me &lt;strong&gt;strong&lt;/strong&gt;
+</code></pre>
+<h3 id="render"><a href="#render" class="headerlink" title="render"></a>render</h3><p>渲染字串。</p>
+<pre><code class="js">&lt;%- render(str, engine, [options]) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- render(&#39;p(class=&quot;example&quot;) Test&#39;, &#39;pug&#39;); %&gt;
+// &lt;p class=&quot;example&quot;&gt;Test&lt;/p&gt;
+</code></pre>
+<p>See <a href="https://hexo.io/zh-twapi/rendering">Rendering</a> for more details.</p>
+<h3 id="word-wrap"><a href="#word-wrap" class="headerlink" title="word_wrap"></a>word_wrap</h3><p>使每行的字串長度不超過 <code>length</code>。<code>length</code> 預設為 80。</p>
+<pre><code class="js">&lt;%- word_wrap(str, [length]) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- word_wrap(&#39;Once upon a time&#39;, 8) %&gt;
+// Once upon\n a time
+</code></pre>
+<h3 id="truncate"><a href="#truncate" class="headerlink" title="truncate"></a>truncate</h3><p>移除超過 <code>length</code> 的字串。</p>
+<pre><code class="js">&lt;%- truncate(text, length) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- truncate(&#39;Once upon a time in a world far far away&#39;, 16) %&gt;
+// Once upon a time
+</code></pre>
+<h3 id="escape-html"><a href="#escape-html" class="headerlink" title="escape_html"></a>escape_html</h3><p>Escapes HTML entities in a string.</p>
+<pre><code class="js">&lt;%- escape_html(str) %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- escape_html(&#39;&lt;p&gt;Hello &quot;world&quot;.&lt;/p&gt;&#39;) %&gt;
+// &amp;lt;p&amp;gt;Hello &amp;quot;world&amp;quot;.&amp;lt;&amp;#x2F;p&amp;gt;
+</code></pre>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><h3 id="partial"><a href="#partial" class="headerlink" title="partial"></a>partial</h3><p>載入其他模板檔案，您可在 <code>locals</code> 設定區域變數。</p>
+<pre><code class="js">&lt;%- partial(layout, [locals], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cache</code></td>
+<td>儲存快取（使用 Fragment cache）</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>only</code></td>
+<td>限制區域變數。在模板中只能使用 <code>locals</code> 中設定的變數。</td>
+<td><code>false</code></td>
+</tr>
+</tbody></table>
+<h3 id="fragment-cache"><a href="#fragment-cache" class="headerlink" title="fragment_cache"></a>fragment_cache</h3><p>儲存局部快取。它儲存局部內容，下次使用時就能直接使用快取。</p>
+<pre><code class="js">&lt;%- fragment_cache(id, fn);
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- fragment_cache(&#39;header&#39;, function(){
+  return &#39;&lt;header&gt;&lt;/header&gt;&#39;;
+}) %&gt;
+</code></pre>
+<h2 id="日期與時間"><a href="#日期與時間" class="headerlink" title="日期與時間"></a>日期與時間</h2><h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>插入格式化的日期。<code>date</code> 可以是 UNIX 時間、ISO 字串、Date 物件或 <a href="http://momentjs.com/">Moment.js</a> 物件。<code>format</code> 預設為 <code>date_format</code> 設定。</p>
+<pre><code class="js">&lt;%- date(date, [format]) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- date(Date.now()) %&gt;
+// 2013-01-01
+
+&lt;%- date(Date.now(), &#39;MMM D YYYY&#39;) %&gt;
+// Jan 1 2013
+</code></pre>
+<h3 id="date-xml"><a href="#date-xml" class="headerlink" title="date_xml"></a>date_xml</h3><p>插入 XML 格式的日期。<code>date</code> 可以是 UNIX 時間、ISO 字串、Date 物件或 <a href="http://momentjs.com/">Moment.js</a> 物件。</p>
+<pre><code class="js">&lt;%- date_xml(date) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- date_xml(Date.now()) %&gt;
+// 2013-01-01T00:00:00.000Z
+</code></pre>
+<h3 id="time"><a href="#time" class="headerlink" title="time"></a>time</h3><p>插入格式化的時間。<code>date</code> 可以是 UNIX 時間、ISO 字串、Date 物件或 <a href="http://momentjs.com/">Moment.js</a> 物件。<code>format</code> 預設為 <code>time_format</code> 設定。</p>
+<pre><code class="js">&lt;%- time(date, [format]) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- time(Date.now()) %&gt;
+// 13:05:12
+
+&lt;%- time(Date.now(), &#39;h:mm:ss a&#39;) %&gt;
+// 1:05:12 pm
+</code></pre>
+<h3 id="full-date"><a href="#full-date" class="headerlink" title="full_date"></a>full_date</h3><p>插入格式化的日期和時間。<code>date</code> 可以是 UNIX 時間、ISO 字串、Date 物件或 <a href="http://momentjs.com/">Moment.js</a> 物件。<code>format</code> 預設為 <code>date_format + time_format</code> 設定。</p>
+<pre><code class="js">&lt;%- full_date(date, [format]) %&gt;
+</code></pre>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- full_date(new Date()) %&gt;
+// Jan 1, 2013 0:00:00
+
+&lt;%- full_date(new Date(), &#39;dddd, MMMM Do YYYY, h:mm:ss a&#39;) %&gt;
+// Tuesday, January 1st 2013, 12:00:00 am
+</code></pre>
+<h3 id="moment"><a href="#moment" class="headerlink" title="moment"></a>moment</h3><p><a href="http://momentjs.com/">Moment.js</a> 函式庫。</p>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><h3 id="list-categories"><a href="#list-categories" class="headerlink" title="list_categories"></a>list_categories</h3><p>插入分類列表。</p>
+<pre><code class="js">&lt;%- list_categories([categories], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>分類排列方式</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>分類排列順序。<code>1</code>, <code>asc</code> 升冪；<code>-1</code>, <code>desc</code> 降冪。</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>顯示每個分類的文章總數</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>分類列表的顯示方式。使用 <code>list</code> 以無序列表（unordered list）方式顯示。</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>分類間的分隔符號。只有在 <code>style</code> 不是 <code>list</code> 時有用。</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>depth</code></td>
+<td>要顯示的分類層級。<code>0</code> 顯示所有層級的分類；<code>-1</code> 和 <code>0</code> 很類似，但是顯示不分層級；<code>1</code> 只顯示第一層的分類。</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>分類列表的 class 名稱。</td>
+<td>category</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>改變分類名稱顯示方法的函數</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="list-tags"><a href="#list-tags" class="headerlink" title="list_tags"></a>list_tags</h3><p>插入標籤列表。</p>
+<pre><code class="js">&lt;%- list_tags([tags], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>標籤排列方式</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>標籤排列順序。<code>1</code>, <code>asc</code> 升冪；<code>-1</code>, <code>desc</code> 降冪。</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>顯示每個標籤的文章總數</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>標籤列表的顯示方式。使用 <code>list</code> 以無序列表（unordered list）方式顯示。</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>標籤間的分隔符號。只有在 <code>style</code> 不是 <code>list</code> 時有用。</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>Class name of tag list (string) or customize each tag’s class (object, see below).</td>
+<td>tag</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>改變標籤名稱顯示方法的函數</td>
+<td></td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>要顯示的標籤數量（0 &#x3D; 無限制）</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td>Add a suffix to link.</td>
+<td>None</td>
+</tr>
+</tbody></table>
+<p>Class advanced customization:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class.ul</code></td>
+<td><code>&lt;ul&gt;</code> class name (only for style <code>list</code>)</td>
+<td><code>tag-list</code> (list style)</td>
+</tr>
+<tr>
+<td><code>class.li</code></td>
+<td><code>&lt;li&gt;</code> class name (only for style <code>list</code>)</td>
+<td><code>tag-list-item</code> (list style)</td>
+</tr>
+<tr>
+<td><code>class.a</code></td>
+<td><code>&lt;a&gt;</code> class name</td>
+<td><code>tag-list-link</code> (list style) <code>tag-link</code> (normal style)</td>
+</tr>
+<tr>
+<td><code>class.label</code></td>
+<td><code>&lt;span&gt;</code> class name where the tag label is stored (only for normal style, when <code>class.label</code> is set the label is put in a <code>&lt;span&gt;</code>)</td>
+<td><code>tag-label</code> (normal style)</td>
+</tr>
+<tr>
+<td><code>class.count</code></td>
+<td><code>&lt;span&gt;</code> class name where the tag counter is stored (only when <code>show_count</code> is <code>true</code>)</td>
+<td><code>tag-list-count</code> (list style) <code>tag-count</code> (normal style)</td>
+</tr>
+</tbody></table>
+<p>Examples:</p>
+<pre><code class="ejs">&lt;%- list_tags(site.tags, {class: &#39;classtest&#39;, style: false, separator: &#39; | &#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: &#39;classtest&#39;, style: &#39;list&#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: {ul: &#39;ululul&#39;, li: &#39;lilili&#39;, a: &#39;aaa&#39;, count: &#39;ccc&#39;}, style: false, separator: &#39; | &#39;}) %&gt;
+&lt;%- list_tags(site.tags, {class: {ul: &#39;ululul&#39;, li: &#39;lilili&#39;, a: &#39;aaa&#39;, count: &#39;ccc&#39;}, style: &#39;list&#39;}) %&gt;
+</code></pre>
+<h3 id="list-archives"><a href="#list-archives" class="headerlink" title="list_archives"></a>list_archives</h3><p>插入彙整列表。</p>
+<pre><code class="js">&lt;%- list_archives([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>type</code></td>
+<td>類型。此設定可為 <code>yearly</code> 或 <code>monthly</code>。</td>
+<td>monthly</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>排列順序。<code>1</code>, <code>asc</code> 升冪；<code>-1</code>, <code>desc</code> 降冪。</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>show_count</code></td>
+<td>顯示每個彙整的文章總數</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>日期格式</td>
+<td>MMMM YYYY</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>彙整列表的顯示方式。使用 <code>list</code> 以無序列表（unordered list）方式顯示。</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>彙整間的分隔符號。只有在 <code>style</code> 不是 <code>list</code> 時有用。</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>彙整列表的 class 名稱。</td>
+<td>archive</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>改變彙整名稱顯示方法的函數</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="list-posts"><a href="#list-posts" class="headerlink" title="list_posts"></a>list_posts</h3><p>插入文章列表。</p>
+<pre><code class="js">&lt;%- list_posts([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orderby</code></td>
+<td>文章排列方式</td>
+<td>date</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>文章排列順序。<code>1</code>, <code>asc</code> 升冪；<code>-1</code>, <code>desc</code> 降冪。</td>
+<td>-1</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>文章列表的顯示方式。使用 <code>list</code> 以無序列表（unordered list）方式顯示。</td>
+<td>list</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>文章間的分隔符號。只有在 <code>style</code> 不是 <code>list</code> 時有用。</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>文章列表的 class 名稱。</td>
+<td>post</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>要顯示的文章數量（0 &#x3D; 無限制）</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td>改變文章名稱顯示方法的函數</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="tagcloud"><a href="#tagcloud" class="headerlink" title="tagcloud"></a>tagcloud</h3><p>插入標籤雲。</p>
+<pre><code class="js">&lt;%- tagcloud([tags], [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>min_font</code></td>
+<td>最小字體尺寸</td>
+<td>10</td>
+</tr>
+<tr>
+<td><code>max_font</code></td>
+<td>最大字體尺寸</td>
+<td>20</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>字體尺寸的單位</td>
+<td>px</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>標籤總量</td>
+<td>40</td>
+</tr>
+<tr>
+<td><code>orderby</code></td>
+<td>標籤排列方式</td>
+<td>name</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>標籤排列順序。<code>1</code>, <code>sac</code> 升冪；<code>-1</code>, <code>desc</code> 降冪</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td>使用顏色</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>start_color</code></td>
+<td>開始的顏色。您可使用十六進位值（<code>#b700ff</code>），rgba（<code>rgba(183, 0, 255, 1)</code>），hsla（<code>hsla(283, 100%, 50%, 1)</code>）或 <a href="http://www.w3.org/TR/css3-color/#svg-color">顏色關鍵字</a>。此選項僅在 <code>color</code> 設定開啟時才有用。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>end_color</code></td>
+<td>結束的顏色。您可使用十六進位值（<code>#b700ff</code>），rgba（<code>rgba(183, 0, 255, 1)</code>），hsla（<code>hsla(283, 100%, 50%, 1)</code>）或 <a href="http://www.w3.org/TR/css3-color/#svg-color">顏色關鍵字</a>。此選項僅在 <code>color</code> 設定開啟時才有用。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>標籤的 class name prefix of tags</td>
+<td></td>
+</tr>
+<tr>
+<td><code>level</code></td>
+<td>不同 class name 的總數。此選項僅在 <code>class</code> 設定時才有用。</td>
+<td>10</td>
+</tr>
+</tbody></table>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="paginator"><a href="#paginator" class="headerlink" title="paginator"></a>paginator</h3><p>插入分頁連結。</p>
+<pre><code class="js">&lt;%- paginator(options) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>base</code></td>
+<td>基礎網址</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>網址格式</td>
+<td>page&#x2F;%d&#x2F;</td>
+</tr>
+<tr>
+<td><code>total</code></td>
+<td>分頁總數</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>current</code></td>
+<td>目前頁數</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>prev_text</code></td>
+<td>上一頁連結的文字。僅在 <code>prev_next</code> 設定開啟時才有用。</td>
+<td>Prev</td>
+</tr>
+<tr>
+<td><code>next_text</code></td>
+<td>下一頁連結的文字。僅在 <code>prev_next</code> 設定開啟時才有用。</td>
+<td>Next</td>
+</tr>
+<tr>
+<td><code>space</code></td>
+<td>空白文字</td>
+<td>&amp;hellp;</td>
+</tr>
+<tr>
+<td><code>prev_next</code></td>
+<td>顯示上一頁和下一頁的連結</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>end_size</code></td>
+<td>顯示於兩側的頁數</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>mid_size</code></td>
+<td>顯示於中間的頁數</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>show_all</code></td>
+<td>顯示所有頁數。如果開啟此設定的話，<code>end_size</code> 和 <code>mid_size</code> 就沒用了。</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>escape</code></td>
+<td>Escape HTML tags</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- paginator({
+  prev_text: &#39;&lt;&#39;,
+  next_text: &#39;&gt;&#39;
+}) %&gt;
+</code></pre>
+<pre><code class="html">&lt;!-- Rendered as --&gt;
+&lt;a href=&quot;/1/&quot;&gt;&amp;lt;&lt;/a&gt;
+&lt;a href=&quot;/1/&quot;&gt;1&lt;/a&gt;
+2
+&lt;a href=&quot;/3/&quot;&gt;3&lt;/a&gt;
+&lt;a href=&quot;/3/&quot;&gt;&amp;gt;&lt;/a&gt;
+</code></pre>
+<pre><code class="js">&lt;%- paginator({
+  prev_text: &#39;&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;/i&gt;&#39;,
+  next_text: &#39;&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;&#39;,
+  escape: false
+}) %&gt;
+</code></pre>
+<pre><code class="html">&lt;!-- Rendered as --&gt;
+&lt;a href=&quot;/1/&quot;&gt;&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;a href=&quot;/1/&quot;&gt;1&lt;/a&gt;
+2
+&lt;a href=&quot;/3/&quot;&gt;3&lt;/a&gt;
+&lt;a href=&quot;/3/&quot;&gt;&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+</code></pre>
+<h3 id="search-form"><a href="#search-form" class="headerlink" title="search_form"></a>search_form</h3><p>插入 Google 搜尋表單。</p>
+<pre><code class="js">&lt;%- search_form(options) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>表單的 class name</td>
+<td>search-form</td>
+</tr>
+<tr>
+<td><code>text</code></td>
+<td>搜尋提示文字</td>
+<td>Search</td>
+</tr>
+<tr>
+<td><code>button</code></td>
+<td>顯示搜尋按鈕。此設定可為布林值（boolean）或字串，當設定是字串的時候，即為搜尋按鈕的文字。</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<h3 id="number-format"><a href="#number-format" class="headerlink" title="number_format"></a>number_format</h3><p>格式化數字。</p>
+<pre><code class="js">&lt;%- number_format(number, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>precision</code></td>
+<td>數字精確度。此選項可為 <code>false</code> 或非負整數。</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>delimiter</code></td>
+<td>千位數分隔符號</td>
+<td>,</td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>整數和小數之間的分隔符號</td>
+<td>.</td>
+</tr>
+</tbody></table>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- number_format(12345.67, {precision: 1}) %&gt;
+// 12,345.68
+
+&lt;%- number_format(12345.67, {precision: 4}) %&gt;
+// 12,345.6700
+
+&lt;%- number_format(12345.67, {precision: 0}) %&gt;
+// 12,345
+
+&lt;%- number_format(12345.67, {delimiter: &#39;&#39;}) %&gt;
+// 12345.67
+
+&lt;%- number_format(12345.67, {separator: &#39;/&#39;}) %&gt;
+// 12,345/67
+</code></pre>
+<h3 id="meta-generator"><a href="#meta-generator" class="headerlink" title="meta_generator"></a>meta_generator</h3><p>Inserts <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta">generator tag</a>.</p>
+<pre><code class="js">&lt;%- meta_generator() %&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="js">&lt;%- meta_generator() %&gt;
+// &lt;meta name=&quot;generator&quot; content=&quot;Hexo 4.0.0&quot;&gt;
+</code></pre>
+<h3 id="open-graph"><a href="#open-graph" class="headerlink" title="open_graph"></a>open_graph</h3><p>插入 <a href="http://ogp.me/">Open Graph</a> 資料。</p>
+<pre><code class="js">&lt;%- open_graph([options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>頁面標題 (<code>og:title</code>)</td>
+<td><code>page.title</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>頁面類型 (<code>og:type</code>)</td>
+<td>blog</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>頁面網址 (<code>og:url</code>)</td>
+<td><code>url</code></td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>頁面圖片 (<code>og:image</code>)</td>
+<td>內容中的圖片</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>Article author (<code>og:article:author</code>)</td>
+<td><code>config.author</code></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Article published time (<code>og:article:published_time</code>)</td>
+<td>Page published time</td>
+</tr>
+<tr>
+<td><code>updated</code></td>
+<td>Article modified time (<code>og:article:modified_time</code>)</td>
+<td>Page modified time</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>Article language (<code>og:locale</code>)</td>
+<td>&#96;page.lang</td>
+</tr>
+<tr>
+<td><code>site_name</code></td>
+<td>網站名稱 (<code>og:site_name</code>)</td>
+<td><code>config.title</code></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>頁面描述 (<code>og:description</code>)</td>
+<td>內容摘要或前 200 字</td>
+</tr>
+<tr>
+<td><code>twitter_card</code></td>
+<td>Twitter 卡片類型 (<code>twitter:card</code>)</td>
+<td>summary</td>
+</tr>
+<tr>
+<td><code>twitter_id</code></td>
+<td>Twitter ID (<code>twitter:creator</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>twitter_site</code></td>
+<td>Twitter 網站 (<code>twitter:site</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>google_plus</code></td>
+<td>Google+ 個人資料連結</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fb_admins</code></td>
+<td>Facebook 管理者 ID</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fb_app_id</code></td>
+<td>Facebook 應用程式 ID</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="toc"><a href="#toc" class="headerlink" title="toc"></a>toc</h3><p>解析內容中的標題標籤 (h1~h6) 並插入目錄。</p>
+<pre><code class="js">&lt;%- toc(str, [options]) %&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>描述</th>
+<th>預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>class</code></td>
+<td>Class 名稱</td>
+<td>toc</td>
+</tr>
+<tr>
+<td><code>list_number</code></td>
+<td>顯示編號</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>max_depth</code></td>
+<td>生成 TOC 的最大深度</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>min_depth</code></td>
+<td>生成 TOC 的最小深度</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p><strong>範例：</strong></p>
+<pre><code class="js">&lt;%- toc(page.content) %&gt;
+</code></pre>
+<h4 id="data-toc-unnumbered-6-1-0"><a href="#data-toc-unnumbered-6-1-0" class="headerlink" title="data-toc-unnumbered (+6.1.0)"></a>data-toc-unnumbered (+6.1.0)</h4><p>Headings with attribute <code>data-toc-unnumbered=&quot;true&quot;</code> will be marked as unnumbered (list number will not be display).</p>
+<p>{% note warn “Warning!” %}<br>For using <code>data-toc-unnumbered=&quot;true&quot;</code>, the renderer must have the option to add CSS classes.</p>
+<p>Please see below PRs.</p>
+<ul>
+<li><a href="https://github.com/hexojs/hexo/pull/4871">https://github.com/hexojs/hexo/pull/4871</a></li>
+<li><a href="https://github.com/hexojs/hexo-util/pull/269">https://github.com/hexojs/hexo-util/pull/269</a></li>
+<li><a href="https://github.com/hexojs/hexo-renderer-markdown-it/pull/174">https://github.com/hexojs/hexo-renderer-markdown-it/pull/174</a><br>{% endnote %}</li>
+</ul>

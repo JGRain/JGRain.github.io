@@ -1,0 +1,95 @@
+<hr>
+<h2 id="title-Тег"><a href="#title-Тег" class="headerlink" title="title: Тег"></a>title: Тег</h2><p>Тег позволяет легко и быстро вставлять фрагменты в свои посты.</p>
+<h2 id="Краткий-обзор"><a href="#Краткий-обзор" class="headerlink" title="Краткий обзор"></a>Краткий обзор</h2><pre><code class="js">hexo.extend.tag.register(name, function(args, content){
+  // ...
+}, options);
+</code></pre>
+<p>В функцию тега передаются два аргумента: <code>args</code> и <code>content</code>. <code>args</code> содержит аргументы, передаваемые плагину. <code>content</code> оборачивается содержанием с помощью плагина тега.</p>
+<p>С момента введения в асинхронное отображение Hexo 3 использует <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> для обработки. Его поведение несколько отличается от применяемого в <a href="http://paularmstrong.github.io/swig/">Swig</a>.</p>
+<h2 id="Unregister-Tags"><a href="#Unregister-Tags" class="headerlink" title="Unregister Tags"></a>Unregister Tags</h2><p>Use <code>unregister()</code> to replace existing <a href="/docs/tag-plugins">tag plugins</a> with custom functions.</p>
+<pre><code class="js">hexo.extend.tag.unregister(name);
+</code></pre>
+<p><strong>Example</strong></p>
+<pre><code class="js">const tagFn = (args, content) =&gt; {
+  content = &#39;something&#39;;
+  return content;
+};
+
+// https://hexo.io/docs/tag-plugins#YouTube
+hexo.extend.tag.unregister(&#39;youtube&#39;);
+
+hexo.extend.tag.register(&#39;youtube&#39;, tagFn);
+</code></pre>
+<h2 id="Опции"><a href="#Опции" class="headerlink" title="Опции"></a>Опции</h2><h3 id="ends"><a href="#ends" class="headerlink" title="ends"></a>ends</h3><p>Использовать закрывающие теги. По умолчанию установлено в <code>false</code>.</p>
+<h3 id="async"><a href="#async" class="headerlink" title="async"></a>async</h3><p>Включает асинхронный режим. По умолчанию установлено в <code>false</code>.</p>
+<h2 id="Примеры"><a href="#Примеры" class="headerlink" title="Примеры"></a>Примеры</h2><h3 id="Без-закрывающих-тегов"><a href="#Без-закрывающих-тегов" class="headerlink" title="Без закрывающих тегов"></a>Без закрывающих тегов</h3><p>Вставка видео с YouTube.</p>
+<pre><code class="js">hexo.extend.tag.register(&#39;youtube&#39;, function(args){
+  var id = args[0];
+  return &#39;&lt;div class=&quot;video-container&quot;&gt;&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/&#39; + id + &#39;&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;&#39;;
+});
+</code></pre>
+<h3 id="С-закрывающими-тегами"><a href="#С-закрывающими-тегами" class="headerlink" title="С закрывающими тегами"></a>С закрывающими тегами</h3><p>Вставка цитаты.</p>
+<pre><code class="js">hexo.extend.tag.register(&#39;pullquote&#39;, function(args, content){
+  var className =  args.join(&#39; &#39;);
+  return &#39;&lt;blockquote class=&quot;pullquote&#39; + className + &#39;&quot;&gt;&#39; + content + &#39;&lt;/blockquote&gt;&#39;;
+}, {ends: true});
+</code></pre>
+<h3 id="Асинхронная-обработка"><a href="#Асинхронная-обработка" class="headerlink" title="Асинхронная обработка"></a>Асинхронная обработка</h3><p>Вставка файла.</p>
+<pre><code class="js">var fs = require(&#39;hexo-fs&#39;);
+var pathFn = require(&#39;path&#39;);
+
+hexo.extend.tag.register(&#39;include_code&#39;, function(args){
+  var filename = args[0];
+  var path = pathFn.join(hexo.source_dir, filename);
+
+  return fs.readFile(path).then(function(content){
+    return &#39;&lt;pre&gt;&lt;code&gt;&#39; + content + &#39;&lt;/code&gt;&lt;/pre&gt;&#39;;
+  });
+}, {async: true});
+</code></pre>
+<h2 id="Front-matter-and-user-configuration"><a href="#Front-matter-and-user-configuration" class="headerlink" title="Front-matter and user configuration"></a>Front-matter and user configuration</h2><p>Any of the following options is valid:</p>
+<ol>
+<li></li>
+</ol>
+<pre><code class="js">hexo.extend.tag.register(&#39;foo&#39;, function (args) {
+  const [firstArg] = args;
+
+  // User config
+  const { config } = hexo;
+  const editor = config.author + firstArg;
+
+  // Theme config
+  const { config: themeCfg } = hexo.theme;
+  if (themeCfg.fancybox) // do something...
+
+  // Front-matter
+  const { title } = this; // article&#39;s (post/page) title
+
+  // Article&#39;s content
+  const { _content } = this; // original content
+  const { content } = this; // HTML-rendered content
+
+  return &#39;foo&#39;;
+});
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code class="js">hexo.extend.tag.register(&#39;foo&#39;, require(&#39;./lib/foo&#39;)(hexo));
+</code></pre>
+<pre><code class="js">module.exports = hexo =&gt; {
+  return function fooFn(args) {
+    const [firstArg] = args;
+
+    const { config } = hexo;
+    const editor = config.author + firstArg;
+
+    const { config: themeCfg } = hexo.theme;
+    if (themeCfg.fancybox) // do something...
+
+    const { title, _content, content } = this;
+
+    return &#39;foo&#39;;
+  };
+};
+</code></pre>

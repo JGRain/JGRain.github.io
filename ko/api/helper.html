@@ -1,0 +1,22 @@
+<hr>
+<h2 id="title-Helper"><a href="#title-Helper" class="headerlink" title="title: Helper"></a>title: Helper</h2><p>Helper는 템플릿에 쉽고 빠르게 정보(snippet)을 추가할 수 있게 도와줍니다. 우리는 당신이 복잡한 코드를 다룰 때 템플릿 대신 helper를 사용하는 것을 추천합니다.</p>
+<h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><pre><code class="js">hexo.extend.helper.register(name, function(){
+  // ...
+});
+</code></pre>
+<h2 id="예시"><a href="#예시" class="headerlink" title="예시"></a>예시</h2><pre><code class="js">hexo.extend.helper.register(&#39;js&#39;, function(path){
+  return &#39;&lt;script src=&quot;&#39; + path + &#39;&quot;&gt;&lt;/script&gt;&#39;;
+});
+</code></pre>
+<pre><code class="js">&lt;%- js(&#39;script.js&#39;) %&gt;
+// &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="Where-to-place-custom-helper"><a href="#Where-to-place-custom-helper" class="headerlink" title="Where to place custom helper?"></a>Where to place custom helper?</h3><p>Place it under <code>scripts/</code> or <code>themes/&lt;yourtheme&gt;/scripts/</code> folder.</p>
+<h3 id="How-do-I-use-another-registered-helper-in-my-custom-helper"><a href="#How-do-I-use-another-registered-helper-in-my-custom-helper" class="headerlink" title="How do I use another registered helper in my custom helper?"></a>How do I use another registered helper in my custom helper?</h3><p>All helpers are executed in the same context. For example, to use <a href="/docs/helpers#url-for"><code>url_for()</code></a> inside a custom helper:</p>
+<pre><code class="js">hexo.extend.helper.register(&#39;lorem&#39;, function(path) {
+  return &#39;&lt;script src=&quot;&#39; + this.url_for(path) + &#39;&quot;&gt;&lt;/script&gt;&#39;;
+});
+</code></pre>
+<h3 id="How-do-I-use-a-registered-helper-in-another-extension-e-g-Filter-Injector-etc"><a href="#How-do-I-use-a-registered-helper-in-another-extension-e-g-Filter-Injector-etc" class="headerlink" title="How do I use a registered helper in another extension (e.g. Filter, Injector, etc)?"></a>How do I use a registered helper in another extension (e.g. Filter, Injector, etc)?</h3><p><code>hexo.extend.helper.get</code> will return the helper function, but it needs to have hexo as its context, so:</p>
+<pre><code class="js">const url_for = hexo.extend.helper.get(&#39;url_for&#39;).bind(hexo);
+</code></pre>

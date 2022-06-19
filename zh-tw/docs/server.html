@@ -1,0 +1,24 @@
+<hr>
+<h2 id="title-Server"><a href="#title-Server" class="headerlink" title="title: Server"></a>title: Server</h2><h2 id="hexo-server"><a href="#hexo-server" class="headerlink" title="hexo-server"></a><a href="https://github.com/hexojs/hexo-server">hexo-server</a></h2><p>Hexo 3 把伺服器獨立成個別模組，您必須先安裝 <a href="https://github.com/hexojs/hexo-server">hexo-server</a> 才能使用。</p>
+<pre><code class="bash">$ npm install hexo-server --save
+</code></pre>
+<p>安裝完畢後，輸入以下指令以啟動伺服器，您的網站預設會執行於 <code>http://localhost:4000</code>，在伺服器啟動期間，Hexo 會監看檔案變動並自動更新，您無須重啟伺服器。</p>
+<pre><code class="bash">$ hexo server
+</code></pre>
+<p>如果您想要變更連接埠，或是在執行時遇到了 <code>EADDRINUSE</code> 錯誤，可以在執行時使用 <code>-p</code> 選項指定其他連接埠。</p>
+<pre><code class="bash">$ hexo server -p 5000
+</code></pre>
+<h3 id="靜態模式"><a href="#靜態模式" class="headerlink" title="靜態模式"></a>靜態模式</h3><p>在靜態模式下，伺服器只會處理 <code>public</code> 資料夾內的檔案，而且不會處理檔案變動，在執行時，您應該先自行執行 <code>hexo generate</code>，此模式通常用於生產環境（production）下。</p>
+<pre><code class="bash">$ hexo server -s
+</code></pre>
+<h3 id="自定-IP"><a href="#自定-IP" class="headerlink" title="自定 IP"></a>自定 IP</h3><p>伺服器預設運作在 <code>0.0.0.0</code>，您可以覆蓋預設的 IP 設定。</p>
+<pre><code class="bash">$ hexo server -i 192.168.1.1
+</code></pre>
+<h2 id="Pow"><a href="#Pow" class="headerlink" title="Pow"></a>Pow</h2><p><a href="http://pow.cx/">Pow</a> 是一個 Mac 系統上的零配置 Rack 伺服器，它也可作為一個簡單易用的靜態檔案伺服器來使用。</p>
+<h3 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h3><pre><code class="bash">$ curl get.pow.cx | sh
+</code></pre>
+<h3 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h3><p>在 <code>~/.pow</code> 資料夾建立連結（symlink）。</p>
+<pre><code class="bash">$ cd ~/.pow
+$ ln -s /path/to/myapp
+</code></pre>
+<p>您的網站將會執行於 <code>http://myapp.dev</code>，網址是根據連結名稱而定。</p>

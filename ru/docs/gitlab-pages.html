@@ -1,0 +1,39 @@
+<hr>
+<h2 id="title-GitLab-Pages"><a href="#title-GitLab-Pages" class="headerlink" title="title: GitLab Pages"></a>title: GitLab Pages</h2><ol>
+<li>Создайте новый репозиторий под названием <b><em>username</em>.gitlab.io</b>, где <code>username</code> — ваше имя пользователя GitLab. Если вы уже загрузили файлы в репозиторий с другим названием, просто переименуйте его.</li>
+<li>Включите возможность Shared Runners через настройки <code>Settings -&gt; CI / CD -&gt; Shared Runners</code>.</li>
+<li>Запушьте файлы вашей папки Hexo в этот репозиторий. Папка <code>public/</code> не должна загружаться по умолчанию, проверьте, что файл <code>.gitignore</code> содержит строку <code>public/</code>. Структура папки должна быть такой же, как в <a href="https://gitlab.com/pages/hexo">этом репозитории</a>.</li>
+<li>Добавьте файл <code>.gitlab-ci.yml</code> в ваш репозиторий (рядом с _config.yml &amp; package.json) со следующий контентом:</li>
+</ol>
+<pre><code class="yml">image: node:10-alpine # use nodejs v10 LTS
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm install hexo-cli -g
+  - npm install
+
+pages:
+  script:
+    - hexo generate
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+</code></pre>
+<ol start="5">
+<li><em>username</em>.gitlab.io должен заработать, как только GitLab CI закончит деплой.</li>
+<li>(Опционально) Если вы хотите проверить содержимое папок с материалами (html, css, js и т.д.), они могут быть найдены в разделе <a href="https://docs.gitlab.com/ee/user/project/pipelines/job_artifacts.html">job artifact</a>.</li>
+</ol>
+<h3 id="Страница-проекта"><a href="#Страница-проекта" class="headerlink" title="Страница проекта"></a>Страница проекта</h3><p>Если вы препочитаете страницу проекта на GitLab:</p>
+<ol>
+<li>Перейдите в настройки <code>Settings -&gt; General -&gt; Advanced -&gt; Change path</code>. Измените значение на имя так, чтобы сайт был доступен по адресу <b>username.gitlab.io&#x2F;<em>name</em></b>. Это может быть любое слово, как <em>blog</em> или <em>hexo</em>.</li>
+<li>Редактируйте <strong>_config.yml</strong>, изменив значение <code>root:</code> с <code>&quot;&quot;</code> на <code>&quot;name&quot;</code>.</li>
+<li>Закоммитьте и запушьте.</li>
+</ol>
+<h2 id="Полезные-ссылки"><a href="#Полезные-ссылки" class="headerlink" title="Полезные ссылки"></a>Полезные ссылки</h2><ul>
+<li><a href="https://docs.gitlab.com/ee/user/project/pages/index.html">GitLab Pages</a></li>
+<li><a href="https://docs.gitlab.com/ee/ci/README.html">Документация GitLab CI</a></li>
+</ul>

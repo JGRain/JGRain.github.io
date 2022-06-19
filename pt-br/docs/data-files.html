@@ -1,0 +1,18 @@
+<hr>
+<h2 id="title-Arquivos-de-Dados"><a href="#title-Arquivos-de-Dados" class="headerlink" title="title: Arquivos de Dados"></a>title: Arquivos de Dados</h2><p>Às vezes, você pode precisar usar alguns dados em templates que não estão diretamente disponíveis em suas postagens, ou ainda, você deseja reutilizar os dados em um outro lugar. Para esses casos de uso, o Hexo 3 introduziu os novos <strong>Data files</strong> (arquivos de dados). Este recurso carrega arquivos YAML ou JSON no diretório <code>source/_data</code> para que você possa usá-los em seu site.</p>
+<p>{% youtube CN31plHbI-w %}</p>
+<p>Por exemplo, adicione <code>menu.yml</code> no diretório <code>source/_data</code>.</p>
+<pre><code class="yaml">Home: /
+Gallery: /gallery/
+Archives: /archives/
+</code></pre>
+<p>E você pode usá-los nos templates:</p>
+<pre><code>&lt;% for (var link in site.data.menu) { %&gt;
+  &lt;a href=&quot;&lt;%= site.data.menu[link] %&gt;&quot;&gt; &lt;%= link %&gt; &lt;/a&gt;
+&lt;% } %&gt;
+</code></pre>
+<p>Renderizado assim:</p>
+<pre><code>&lt;a href=&quot;/&quot;&gt; Home &lt;/a&gt;
+&lt;a href=&quot;/gallery/&quot;&gt; Gallery &lt;/a&gt;
+&lt;a href=&quot;/archives/&quot;&gt; Archives &lt;/a&gt;
+</code></pre>

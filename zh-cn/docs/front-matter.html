@@ -1,0 +1,100 @@
+<hr>
+<h2 id="title-Front-matter"><a href="#title-Front-matter" class="headerlink" title="title: Front-matter"></a>title: Front-matter</h2><p>{% youtube Rl48Yk4A_V8 %}</p>
+<p>Front-matter 是文件最上方以 <code>---</code> 分隔的区域，用于指定个别文件的变量，举例来说：</p>
+<pre><code class="yaml">---
+title: Hello World
+date: 2013/7/13 20:46:25
+---
+</code></pre>
+<p>以下是预先定义的参数，您可在模板中使用这些参数值并加以利用。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>layout</code></td>
+<td>布局</td>
+<td><a href="/zh-cn/docs/configuration#%E6%96%87%E7%AB%A0"><code>config.default_layout</code></a></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>标题</td>
+<td>文章的文件名</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>建立日期</td>
+<td>文件建立日期</td>
+</tr>
+<tr>
+<td><code>updated</code></td>
+<td>更新日期</td>
+<td>文件更新日期</td>
+</tr>
+<tr>
+<td><code>comments</code></td>
+<td>开启文章的评论功能</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>标签（不适用于分页）</td>
+<td></td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>分类（不适用于分页）</td>
+<td></td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>覆盖文章网址</td>
+<td></td>
+</tr>
+<tr>
+<td><code>excerpt</code></td>
+<td>Page excerpt in plain text. Use <a href="/docs/tag-plugins#Post-Excerpt">this plugin</a> to format the text</td>
+<td></td>
+</tr>
+<tr>
+<td><code>disableNunjucks</code></td>
+<td>Disable rendering of Nunjucks tag <code>{{ }}</code>&#x2F;<code>{% %}</code> and <a href="/docs/tag-plugins">tag plugins</a> when enabled</td>
+<td></td>
+</tr>
+<tr>
+<td><code>lang</code></td>
+<td>Set the language to override <a href="/docs/internationalization#Path">auto-detection</a></td>
+<td>Inherited from <code>_config.yml</code></td>
+</tr>
+</tbody></table>
+<h2 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h2><p>The default layout is <code>post</code>, in accordance to the value of <a href="(/docs/configuration#Writing)"><code>default_layout</code></a> setting in <code>_config.yml</code>. When the layout is disabled (<code>layout: false</code>) in an article, it will not be processed with a theme. However, it will still be rendered by any available renderer: if an article is written in Markdown and a Markdown renderer (like the default <a href="https://github.com/hexojs/hexo-renderer-marked">hexo-renderer-marked</a>) is installed, it will be rendered to HTML.</p>
+<p><a href="/docs/tag-plugins">Tag plugins</a> are always processed regardless of layout, unless disabled by the <code>disableNunjucks</code> setting or <a href="/api/renderer#Disable-Nunjucks-tags">renderer</a>.</p>
+<h2 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h2><p>只有文章支持分类和标签，您可以在 Front-matter 中设置。在其他系统中，分类和标签听起来很接近，但是在 Hexo 中两者有着明显的差别：分类具有顺序性和层次性，也就是说 <code>Foo, Bar</code> 不等于 <code>Bar, Foo</code>；而标签没有顺序和层次。</p>
+<pre><code class="yaml">categories:
+- Diary
+tags:
+- PS3
+- Games
+</code></pre>
+<p>{% note warn 分类方法的分歧 %}<br>如果您有过使用 WordPress 的经验，就很容易误解 Hexo 的分类方式。WordPress 支持对一篇文章设置多个分类，而且这些分类可以是同级的，也可以是父子分类。但是 Hexo 不支持指定多个同级分类。下面的指定方法：</p>
+<pre><code class="yaml">categories:
+  - Diary
+  - Life
+</code></pre>
+<p>会使分类<code>Life</code>成为<code>Diary</code>的子分类，而不是并列分类。因此，有必要为您的文章选择尽可能准确的分类。</p>
+<p>如果你需要为文章添加多个分类，可以尝试以下 list 中的方法。</p>
+<pre><code class="yaml">categories:
+- [Diary, PlayStation]
+- [Diary, Games]
+- [Life]
+</code></pre>
+<p>此时这篇文章同时包括三个分类： <code>PlayStation</code> 和 <code>Games</code> 分别都是父分类 <code>Diary</code> 的子分类，同时 <code>Life</code> 是一个没有子分类的分类。<br>{% endnote %}</p>
+<h2 id="JSON-Front-matter"><a href="#JSON-Front-matter" class="headerlink" title="JSON Front-matter"></a>JSON Front-matter</h2><p>除了 YAML 外，你也可以使用 JSON 来编写 Front-matter，只要将 <code>---</code> 代换成 <code>;;;</code> 即可。</p>
+<pre><code class="json">&quot;title&quot;: &quot;Hello World&quot;,
+&quot;date&quot;: &quot;2013/7/13 20:46:25&quot;
+;;;
+</code></pre>

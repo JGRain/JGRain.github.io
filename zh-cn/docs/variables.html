@@ -1,0 +1,310 @@
+<hr>
+<h2 id="title-变量"><a href="#title-变量" class="headerlink" title="title: 变量"></a>title: 变量</h2><h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>site</code></td>
+<td><a href="#%E7%BD%91%E7%AB%99%E5%8F%98%E9%87%8F">网站变量</a></td>
+<td><code>object</code>; 见 <a href="#%E7%BD%91%E7%AB%99%E5%8F%98%E9%87%8F">网站变量</a></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td>针对该页面的内容以及 front-matter 中自定义的变量。</td>
+<td><code>object</code>; 见 <a href="#%E9%A1%B5%E9%9D%A2%E5%8F%98%E9%87%8F">页面变量</a></td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>网站配置</td>
+<td><code>object</code> (站点的配置文件)</td>
+</tr>
+<tr>
+<td><code>theme</code></td>
+<td>主题配置。继承自网站配置。</td>
+<td><code>object</code> (主题配置文件)</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>当前页面的路径（不含根路径）</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>当前页面的完整网址</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>env</code></td>
+<td>环境变量</td>
+<td>???</td>
+</tr>
+</tbody></table>
+<p>{% note warn %}<br>从 Hexo 5.0.0 开始，Lodash 已从全局变量中移除。迁移时 <a href="https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore">You-Dont-Need-Lodash-Underscore</a> 或许能为你提供帮助。<br>{% endnote %}</p>
+<h3 id="网站变量"><a href="#网站变量" class="headerlink" title="网站变量"></a>网站变量</h3><table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>site.posts</code></td>
+<td>所有文章</td>
+<td><code>array</code> of <code>post</code> objects</td>
+</tr>
+<tr>
+<td><code>site.pages</code></td>
+<td>所有分页</td>
+<td><code>array</code> of <code>page</code> objects</td>
+</tr>
+<tr>
+<td><code>site.categories</code></td>
+<td>所有分类</td>
+<td><code>object</code>，包含了站点全部的分类</td>
+</tr>
+<tr>
+<td><code>site.tags</code></td>
+<td>所有标签</td>
+<td><code>array</code>，包含了站点全部的标签</td>
+</tr>
+</tbody></table>
+<h3 id="页面变量"><a href="#页面变量" class="headerlink" title="页面变量"></a>页面变量</h3><p><strong>页面（<code>page</code>）</strong></p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.title</code></td>
+<td>页面标题</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.date</code></td>
+<td>页面建立日期</td>
+<td><a href="http://momentjs.com/">Moment.js</a> 对象</td>
+</tr>
+<tr>
+<td><code>page.updated</code></td>
+<td>页面更新日期</td>
+<td><a href="http://momentjs.com/">Moment.js</a> 对象</td>
+</tr>
+<tr>
+<td><code>page.comments</code></td>
+<td>留言是否开启</td>
+<td><code>boolean</code></td>
+</tr>
+<tr>
+<td><code>page.layout</code></td>
+<td>布局名称</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.content</code></td>
+<td>页面的完整内容</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.excerpt</code></td>
+<td>页面摘要</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.more</code></td>
+<td>除了页面摘要的其余内容</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.source</code></td>
+<td>页面原始路径</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.full_source</code></td>
+<td>页面的完整原始路径</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.path</code></td>
+<td>页面网址（不含根路径）。我们通常在主题中使用 <code>url_for(page.path)</code>。</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.permalink</code></td>
+<td>页面的完整网址</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.prev</code></td>
+<td>上一个页面。如果此为第一个页面则为 <code>null</code>。</td>
+<td><code>string</code> or <code>null</code></td>
+</tr>
+<tr>
+<td><code>page.next</code></td>
+<td>下一个页面。如果此为最后一个页面则为 <code>null</code>。</td>
+<td><code>string</code> or <code>null</code></td>
+</tr>
+<tr>
+<td><code>page.raw</code></td>
+<td>文章的原始内容</td>
+<td>???</td>
+</tr>
+<tr>
+<td><code>page.photos</code></td>
+<td>文章的照片（用于相簿）</td>
+<td><code>array</code></td>
+</tr>
+<tr>
+<td><code>page.link</code></td>
+<td>文章的外部链接（用于链接文章）</td>
+<td><code>string</code></td>
+</tr>
+</tbody></table>
+<p><strong>文章 (<code>post</code>):</strong> 与 <code>page</code> 布局相同，但新增以下变量。</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.published</code></td>
+<td>如果该文章已发布则为 true</td>
+<td><code>boolean</code></td>
+</tr>
+<tr>
+<td><code>page.categories</code></td>
+<td>该文章的所有分类</td>
+<td><code>array</code> of ???</td>
+</tr>
+<tr>
+<td><code>page.tags</code></td>
+<td>该文章的所有标签</td>
+<td><code>array</code> of ???</td>
+</tr>
+</tbody></table>
+<p><strong>首页（<code>index</code>）</strong></p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.per_page</code></td>
+<td>每页显示的文章数量</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.total</code></td>
+<td>总页数</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.current</code></td>
+<td>目前页数</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.current_url</code></td>
+<td>目前分页的网址</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.posts</code></td>
+<td>本页文章 (<a href="https://hexojs.github.io/warehouse/">Data Model</a>)</td>
+<td><code>object</code></td>
+</tr>
+<tr>
+<td><code>page.prev</code></td>
+<td>上一页的页数。如果此页是第一页的话则为 <code>0</code>。</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.prev_link</code></td>
+<td>上一页的网址。如果此页是第一页的话则为 <code>&#39;&#39;</code>。</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.next</code></td>
+<td>下一页的页数。如果此页是最后一页的话则为 <code>0</code>。</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.next_link</code></td>
+<td>下一页的网址。如果此页是最后一页的话则为 <code>&#39;&#39;</code>。</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>page.path</code></td>
+<td>当前页面的路径（不含根目录）。我们通常在主题中使用 <code>url_for(page.path)</code>。</td>
+<td><code>string</code></td>
+</tr>
+</tbody></table>
+<p>**归档 (<code>archive</code>)**：与 <code>index</code> 布局相同，但新增以下变量。</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.archive</code></td>
+<td>等于 <code>true</code></td>
+<td><code>boolean</code></td>
+</tr>
+<tr>
+<td><code>page.year</code></td>
+<td>年份归档 (4位)</td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>page.month</code></td>
+<td>月份归档 (没有前导零的2位数)</td>
+<td><code>number</code></td>
+</tr>
+</tbody></table>
+<p>**分类 (<code>category</code>)**：与 <code>index</code> 布局相同，但新增以下变量。</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.category</code></td>
+<td>分类名称</td>
+<td><code>string</code></td>
+</tr>
+</tbody></table>
+<p>**标签 (<code>tag</code>)**：与 <code>index</code> 布局相同，但新增以下变量。</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>page.tag</code></td>
+<td>标签名称</td>
+<td><code>string</code></td>
+</tr>
+</tbody></table>

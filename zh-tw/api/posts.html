@@ -1,0 +1,108 @@
+<hr>
+<h2 id="title-文章"><a href="#title-文章" class="headerlink" title="title: 文章"></a>title: 文章</h2><h2 id="建立文章"><a href="#建立文章" class="headerlink" title="建立文章"></a>建立文章</h2><pre><code class="js">hexo.post.create(data, replace);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>參數</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>資料</td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>取代現有檔案</td>
+</tr>
+</tbody></table>
+<p>您可在資料中指定文章的屬性，除了以下的屬性之外，其他屬性也會被加到 front-matter 中。</p>
+<table>
+<thead>
+<tr>
+<th>資料</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td>標題</td>
+</tr>
+<tr>
+<td><code>slug</code></td>
+<td>網址</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>佈局。預設為 <code>default_layout</code> 設定。</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>路徑。預設會根據 <code>new_post_path</code> 設定建構文章路徑。</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>日期。預設為目前時間。</td>
+</tr>
+</tbody></table>
+<h2 id="發佈草稿"><a href="#發佈草稿" class="headerlink" title="發佈草稿"></a>發佈草稿</h2><pre><code class="js">hexo.post.publish(data, replace);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>參數</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td>資料</td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>取代現有檔案</td>
+</tr>
+</tbody></table>
+<p>您可在資料中指定文章的屬性，除了以下的屬性之外，其他屬性也會被加到 front-matter 中。</p>
+<table>
+<thead>
+<tr>
+<th>資料</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>slug</code></td>
+<td>檔案名稱（必須）</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>佈局。預設為 <code>default_layout</code> 設定。</td>
+</tr>
+</tbody></table>
+<h2 id="渲染"><a href="#渲染" class="headerlink" title="渲染"></a>渲染</h2><pre><code class="js">hexo.post.render(source, data);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>參數</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source</code></td>
+<td>檔案的完整路徑（可忽略）</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>資料</td>
+</tr>
+</tbody></table>
+<p>資料中必須包含 <code>content</code> 屬性，如果沒有的話，會試著讀取原始檔案。此函數的執行順序為：</p>
+<ul>
+<li>執行 <code>before_post_render</code> 過濾器</li>
+<li>使用 Markdown 或其他渲染器渲染（根據副檔名而定）</li>
+<li>使用 <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> 渲染</li>
+<li>執行 <code>after_post_render</code> 過濾器</li>
+</ul>

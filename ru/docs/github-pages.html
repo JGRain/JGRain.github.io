@@ -1,0 +1,61 @@
+<hr>
+<h2 id="title-GitHub-Pages"><a href="#title-GitHub-Pages" class="headerlink" title="title: GitHub Pages"></a>title: GitHub Pages</h2><p>В этом туториале мы используем <a href="https://travis-ci.com/">Travis CI</a> для деплоя в Github Pages. <a href="https://travis-ci.com/">Travis CI</a> бесплатен для репозиториев с открытым исходным кодом, то есть ветка <code>master</code> вашего репозитория должна быть публичной. Пожалуйста, перейдите в описание <a href="#Private-repository">приватного репозитория</a>, если вы предпочитаете не открывать свой исходный код, либо откажитесь от загрузки своих файлов на GitHub.</p>
+<ol>
+<li>Создайте репозиторий с названием <b><em>username</em>.github.io</b>, где <code>username</code> — ваше имя пользователя GitHub. Если вы уже загрузили файлы в репозиторий с другим названием, просто переименуйте его.</li>
+<li>Загрузите <code>push</code> файлы вашей папки Hexo в этот репозиторий. Папка <code>public/</code> не должна загружаться по умолчанию, проверьте, что файл <code>.gitignore</code> содержит строку <code>public/</code>. Структура папки должна быть такой же, как в <a href="https://github.com/hexojs/hexo-starter">этом репозитории</a>, без файла <code>.gitmodules</code>.</li>
+<li>Добавьте <a href="https://github.com/marketplace/travis-ci">Travis CI</a> в свой аккаунт.</li>
+<li>Зайдите на страницу <a href="https://github.com/settings/installations">Настроек приложения</a>, сконфигурируйте Travis CI, чтобы оно имело доступ к репозиторию.</li>
+<li>Вас перенаправят на страницу Travis.</li>
+<li>В новой вкладке сгенерируйте <a href="https://github.com/settings/tokens">новый токен</a> с областью видимости <strong>repo</strong>. Запишите значение токена.</li>
+<li>На странице Travis зайдите в настройки репозитория. В поле <strong>Environment Variables</strong>, вставьте <strong>GH_TOKEN</strong> в качестве имени и токен в качестве значения. Нажмите <code>Add</code> для сохранения.</li>
+<li>Добавьте файл <code>.travis.yml</code> в свой репозиторий (рядом с _config.yml &amp; package.json) со следующим контентом:</li>
+</ol>
+<pre><code class="yml">sudo: false
+language: node_js
+node_js:
+  - 10 # use nodejs v10 LTS
+cache: npm
+branches:
+  only:
+    - master # build master branch only
+script:
+  - hexo generate # generate static files
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_TOKEN
+  keep-history: true
+  on:
+    branch: master
+  local-dir: public
+</code></pre>
+<ol start="9">
+<li>Как только Travis CI завершит деплой, сгенерированные страницы появятся в ветке <code>gh-pages</code> вашего репо.</li>
+<li>В настройках своего репозитория GitHub перейдите в раздел “GitHub Pages” и измените <code>Source</code> на <strong>ветку gh-pages</strong>.</li>
+<li>Проверьте страницу на <em>username</em>.github.io.</li>
+</ol>
+<h3 id="Страница-проекта"><a href="#Страница-проекта" class="headerlink" title="Страница проекта"></a>Страница проекта</h3><p>Если вы препочитаете страницу проекта на GitHub:</p>
+<ol>
+<li>Перейдите на страницу своего репо на GitHub. Откройте таб <strong>Settings</strong>. Измените <strong>Repository name</strong>, чтобы ваш блог был доступен на <b>username.github.io&#x2F;<em>repository</em></b>, <strong>repository</strong> может быть любым словом, как <em>blog</em> или <em>hexo</em>.</li>
+<li>Редактируйте файл <strong>_config.yml</strong>, изменив значение <code>root:</code> на <code>/&lt;repository&gt;/</code> (должно начинаться и заканчиваться косой чертой).</li>
+<li>Закоммитьте и запушьте.</li>
+</ol>
+<h2 id="Приватный-репозиторий"><a href="#Приватный-репозиторий" class="headerlink" title="Приватный репозиторий"></a>Приватный репозиторий</h2><p>Следующая инструкция адаптирована со страницы <a href="/docs/one-command-deployment">развёртывание одной командой</a> page.</p>
+<ol>
+<li>Установите <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>.</li>
+<li>Добавьте следующую конфигурацию в <strong>_config.yml</strong>, (удалите существующие строки, если таковые имеются)</li>
+</ol>
+<pre><code class="yml">deploy:
+  type: git
+  repo: https://github.com/&lt;username&gt;/&lt;project&gt;
+  # example, https://github.com/hexojs/hexojs.github.io
+  branch: gh-pages
+</code></pre>
+<ol start="3">
+<li>Запустите <code>hexo clean &amp;&amp; hexo deploy</code>.</li>
+<li>Проверьте веб-страницу по адресу <em>username</em>.github.io.</li>
+</ol>
+<h2 id="Полезные-ссылки"><a href="#Полезные-ссылки" class="headerlink" title="Полезные ссылки"></a>Полезные ссылки</h2><ul>
+<li><a href="https://help.github.com/categories/github-pages-basics/">GitHub Pages</a></li>
+<li><a href="https://docs.travis-ci.com/user/tutorial/">Документация Travis CI</a></li>
+</ul>

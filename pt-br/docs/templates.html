@@ -1,0 +1,88 @@
+<hr>
+<h2 id="title-Templates"><a href="#title-Templates" class="headerlink" title="title: Templates"></a>title: Templates</h2><p>Os templates definem a apresentação do seu site, descrevendo o que cada página deve ter de semelhante. A tabela abaixo mostra o modelo correspondente para cada página disponível. No mínimo, um tema deve conter um template de <code>index</code>.</p>
+<p>{% youtube mb65bQ4iUc4 %}</p>
+<table>
+<thead>
+<tr>
+<th>Template</th>
+<th>Página</th>
+<th>Fallback</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>index</code></td>
+<td>Página Home</td>
+<td></td>
+</tr>
+<tr>
+<td><code>post</code></td>
+<td>Postagens</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td>Páginas</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>archive</code></td>
+<td>Arquivos (archives)</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td>Categorias</td>
+<td><code>archive</code></td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td>Tags</td>
+<td><code>archive</code></td>
+</tr>
+</tbody></table>
+<h2 id="Layouts"><a href="#Layouts" class="headerlink" title="Layouts"></a>Layouts</h2><p>Quando as páginas compartilham uma estrutura semelhante - por exemplo, quando dois templates possuem um cabeçalho e um rodapé - você pode considerar usar um <code>layout</code> para declarar essas semelhanças estruturais. Todo arquivo de layout deve conter uma variável <code>body</code> para exibir o conteúdo do template em questão. Por exemplo:</p>
+<pre><code class="html">index
+</code></pre>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;&lt;%- body %&gt;&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>yields:</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;index&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Por padrão, o template de <code>layout</code> é usado por todos os outros templates. Você pode especificar layouts adicionais no <a href="front-matter.html">front-matter</a> ou configurá-lo como <code>false</code> para desativá-lo. É até possível criar uma estrutura aninhada complexa ao incluir mais templates de layout no seu layout principal.</p>
+<h2 id="Partials"><a href="#Partials" class="headerlink" title="Partials"></a>Partials</h2><p>Os partials são úteis para compartilhar componentes entre seus templates. Um exemplo típico inclui cabeçalhos (header), rodapés (footer) ou barras laterais (sidebar). Você pode querer colocar seus partials em arquivos separados para tornar a manutenção do seu site significativamente mais conveniente. Por exemplo:</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= config.title %&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>yields:</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;My Site&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h2 id="Variaveis-Locais"><a href="#Variaveis-Locais" class="headerlink" title="Variáveis Locais"></a>Variáveis Locais</h2><p>Você pode definir variáveis locais em um template e usá-las em outros templates.</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;&lt;%= title %&gt;&lt;/h1&gt;
+</code></pre>
+<pre><code class="html">&lt;%- partial(&#39;partial/header&#39;, {title: &#39;Hello World&#39;}) %&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<p>yields:</p>
+<pre><code class="html">&lt;h1 id=&quot;logo&quot;&gt;Hello World&lt;/h1&gt;
+&lt;div id=&quot;content&quot;&gt;Home page&lt;/div&gt;
+</code></pre>
+<h2 id="Otimizacao"><a href="#Otimizacao" class="headerlink" title="Otimização"></a>Otimização</h2><p>Se o seu tema for extremamente complexo ou se o número de arquivos a serem gerados for muito grande, o desempenho da geração de arquivos do Hexo pode começar a diminuir consideravelmente. Além de simplificar o seu tema, você também pode tentar usar o <code>Fragment Caching</code>, que foi introduzido no Hexo 2.7.</p>
+<p>Este recurso foi emprestado do <a href="http://guides.rubyonrails.org/caching_with_rails.html#fragment-caching">Ruby on Rails</a>. Isso faz com que o conteúdo seja salvo de forma fragmentada e cacheado para quando requisições adicionais forem feitas. Isso pode reduzir o número de consultas no banco de dados e também pode acelerar a geração de arquivos.</p>
+<p>O recurso de <code>Fragment Caching</code> é melhor aproveitado em cabeçalhos, rodapés, barras laterais e outros conteúdos estáticos, onde sejam feitas pouquíssimas mudanças de um template para outro. Por exemplo:</p>
+<pre><code class="js">&lt;%- fragment_cache(&#39;header&#39;, function(){
+  return &#39;&lt;header&gt;&lt;/header&gt;&#39;;
+});
+</code></pre>
+<p>Embora seja mais fácil usar partials:</p>
+<pre><code class="js">&lt;%- partial(&#39;header&#39;, {}, {cache: true});
+</code></pre>
+<p>{% note warn %}<br><code>fragment_cache()</code> will cache the rendered result and output the cached result to other pages. This should only be used on partials that are expected <strong>not</strong> to change across different pages. Otherwise, it should <strong>not</strong> be enabled.<br>For example, it should be disabled when <code>relative_link</code> is enabled in the config. This is because relative links may appear differently across pages.<br>{% endnote %}</p>
